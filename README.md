@@ -53,4 +53,4 @@ em cada questão, sem alterar o código.
 
 ## Aviso
 
-Material de estudo independente, **não afiliado ao ISTQB**. Baseado na estrutura pública do syllabus CTFL v4.0.
+Material de estudo independente, **não afiliado ao ISTQB**. Baseado na estrutura pública do syllabus CTFL v4.0.x
