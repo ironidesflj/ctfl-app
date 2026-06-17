@@ -1,13 +1,13 @@
 const KEY = "ctfl_progress_v1";
 
-const EMPTY = { total: 0, correct: 0, byDomain: {} };
+const EMPTY = { total: 0, correct: 0, byDomain: {}, seen: {} };
 
 export function loadProgress() {
   try {
     const raw = localStorage.getItem(KEY);
     if (!raw) return { ...EMPTY };
     const parsed = JSON.parse(raw);
-    return { ...EMPTY, ...parsed, byDomain: parsed.byDomain || {} };
+    return { ...EMPTY, ...parsed, byDomain: parsed.byDomain || {}, seen: parsed.seen || {} };
   } catch {
     return { ...EMPTY };
   }
@@ -22,15 +22,23 @@ export function saveProgress(state) {
   }
 }
 
-export function recordAnswer(state, domain, correct) {
+export function recordAnswer(state, domain, correct, questionId) {
   const next = {
     total: state.total + 1,
     correct: state.correct + (correct ? 1 : 0),
-    byDomain: { ...state.byDomain }
+    byDomain: { ...state.byDomain },
+    seen: { ...(state.seen || {}) }
   };
   const d = next.byDomain[domain] || { t: 0, c: 0 };
   next.byDomain[domain] = { t: d.t + 1, c: d.c + (correct ? 1 : 0) };
+  if (questionId) next.seen[questionId] = correct ? "correct" : "wrong";
   return next;
+}
+
+export function getWrongIds(state) {
+  return Object.entries(state.seen || {})
+    .filter(([, v]) => v === "wrong")
+    .map(([k]) => k);
 }
 
 export function clearProgress() {
@@ -63,7 +71,7 @@ export function importProgress(file) {
         const data = JSON.parse(reader.result);
         const p = data.progress || data;
         if (typeof p.total !== "number") throw new Error("Formato inválido");
-        resolve({ ...EMPTY, ...p, byDomain: p.byDomain || {} });
+        resolve({ ...EMPTY, ...p, byDomain: p.byDomain || {}, seen: p.seen || {} });
       } catch (e) {
         reject(e);
       }

@@ -28,6 +28,11 @@ export function byDomain(domainId) {
   return ALL.filter((q) => q.domain === domainId);
 }
 
+export function byIds(ids) {
+  const set = new Set(ids);
+  return ALL.filter((q) => set.has(q.id));
+}
+
 export function shuffle(arr) {
   const r = [...arr];
   for (let i = r.length - 1; i > 0; i--) {

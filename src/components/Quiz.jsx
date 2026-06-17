@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useMemo } from "react";
-import { DOMAINS, domainName, chapterWeight, byDomain, buildExam, shuffle, shuffleOptions, META } from "../lib/bank.js";
+import { DOMAINS, domainName, chapterWeight, byDomain, byIds, buildExam, shuffle, shuffleOptions, META } from "../lib/bank.js";
+import { getWrongIds } from "../lib/storage.js";
 
 const LETTERS = ["A", "B", "C", "D", "E"];
 
@@ -9,11 +10,13 @@ function fmtTime(s) {
   return `${m}:${String(r).padStart(2, "0")}`;
 }
 
-export default function Quiz({ onAnswer }) {
+export default function Quiz({ onAnswer, progress }) {
   const [phase, setPhase] = useState("setup"); // setup | running | result
   const [mode, setMode] = useState("practice"); // practice | exam
-  const [domain, setDomain] = useState("all");
+  const [domain, setDomain] = useState("all"); // ou "wrong" no modo "errei antes"
   const [count, setCount] = useState(10);
+
+  const wrongIds = progress ? getWrongIds(progress) : [];
 
   const [questions, setQuestions] = useState([]);
   const [opts, setOpts] = useState([]); // alternativas embaralhadas por questão
@@ -27,7 +30,8 @@ export default function Quiz({ onAnswer }) {
   useEffect(() => () => clearInterval(timerRef.current), []);
 
   function start() {
-    const qs = mode === "exam" ? buildExam() : shuffle(byDomain(domain)).slice(0, Math.min(count, byDomain(domain).length));
+    const pool = mode === "exam" ? null : domain === "wrong" ? byIds(wrongIds) : byDomain(domain);
+    const qs = mode === "exam" ? buildExam() : shuffle(pool).slice(0, Math.min(count, pool.length));
     setQuestions(qs);
     setOpts(qs.map((q) => shuffleOptions(q)));
     setAnswers(new Array(qs.length).fill(null));
@@ -54,7 +58,7 @@ export default function Quiz({ onAnswer }) {
     const next = [...answers];
     next[idx] = optIndex;
     setAnswers(next);
-    onAnswer(questions[idx].domain, opts[idx][optIndex].correct);
+    onAnswer(questions[idx].domain, opts[idx][optIndex].correct, questions[idx].id);
   }
 
   function selectExam(optIndex) {
@@ -110,6 +114,12 @@ export default function Quiz({ onAnswer }) {
                 <span className="domain-weight">Todos os domínios</span>
                 <span className="domain-sub">Mistura de todos os capítulos</span>
               </button>
+              {wrongIds.length > 0 && (
+                <button className={"domain-card wide" + (domain === "wrong" ? " selected" : "")} onClick={() => setDomain("wrong")}>
+                  <span className="domain-weight">Errei antes</span>
+                  <span className="domain-sub">{wrongIds.length} questão(ões) que você errou</span>
+                </button>
+              )}
               {DOMAINS.map((d) => (
                 <button key={d.id} className={"domain-card" + (domain === d.id ? " selected" : "")} onClick={() => setDomain(d.id)}>
                   <span className="domain-weight">{chapterWeight(d.chapter)} / {META.total}</span>

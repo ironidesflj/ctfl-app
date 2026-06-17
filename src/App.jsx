@@ -21,8 +21,8 @@ export default function App() {
     saveProgress(progress);
   }, [progress]);
 
-  const onAnswer = (domain, correct) =>
-    setProgress((p) => recordAnswer(p, domain, correct));
+  const onAnswer = (domain, correct, questionId) =>
+    setProgress((p) => recordAnswer(p, domain, correct, questionId));
 
   return (
     <div className="app">
@@ -49,7 +49,7 @@ export default function App() {
       </nav>
 
       <main>
-        {tab === "quiz" && <Quiz onAnswer={onAnswer} />}
+        {tab === "quiz" && <Quiz onAnswer={onAnswer} progress={progress} />}
         {tab === "syllabus" && <Syllabus />}
         {tab === "flash" && <Flashcards />}
         {tab === "stats" && <Stats progress={progress} setProgress={setProgress} />}
