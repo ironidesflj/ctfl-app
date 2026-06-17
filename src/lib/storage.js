@@ -1,6 +1,6 @@
 const KEY = "ctfl_progress_v1";
 
-const EMPTY = { total: 0, correct: 0, byDomain: {}, seen: {} };
+const EMPTY = { total: 0, correct: 0, byDomain: {}, seen: {}, flashcards: {} };
 
 export function loadProgress() {
   try {

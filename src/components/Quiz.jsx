@@ -177,8 +177,9 @@ export default function Quiz({ onAnswer, progress, initialFilter, onFilterConsum
             {pct >= 85 ? "Excelente domínio. Pronto para a prova." : passed ? "Passou! Reforce os domínios mais fracos na aba Progresso." : "A nota de corte é 65% (26/40). Revise os erros abaixo."}
           </p>
           <div className="actions center">
+            <button className="btn ghost" onClick={reset}>← Voltar ao início</button>
             <button className="btn" onClick={() => setShowReview((v) => !v)}>{showReview ? "Ocultar revisão" : "Revisar erros"}</button>
-            <button className="btn primary" onClick={reset}>Refazer</button>
+            <button className="btn primary" onClick={reset}>Refazer este quiz</button>
           </div>
         </div>
 
@@ -217,6 +218,12 @@ export default function Quiz({ onAnswer, progress, initialFilter, onFilterConsum
 
   return (
     <div className="quiz">
+      <button
+        className="btn ghost back-btn"
+        onClick={() => { clearInterval(timerRef.current); setPhase("setup"); }}
+      >
+        ← Voltar
+      </button>
       <div className="run-head">
         <span className="muted">Questão {idx + 1} de {questions.length}</span>
         {mode === "exam" && <span className={"timer " + timerClass}>{fmtTime(timeLeft)}</span>}

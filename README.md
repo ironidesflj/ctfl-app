@@ -61,6 +61,10 @@ Material de estudo independente, **não afiliado ao ISTQB**. Baseado na estrutur
 
 ## Changelog
 
+### v1.5.0
+- Corrige export/import: campo `seen` (modo Errei antes) agora persiste entre aparelhos
+- Botão Voltar no quiz (durante e após a sessão)
+
 ### v1.4.0
 - Syllabus acionável: navegação direta do capítulo para o Quiz filtrado
 
