@@ -33,6 +33,16 @@ export function byIds(ids) {
   return ALL.filter((q) => set.has(q.id));
 }
 
+export function coverageByDomain(seenMap) {
+  const result = {};
+  DOMAINS.forEach((d) => {
+    const total = ALL.filter((q) => q.domain === d.id).length;
+    const seen = ALL.filter((q) => q.domain === d.id && seenMap[q.id]).length;
+    result[d.id] = { seen, total };
+  });
+  return result;
+}
+
 export function shuffle(arr) {
   const r = [...arr];
   for (let i = r.length - 1; i > 0; i--) {

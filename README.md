@@ -61,6 +61,9 @@ Material de estudo independente, **não afiliado ao ISTQB**. Baseado na estrutur
 
 ## Changelog
 
+### v1.6.0
+- Cobertura por capítulo na aba Progresso (questões vistas / total)
+
 ### v1.5.0
 - Corrige export/import: campo `seen` (modo Errei antes) agora persiste entre aparelhos
 - Botão Voltar no quiz (durante e após a sessão)

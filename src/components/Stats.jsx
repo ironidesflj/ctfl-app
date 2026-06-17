@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { DOMAINS } from "../lib/bank.js";
+import { DOMAINS, coverageByDomain } from "../lib/bank.js";
 import { exportProgress, importProgress, clearProgress } from "../lib/storage.js";
 
 export default function Stats({ progress, setProgress }) {
@@ -7,6 +7,7 @@ export default function Stats({ progress, setProgress }) {
   const [msg, setMsg] = useState("");
 
   const pct = progress.total > 0 ? Math.round((progress.correct / progress.total) * 100) : 0;
+  const coverage = coverageByDomain(progress.seen || {});
 
   async function handleImport(e) {
     const file = e.target.files?.[0];
@@ -42,6 +43,39 @@ export default function Stats({ progress, setProgress }) {
                 <span className={"bar-val " + tone}>{bd.t > 0 ? `${p}% (${bd.c}/${bd.t})` : "sem dados"}</span>
               </div>
               <div className="bar"><div className={"bar-fill " + tone} style={{ width: p + "%" }} /></div>
+            </div>
+          );
+        })}
+      </div>
+
+      <div className="card">
+        <h3>Cobertura por capítulo</h3>
+        <p className="muted" style={{marginBottom: '1rem', fontSize: '13px'}}>
+          Questões vistas ao menos uma vez (modos Estudo e Errei antes)
+        </p>
+        {DOMAINS.map(d => {
+          const cov = coverage[d.id];
+          const pct = Math.round((cov.seen / cov.total) * 100);
+          return (
+            <div className="bar-row" key={d.id}>
+              <div className="bar-head">
+                <span>{d.name}</span>
+                <span className="bar-val" style={{color: 'var(--text-2)'}}>
+                  {cov.seen}/{cov.total} ({pct}%)
+                </span>
+              </div>
+              <div className="bar">
+                <div className="bar-fill"
+                  style={{
+                    width: pct + '%',
+                    background: pct === 100
+                      ? 'var(--ok)'
+                      : pct >= 50
+                      ? 'var(--accent)'
+                      : 'var(--text-3)'
+                  }}
+                />
+              </div>
             </div>
           );
         })}
