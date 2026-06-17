@@ -16,6 +16,7 @@ const TABS = [
 export default function App() {
   const [tab, setTab] = useState("quiz");
   const [progress, setProgress] = useState(loadProgress);
+  const [quizFilter, setQuizFilter] = useState(null);
 
   useEffect(() => {
     saveProgress(progress);
@@ -49,8 +50,17 @@ export default function App() {
       </nav>
 
       <main>
-        {tab === "quiz" && <Quiz onAnswer={onAnswer} progress={progress} />}
-        {tab === "syllabus" && <Syllabus />}
+        {tab === "quiz" && (
+          <Quiz
+            onAnswer={onAnswer}
+            progress={progress}
+            initialFilter={quizFilter}
+            onFilterConsumed={() => setQuizFilter(null)}
+          />
+        )}
+        {tab === "syllabus" && (
+          <Syllabus onStudy={(domain) => { setQuizFilter({ domain }); setTab("quiz"); }} />
+        )}
         {tab === "flash" && <Flashcards />}
         {tab === "stats" && <Stats progress={progress} setProgress={setProgress} />}
       </main>

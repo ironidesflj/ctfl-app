@@ -10,6 +10,7 @@ React + Vite, instalável como PWA, funciona offline. Banco de **200 questões**
 - **Quiz — modo Simulado:** 40 questões proporcionais ao exame, cronômetro 75 min, revisão no fim.
 - **Flashcards:** marcação Sei/Não sei, filtro "Revisar (N)" para cards pendentes.
 - **Syllabus** por capítulo.
+- **Syllabus acionável:** botão "Estudar este capítulo" abre o Quiz pré-filtrado.
 - **Progresso** por domínio com exportar/importar JSON (sincronização manual entre aparelhos).
 - **PWA:** instalável no celular, funciona offline.
 - **Banco:** 200 questões PT-BR, distribuição proporcional ao exame CTFL v4.0.
@@ -59,6 +60,9 @@ em cada questão, sem alterar o código.
 Material de estudo independente, **não afiliado ao ISTQB**. Baseado na estrutura pública do syllabus CTFL v4.0.x
 
 ## Changelog
+
+### v1.4.0
+- Syllabus acionável: navegação direta do capítulo para o Quiz filtrado
 
 ### v1.3.0
 - Versão exibida no rodapé do app

@@ -10,13 +10,21 @@ function fmtTime(s) {
   return `${m}:${String(r).padStart(2, "0")}`;
 }
 
-export default function Quiz({ onAnswer, progress }) {
+export default function Quiz({ onAnswer, progress, initialFilter, onFilterConsumed }) {
   const [phase, setPhase] = useState("setup"); // setup | running | result
   const [mode, setMode] = useState("practice"); // practice | exam
   const [domain, setDomain] = useState("all"); // ou "wrong" no modo "errei antes"
   const [count, setCount] = useState(10);
 
   const wrongIds = progress ? getWrongIds(progress) : [];
+
+  useEffect(() => {
+    if (initialFilter) {
+      setDomain(initialFilter.domain);
+      setMode("practice");
+      onFilterConsumed();
+    }
+  }, [initialFilter]);
 
   const [questions, setQuestions] = useState([]);
   const [opts, setOpts] = useState([]); // alternativas embaralhadas por questão

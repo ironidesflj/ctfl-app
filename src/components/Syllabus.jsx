@@ -2,7 +2,7 @@ import { useState, useMemo } from "react";
 import { DOMAINS, chapterWeight, META } from "../lib/bank.js";
 import { SYLLABUS_ITEMS } from "../data/study.js";
 
-export default function Syllabus() {
+export default function Syllabus({ onStudy }) {
   const [domain, setDomain] = useState("all");
 
   const items = useMemo(
@@ -28,6 +28,11 @@ export default function Syllabus() {
             <div className="syl-desc">{i.desc}</div>
           </div>
         ))}
+        {dom && (
+          <button className="btn primary" onClick={() => onStudy(domain)}>
+            Estudar este capítulo →
+          </button>
+        )}
       </div>
     </div>
   );
