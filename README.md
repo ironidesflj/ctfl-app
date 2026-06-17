@@ -61,6 +61,9 @@ Material de estudo independente, **não afiliado ao ISTQB**. Baseado na estrutur
 
 ## Changelog
 
+### v1.8.0
+- Tela de onboarding no primeiro acesso (apresenta os modos e o banco)
+
 ### v1.7.0
 - Salvar questões: marque qualquer questão durante o estudo e revise depois (modo Salvos)
 

@@ -3,6 +3,7 @@ import Quiz from "./components/Quiz.jsx";
 import Flashcards from "./components/Flashcards.jsx";
 import Syllabus from "./components/Syllabus.jsx";
 import Stats from "./components/Stats.jsx";
+import Onboarding from "./components/Onboarding.jsx";
 import { loadProgress, saveProgress, recordAnswer } from "./lib/storage.js";
 import { META } from "./lib/bank.js";
 
@@ -17,6 +18,10 @@ export default function App() {
   const [tab, setTab] = useState("quiz");
   const [progress, setProgress] = useState(loadProgress);
   const [quizFilter, setQuizFilter] = useState(null);
+  const [showOnboarding, setShowOnboarding] = useState(() => {
+    try { return !localStorage.getItem("ctfl_onboarding_done"); }
+    catch { return false; }
+  });
 
   useEffect(() => {
     saveProgress(progress);
@@ -24,6 +29,11 @@ export default function App() {
 
   const onAnswer = (domain, correct, questionId) =>
     setProgress((p) => recordAnswer(p, domain, correct, questionId));
+
+  function dismissOnboarding() {
+    try { localStorage.setItem("ctfl_onboarding_done", "1"); } catch {}
+    setShowOnboarding(false);
+  }
 
   return (
     <div className="app">
@@ -35,36 +45,42 @@ export default function App() {
         </div>
       </header>
 
-      <nav className="tabs" role="tablist">
-        {TABS.map((t) => (
-          <button
-            key={t.id}
-            role="tab"
-            aria-selected={tab === t.id}
-            className={"tab" + (tab === t.id ? " active" : "")}
-            onClick={() => setTab(t.id)}
-          >
-            {t.label}
-          </button>
-        ))}
-      </nav>
+      {showOnboarding ? (
+        <Onboarding onDismiss={dismissOnboarding} />
+      ) : (
+        <>
+          <nav className="tabs" role="tablist">
+            {TABS.map((t) => (
+              <button
+                key={t.id}
+                role="tab"
+                aria-selected={tab === t.id}
+                className={"tab" + (tab === t.id ? " active" : "")}
+                onClick={() => setTab(t.id)}
+              >
+                {t.label}
+              </button>
+            ))}
+          </nav>
 
-      <main>
-        {tab === "quiz" && (
-          <Quiz
-            onAnswer={onAnswer}
-            progress={progress}
-            setProgress={setProgress}
-            initialFilter={quizFilter}
-            onFilterConsumed={() => setQuizFilter(null)}
-          />
-        )}
-        {tab === "syllabus" && (
-          <Syllabus onStudy={(domain) => { setQuizFilter({ domain }); setTab("quiz"); }} />
-        )}
-        {tab === "flash" && <Flashcards />}
-        {tab === "stats" && <Stats progress={progress} setProgress={setProgress} />}
-      </main>
+          <main>
+            {tab === "quiz" && (
+              <Quiz
+                onAnswer={onAnswer}
+                progress={progress}
+                setProgress={setProgress}
+                initialFilter={quizFilter}
+                onFilterConsumed={() => setQuizFilter(null)}
+              />
+            )}
+            {tab === "syllabus" && (
+              <Syllabus onStudy={(domain) => { setQuizFilter({ domain }); setTab("quiz"); }} />
+            )}
+            {tab === "flash" && <Flashcards />}
+            {tab === "stats" && <Stats progress={progress} setProgress={setProgress} />}
+          </main>
+        </>
+      )}
 
       <footer className="foot">
         Material de estudo independente, não afiliado ao ISTQB.
