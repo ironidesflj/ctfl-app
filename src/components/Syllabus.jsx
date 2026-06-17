@@ -2,7 +2,7 @@ import { useState, useMemo } from "react";
 import { DOMAINS, chapterWeight, META } from "../lib/bank.js";
 import { SYLLABUS_ITEMS } from "../data/study.js";
 
-export default function Syllabus({ onStudy }) {
+export default function Syllabus({ onStudy, lang = "pt" }) {
   const [domain, setDomain] = useState("all");
 
   const items = useMemo(
@@ -13,6 +13,11 @@ export default function Syllabus({ onStudy }) {
 
   return (
     <div className="study">
+      {lang === "en" && (
+        <div style={{fontSize:'12px', color:'var(--text-3)', marginBottom:'0.5rem'}}>
+          English syllabus coming soon
+        </div>
+      )}
       <div className="filter-bar">
         <button className={"chip" + (domain === "all" ? " on" : "")} onClick={() => setDomain("all")}>Todos</button>
         {DOMAINS.map((d) => (

@@ -16,12 +16,19 @@ export const domainName = (id) => DOMAINS.find((d) => d.id === id)?.name || id;
 export const chapterWeight = (chapter) => META.chapterWeights[String(chapter)] || 0;
 
 // Texto da questão no idioma corrente, com índice de resposta neutro.
-export function localized(q, lang = LANG) {
-  const loc = q.locales[lang] || q.locales[META.defaultLanguage];
-  return { id: q.id, domain: q.domain, chapter: q.chapter, kLevel: q.kLevel, answer: q.answer, ...loc };
+export function localized(q, lang = "pt") {
+  const loc = q.locales[lang] || q.locales["pt"];
+  return {
+    id: q.id,
+    domain: q.domain,
+    chapter: q.chapter,
+    kLevel: q.kLevel,
+    answer: q.answer,
+    ...loc
+  };
 }
 
-export const ALL = bank.questions.map((q) => localized(q));
+export const ALL = bank.questions.map((q) => localized(q, "pt"));
 
 export function byDomain(domainId) {
   if (domainId === "all") return ALL;
@@ -31,6 +38,34 @@ export function byDomain(domainId) {
 export function byIds(ids) {
   const set = new Set(ids);
   return ALL.filter((q) => set.has(q.id));
+}
+
+// Retorna todas as questões localizadas no idioma solicitado (fallback PT).
+export function allInLang(lang = "pt") {
+  return bank.questions.map((q) => localized(q, lang));
+}
+
+export function byDomainInLang(domainId, lang = "pt") {
+  const all = allInLang(lang);
+  return domainId === "all" ? all : all.filter((q) => q.domain === domainId);
+}
+
+export function buildExamInLang(lang = "pt") {
+  const allQ = allInLang(lang);
+  const picked = [];
+  DOMAINS.forEach((d) => {
+    const pool = shuffle(allQ.filter((q) => q.domain === d.id));
+    const want = Math.round((chapterWeight(d.chapter) / META.total) * META.examFormat.questions);
+    picked.push(...pool.slice(0, want));
+  });
+  let pool = shuffle(picked);
+  if (pool.length > META.examFormat.questions) pool = pool.slice(0, META.examFormat.questions);
+  if (pool.length < META.examFormat.questions) {
+    const used = new Set(pool.map((q) => q.id));
+    const extra = shuffle(allQ).filter((q) => !used.has(q.id));
+    pool.push(...extra.slice(0, META.examFormat.questions - pool.length));
+  }
+  return shuffle(pool);
 }
 
 export function coverageByDomain(seenMap) {

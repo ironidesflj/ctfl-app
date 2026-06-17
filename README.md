@@ -61,6 +61,11 @@ Material de estudo independente, **não afiliado ao ISTQB**. Baseado na estrutur
 
 ## Changelog
 
+### v2.0.0
+- Arquitetura multilíngue: toggle PT/EN no header
+- Questões exibidas no idioma selecionado (fallback PT quando EN não disponível)
+- EN flashcards e syllabus: coming soon
+
 ### v1.8.0
 - Tela de onboarding no primeiro acesso (apresenta os modos e o banco)
 

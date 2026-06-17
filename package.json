@@ -1,7 +1,7 @@
 {
   "name": "ctfl-prep",
   "private": true,
-  "version": "1.8.0",
+  "version": "2.0.0",
   "type": "module",
   "description": "App de preparação para o exame ISTQB CTFL v4.0",
   "scripts": {

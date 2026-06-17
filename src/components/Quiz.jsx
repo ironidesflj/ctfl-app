@@ -1,6 +1,9 @@
 import { useState, useEffect, useRef, useMemo } from "react";
-import { DOMAINS, domainName, chapterWeight, byDomain, byIds, buildExam, shuffle, shuffleOptions, META } from "../lib/bank.js";
+import { DOMAINS, domainName, chapterWeight, byDomainInLang, byIds, buildExamInLang, shuffle, shuffleOptions, META } from "../lib/bank.js";
 import { getWrongIds, isSaved, toggleSaved, getSavedIds } from "../lib/storage.js";
+import bank from "../data/ctfl-questions-ptbr.json";
+
+const hasEN = (id) => !!bank.questions.find((q) => q.id === id)?.locales?.en;
 
 const LETTERS = ["A", "B", "C", "D", "E"];
 
@@ -10,7 +13,7 @@ function fmtTime(s) {
   return `${m}:${String(r).padStart(2, "0")}`;
 }
 
-export default function Quiz({ onAnswer, progress, setProgress, initialFilter, onFilterConsumed }) {
+export default function Quiz({ onAnswer, progress, setProgress, initialFilter, onFilterConsumed, lang = "pt" }) {
   const [phase, setPhase] = useState("setup"); // setup | running | result
   const [mode, setMode] = useState("practice"); // practice | exam
   const [domain, setDomain] = useState("all"); // ou "wrong" no modo "errei antes"
@@ -40,13 +43,13 @@ export default function Quiz({ onAnswer, progress, setProgress, initialFilter, o
   function start() {
     let qs;
     if (mode === "exam") {
-      qs = buildExam();
+      qs = buildExamInLang(lang);
     } else if (mode === "saved") {
       const ids = getSavedIds(progress);
       const pool = byIds(ids);
       qs = shuffle(pool).slice(0, Math.min(count, pool.length));
     } else {
-      const pool = domain === "wrong" ? byIds(wrongIds) : byDomain(domain);
+      const pool = domain === "wrong" ? byIds(wrongIds) : byDomainInLang(domain, lang);
       qs = shuffle(pool).slice(0, Math.min(count, pool.length));
     }
     setQuestions(qs);
@@ -270,6 +273,11 @@ export default function Quiz({ onAnswer, progress, setProgress, initialFilter, o
           <span className="q-domain">{domainName(q.domain)}</span>
           <span className={"klvl k" + q.kLevel}>K{q.kLevel}</span>
         </div>
+        {lang === "en" && !hasEN(questions[idx]?.id) && (
+          <span style={{fontSize:'11px', color:'var(--text-3)'}}>
+            EN coming soon · showing PT
+          </span>
+        )}
         <p className="q-text">{q.q}</p>
 
         <div className="options">

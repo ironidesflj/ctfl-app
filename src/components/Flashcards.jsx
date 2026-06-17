@@ -2,7 +2,7 @@ import { useState, useMemo } from "react";
 import { DOMAINS } from "../lib/bank.js";
 import { FLASHCARDS } from "../data/study.js";
 
-export default function Flashcards() {
+export default function Flashcards({ lang = "pt" }) {
   const [domain, setDomain] = useState("all");
   const [idx, setIdx] = useState(0);
   const [flipped, setFlipped] = useState(false);
@@ -26,6 +26,14 @@ export default function Flashcards() {
 
   return (
     <div className="study">
+      {lang === "en" && (
+        <div style={{
+          fontSize:'12px', color:'var(--text-3)',
+          textAlign:'center', marginBottom:'0.5rem'
+        }}>
+          English flashcards coming soon
+        </div>
+      )}
       <div className="filter-bar">
         <button className={"chip" + (domain === "all" ? " on" : "")} onClick={() => pickDomain("all")}>Todos</button>
         {DOMAINS.map((d) => (

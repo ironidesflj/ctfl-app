@@ -22,6 +22,10 @@ export default function App() {
     try { return !localStorage.getItem("ctfl_onboarding_done"); }
     catch { return false; }
   });
+  const [lang, setLang] = useState(() => {
+    try { return localStorage.getItem("ctfl_lang") || "pt"; }
+    catch { return "pt"; }
+  });
 
   useEffect(() => {
     saveProgress(progress);
@@ -35,6 +39,12 @@ export default function App() {
     setShowOnboarding(false);
   }
 
+  function toggleLang() {
+    const next = lang === "pt" ? "en" : "pt";
+    try { localStorage.setItem("ctfl_lang", next); } catch {}
+    setLang(next);
+  }
+
   return (
     <div className="app">
       <header className="masthead">
@@ -43,6 +53,9 @@ export default function App() {
           <h1>CTFL Prep</h1>
           <p className="mast-sub">ISTQB Foundation Level v4.0 · {META.total} questões</p>
         </div>
+        <button className="btn ghost lang-toggle" onClick={toggleLang}>
+          {lang === "pt" ? "EN" : "PT"}
+        </button>
       </header>
 
       {showOnboarding ? (
@@ -71,12 +84,13 @@ export default function App() {
                 setProgress={setProgress}
                 initialFilter={quizFilter}
                 onFilterConsumed={() => setQuizFilter(null)}
+                lang={lang}
               />
             )}
             {tab === "syllabus" && (
-              <Syllabus onStudy={(domain) => { setQuizFilter({ domain }); setTab("quiz"); }} />
+              <Syllabus onStudy={(domain) => { setQuizFilter({ domain }); setTab("quiz"); }} lang={lang} />
             )}
-            {tab === "flash" && <Flashcards />}
+            {tab === "flash" && <Flashcards lang={lang} />}
             {tab === "stats" && <Stats progress={progress} setProgress={setProgress} />}
           </main>
         </>

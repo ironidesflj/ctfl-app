@@ -310,3 +310,5 @@ body {
 .ob-cta { padding: 14px 40px; font-size: 16px; }
 
 .ob-disclaimer { font-size: 12px; color: var(--text-3); }
+
+.lang-toggle { font-family: var(--font-mono); font-size: 12px; padding: 5px 12px; }
