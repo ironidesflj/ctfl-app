@@ -1,15 +1,18 @@
 # CTFL Prep — ISTQB Foundation Level v4.0
 
 App de preparação para o exame **ISTQB Certified Tester Foundation Level (CTFL) v4.0**.
-React + Vite, instalável como PWA, funciona offline. Banco de **120 questões** em PT-BR.
+React + Vite, instalável como PWA, funciona offline. Banco de **200 questões** em PT-BR.
 
 ## Funcionalidades
 
-- **Quiz — modo Estudo:** feedback e explicação a cada questão; filtra por domínio e quantidade.
-- **Quiz — modo Simulado:** 40 questões na proporção do exame, cronômetro de 75 min, revisão de erros no fim.
-- **Flashcards** e **Syllabus** por capítulo.
-- **Progresso** por domínio, com **exportar/importar** (sincronização manual entre aparelhos, sem login).
-- Alternativas embaralhadas a cada exibição; tags de nível K1/K2/K3.
+- **Quiz — modo Estudo:** feedback por questão, filtra domínio/quantidade, modo **"Errei antes"**
+  (aparece quando há histórico de erros).
+- **Quiz — modo Simulado:** 40 questões proporcionais ao exame, cronômetro 75 min, revisão no fim.
+- **Flashcards:** marcação Sei/Não sei, filtro "Revisar (N)" para cards pendentes.
+- **Syllabus** por capítulo.
+- **Progresso** por domínio com exportar/importar JSON (sincronização manual entre aparelhos).
+- **PWA:** instalável no celular, funciona offline.
+- **Banco:** 200 questões PT-BR, distribuição proporcional ao exame CTFL v4.0.
 
 ## Rodar localmente
 
@@ -40,7 +43,7 @@ src/
   data/ctfl-questions-ptbr.json   banco de questões (schema i18n)
   data/study.js                   flashcards + tópicos do syllabus
   lib/bank.js                     carregamento, filtros, amostra do simulado
-  lib/storage.js                  persistência local + export/import
+  lib/storage.js                  persistência local, memória por questão (seen) + export/import
   components/                     Quiz, Flashcards, Syllabus, Stats
   App.jsx, main.jsx, styles.css
 ```
@@ -54,3 +57,20 @@ em cada questão, sem alterar o código.
 ## Aviso
 
 Material de estudo independente, **não afiliado ao ISTQB**. Baseado na estrutura pública do syllabus CTFL v4.0.x
+
+## Changelog
+
+### v1.3.0
+- Versão exibida no rodapé do app
+- README atualizado
+
+### v1.2.0
+- Flashcards com marcação Sei/Não sei
+- Filtro "Revisar (N)" no deck de flashcards
+
+### v1.1.0
+- Memória por questão (campo `seen` no progresso)
+- Modo "Errei antes" no Quiz
+
+### v1.0.0
+- Lançamento inicial: 120 questões, Quiz, Flashcards, Syllabus, Progresso, PWA

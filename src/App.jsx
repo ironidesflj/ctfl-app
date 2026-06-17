@@ -57,6 +57,7 @@ export default function App() {
 
       <footer className="foot">
         Material de estudo independente, não afiliado ao ISTQB.
+        <span style={{marginLeft: '1rem', opacity: 0.5}}>v{__APP_VERSION__}</span>
       </footer>
     </div>
   );

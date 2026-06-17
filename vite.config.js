@@ -6,6 +6,9 @@ import { VitePWA } from "vite-plugin-pwa";
 // GitHub Pages (subdiretório) quanto em Vercel/Netlify (raiz).
 export default defineConfig({
   base: "./",
+  define: {
+    __APP_VERSION__: JSON.stringify(process.env.npm_package_version)
+  },
   plugins: [
     react(),
     VitePWA({
