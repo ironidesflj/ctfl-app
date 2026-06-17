@@ -1,13 +1,13 @@
 const KEY = "ctfl_progress_v1";
 
-const EMPTY = { total: 0, correct: 0, byDomain: {}, seen: {}, flashcards: {} };
+const EMPTY = { total: 0, correct: 0, byDomain: {}, seen: {}, flashcards: {}, saved: [] };
 
 export function loadProgress() {
   try {
     const raw = localStorage.getItem(KEY);
     if (!raw) return { ...EMPTY };
     const parsed = JSON.parse(raw);
-    return { ...EMPTY, ...parsed, byDomain: parsed.byDomain || {}, seen: parsed.seen || {} };
+    return { ...EMPTY, ...parsed, byDomain: parsed.byDomain || {}, seen: parsed.seen || {}, saved: parsed.saved || [] };
   } catch {
     return { ...EMPTY };
   }
@@ -41,6 +41,25 @@ export function getWrongIds(state) {
     .map(([k]) => k);
 }
 
+export function toggleSaved(state, questionId) {
+  const saved = state.saved || [];
+  const exists = saved.includes(questionId);
+  return {
+    ...state,
+    saved: exists
+      ? saved.filter((id) => id !== questionId)
+      : [...saved, questionId]
+  };
+}
+
+export function isSaved(state, questionId) {
+  return (state.saved || []).includes(questionId);
+}
+
+export function getSavedIds(state) {
+  return state.saved || [];
+}
+
 export function clearProgress() {
   try {
     localStorage.removeItem(KEY);
@@ -71,7 +90,7 @@ export function importProgress(file) {
         const data = JSON.parse(reader.result);
         const p = data.progress || data;
         if (typeof p.total !== "number") throw new Error("Formato inválido");
-        resolve({ ...EMPTY, ...p, byDomain: p.byDomain || {}, seen: p.seen || {} });
+        resolve({ ...EMPTY, ...p, byDomain: p.byDomain || {}, seen: p.seen || {}, saved: p.saved || [] });
       } catch (e) {
         reject(e);
       }

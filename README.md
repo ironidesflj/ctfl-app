@@ -61,6 +61,9 @@ Material de estudo independente, **não afiliado ao ISTQB**. Baseado na estrutur
 
 ## Changelog
 
+### v1.7.0
+- Salvar questões: marque qualquer questão durante o estudo e revise depois (modo Salvos)
+
 ### v1.6.0
 - Cobertura por capítulo na aba Progresso (questões vistas / total)
 

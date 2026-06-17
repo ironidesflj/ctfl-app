@@ -54,6 +54,7 @@ export default function App() {
           <Quiz
             onAnswer={onAnswer}
             progress={progress}
+            setProgress={setProgress}
             initialFilter={quizFilter}
             onFilterConsumed={() => setQuizFilter(null)}
           />

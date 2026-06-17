@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useMemo } from "react";
 import { DOMAINS, domainName, chapterWeight, byDomain, byIds, buildExam, shuffle, shuffleOptions, META } from "../lib/bank.js";
-import { getWrongIds } from "../lib/storage.js";
+import { getWrongIds, isSaved, toggleSaved, getSavedIds } from "../lib/storage.js";
 
 const LETTERS = ["A", "B", "C", "D", "E"];
 
@@ -10,7 +10,7 @@ function fmtTime(s) {
   return `${m}:${String(r).padStart(2, "0")}`;
 }
 
-export default function Quiz({ onAnswer, progress, initialFilter, onFilterConsumed }) {
+export default function Quiz({ onAnswer, progress, setProgress, initialFilter, onFilterConsumed }) {
   const [phase, setPhase] = useState("setup"); // setup | running | result
   const [mode, setMode] = useState("practice"); // practice | exam
   const [domain, setDomain] = useState("all"); // ou "wrong" no modo "errei antes"
@@ -38,8 +38,17 @@ export default function Quiz({ onAnswer, progress, initialFilter, onFilterConsum
   useEffect(() => () => clearInterval(timerRef.current), []);
 
   function start() {
-    const pool = mode === "exam" ? null : domain === "wrong" ? byIds(wrongIds) : byDomain(domain);
-    const qs = mode === "exam" ? buildExam() : shuffle(pool).slice(0, Math.min(count, pool.length));
+    let qs;
+    if (mode === "exam") {
+      qs = buildExam();
+    } else if (mode === "saved") {
+      const ids = getSavedIds(progress);
+      const pool = byIds(ids);
+      qs = shuffle(pool).slice(0, Math.min(count, pool.length));
+    } else {
+      const pool = domain === "wrong" ? byIds(wrongIds) : byDomain(domain);
+      qs = shuffle(pool).slice(0, Math.min(count, pool.length));
+    }
     setQuestions(qs);
     setOpts(qs.map((q) => shuffleOptions(q)));
     setAnswers(new Array(qs.length).fill(null));
@@ -112,6 +121,17 @@ export default function Quiz({ onAnswer, progress, initialFilter, onFilterConsum
             <span className="mode-title">Simulado</span>
             <span className="mode-desc">{META.examFormat.questions} questões · {META.examFormat.timeMinutesNonNative} min · revisão no fim</span>
           </button>
+          {getSavedIds(progress).length > 0 && (
+            <button
+              className={"mode-btn" + (mode === "saved" ? " active" : "")}
+              onClick={() => setMode("saved")}
+            >
+              <span className="mode-title">★ Salvos</span>
+              <span className="mode-desc">
+                {getSavedIds(progress).length} questão(ões) marcada(s) para revisar
+              </span>
+            </button>
+          )}
         </div>
 
         {mode === "practice" ? (
@@ -135,6 +155,20 @@ export default function Quiz({ onAnswer, progress, initialFilter, onFilterConsum
                 </button>
               ))}
             </div>
+            <div className="count-row">
+              <span className="muted">Quantidade:</span>
+              {[10, 20, 99].map((n) => (
+                <button key={n} className={"chip" + (count === n ? " on" : "")} onClick={() => setCount(n)}>
+                  {n === 99 ? "Todas" : n}
+                </button>
+              ))}
+            </div>
+          </div>
+        ) : mode === "saved" ? (
+          <div className="card">
+            <p className="muted">
+              Revise as {getSavedIds(progress).length} questão(ões) que você marcou com ★ durante o estudo.
+            </p>
             <div className="count-row">
               <span className="muted">Quantidade:</span>
               {[10, 20, 99].map((n) => (
@@ -211,7 +245,8 @@ export default function Quiz({ onAnswer, progress, initialFilter, onFilterConsum
   // ---------- RUNNING ----------
   const q = questions[idx];
   const o = opts[idx];
-  const answered = mode === "practice" && answers[idx] !== null;
+  const answered = (mode === "practice" || mode === "saved") && answers[idx] !== null;
+  const saved = isSaved(progress, q?.id);
   const isLast = idx === questions.length - 1;
   const pct = Math.round(((idx + 1) / questions.length) * 100);
   const timerClass = timeLeft <= 300 ? "danger" : timeLeft <= 600 ? "warn" : "";
@@ -262,6 +297,16 @@ export default function Quiz({ onAnswer, progress, initialFilter, onFilterConsum
         </div>
 
         {answered && <div className="explanation">{q.exp}</div>}
+
+        {answered && (
+          <button
+            className={"btn " + (saved ? "primary" : "ghost")}
+            onClick={() => setProgress((p) => toggleSaved(p, q.id))}
+            style={{ marginTop: '0.5rem' }}
+          >
+            {saved ? "★ Salvo" : "☆ Salvar questão"}
+          </button>
+        )}
 
         <div className="actions">
           {mode === "exam" && idx > 0 && <button className="btn" onClick={() => setIdx(idx - 1)}>← Anterior</button>}
