@@ -5,7 +5,8 @@
     "version": "1.0.0",
     "defaultLanguage": "pt",
     "availableLanguages": [
-      "pt"
+      "pt",
+      "en"
     ],
     "examFormat": {
       "questions": 40,
@@ -48,6 +49,16 @@
             "Um erro (ação humana) introduz um defeito no artefato, que ao ser executado pode causar uma falha"
           ],
           "exp": "A cadeia causal é erro humano → defeito no código/artefato → falha (comportamento incorreto em execução)."
+        },
+        "en": {
+          "q": "Which correctly describes the relationship between error, defect, and failure?",
+          "options": [
+            "Error is caused by the tester; defect by the developer; failure by the user",
+            "An error (human action) introduces a defect into an artifact, which when executed may cause a failure",
+            "Error and defect are synonyms; failure only occurs in production",
+            "A failure causes a defect, which causes an error"
+          ],
+          "exp": "The causal chain is: human error → defect in the artifact/code → failure (incorrect behavior at runtime)."
         }
       }
     },
@@ -67,6 +78,16 @@
             "Garantir matematicamente a ausência de defeitos"
           ],
           "exp": "O teste não pode provar a ausência de defeitos; ele fornece informação e reduz risco, mas não garante perfeição."
+        },
+        "en": {
+          "q": "Which is NOT a typical objective of testing?",
+          "options": [
+            "Finding defects",
+            "Reducing the level of risk",
+            "Verifying requirements",
+            "Mathematically proving the absence of all defects"
+          ],
+          "exp": "Testing cannot prove the absence of defects; it provides information and reduces risk, but cannot guarantee perfection."
         }
       }
     },
@@ -86,6 +107,16 @@
             "Teste encontra falhas; depuração localiza, analisa e corrige o defeito que as causou"
           ],
           "exp": "Teste evidencia falhas causadas por defeitos; a depuração é a atividade de desenvolvimento que localiza, diagnostica e corrige o defeito."
+        },
+        "en": {
+          "q": "What is the difference between testing and debugging?",
+          "options": [
+            "They are the same activity",
+            "Testing finds failures; debugging locates, analyzes, and fixes the defect that caused them",
+            "Debugging finds failures; testing fixes the code",
+            "Debugging only occurs in production"
+          ],
+          "exp": "Testing reveals failures caused by defects; debugging is the development activity that locates, diagnoses, and corrects the defect."
         }
       }
     },
@@ -105,6 +136,16 @@
             "Para contribuir com o sucesso do projeto, reduzindo o risco de falhas em operação"
           ],
           "exp": "O teste reduz o risco de falhas em operação e ajuda a entregar um produto com qualidade adequada às necessidades das partes interessadas."
+        },
+        "en": {
+          "q": "Why is testing necessary?",
+          "options": [
+            "To replace code review",
+            "To contribute to project success by reducing the risk of failures in operation",
+            "To guarantee defect-free software",
+            "Because it is required by law"
+          ],
+          "exp": "Testing reduces the risk of operational failures and helps deliver a product with quality adequate to stakeholder needs."
         }
       }
     },
@@ -124,6 +165,16 @@
             "QC é orientado ao produto (inclui o teste); QA é orientado ao processo"
           ],
           "exp": "QC foca o produto e inclui atividades como o teste; QA foca a melhoria do processo para gerar confiança de que a qualidade será atingida."
+        },
+        "en": {
+          "q": "How do quality control (QC) and quality assurance (QA) relate?",
+          "options": [
+            "They are synonyms",
+            "QC is product-oriented (includes testing); QA is process-oriented",
+            "QA is product-oriented; QC is process-oriented",
+            "Testing is part of QA, not QC"
+          ],
+          "exp": "QC focuses on the product and includes activities such as testing; QA focuses on process improvement to build confidence that quality will be achieved."
         }
       }
     },
@@ -143,6 +194,16 @@
             "O evento mais antigo que, se corrigido, evita a recorrência do defeito"
           ],
           "exp": "A análise de causa-raiz busca a origem fundamental, permitindo ações que previnem a reincidência de defeitos semelhantes."
+        },
+        "en": {
+          "q": "The root cause of a defect is:",
+          "options": [
+            "The failure observed by the user",
+            "The earliest event that, if corrected, prevents the recurrence of the defect",
+            "The test environment",
+            "The test case that failed"
+          ],
+          "exp": "Root cause analysis seeks the fundamental origin, enabling actions that prevent similar defects from recurring."
         }
       }
     },
@@ -162,6 +223,16 @@
             "Testar pode revelar defeitos, mas não provar que não existem"
           ],
           "exp": "Encontrar defeitos não é prova de ausência deles; mesmo sem defeitos encontrados, não há garantia de correção total."
+        },
+        "en": {
+          "q": "The principle 'testing shows the presence of defects, not their absence' means that:",
+          "options": [
+            "Testing proves there are no defects",
+            "Testing can reveal defects but cannot prove none exist",
+            "Defects always exist",
+            "Testing is useless"
+          ],
+          "exp": "Finding defects does not prove their absence; even when no defects are found, there is no guarantee of total correctness."
         }
       }
     },
@@ -181,6 +252,16 @@
             "Usar análise de risco e prioridades para focar o esforço"
           ],
           "exp": "Como não é viável testar todas as combinações, prioriza-se com base em risco e prioridades."
+        },
+        "en": {
+          "q": "The principle 'exhaustive testing is impossible' has the practical consequence of:",
+          "options": [
+            "Not worth testing",
+            "Using risk analysis and priorities to focus effort",
+            "Testing only the happy path",
+            "Automating everything"
+          ],
+          "exp": "Since testing all combinations is not feasible, effort is prioritized based on risk and business priorities."
         }
       }
     },
@@ -200,6 +281,16 @@
             "Atividades de teste devem começar o mais cedo possível no ciclo"
           ],
           "exp": "Iniciar cedo (inclusive com testes estáticos em requisitos) reduz custos, pois defeitos achados tarde são mais caros de corrigir."
+        },
+        "en": {
+          "q": "The 'early testing saves time and money' principle states that:",
+          "options": [
+            "Tests should only start after the code is complete",
+            "Testing activities should start as early as possible in the lifecycle",
+            "Testing early increases costs",
+            "Only requirements can be tested early"
+          ],
+          "exp": "Starting early (including static testing on requirements) reduces costs because defects found late are more expensive to fix."
         }
       }
     },
@@ -219,6 +310,16 @@
             "Poucos módulos concentram a maioria dos defeitos"
           ],
           "exp": "Geralmente uma minoria de módulos concentra a maioria dos defeitos, o que orienta a priorização do teste."
+        },
+        "en": {
+          "q": "The 'defect clustering' principle suggests that:",
+          "options": [
+            "Defects are evenly distributed",
+            "A small number of modules contain the majority of defects",
+            "Each module has exactly one defect",
+            "Defects only appear in new code"
+          ],
+          "exp": "Typically a minority of modules concentrates most defects (Pareto principle), which guides test prioritization."
         }
       }
     },
@@ -238,6 +339,16 @@
             "Repetir os mesmos testes deixa de encontrar novos defeitos"
           ],
           "exp": "Se os mesmos casos são repetidos, eles param de revelar defeitos novos; é preciso revisar e renovar os testes."
+        },
+        "en": {
+          "q": "The 'pesticide paradox' indicates that:",
+          "options": [
+            "More testing generates more defects",
+            "Repeating the same tests will eventually stop finding new defects",
+            "Manual tests are better than automated",
+            "Pesticides affect the software"
+          ],
+          "exp": "If the same test cases are repeated, they stop revealing new defects; tests must be reviewed and new ones created regularly."
         }
       }
     },
@@ -257,6 +368,16 @@
             "A forma de testar varia conforme o domínio, risco e contexto"
           ],
           "exp": "Sistemas diferentes (e.g., e-commerce vs. software médico) exigem abordagens, técnicas e rigor distintos."
+        },
+        "en": {
+          "q": "The principle 'testing is context-dependent' means that:",
+          "options": [
+            "All software is tested the same way",
+            "The way of testing varies according to domain, risk, and context",
+            "Context does not matter",
+            "Only critical systems need testing"
+          ],
+          "exp": "Different systems (e.g., e-commerce vs. medical software) require different approaches, techniques, and rigor."
         }
       }
     },
@@ -276,6 +397,16 @@
             "Corrigir todos os defeitos é inútil se o sistema não atende às necessidades do usuário"
           ],
           "exp": "Um produto pode estar livre de defeitos conhecidos e ainda assim ser inadequado se não atende às necessidades reais."
+        },
+        "en": {
+          "q": "The 'absence-of-errors fallacy' states that:",
+          "options": [
+            "Defect-free software is always good",
+            "Fixing all known defects is useless if the system does not meet user needs",
+            "Errors do not exist",
+            "Errors do not matter"
+          ],
+          "exp": "A product may be free of known defects and still be inadequate if it does not meet real user needs."
         }
       }
     },
@@ -295,6 +426,16 @@
             "Agrupamento de defeitos"
           ],
           "exp": "Concentrar esforço onde os defeitos historicamente se agrupam aplica o princípio do defect clustering."
+        },
+        "en": {
+          "q": "A team decides to prioritize testing the payment module, where defects have historically clustered. Which principle justifies this?",
+          "options": [
+            "Exhaustive testing",
+            "Defect clustering",
+            "Absence-of-errors fallacy",
+            "Pesticide paradox"
+          ],
+          "exp": "Concentrating effort where defects historically cluster applies the defect clustering principle."
         }
       }
     },
@@ -314,6 +455,16 @@
             "Planejamento"
           ],
           "exp": "O planejamento de teste define objetivos, escopo, abordagem, recursos e critérios."
+        },
+        "en": {
+          "q": "Which test process activity defines objectives, approach, and resources?",
+          "options": [
+            "Test execution",
+            "Test planning",
+            "Test analysis",
+            "Test completion"
+          ],
+          "exp": "Test planning defines objectives, scope, approach, resources, and criteria."
         }
       }
     },
@@ -333,6 +484,16 @@
             "Comparar o progresso real com o planejado e tomar ações corretivas"
           ],
           "exp": "O monitoramento coleta métricas; o controle age (replanejar, realocar) quando há desvios em relação ao plano."
+        },
+        "en": {
+          "q": "Monitoring and control of testing serves to:",
+          "options": [
+            "Write test cases",
+            "Compare actual progress against the plan and take corrective actions",
+            "Execute the tests",
+            "Close the project"
+          ],
+          "exp": "Monitoring collects metrics; control acts (replan, reallocate) when there are deviations from the plan."
         }
       }
     },
@@ -352,6 +513,16 @@
             "Condições de teste a partir da base de teste e seus critérios"
           ],
           "exp": "A análise identifica o que testar — as condições de teste — a partir da base de teste (requisitos, riscos, etc.)."
+        },
+        "en": {
+          "q": "In the test analysis activity, what is primarily produced?",
+          "options": [
+            "Automated scripts",
+            "Test conditions derived from the test basis and its criteria",
+            "The final report",
+            "Test data"
+          ],
+          "exp": "Analysis identifies what to test — the test conditions — from the test basis (requirements, risks, etc.)."
         }
       }
     },
@@ -371,6 +542,16 @@
             "Definir como testar: casos de teste e conjuntos a partir das condições"
           ],
           "exp": "A modelagem (design) elabora como cobrir as condições de teste, produzindo casos e conjuntos de teste."
+        },
+        "en": {
+          "q": "In test design, the focus is on:",
+          "options": [
+            "Identifying what to test",
+            "Defining how to test: test cases and sets derived from the conditions",
+            "Executing the cases",
+            "Reporting defects"
+          ],
+          "exp": "Test design elaborates how to cover the test conditions, producing test cases and test sets."
         }
       }
     },
@@ -390,6 +571,16 @@
             "Procedimentos, scripts e dados prontos para execução, com o ambiente preparado"
           ],
           "exp": "A implementação organiza e prepara tudo o que é necessário para executar: procedimentos, dados, ambiente e agenda."
+        },
+        "en": {
+          "q": "What is the primary output of the test implementation activity?",
+          "options": [
+            "Test conditions",
+            "Procedures, scripts, and data ready for execution, with the environment prepared",
+            "The test plan",
+            "The progress report"
+          ],
+          "exp": "Implementation organizes and prepares everything needed to execute: procedures, data, environment, and schedule."
         }
       }
     },
@@ -409,6 +600,16 @@
             "Registrar o resultado e, se for uma anomalia, criar um relatório de defeito"
           ],
           "exp": "Resultados são comparados ao esperado; divergências (anomalias) são analisadas e, quando defeitos, registradas em relatório."
+        },
+        "en": {
+          "q": "During test execution, when a divergent result is found, the tester should first:",
+          "options": [
+            "Fix the code",
+            "Record the result and, if it is an anomaly, create a defect report",
+            "Stop testing",
+            "Ignore it if it is minor"
+          ],
+          "exp": "Results are compared to expected; divergences (anomalies) are analyzed and, when defects are confirmed, logged in a defect report."
         }
       }
     },
@@ -428,6 +629,16 @@
             "Arquivar testware, registrar lições aprendidas e produzir o relatório de conclusão"
           ],
           "exp": "A conclusão consolida resultados, arquiva o testware reutilizável, registra lições aprendidas e emite o relatório de conclusão."
+        },
+        "en": {
+          "q": "The test completion activity typically includes:",
+          "options": [
+            "Writing the first test cases",
+            "Archiving testware, recording lessons learned, and producing the completion report",
+            "Defining objectives",
+            "Preparing the environment"
+          ],
+          "exp": "Completion consolidates results, archives reusable testware, records lessons learned, and issues the completion report."
         }
       }
     },
@@ -447,6 +658,16 @@
             "Os artefatos produzidos durante o processo de teste (planos, casos, dados, relatórios)"
           ],
           "exp": "Testware engloba todos os artefatos do trabalho de teste: planos, condições, casos, dados, scripts, relatórios."
+        },
+        "en": {
+          "q": "What is 'testware'?",
+          "options": [
+            "Test hardware",
+            "Artifacts produced during the test process (plans, cases, data, reports)",
+            "The automation tool",
+            "The system under test"
+          ],
+          "exp": "Testware encompasses all work products of the testing process: plans, conditions, cases, data, scripts, reports."
         }
       }
     },
@@ -466,6 +687,16 @@
             "Permitir avaliar cobertura e o impacto de mudanças sobre os testes"
           ],
           "exp": "A rastreabilidade liga requisitos/riscos a condições e casos, apoiando cobertura, análise de impacto e auditoria."
+        },
+        "en": {
+          "q": "What is the main benefit of traceability between the test basis and testware?",
+          "options": [
+            "Reducing the number of tests",
+            "Enabling coverage assessment and impact analysis of changes on the tests",
+            "Eliminating documentation",
+            "Speeding up the code"
+          ],
+          "exp": "Traceability links requirements/risks to conditions and cases, supporting coverage assessment, impact analysis, and auditing."
         }
       }
     },
@@ -485,6 +716,16 @@
             "Independência pode reduzir o viés do autor, mas graus extremos têm desvantagens como menor conhecimento do contexto"
           ],
           "exp": "Algum grau de independência reduz o viés cognitivo do autor, mas independência total pode afastar o testador do contexto e da comunicação."
+        },
+        "en": {
+          "q": "Regarding test independence, which statement is correct?",
+          "options": [
+            "Greater independence always finds more defects",
+            "Independence can reduce author bias, but extreme degrees have disadvantages such as less context knowledge",
+            "The author is always the best tester of their own code",
+            "Independence does not influence testing"
+          ],
+          "exp": "Some degree of independence reduces the author's cognitive bias, but full independence can distance the tester from context and communication."
         }
       }
     },
@@ -504,6 +745,16 @@
             "Pensamento analítico e crítico para questionar suposições e identificar problemas"
           ],
           "exp": "O pensamento analítico/crítico permite ao testador questionar suposições, identificar inconsistências e encontrar defeitos não óbvios."
+        },
+        "en": {
+          "q": "Which of the following best describes a 'test basis'?",
+          "options": [
+            "The test environment configuration",
+            "Any artifact from which test conditions can be derived",
+            "The set of all executed test cases",
+            "The defect tracking system"
+          ],
+          "exp": "The test basis is any artifact (requirements, design, code, risk list) used to identify what needs to be tested."
         }
       }
     },
@@ -523,6 +774,16 @@
             "Toda a equipe compartilha a responsabilidade pela qualidade, com testadores colaborando com devs e stakeholders"
           ],
           "exp": "Na whole-team approach, qualidade é responsabilidade coletiva; testadores, devs e negócio colaboram desde o início."
+        },
+        "en": {
+          "q": "What does 'testability' refer to?",
+          "options": [
+            "The number of test cases written",
+            "The degree to which a work product facilitates testing",
+            "The speed of test execution",
+            "The coverage achieved"
+          ],
+          "exp": "Testability is a quality characteristic of a work product that indicates how easily it can be tested."
         }
       }
     },
@@ -542,6 +803,16 @@
             "Combinar o conhecimento do autor com a perspectiva imparcial de quem não escreveu o artefato"
           ],
           "exp": "Diferentes graus de independência equilibram conhecimento contextual e imparcialidade, melhorando a eficácia da detecção."
+        },
+        "en": {
+          "q": "A tester finds that a critical module has never been tested. Which principle is most relevant?",
+          "options": [
+            "Pesticide paradox",
+            "Early testing saves time and money",
+            "Defect clustering",
+            "Exhaustive testing is impossible"
+          ],
+          "exp": "Starting testing early — including identifying untested areas — reduces cost and risk of late defect discovery."
         }
       }
     },
@@ -561,6 +832,16 @@
             "O viés do autor dificulta ver os próprios erros — o testador tende a confirmar o que escreveu"
           ],
           "exp": "O viés cognitivo do autor faz com que ele leia o que pretendia escrever, não o que realmente está escrito."
+        },
+        "en": {
+          "q": "Which is an example of a failure?",
+          "options": [
+            "A developer misreads a requirement",
+            "An incorrect line of code",
+            "An application crash observed by the user during execution",
+            "A missing test case"
+          ],
+          "exp": "A failure is the observable incorrect behavior of a system during execution, caused by a defect in the code."
         }
       }
     },
@@ -580,6 +861,16 @@
             "Testador da equipe de desenvolvimento"
           ],
           "exp": "O grau mais alto de independência é representado por testadores de organizações externas — consultores ou laboratórios independentes."
+        },
+        "en": {
+          "q": "Which is an example of a defect?",
+          "options": [
+            "A developer misunderstands a specification",
+            "An incorrect statement in the source code",
+            "An application returning a wrong result at runtime",
+            "A missing test environment"
+          ],
+          "exp": "A defect is the manifestation of an error in an artifact (e.g., incorrect code statement) that may cause a failure."
         }
       }
     },
@@ -599,6 +890,16 @@
             "Verificar cobertura dos requisitos e analisar o impacto de mudanças nos testes"
           ],
           "exp": "Com rastreabilidade bidirecional, é possível saber quais testes cobrem cada requisito e quais testes serão afetados por mudanças."
+        },
+        "en": {
+          "q": "Testing contributes to quality by:",
+          "options": [
+            "Replacing good development practices",
+            "Providing information about quality and helping stakeholders make informed decisions",
+            "Guaranteeing that all defects are found",
+            "Eliminating the need for requirements"
+          ],
+          "exp": "Testing is an information-gathering activity; it provides data about quality to support decisions, not guarantee perfection."
         }
       }
     },
@@ -618,6 +919,16 @@
             "Planejar, monitorar, controlar e liderar as atividades de teste e a equipe"
           ],
           "exp": "O gerente de testes é responsável pelo planejamento, monitoramento e controle do processo de teste e pela liderança da equipe."
+        },
+        "en": {
+          "q": "Which statement best describes the relationship between testing and quality assurance?",
+          "options": [
+            "Testing and QA are the same thing",
+            "Testing is a form of quality control and provides feedback that supports QA",
+            "QA subsumes testing entirely",
+            "Testing replaces QA in agile projects"
+          ],
+          "exp": "Testing (QC) provides product-level feedback on defects; QA uses that feedback alongside process improvements to build quality confidence."
         }
       }
     },
@@ -637,6 +948,16 @@
             "O conjunto de artefatos dos quais os testes são derivados (requisitos, código, modelos, etc.)"
           ],
           "exp": "A base de teste são os artefatos — requisitos, especificações, código, modelos — a partir dos quais condições e casos de teste são derivados."
+        },
+        "en": {
+          "q": "A developer introduces an off-by-one error in a loop. This is an example of:",
+          "options": [
+            "A failure",
+            "An error",
+            "A defect",
+            "A test condition"
+          ],
+          "exp": "The developer's mistake is an error; the resulting incorrect code is the defect. The failure occurs only when the defective code is executed."
         }
       }
     },
@@ -656,6 +977,16 @@
             "Verificação: 'estamos construindo certo?' (conforme especificação); validação: 'estamos construindo a coisa certa?' (atende ao usuário)"
           ],
           "exp": "Verificação checa conformidade com a especificação; validação checa se o produto atende às necessidades reais do usuário."
+        },
+        "en": {
+          "q": "Which activity does NOT belong to the test process?",
+          "options": [
+            "Test analysis",
+            "Test design",
+            "Code compilation",
+            "Test completion"
+          ],
+          "exp": "Code compilation is a development activity. The test process activities are: planning, monitoring/control, analysis, design, implementation, execution, completion."
         }
       }
     },
@@ -675,6 +1006,16 @@
             "Adota uma perspectiva crítica, buscando ativamente falhas e questionando suposições"
           ],
           "exp": "Testadores adotam mentalidade de questionamento e ceticismo construtivo para encontrar o que pode falhar, não para confirmar que funciona."
+        },
+        "en": {
+          "q": "What is the purpose of a test completion report?",
+          "options": [
+            "To authorize the start of testing",
+            "To summarize testing results, coverage, and lessons learned at the end of a test level or milestone",
+            "To list all open defects only",
+            "To replace the test plan"
+          ],
+          "exp": "The test completion report consolidates what was achieved, coverage attained, quality assessment, and lessons learned."
         }
       }
     },
@@ -694,6 +1035,16 @@
             "O item de trabalho (componente, sistema, requisito) que está sendo testado"
           ],
           "exp": "O objeto de teste é o artefato que está sendo avaliado: um componente, sistema, requisito, modelo ou documento."
+        },
+        "en": {
+          "q": "Which factor most directly influences the degree of test independence chosen for a project?",
+          "options": [
+            "The color scheme of the test management tool",
+            "The level of risk and the need to reduce author cognitive bias",
+            "The number of developers on the team",
+            "The programming language used"
+          ],
+          "exp": "Independence level is chosen based on risk and the need to counteract author bias; higher risk typically warrants more independence."
         }
       }
     },
@@ -713,6 +1064,16 @@
             "Permite que defeitos sejam compreendidos, priorizados e corrigidos de forma eficiente"
           ],
           "exp": "Relatórios claros, objetivos e factuais facilitam a compreensão, reprodução e correção dos defeitos, além de preservar a colaboração."
+        },
+        "en": {
+          "q": "In the context of testing, what is a 'test oracle'?",
+          "options": [
+            "An automated test generation tool",
+            "A mechanism for determining whether a test has passed or failed",
+            "A test case repository",
+            "A type of specification-based technique"
+          ],
+          "exp": "A test oracle provides the expected result against which actual results are compared to determine pass or fail."
         }
       }
     },
@@ -732,6 +1093,16 @@
             "As atividades de teste (inclusive revisões estáticas) iniciam desde os requisitos, não só após o código"
           ],
           "exp": "Shift-left significa começar a testar — inclusive com revisões de requisitos — nas fases iniciais, antes mesmo de qualquer código."
+        },
+        "en": {
+          "q": "Which of the following is a generic skill expected of a tester?",
+          "options": [
+            "Expertise in network hardware",
+            "Analytical thinking and attention to detail",
+            "Ability to write production code only",
+            "Sales and marketing experience"
+          ],
+          "exp": "Testers need analytical thinking, attention to detail, communication, and a systematic mindset among other generic skills."
         }
       }
     },
@@ -751,6 +1122,16 @@
             "Identifica a origem dos problemas, permitindo melhorias de processo que previnam defeitos similares no futuro"
           ],
           "exp": "Identificar a causa-raiz permite implementar melhorias de processo que evitam a reincidência de classes de defeitos semelhantes."
+        },
+        "en": {
+          "q": "The 'whole-team approach' to quality means:",
+          "options": [
+            "Only testers are responsible for quality",
+            "Every team member shares responsibility for quality",
+            "Developers never test",
+            "Quality is only the concern of the QA manager"
+          ],
+          "exp": "In the whole-team approach, quality is a shared responsibility; everyone contributes, not just dedicated testers."
         }
       }
     },
@@ -770,6 +1151,16 @@
             "Pré-condições, passos de execução, resultado esperado e pós-condições"
           ],
           "exp": "Um caso de teste completo define pré-condições, entradas, passos, resultado esperado e pós-condições, garantindo repetibilidade."
+        },
+        "en": {
+          "q": "Continuous testing in DevOps pipelines is most closely associated with which testing principle?",
+          "options": [
+            "Exhaustive testing is impossible",
+            "Early testing saves time and money",
+            "Absence-of-errors fallacy",
+            "Pesticide paradox"
+          ],
+          "exp": "Continuous testing embodies early and frequent testing throughout the pipeline, directly aligning with the early testing principle."
         }
       }
     },
@@ -789,6 +1180,16 @@
             "Defeitos em produção são muito mais caros de corrigir — o custo cresce a cada fase que passa"
           ],
           "exp": "O custo de correção aumenta exponencialmente com a fase: defeitos em requisitos custam muito menos que em produção."
+        },
+        "en": {
+          "q": "When a test case is executed and the actual result matches the expected result, the test:",
+          "options": [
+            "Has proven the software is correct",
+            "Has passed, but this does not prove the absence of other defects",
+            "Has found a defect",
+            "Should be removed from the test suite"
+          ],
+          "exp": "A passing test increases confidence but does not prove correctness; other defects may exist in untested paths."
         }
       }
     },
