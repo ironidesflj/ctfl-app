@@ -63,6 +63,10 @@ Material de estudo independente, **não afiliado ao ISTQB**. Baseado na estrutur
 
 ## Changelog
 
+### v2.6.1
+- fix: Onboarding e Glossary agora usam o dicionário central de i18n
+  (últimas 2 strings hardcoded do levantamento)
+
 ### v2.6.0
 - fix: tradução completa de interface (i18n) — ~68 strings hardcoded em PT
   substituídas por dicionário central (ui-strings.js), incluindo nomes de

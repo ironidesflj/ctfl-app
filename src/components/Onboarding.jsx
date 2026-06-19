@@ -1,4 +1,6 @@
-export default function Onboarding({ onDismiss }) {
+import { t } from "../lib/ui-strings.js";
+
+export default function Onboarding({ onDismiss, lang = "pt" }) {
   return (
     <div className="onboarding">
       <div className="ob-hero">
@@ -15,7 +17,7 @@ export default function Onboarding({ onDismiss }) {
         <div className="ob-card">
           <span className="ob-icon">⏱</span>
           <div className="ob-card-title">Simulado</div>
-          <div className="ob-card-desc">40 questões em 75 minutos, igual à prova real. Revisão de erros no fim.</div>
+          <div className="ob-card-desc">{t(lang, "onboarding.examCardDesc")}</div>
         </div>
         <div className="ob-card">
           <span className="ob-icon">🃏</span>
@@ -25,7 +27,7 @@ export default function Onboarding({ onDismiss }) {
       </div>
 
       <div className="ob-stats">
-        <span>200 questões</span>
+        <span>{t(lang, "onboarding.statsQuestions")}</span>
         <span>·</span>
         <span>6 domínios</span>
         <span>·</span>

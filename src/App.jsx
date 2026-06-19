@@ -79,7 +79,7 @@ export default function App() {
       </header>
 
       {showOnboarding ? (
-        <Onboarding onDismiss={dismissOnboarding} />
+        <Onboarding onDismiss={dismissOnboarding} lang={lang} />
       ) : (
         <>
           <nav className="tabs" role="tablist">

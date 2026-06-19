@@ -1,6 +1,7 @@
 import { useState, useMemo } from "react";
 import { DOMAINS, domainNameInLang } from "../lib/bank.js";
 import { localizedGlossary } from "../data/glossary.js";
+import { t } from "../lib/ui-strings.js";
 
 export default function Glossary({ lang = "pt" }) {
   const [domain, setDomain] = useState("all");
@@ -31,7 +32,7 @@ export default function Glossary({ lang = "pt" }) {
 
       <div className="filter-bar">
         <button className={"chip" + (domain === "all" ? " on" : "")} onClick={() => setDomain("all")}>
-          {lang === "pt" ? "Todos" : "All"}
+          {t(lang, "domainAll")}
         </button>
         {DOMAINS.map((d) => (
           <button key={d.id} className={"chip" + (domain === d.id ? " on" : "")} onClick={() => setDomain(d.id)}>
