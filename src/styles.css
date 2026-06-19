@@ -312,3 +312,17 @@ body {
 .ob-disclaimer { font-size: 12px; color: var(--text-3); }
 
 .lang-toggle { font-family: var(--font-mono); font-size: 12px; padding: 5px 12px; }
+
+.search-input {
+  width: 100%; padding: 10px 16px; margin-bottom: 1rem;
+  border: 1px solid var(--line); border-radius: var(--radius-sm);
+  background: var(--surface); color: var(--text); font-size: 14px;
+}
+.search-input:focus { outline: none; border-color: var(--accent); }
+
+.glossary-hint { margin-top: 8px; font-size: 12px; color: var(--text-3); }
+.glossary-tag {
+  display: inline-block; margin: 2px 4px 2px 0; padding: 2px 8px;
+  background: var(--accent-soft); color: var(--accent-text);
+  border-radius: 999px; font-size: 11px;
+}

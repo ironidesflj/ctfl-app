@@ -2,17 +2,11 @@ import { useState, useEffect } from "react";
 import Quiz from "./components/Quiz.jsx";
 import Flashcards from "./components/Flashcards.jsx";
 import Syllabus from "./components/Syllabus.jsx";
+import Glossary from "./components/Glossary.jsx";
 import Stats from "./components/Stats.jsx";
 import Onboarding from "./components/Onboarding.jsx";
 import { loadProgress, saveProgress, recordAnswer } from "./lib/storage.js";
 import { META } from "./lib/bank.js";
-
-const TABS = [
-  { id: "quiz", label: "Quiz" },
-  { id: "syllabus", label: "Syllabus" },
-  { id: "flash", label: "Flashcards" },
-  { id: "stats", label: "Progresso" }
-];
 
 export default function App() {
   const [tab, setTab] = useState("quiz");
@@ -44,6 +38,14 @@ export default function App() {
     try { localStorage.setItem("ctfl_lang", next); } catch {}
     setLang(next);
   }
+
+  const TABS = [
+    { id: "quiz", label: "Quiz" },
+    { id: "syllabus", label: "Syllabus" },
+    { id: "flash", label: "Flashcards" },
+    { id: "glossary", label: lang === "pt" ? "Glossário" : "Glossary" },
+    { id: "stats", label: "Progresso" }
+  ];
 
   return (
     <div className="app">
@@ -91,6 +93,7 @@ export default function App() {
               <Syllabus onStudy={(domain) => { setQuizFilter({ domain }); setTab("quiz"); }} lang={lang} />
             )}
             {tab === "flash" && <Flashcards lang={lang} />}
+            {tab === "glossary" && <Glossary lang={lang} />}
             {tab === "stats" && <Stats progress={progress} setProgress={setProgress} />}
           </main>
         </>

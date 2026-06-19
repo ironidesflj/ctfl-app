@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useMemo } from "react";
 import { DOMAINS, domainName, chapterWeight, byDomainInLang, byIds, buildExamInLang, shuffle, shuffleOptions, META } from "../lib/bank.js";
 import { getWrongIds, isSaved, toggleSaved, getSavedIds } from "../lib/storage.js";
+import { findGlossaryTermsInText } from "../data/glossary.js";
 import bank from "../data/ctfl-questions-ptbr.json";
 
 const hasEN = (id) => !!bank.questions.find((q) => q.id === id)?.locales?.en;
@@ -305,6 +306,18 @@ export default function Quiz({ onAnswer, progress, setProgress, initialFilter, o
         </div>
 
         {answered && <div className="explanation">{q.exp}</div>}
+
+        {answered && (() => {
+          const matchedTerms = findGlossaryTermsInText(q.exp, lang);
+          return matchedTerms.length > 0 && (
+            <div className="glossary-hint">
+              {lang === "pt" ? "Termos: " : "Terms: "}
+              {matchedTerms.map((t) => (
+                <span key={t.id} className="glossary-tag">{t.term}</span>
+              ))}
+            </div>
+          );
+        })()}
 
         {answered && (
           <button

@@ -63,6 +63,12 @@ Material de estudo independente, **não afiliado ao ISTQB**. Baseado na estrutur
 
 ## Changelog
 
+### v2.4.0
+- feat: Glossário ISTQB integrado (12 termos essenciais por ora, PT/EN, busca e
+  filtro por capítulo — meta de 70 termos, restante pendente)
+- feat: termos do glossário destacados automaticamente nas explicações
+  do Quiz
+
 ### v2.3.0
 - Flashcards e Syllabus 100% bilíngues: 15 flashcards + 15 itens de syllabus
   com tradução EN completa. Encerra a internacionalização em todas as quatro
