@@ -63,6 +63,10 @@ Material de estudo independente, **não afiliado ao ISTQB**. Baseado na estrutur
 
 ## Changelog
 
+### v2.2.0
+- Refactor: Flashcards e Syllabus migrados para schema i18n (locales.pt/en),
+  preparando para tradução EN. Conteúdo PT inalterado.
+
 ### v2.1.0
 - Banco de questões 100% bilíngue: 200/200 questões com tradução EN completa
   (Capítulos 1-6), criadas diretamente em inglês a partir do syllabus oficial

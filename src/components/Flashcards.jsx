@@ -1,15 +1,18 @@
 import { useState, useMemo } from "react";
 import { DOMAINS } from "../lib/bank.js";
-import { FLASHCARDS } from "../data/study.js";
+import { FLASHCARDS, flashcardsInLang } from "../data/study.js";
+
+const hasEN = (id) => !!FLASHCARDS.find((c) => c.id === id)?.locales?.en;
 
 export default function Flashcards({ lang = "pt" }) {
   const [domain, setDomain] = useState("all");
   const [idx, setIdx] = useState(0);
   const [flipped, setFlipped] = useState(false);
 
+  const allCards = useMemo(() => flashcardsInLang(lang), [lang]);
   const cards = useMemo(
-    () => (domain === "all" ? FLASHCARDS : FLASHCARDS.filter((c) => c.d === domain)),
-    [domain]
+    () => (domain === "all" ? allCards : allCards.filter((c) => c.d === domain)),
+    [domain, allCards]
   );
 
   const card = cards[idx] || cards[0];
@@ -26,14 +29,6 @@ export default function Flashcards({ lang = "pt" }) {
 
   return (
     <div className="study">
-      {lang === "en" && (
-        <div style={{
-          fontSize:'12px', color:'var(--text-3)',
-          textAlign:'center', marginBottom:'0.5rem'
-        }}>
-          English flashcards coming soon
-        </div>
-      )}
       <div className="filter-bar">
         <button className={"chip" + (domain === "all" ? " on" : "")} onClick={() => pickDomain("all")}>Todos</button>
         {DOMAINS.map((d) => (
@@ -42,6 +37,9 @@ export default function Flashcards({ lang = "pt" }) {
       </div>
 
       <button className="card flash" onClick={() => setFlipped((f) => !f)}>
+        {lang === "en" && !hasEN(card.id) && (
+          <span style={{fontSize:'11px', color:'var(--text-3)'}}>EN coming soon · showing PT</span>
+        )}
         {!flipped ? (
           <>
             <span className="flash-front">{card.front}</span>
