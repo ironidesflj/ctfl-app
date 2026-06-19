@@ -63,6 +63,12 @@ Material de estudo independente, **não afiliado ao ISTQB**. Baseado na estrutur
 
 ## Changelog
 
+### v2.6.0
+- fix: tradução completa de interface (i18n) — ~68 strings hardcoded em PT
+  substituídas por dicionário central (ui-strings.js), incluindo nomes de
+  domínio, labels de tabs, botões, mensagens de progresso e rodapé
+- refactor: DOMAINS em bank.js agora bilíngue (pt/en)
+
 ### v2.5.0
 - feat: histórico de evolução nas estatísticas (últimos 14 dias de atividade)
 - feat: toggle manual de tema (claro/escuro/automático) no header

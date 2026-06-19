@@ -4,15 +4,21 @@ export const META = bank.meta;
 export const LANG = META.defaultLanguage; // "pt"
 
 export const DOMAINS = [
-  { id: "fund", name: "Fundamentos", chapter: 1 },
-  { id: "proc", name: "Teste no Ciclo", chapter: 2 },
-  { id: "est", name: "Teste Estático", chapter: 3 },
-  { id: "tec", name: "Técnicas de Teste", chapter: 4 },
-  { id: "mgmt", name: "Gerenc. de Teste", chapter: 5 },
-  { id: "fer", name: "Ferramentas", chapter: 6 }
+  { id: "fund", chapter: 1, pt: { name: "Fundamentos", sub: "Fundamentos do Teste" }, en: { name: "Fundamentals", sub: "Fundamentals of Testing" } },
+  { id: "proc", chapter: 2, pt: { name: "Teste no Ciclo", sub: "Teste ao Longo do Ciclo de Desenvolvimento" }, en: { name: "Testing in the Lifecycle", sub: "Testing Throughout the Software Development Lifecycle" } },
+  { id: "est", chapter: 3, pt: { name: "Teste Estático", sub: "Teste Estático" }, en: { name: "Static Testing", sub: "Static Testing" } },
+  { id: "tec", chapter: 4, pt: { name: "Técnicas de Teste", sub: "Técnicas de Teste" }, en: { name: "Test Techniques", sub: "Test Techniques" } },
+  { id: "mgmt", chapter: 5, pt: { name: "Gerenc. de Teste", sub: "Gerenciamento das Atividades de Teste" }, en: { name: "Test Management", sub: "Test Management" } },
+  { id: "fer", chapter: 6, pt: { name: "Ferramentas", sub: "Ferramentas de Apoio ao Teste" }, en: { name: "Tools", sub: "Tool Support for Testing" } }
 ];
 
-export const domainName = (id) => DOMAINS.find((d) => d.id === id)?.name || id;
+export const domainName = (id, lang = "pt") => {
+  const d = DOMAINS.find((x) => x.id === id);
+  return d ? (d[lang]?.name || d.pt.name) : id;
+};
+
+export const domainNameInLang = (id, lang = "pt") => domainName(id, lang);
+
 export const chapterWeight = (chapter) => META.chapterWeights[String(chapter)] || 0;
 
 // Texto da questão no idioma corrente, com índice de resposta neutro.

@@ -1,5 +1,5 @@
 import { useState, useMemo } from "react";
-import { DOMAINS } from "../lib/bank.js";
+import { DOMAINS, domainNameInLang } from "../lib/bank.js";
 import { localizedGlossary } from "../data/glossary.js";
 
 export default function Glossary({ lang = "pt" }) {
@@ -35,7 +35,7 @@ export default function Glossary({ lang = "pt" }) {
         </button>
         {DOMAINS.map((d) => (
           <button key={d.id} className={"chip" + (domain === d.id ? " on" : "")} onClick={() => setDomain(d.id)}>
-            {d.name}
+            {domainNameInLang(d.id, lang)}
           </button>
         ))}
       </div>

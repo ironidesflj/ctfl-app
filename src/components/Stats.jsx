@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
-import { DOMAINS, coverageByDomain } from "../lib/bank.js";
+import { DOMAINS, domainNameInLang, coverageByDomain } from "../lib/bank.js";
 import { exportProgress, importProgress, clearProgress } from "../lib/storage.js";
+import { t } from "../lib/ui-strings.js";
 
 function groupByDay(history) {
   const byDay = {};
@@ -14,7 +15,7 @@ function groupByDay(history) {
     .slice(-14); // últimos 14 dias com atividade
 }
 
-export default function Stats({ progress, setProgress }) {
+export default function Stats({ progress, setProgress, lang = "pt" }) {
   const fileRef = useRef(null);
   const [msg, setMsg] = useState("");
 
@@ -28,9 +29,9 @@ export default function Stats({ progress, setProgress }) {
     try {
       const imported = await importProgress(file);
       setProgress(imported);
-      setMsg("Progresso importado com sucesso.");
+      setMsg(t(lang, "stats.importSuccess"));
     } catch {
-      setMsg("Arquivo inválido. Use um arquivo exportado por este app.");
+      setMsg(t(lang, "stats.importError"));
     }
     e.target.value = "";
   }
@@ -38,15 +39,15 @@ export default function Stats({ progress, setProgress }) {
   return (
     <div className="study">
       <div className="stat-grid">
-        <div className="stat"><div className="stat-val">{progress.total}</div><div className="stat-lbl">Respondidas</div></div>
-        <div className="stat"><div className="stat-val">{progress.correct}</div><div className="stat-lbl">Acertos</div></div>
-        <div className="stat"><div className="stat-val">{pct}%</div><div className="stat-lbl">Aproveitamento</div></div>
+        <div className="stat"><div className="stat-val">{progress.total}</div><div className="stat-lbl">{t(lang, "stats.answered")}</div></div>
+        <div className="stat"><div className="stat-val">{progress.correct}</div><div className="stat-lbl">{t(lang, "stats.correct")}</div></div>
+        <div className="stat"><div className="stat-val">{pct}%</div><div className="stat-lbl">{t(lang, "stats.performance")}</div></div>
       </div>
 
       <div className="card">
-        <h3>Evolução</h3>
+        <h3>{t(lang, "stats.evolution")}</h3>
         {days.length === 0 ? (
-          <p className="muted">Sem histórico ainda. Responda algumas questões para ver sua evolução aqui.</p>
+          <p className="muted">{t(lang, "stats.noHistory")}</p>
         ) : (
           days.map(([date, d]) => {
             const dpct = Math.round((d.correct / d.total) * 100);
@@ -65,7 +66,7 @@ export default function Stats({ progress, setProgress }) {
       </div>
 
       <div className="card">
-        <h3>Por domínio</h3>
+        <h3>{t(lang, "stats.byDomain")}</h3>
         {DOMAINS.map((d) => {
           const bd = progress.byDomain[d.id] || { t: 0, c: 0 };
           const p = bd.t > 0 ? Math.round((bd.c / bd.t) * 100) : 0;
@@ -73,8 +74,8 @@ export default function Stats({ progress, setProgress }) {
           return (
             <div className="bar-row" key={d.id}>
               <div className="bar-head">
-                <span>{d.name}</span>
-                <span className={"bar-val " + tone}>{bd.t > 0 ? `${p}% (${bd.c}/${bd.t})` : "sem dados"}</span>
+                <span>{domainNameInLang(d.id, lang)}</span>
+                <span className={"bar-val " + tone}>{bd.t > 0 ? `${p}% (${bd.c}/${bd.t})` : t(lang, "stats.noData")}</span>
               </div>
               <div className="bar"><div className={"bar-fill " + tone} style={{ width: p + "%" }} /></div>
             </div>
@@ -83,9 +84,9 @@ export default function Stats({ progress, setProgress }) {
       </div>
 
       <div className="card">
-        <h3>Cobertura por capítulo</h3>
+        <h3>{t(lang, "stats.coverage")}</h3>
         <p className="muted" style={{marginBottom: '1rem', fontSize: '13px'}}>
-          Questões vistas ao menos uma vez (modos Estudo e Errei antes)
+          {t(lang, "stats.coverageDesc")}
         </p>
         {DOMAINS.map(d => {
           const cov = coverage[d.id];
@@ -93,7 +94,7 @@ export default function Stats({ progress, setProgress }) {
           return (
             <div className="bar-row" key={d.id}>
               <div className="bar-head">
-                <span>{d.name}</span>
+                <span>{domainNameInLang(d.id, lang)}</span>
                 <span className="bar-val" style={{color: 'var(--text-2)'}}>
                   {cov.seen}/{cov.total} ({pct}%)
                 </span>
@@ -116,15 +117,14 @@ export default function Stats({ progress, setProgress }) {
       </div>
 
       <div className="card note">
-        <strong>Meta CTFL v4.0:</strong> 40 questões, mínimo 26 acertos (65%). Os capítulos 4 (Técnicas) e 5 (Gerenciamento)
-        somam metade do exame — priorize-os. Há cerca de 8 questões K3 (aplicação), as mais difíceis.
+        <strong>{t(lang, "stats.metaTitle")}</strong> {t(lang, "stats.metaText")}
       </div>
 
       <div className="actions">
-        <button className="btn" onClick={() => exportProgress(progress)}>Exportar progresso</button>
-        <button className="btn" onClick={() => fileRef.current?.click()}>Importar progresso</button>
+        <button className="btn" onClick={() => exportProgress(progress)}>{t(lang, "stats.exportBtn")}</button>
+        <button className="btn" onClick={() => fileRef.current?.click()}>{t(lang, "stats.importBtn")}</button>
         <input ref={fileRef} type="file" accept="application/json" hidden onChange={handleImport} />
-        <button className="btn ghost" onClick={() => { if (confirm("Zerar todo o progresso?")) setProgress(clearProgress()); }}>Zerar</button>
+        <button className="btn ghost" onClick={() => { if (confirm(t(lang, "stats.resetConfirm"))) setProgress(clearProgress()); }}>{t(lang, "stats.resetBtn")}</button>
       </div>
       {msg && <p className="muted">{msg}</p>}
     </div>

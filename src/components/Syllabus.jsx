@@ -1,6 +1,7 @@
 import { useState, useMemo } from "react";
-import { DOMAINS, chapterWeight, META } from "../lib/bank.js";
+import { DOMAINS, domainNameInLang, chapterWeight, META } from "../lib/bank.js";
 import { SYLLABUS_ITEMS, syllabusInLang } from "../data/study.js";
+import { t } from "../lib/ui-strings.js";
 
 const hasEN = (id) => !!SYLLABUS_ITEMS.find((i) => i.id === id)?.locales?.en;
 
@@ -17,14 +18,14 @@ export default function Syllabus({ onStudy, lang = "pt" }) {
   return (
     <div className="study">
       <div className="filter-bar">
-        <button className={"chip" + (domain === "all" ? " on" : "")} onClick={() => setDomain("all")}>Todos</button>
+        <button className={"chip" + (domain === "all" ? " on" : "")} onClick={() => setDomain("all")}>{t(lang, "domainAll")}</button>
         {DOMAINS.map((d) => (
-          <button key={d.id} className={"chip" + (domain === d.id ? " on" : "")} onClick={() => setDomain(d.id)}>{d.name}</button>
+          <button key={d.id} className={"chip" + (domain === d.id ? " on" : "")} onClick={() => setDomain(d.id)}>{domainNameInLang(d.id, lang)}</button>
         ))}
       </div>
 
       <div className="card">
-        {dom && <p className="syl-head">{chapterWeight(dom.chapter)} de {META.total} questões neste banco</p>}
+        {dom && <p className="syl-head">{chapterWeight(dom.chapter)} {t(lang, "syllabus.ofQuestions", { total: META.total })}</p>}
         {items.map((i) => (
           <div className="syl-item" key={i.id}>
             <div className="syl-kw">{i.kw}</div>
@@ -36,7 +37,7 @@ export default function Syllabus({ onStudy, lang = "pt" }) {
         ))}
         {dom && (
           <button className="btn primary" onClick={() => onStudy(domain)}>
-            Estudar este capítulo →
+            {t(lang, "syllabus.studyChapter")}
           </button>
         )}
       </div>

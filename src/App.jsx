@@ -7,6 +7,7 @@ import Stats from "./components/Stats.jsx";
 import Onboarding from "./components/Onboarding.jsx";
 import { loadProgress, saveProgress, recordAnswer } from "./lib/storage.js";
 import { META } from "./lib/bank.js";
+import { t } from "./lib/ui-strings.js";
 
 export default function App() {
   const [tab, setTab] = useState("quiz");
@@ -54,11 +55,11 @@ export default function App() {
   }
 
   const TABS = [
-    { id: "quiz", label: "Quiz" },
-    { id: "syllabus", label: "Syllabus" },
-    { id: "flash", label: "Flashcards" },
-    { id: "glossary", label: lang === "pt" ? "Glossário" : "Glossary" },
-    { id: "stats", label: "Progresso" }
+    { id: "quiz", label: t(lang, "tabs.quiz") },
+    { id: "syllabus", label: t(lang, "tabs.syllabus") },
+    { id: "flash", label: t(lang, "tabs.flashcards") },
+    { id: "glossary", label: t(lang, "tabs.glossary") },
+    { id: "stats", label: t(lang, "tabs.progress") }
   ];
 
   return (
@@ -67,7 +68,7 @@ export default function App() {
         <div className="mast-mark" aria-hidden="true">CT</div>
         <div>
           <h1>CTFL Prep</h1>
-          <p className="mast-sub">ISTQB Foundation Level v4.0 · {META.total} questões</p>
+          <p className="mast-sub">ISTQB Foundation Level v4.0 · {META.total} {t(lang, "questionsCount")}</p>
         </div>
         <button className="btn ghost lang-toggle" onClick={toggleLang}>
           {lang === "pt" ? "PT" : "EN"}
@@ -111,13 +112,13 @@ export default function App() {
             )}
             {tab === "flash" && <Flashcards lang={lang} />}
             {tab === "glossary" && <Glossary lang={lang} />}
-            {tab === "stats" && <Stats progress={progress} setProgress={setProgress} />}
+            {tab === "stats" && <Stats progress={progress} setProgress={setProgress} lang={lang} />}
           </main>
         </>
       )}
 
       <footer className="foot">
-        Material de estudo independente, não afiliado ao ISTQB.
+        {t(lang, "footer")}
         <span style={{marginLeft: '1rem', opacity: 0.5}}>v{__APP_VERSION__}</span>
       </footer>
     </div>

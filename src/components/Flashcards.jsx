@@ -1,6 +1,7 @@
 import { useState, useMemo } from "react";
-import { DOMAINS } from "../lib/bank.js";
+import { DOMAINS, domainNameInLang } from "../lib/bank.js";
 import { FLASHCARDS, flashcardsInLang } from "../data/study.js";
+import { t } from "../lib/ui-strings.js";
 
 const hasEN = (id) => !!FLASHCARDS.find((c) => c.id === id)?.locales?.en;
 
@@ -30,9 +31,9 @@ export default function Flashcards({ lang = "pt" }) {
   return (
     <div className="study">
       <div className="filter-bar">
-        <button className={"chip" + (domain === "all" ? " on" : "")} onClick={() => pickDomain("all")}>Todos</button>
+        <button className={"chip" + (domain === "all" ? " on" : "")} onClick={() => pickDomain("all")}>{t(lang, "domainAll")}</button>
         {DOMAINS.map((d) => (
-          <button key={d.id} className={"chip" + (domain === d.id ? " on" : "")} onClick={() => pickDomain(d.id)}>{d.name}</button>
+          <button key={d.id} className={"chip" + (domain === d.id ? " on" : "")} onClick={() => pickDomain(d.id)}>{domainNameInLang(d.id, lang)}</button>
         ))}
       </div>
 
@@ -43,7 +44,7 @@ export default function Flashcards({ lang = "pt" }) {
         {!flipped ? (
           <>
             <span className="flash-front">{card.front}</span>
-            <span className="flash-hint">toque para revelar</span>
+            <span className="flash-hint">{t(lang, "flashcards.flip")}</span>
           </>
         ) : (
           <span className="flash-back">{card.back}</span>
@@ -51,9 +52,9 @@ export default function Flashcards({ lang = "pt" }) {
       </button>
 
       <div className="actions">
-        <button className="btn" onClick={() => go(-1)}>← Anterior</button>
+        <button className="btn" onClick={() => go(-1)}>{t(lang, "flashcards.prev")}</button>
         <span className="muted center-num">{idx + 1} / {cards.length}</span>
-        <button className="btn" onClick={() => go(1)}>Próximo →</button>
+        <button className="btn" onClick={() => go(1)}>{t(lang, "flashcards.next")}</button>
       </div>
     </div>
   );

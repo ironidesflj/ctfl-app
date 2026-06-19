@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef, useMemo } from "react";
-import { DOMAINS, domainName, chapterWeight, byDomainInLang, byIds, buildExamInLang, shuffle, shuffleOptions, META } from "../lib/bank.js";
+import { DOMAINS, domainName, domainNameInLang, chapterWeight, byDomainInLang, byIds, buildExamInLang, shuffle, shuffleOptions, META } from "../lib/bank.js";
 import { getWrongIds, isSaved, toggleSaved, getSavedIds } from "../lib/storage.js";
 import { findGlossaryTermsInText } from "../data/glossary.js";
+import { t } from "../lib/ui-strings.js";
 import bank from "../data/ctfl-questions-ptbr.json";
 
 const hasEN = (id) => !!bank.questions.find((q) => q.id === id)?.locales?.en;
@@ -118,21 +119,21 @@ export default function Quiz({ onAnswer, progress, setProgress, initialFilter, o
       <div className="quiz">
         <div className="mode-toggle">
           <button className={"mode-btn" + (mode === "practice" ? " active" : "")} onClick={() => setMode("practice")}>
-            <span className="mode-title">Estudo</span>
-            <span className="mode-desc">Feedback e explicação a cada questão</span>
+            <span className="mode-title">{t(lang, "quiz.modeStudy")}</span>
+            <span className="mode-desc">{t(lang, "quiz.modeStudyDesc")}</span>
           </button>
           <button className={"mode-btn" + (mode === "exam" ? " active" : "")} onClick={() => setMode("exam")}>
-            <span className="mode-title">Simulado</span>
-            <span className="mode-desc">{META.examFormat.questions} questões · {META.examFormat.timeMinutesNonNative} min · revisão no fim</span>
+            <span className="mode-title">{t(lang, "quiz.modeExam")}</span>
+            <span className="mode-desc">{t(lang, "quiz.modeExamDesc", { n: META.examFormat.questions, min: META.examFormat.timeMinutesNonNative })}</span>
           </button>
           {getSavedIds(progress).length > 0 && (
             <button
               className={"mode-btn" + (mode === "saved" ? " active" : "")}
               onClick={() => setMode("saved")}
             >
-              <span className="mode-title">★ Salvos</span>
+              <span className="mode-title">{t(lang, "quiz.modeSaved")}</span>
               <span className="mode-desc">
-                {getSavedIds(progress).length} questão(ões) marcada(s) para revisar
+                {t(lang, "quiz.modeSavedDesc", { n: getSavedIds(progress).length })}
               </span>
             </button>
           )}
@@ -140,30 +141,30 @@ export default function Quiz({ onAnswer, progress, setProgress, initialFilter, o
 
         {mode === "practice" ? (
           <div className="card">
-            <h3>Escolha o domínio</h3>
+            <h3>{t(lang, "quiz.chooseDomain")}</h3>
             <div className="domain-grid">
               <button className={"domain-card wide" + (domain === "all" ? " selected" : "")} onClick={() => setDomain("all")}>
-                <span className="domain-weight">Todos os domínios</span>
-                <span className="domain-sub">Mistura de todos os capítulos</span>
+                <span className="domain-weight">{t(lang, "quiz.allDomains")}</span>
+                <span className="domain-sub">{t(lang, "domainAllDesc")}</span>
               </button>
               {wrongIds.length > 0 && (
                 <button className={"domain-card wide" + (domain === "wrong" ? " selected" : "")} onClick={() => setDomain("wrong")}>
-                  <span className="domain-weight">Errei antes</span>
-                  <span className="domain-sub">{wrongIds.length} questão(ões) que você errou</span>
+                  <span className="domain-weight">{t(lang, "quiz.wrongBefore")}</span>
+                  <span className="domain-sub">{t(lang, "quiz.wrongBeforeDesc", { n: wrongIds.length })}</span>
                 </button>
               )}
               {DOMAINS.map((d) => (
                 <button key={d.id} className={"domain-card" + (domain === d.id ? " selected" : "")} onClick={() => setDomain(d.id)}>
                   <span className="domain-weight">{chapterWeight(d.chapter)} / {META.total}</span>
-                  <span className="domain-name">{d.name}</span>
+                  <span className="domain-name">{domainNameInLang(d.id, lang)}</span>
                 </button>
               ))}
             </div>
             <div className="count-row">
-              <span className="muted">Quantidade:</span>
+              <span className="muted">{t(lang, "quiz.quantity")}</span>
               {[10, 20, 99].map((n) => (
                 <button key={n} className={"chip" + (count === n ? " on" : "")} onClick={() => setCount(n)}>
-                  {n === 99 ? "Todas" : n}
+                  {n === 99 ? t(lang, "quiz.all") : n}
                 </button>
               ))}
             </div>
@@ -171,13 +172,13 @@ export default function Quiz({ onAnswer, progress, setProgress, initialFilter, o
         ) : mode === "saved" ? (
           <div className="card">
             <p className="muted">
-              Revise as {getSavedIds(progress).length} questão(ões) que você marcou com ★ durante o estudo.
+              {t(lang, "quiz.savedReviewHint", { n: getSavedIds(progress).length })}
             </p>
             <div className="count-row">
-              <span className="muted">Quantidade:</span>
+              <span className="muted">{t(lang, "quiz.quantity")}</span>
               {[10, 20, 99].map((n) => (
                 <button key={n} className={"chip" + (count === n ? " on" : "")} onClick={() => setCount(n)}>
-                  {n === 99 ? "Todas" : n}
+                  {n === 99 ? t(lang, "quiz.all") : n}
                 </button>
               ))}
             </div>
@@ -185,14 +186,12 @@ export default function Quiz({ onAnswer, progress, setProgress, initialFilter, o
         ) : (
           <div className="card">
             <p className="muted">
-              O modo Simulado reproduz a prova: {META.examFormat.questions} questões na proporção dos capítulos,
-              cronômetro de {META.examFormat.timeMinutesNonNative} minutos (tempo estendido para não-nativos),
-              sem feedback até o final.
+              {t(lang, "quiz.examExplain", { n: META.examFormat.questions, min: META.examFormat.timeMinutesNonNative })}
             </p>
           </div>
         )}
 
-        <button className="btn primary" onClick={start}>Iniciar</button>
+        <button className="btn primary" onClick={start}>{t(lang, "quiz.start")}</button>
       </div>
     );
   }
@@ -210,22 +209,22 @@ export default function Quiz({ onAnswer, progress, setProgress, initialFilter, o
       <div className="quiz">
         <div className="card result">
           <div className="result-score">{score}/{total} · {pct}%</div>
-          <div className={"verdict " + (passed ? "ok" : "no")}>{passed ? "Aprovado" : "Abaixo da nota de corte"}</div>
+          <div className={"verdict " + (passed ? "ok" : "no")}>{passed ? t(lang, "quiz.passed") : t(lang, "quiz.failed")}</div>
           <p className="muted">
-            {pct >= 85 ? "Excelente domínio. Pronto para a prova." : passed ? "Passou! Reforce os domínios mais fracos na aba Progresso." : "A nota de corte é 65% (26/40). Revise os erros abaixo."}
+            {pct >= 85 ? t(lang, "quiz.excellentMsg") : passed ? t(lang, "quiz.passedMsg") : t(lang, "quiz.failedMsg")}
           </p>
           <div className="actions center">
-            <button className="btn ghost" onClick={reset}>← Voltar ao início</button>
-            <button className="btn" onClick={() => setShowReview((v) => !v)}>{showReview ? "Ocultar revisão" : "Revisar erros"}</button>
-            <button className="btn primary" onClick={reset}>Refazer este quiz</button>
+            <button className="btn ghost" onClick={reset}>{t(lang, "quiz.backHome")}</button>
+            <button className="btn" onClick={() => setShowReview((v) => !v)}>{showReview ? t(lang, "quiz.hideReview") : t(lang, "quiz.showReview")}</button>
+            <button className="btn primary" onClick={reset}>{t(lang, "quiz.retakeQuiz")}</button>
           </div>
         </div>
 
         {showReview && (
           <div className="card">
-            <h3>Revisão dos erros</h3>
+            <h3>{t(lang, "quiz.reviewErrors")}</h3>
             {wrong.length === 0 ? (
-              <p className="ok">Nenhum erro — gabaritou!</p>
+              <p className="ok">{t(lang, "quiz.noErrors")}</p>
             ) : (
               wrong.map(({ q, i }) => {
                 const correct = opts[i].find((o) => o.correct);
@@ -233,8 +232,8 @@ export default function Quiz({ onAnswer, progress, setProgress, initialFilter, o
                 return (
                   <div className="review-item" key={q.id}>
                     <div className="review-q">{i + 1}. {q.q}</div>
-                    <div className="review-a no">✗ Sua resposta: {chosen ? chosen.text : "não respondida"}</div>
-                    <div className="review-a ok">✓ Correta: {correct.text}</div>
+                    <div className="review-a no">✗ {t(lang, "quiz.yourAnswer")} {chosen ? chosen.text : t(lang, "quiz.notAnswered")}</div>
+                    <div className="review-a ok">✓ {t(lang, "quiz.correctAnswer")} {correct.text}</div>
                     <div className="review-exp">{q.exp}</div>
                   </div>
                 );
@@ -261,17 +260,17 @@ export default function Quiz({ onAnswer, progress, setProgress, initialFilter, o
         className="btn ghost back-btn"
         onClick={() => { clearInterval(timerRef.current); setPhase("setup"); }}
       >
-        ← Voltar
+        {t(lang, "quiz.backShort")}
       </button>
       <div className="run-head">
-        <span className="muted">Questão {idx + 1} de {questions.length}</span>
+        <span className="muted">{t(lang, "quiz.questionOf", { n: idx + 1, total: questions.length })}</span>
         {mode === "exam" && <span className={"timer " + timerClass}>{fmtTime(timeLeft)}</span>}
       </div>
       <div className="progress"><div className="progress-fill" style={{ width: pct + "%" }} /></div>
 
       <div className="card">
         <div className="q-meta">
-          <span className="q-domain">{domainName(q.domain)}</span>
+          <span className="q-domain">{domainName(q.domain, lang)}</span>
           <span className={"klvl k" + q.kLevel}>K{q.kLevel}</span>
         </div>
         {lang === "en" && !hasEN(questions[idx]?.id) && (
@@ -311,9 +310,9 @@ export default function Quiz({ onAnswer, progress, setProgress, initialFilter, o
           const matchedTerms = findGlossaryTermsInText(q.exp, lang);
           return matchedTerms.length > 0 && (
             <div className="glossary-hint">
-              {lang === "pt" ? "Termos: " : "Terms: "}
-              {matchedTerms.map((t) => (
-                <span key={t.id} className="glossary-tag">{t.term}</span>
+              {t(lang, "quiz.terms")}
+              {matchedTerms.map((term) => (
+                <span key={term.id} className="glossary-tag">{term.term}</span>
               ))}
             </div>
           );
@@ -325,14 +324,14 @@ export default function Quiz({ onAnswer, progress, setProgress, initialFilter, o
             onClick={() => setProgress((p) => toggleSaved(p, q.id))}
             style={{ marginTop: '0.5rem' }}
           >
-            {saved ? "★ Salvo" : "☆ Salvar questão"}
+            {saved ? t(lang, "quiz.saved") : t(lang, "quiz.saveQuestion")}
           </button>
         )}
 
         <div className="actions">
-          {mode === "exam" && idx > 0 && <button className="btn" onClick={() => setIdx(idx - 1)}>← Anterior</button>}
-          {!isLast && (mode === "exam" || answered) && <button className="btn primary" onClick={() => setIdx(idx + 1)}>Próxima →</button>}
-          {isLast && (mode === "exam" || answered) && <button className="btn primary" onClick={finish}>{mode === "exam" ? "Finalizar simulado" : "Ver resultado"}</button>}
+          {mode === "exam" && idx > 0 && <button className="btn" onClick={() => setIdx(idx - 1)}>{t(lang, "quiz.prev")}</button>}
+          {!isLast && (mode === "exam" || answered) && <button className="btn primary" onClick={() => setIdx(idx + 1)}>{t(lang, "quiz.next")}</button>}
+          {isLast && (mode === "exam" || answered) && <button className="btn primary" onClick={finish}>{mode === "exam" ? t(lang, "quiz.finishExam") : t(lang, "quiz.seeResult")}</button>}
         </div>
       </div>
     </div>
