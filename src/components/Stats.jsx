@@ -2,12 +2,25 @@ import { useRef, useState } from "react";
 import { DOMAINS, coverageByDomain } from "../lib/bank.js";
 import { exportProgress, importProgress, clearProgress } from "../lib/storage.js";
 
+function groupByDay(history) {
+  const byDay = {};
+  history.forEach((h) => {
+    byDay[h.date] = byDay[h.date] || { total: 0, correct: 0 };
+    byDay[h.date].total++;
+    if (h.correct) byDay[h.date].correct++;
+  });
+  return Object.entries(byDay)
+    .sort((a, b) => a[0].localeCompare(b[0]))
+    .slice(-14); // últimos 14 dias com atividade
+}
+
 export default function Stats({ progress, setProgress }) {
   const fileRef = useRef(null);
   const [msg, setMsg] = useState("");
 
   const pct = progress.total > 0 ? Math.round((progress.correct / progress.total) * 100) : 0;
   const coverage = coverageByDomain(progress.seen || {});
+  const days = groupByDay(progress.history || []);
 
   async function handleImport(e) {
     const file = e.target.files?.[0];
@@ -28,6 +41,27 @@ export default function Stats({ progress, setProgress }) {
         <div className="stat"><div className="stat-val">{progress.total}</div><div className="stat-lbl">Respondidas</div></div>
         <div className="stat"><div className="stat-val">{progress.correct}</div><div className="stat-lbl">Acertos</div></div>
         <div className="stat"><div className="stat-val">{pct}%</div><div className="stat-lbl">Aproveitamento</div></div>
+      </div>
+
+      <div className="card">
+        <h3>Evolução</h3>
+        {days.length === 0 ? (
+          <p className="muted">Sem histórico ainda. Responda algumas questões para ver sua evolução aqui.</p>
+        ) : (
+          days.map(([date, d]) => {
+            const dpct = Math.round((d.correct / d.total) * 100);
+            const tone = dpct >= 65 ? "ok" : "no";
+            return (
+              <div className="bar-row" key={date}>
+                <div className="bar-head">
+                  <span>{date}</span>
+                  <span className={"bar-val " + tone}>{dpct}% ({d.correct}/{d.total})</span>
+                </div>
+                <div className="bar"><div className={"bar-fill " + tone} style={{ width: dpct + "%" }} /></div>
+              </div>
+            );
+          })
+        )}
       </div>
 
       <div className="card">

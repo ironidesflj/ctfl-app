@@ -1,13 +1,13 @@
 const KEY = "ctfl_progress_v1";
 
-const EMPTY = { total: 0, correct: 0, byDomain: {}, seen: {}, flashcards: {}, saved: [] };
+const EMPTY = { total: 0, correct: 0, byDomain: {}, seen: {}, flashcards: {}, saved: [], history: [] };
 
 export function loadProgress() {
   try {
     const raw = localStorage.getItem(KEY);
     if (!raw) return { ...EMPTY };
     const parsed = JSON.parse(raw);
-    return { ...EMPTY, ...parsed, byDomain: parsed.byDomain || {}, seen: parsed.seen || {}, saved: parsed.saved || [] };
+    return { ...EMPTY, ...parsed, byDomain: parsed.byDomain || {}, seen: parsed.seen || {}, saved: parsed.saved || [], history: parsed.history || [] };
   } catch {
     return { ...EMPTY };
   }
@@ -24,10 +24,12 @@ export function saveProgress(state) {
 
 export function recordAnswer(state, domain, correct, questionId) {
   const next = {
+    ...state,
     total: state.total + 1,
     correct: state.correct + (correct ? 1 : 0),
     byDomain: { ...state.byDomain },
-    seen: { ...(state.seen || {}) }
+    seen: { ...(state.seen || {}) },
+    history: [...(state.history || []), { date: new Date().toISOString().slice(0, 10), correct }].slice(-90)
   };
   const d = next.byDomain[domain] || { t: 0, c: 0 };
   next.byDomain[domain] = { t: d.t + 1, c: d.c + (correct ? 1 : 0) };
@@ -90,7 +92,7 @@ export function importProgress(file) {
         const data = JSON.parse(reader.result);
         const p = data.progress || data;
         if (typeof p.total !== "number") throw new Error("Formato inválido");
-        resolve({ ...EMPTY, ...p, byDomain: p.byDomain || {}, seen: p.seen || {}, saved: p.saved || [] });
+        resolve({ ...EMPTY, ...p, byDomain: p.byDomain || {}, seen: p.seen || {}, saved: p.saved || [], history: p.history || [] });
       } catch (e) {
         reject(e);
       }

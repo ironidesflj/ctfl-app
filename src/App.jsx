@@ -20,10 +20,18 @@ export default function App() {
     try { return localStorage.getItem("ctfl_lang") || "pt"; }
     catch { return "pt"; }
   });
+  const [theme, setTheme] = useState(() => {
+    try { return localStorage.getItem("ctfl_theme") || "auto"; }
+    catch { return "auto"; }
+  });
 
   useEffect(() => {
     saveProgress(progress);
   }, [progress]);
+
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", theme);
+  }, [theme]);
 
   const onAnswer = (domain, correct, questionId) =>
     setProgress((p) => recordAnswer(p, domain, correct, questionId));
@@ -37,6 +45,12 @@ export default function App() {
     const next = lang === "pt" ? "en" : "pt";
     try { localStorage.setItem("ctfl_lang", next); } catch {}
     setLang(next);
+  }
+
+  function cycleTheme() {
+    const next = theme === "auto" ? "light" : theme === "light" ? "dark" : "auto";
+    try { localStorage.setItem("ctfl_theme", next); } catch {}
+    setTheme(next);
   }
 
   const TABS = [
@@ -57,6 +71,9 @@ export default function App() {
         </div>
         <button className="btn ghost lang-toggle" onClick={toggleLang}>
           {lang === "pt" ? "PT" : "EN"}
+        </button>
+        <button className="btn ghost theme-toggle" onClick={cycleTheme}>
+          {theme === "auto" ? "🌗" : theme === "light" ? "☀️" : "🌙"}
         </button>
       </header>
 

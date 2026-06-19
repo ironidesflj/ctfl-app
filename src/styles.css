@@ -45,6 +45,48 @@
   }
 }
 
+/* Tema manual: força claro/escuro independentemente de prefers-color-scheme.
+   "auto" não tem bloco aqui — usa o comportamento padrão acima. */
+[data-theme="light"] {
+  --bg: #f6f5f9;
+  --surface: #ffffff;
+  --surface-2: #f0eef6;
+  --line: #e2dff0;
+  --line-strong: #cdc8e4;
+  --text: #1b1830;
+  --text-2: #5c5775;
+  --text-3: #8a85a3;
+  --accent: #5a4be7;
+  --accent-soft: #ece9fc;
+  --accent-text: #3b2fb0;
+  --ok: #0f8a5f;
+  --ok-soft: #e2f4ec;
+  --no: #c5362f;
+  --no-soft: #fae9e8;
+  --warn: #b5730a;
+  --warn-soft: #fbeeda;
+}
+
+[data-theme="dark"] {
+  --bg: #0f0e16;
+  --surface: #1a1825;
+  --surface-2: #221f30;
+  --line: #2c2940;
+  --line-strong: #3a3654;
+  --text: #ecebf5;
+  --text-2: #a8a3c2;
+  --text-3: #76728f;
+  --accent: #8b7dff;
+  --accent-soft: #241f3d;
+  --accent-text: #b9aeff;
+  --ok: #45c98e;
+  --ok-soft: #16271f;
+  --no: #f0726a;
+  --no-soft: #2a1816;
+  --warn: #e0a04a;
+  --warn-soft: #2a2113;
+}
+
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
@@ -312,6 +354,7 @@ body {
 .ob-disclaimer { font-size: 12px; color: var(--text-3); }
 
 .lang-toggle { font-family: var(--font-mono); font-size: 12px; padding: 5px 12px; }
+.theme-toggle { font-size: 14px; padding: 5px 10px; }
 
 .search-input {
   width: 100%; padding: 10px 16px; margin-bottom: 1rem;

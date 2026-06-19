@@ -63,6 +63,10 @@ Material de estudo independente, **não afiliado ao ISTQB**. Baseado na estrutur
 
 ## Changelog
 
+### v2.5.0
+- feat: histórico de evolução nas estatísticas (últimos 14 dias de atividade)
+- feat: toggle manual de tema (claro/escuro/automático) no header
+
 ### v2.4.0
 - feat: Glossário ISTQB integrado (70 termos essenciais, PT/EN, busca e
   filtro por capítulo)
