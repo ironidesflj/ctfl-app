@@ -63,6 +63,11 @@ Material de estudo independente, **não afiliado ao ISTQB**. Baseado na estrutur
 
 ## Changelog
 
+### v2.3.0
+- Flashcards e Syllabus 100% bilíngues: 15 flashcards + 15 itens de syllabus
+  com tradução EN completa. Encerra a internacionalização em todas as quatro
+  telas (Quiz, Simulado, Flashcards, Syllabus).
+
 ### v2.2.0
 - Refactor: Flashcards e Syllabus migrados para schema i18n (locales.pt/en),
   preparando para tradução EN. Conteúdo PT inalterado.
