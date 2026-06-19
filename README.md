@@ -63,6 +63,9 @@ Material de estudo independente, **não afiliado ao ISTQB**. Baseado na estrutur
 
 ## Changelog
 
+### v2.7.0
+- feat: motor de repetição espaçada SM-2 (lib isolada, ainda não integrado à UI)
+
 ### v2.6.1
 - fix: Onboarding e Glossary agora usam o dicionário central de i18n
   (últimas 2 strings hardcoded do levantamento)
