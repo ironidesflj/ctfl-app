@@ -63,6 +63,11 @@ Material de estudo independente, **não afiliado ao ISTQB**. Baseado na estrutur
 
 ## Changelog
 
+### v2.8.0
+- feat: modo Revisão (SRS) no Quiz, com algoritmo SM-2 compartilhado
+- feat: Flashcards migrados para avaliação SM-2 (Errei/Difícil/Bom/Fácil)
+- feat: toda resposta no Quiz alimenta automaticamente o sistema de repetição espaçada
+
 ### v2.7.0
 - feat: motor de repetição espaçada SM-2 (lib isolada, ainda não integrado à UI)
 

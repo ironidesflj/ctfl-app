@@ -36,6 +36,8 @@ export const UI = {
       prev: "← Anterior", next: "Próxima →",
       finishExam: "Finalizar simulado", seeResult: "Ver resultado",
       terms: "Termos: ",
+      modeSRS: "Revisão", srsDueDesc: "questão(ões) para revisar hoje",
+      srsAgain: "Errei", srsHard: "Difícil", srsGood: "Bom", srsEasy: "Fácil",
     },
     stats: {
       importSuccess: "Progresso importado com sucesso.",
@@ -51,7 +53,11 @@ export const UI = {
       exportBtn: "Exportar progresso", importBtn: "Importar progresso",
       resetBtn: "Zerar", resetConfirm: "Zerar todo o progresso?",
     },
-    flashcards: { flip: "toque para revelar", prev: "← Anterior", next: "Próximo →" },
+    flashcards: {
+      flip: "toque para revelar", prev: "← Anterior", next: "Próximo →",
+      again: "Errei", hard: "Difícil", good: "Bom", easy: "Fácil",
+      dueToday: "Para revisar hoje",
+    },
     syllabus: { ofQuestions: "de {total} questões neste banco", studyChapter: "Estudar este capítulo →" },
     onboarding: {
       examCardDesc: "40 questões em 75 minutos, igual à prova real. Revisão de erros no fim.",
@@ -92,6 +98,8 @@ export const UI = {
       prev: "← Previous", next: "Next →",
       finishExam: "Finish exam", seeResult: "See result",
       terms: "Terms: ",
+      modeSRS: "Review", srsDueDesc: "question(s) due today",
+      srsAgain: "Again", srsHard: "Hard", srsGood: "Good", srsEasy: "Easy",
     },
     stats: {
       importSuccess: "Progress imported successfully.",
@@ -107,7 +115,11 @@ export const UI = {
       exportBtn: "Export progress", importBtn: "Import progress",
       resetBtn: "Reset", resetConfirm: "Reset all progress?",
     },
-    flashcards: { flip: "tap to reveal", prev: "← Previous", next: "Next →" },
+    flashcards: {
+      flip: "tap to reveal", prev: "← Previous", next: "Next →",
+      again: "Again", hard: "Hard", good: "Good", easy: "Easy",
+      dueToday: "Due today",
+    },
     syllabus: { ofQuestions: "of {total} questions in this bank", studyChapter: "Study this chapter →" },
     onboarding: {
       examCardDesc: "40 questions in 75 minutes, just like the real exam. Mistake review at the end.",

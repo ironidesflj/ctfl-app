@@ -369,3 +369,6 @@ body {
   background: var(--accent-soft); color: var(--accent-text);
   border-radius: 999px; font-size: 11px;
 }
+
+.srs-quality { display: flex; gap: 8px; margin-top: 1rem; flex-wrap: wrap; }
+.srs-quality button { flex: 1; min-width: 70px; padding: 10px; font-size: 12px; }

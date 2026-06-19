@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useMemo } from "react";
-import { DOMAINS, domainName, domainNameInLang, chapterWeight, byDomainInLang, byIds, buildExamInLang, shuffle, shuffleOptions, META } from "../lib/bank.js";
-import { getWrongIds, isSaved, toggleSaved, getSavedIds } from "../lib/storage.js";
+import { DOMAINS, ALL, domainName, domainNameInLang, chapterWeight, byDomainInLang, byIds, buildExamInLang, shuffle, shuffleOptions, META } from "../lib/bank.js";
+import { getWrongIds, isSaved, toggleSaved, getSavedIds, getSRSCard, updateSRSCard, getDueItems } from "../lib/storage.js";
+import { initSM2, sm2, QUALITY } from "../lib/spacedRepetition.js";
 import { findGlossaryTermsInText } from "../data/glossary.js";
 import { t } from "../lib/ui-strings.js";
 import bank from "../data/ctfl-questions-ptbr.json";
@@ -22,6 +23,7 @@ export default function Quiz({ onAnswer, progress, setProgress, initialFilter, o
   const [count, setCount] = useState(10);
 
   const wrongIds = progress ? getWrongIds(progress) : [];
+  const dueIds = progress ? getDueItems(progress, ALL.map((q) => q.id)) : [];
 
   useEffect(() => {
     if (initialFilter) {
@@ -49,6 +51,9 @@ export default function Quiz({ onAnswer, progress, setProgress, initialFilter, o
     } else if (mode === "saved") {
       const ids = getSavedIds(progress);
       const pool = byIds(ids);
+      qs = shuffle(pool).slice(0, Math.min(count, pool.length));
+    } else if (mode === "srs") {
+      const pool = byIds(dueIds);
       qs = shuffle(pool).slice(0, Math.min(count, pool.length));
     } else {
       const pool = domain === "wrong" ? byIds(wrongIds) : byDomainInLang(domain, lang);
@@ -80,7 +85,25 @@ export default function Quiz({ onAnswer, progress, setProgress, initialFilter, o
     const next = [...answers];
     next[idx] = optIndex;
     setAnswers(next);
-    onAnswer(questions[idx].domain, opts[idx][optIndex].correct, questions[idx].id);
+    const question = questions[idx];
+    const correct = opts[idx][optIndex].correct;
+    onAnswer(question.domain, correct, question.id);
+
+    if (mode !== "srs") {
+      const existing = getSRSCard(progress, question.id);
+      if (!existing) {
+        const card = initSM2();
+        const updated = sm2(card, correct ? QUALITY.good : QUALITY.again);
+        setProgress((p) => updateSRSCard(p, question.id, updated));
+      }
+    }
+  }
+
+  function rateSRS(label) {
+    const question = questions[idx];
+    const card = getSRSCard(progress, question.id) || initSM2();
+    const updated = sm2(card, QUALITY[label]);
+    setProgress((p) => updateSRSCard(p, question.id, updated));
   }
 
   function selectExam(optIndex) {
@@ -137,6 +160,12 @@ export default function Quiz({ onAnswer, progress, setProgress, initialFilter, o
               </span>
             </button>
           )}
+          {dueIds.length > 0 && (
+            <button className={"mode-btn" + (mode === "srs" ? " active" : "")} onClick={() => setMode("srs")}>
+              <span className="mode-title">{t(lang, "quiz.modeSRS")}</span>
+              <span className="mode-desc">{dueIds.length} {t(lang, "quiz.srsDueDesc")}</span>
+            </button>
+          )}
         </div>
 
         {mode === "practice" ? (
@@ -173,6 +202,20 @@ export default function Quiz({ onAnswer, progress, setProgress, initialFilter, o
           <div className="card">
             <p className="muted">
               {t(lang, "quiz.savedReviewHint", { n: getSavedIds(progress).length })}
+            </p>
+            <div className="count-row">
+              <span className="muted">{t(lang, "quiz.quantity")}</span>
+              {[10, 20, 99].map((n) => (
+                <button key={n} className={"chip" + (count === n ? " on" : "")} onClick={() => setCount(n)}>
+                  {n === 99 ? t(lang, "quiz.all") : n}
+                </button>
+              ))}
+            </div>
+          </div>
+        ) : mode === "srs" ? (
+          <div className="card">
+            <p className="muted">
+              {dueIds.length} {t(lang, "quiz.srsDueDesc")}
             </p>
             <div className="count-row">
               <span className="muted">{t(lang, "quiz.quantity")}</span>
@@ -248,7 +291,7 @@ export default function Quiz({ onAnswer, progress, setProgress, initialFilter, o
   // ---------- RUNNING ----------
   const q = questions[idx];
   const o = opts[idx];
-  const answered = (mode === "practice" || mode === "saved") && answers[idx] !== null;
+  const answered = (mode === "practice" || mode === "saved" || mode === "srs") && answers[idx] !== null;
   const saved = isSaved(progress, q?.id);
   const isLast = idx === questions.length - 1;
   const pct = Math.round(((idx + 1) / questions.length) * 100);
@@ -326,6 +369,15 @@ export default function Quiz({ onAnswer, progress, setProgress, initialFilter, o
           >
             {saved ? t(lang, "quiz.saved") : t(lang, "quiz.saveQuestion")}
           </button>
+        )}
+
+        {mode === "srs" && answered && (
+          <div className="srs-quality">
+            <button className="btn" onClick={() => rateSRS("again")}>{t(lang, "quiz.srsAgain")}</button>
+            <button className="btn" onClick={() => rateSRS("hard")}>{t(lang, "quiz.srsHard")}</button>
+            <button className="btn" onClick={() => rateSRS("good")}>{t(lang, "quiz.srsGood")}</button>
+            <button className="btn" onClick={() => rateSRS("easy")}>{t(lang, "quiz.srsEasy")}</button>
+          </div>
         )}
 
         <div className="actions">
