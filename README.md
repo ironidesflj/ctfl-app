@@ -14,6 +14,8 @@ React + Vite, instalável como PWA, funciona offline. Banco de **200 questões**
 - **Progresso** por domínio com exportar/importar JSON (sincronização manual entre aparelhos).
 - **PWA:** instalável no celular, funciona offline.
 - **Banco:** 200 questões PT-BR, distribuição proporcional ao exame CTFL v4.0.
+- **Toggle PT/EN no header:** alterna o idioma das questões no Quiz e Simulado
+  (Flashcards e Syllabus permanecem em PT, com aviso "coming soon" em EN).
 
 ## Rodar localmente
 
@@ -61,8 +63,15 @@ Material de estudo independente, **não afiliado ao ISTQB**. Baseado na estrutur
 
 ## Changelog
 
+### v2.1.0
+- Banco de questões 100% bilíngue: 200/200 questões com tradução EN completa
+  (Capítulos 1-6), criadas diretamente em inglês a partir do syllabus oficial
+  ISTQB CTFL v4.0 (não traduzidas)
+- Encerra o épico de internacionalização G1+G2
+
 ### v2.0.1
-- Fix: toggle PT/EN estava invertido (badge e conteúdo trocados)
+- Fix: label do toggle PT/EN exibia o próximo idioma em vez do idioma atual
+  do conteúdo exibido
 
 ### v2.0.0
 - Arquitetura multilíngue: toggle PT/EN no header
