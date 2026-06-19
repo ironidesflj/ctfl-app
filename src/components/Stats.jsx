@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import { DOMAINS, domainNameInLang, coverageByDomain } from "../lib/bank.js";
 import { exportProgress, importProgress, clearProgress } from "../lib/storage.js";
 import { t } from "../lib/ui-strings.js";
+import { getNotificationPermission, requestNotificationPermission } from "../lib/notifications.js";
 
 function groupByDay(history) {
   const byDay = {};
@@ -18,6 +19,12 @@ function groupByDay(history) {
 export default function Stats({ progress, setProgress, lang = "pt" }) {
   const fileRef = useRef(null);
   const [msg, setMsg] = useState("");
+  const [notifStatus, setNotifStatus] = useState(getNotificationPermission());
+
+  async function enableNotifications() {
+    const result = await requestNotificationPermission();
+    setNotifStatus(result);
+  }
 
   const pct = progress.total > 0 ? Math.round((progress.correct / progress.total) * 100) : 0;
   const coverage = coverageByDomain(progress.seen || {});
@@ -119,6 +126,19 @@ export default function Stats({ progress, setProgress, lang = "pt" }) {
       <div className="card note">
         <strong>{t(lang, "stats.metaTitle")}</strong> {t(lang, "stats.metaText")}
       </div>
+
+      {notifStatus !== "unsupported" && (
+        <div className="card">
+          <h3>{t(lang, "notifications.title")}</h3>
+          {notifStatus === "granted" && <p className="muted">{t(lang, "notifications.enabled")}</p>}
+          {notifStatus === "denied" && <p className="muted">{t(lang, "notifications.blocked")}</p>}
+          {notifStatus === "default" && (
+            <button className="btn" onClick={enableNotifications}>
+              {t(lang, "notifications.enable")}
+            </button>
+          )}
+        </div>
+      )}
 
       <div className="actions">
         <button className="btn" onClick={() => exportProgress(progress)}>{t(lang, "stats.exportBtn")}</button>

@@ -63,6 +63,11 @@ Material de estudo independente, **não afiliado ao ISTQB**. Baseado na estrutur
 
 ## Changelog
 
+### v2.9.0
+- feat: notificações locais (Web Notifications API) avisando sobre itens
+  SRS atrasados e ausência de estudo prolongada — suporte em Android/desktop;
+  iOS PWA tem suporte limitado e pode não funcionar de forma confiável
+
 ### v2.8.0
 - feat: modo Revisão (SRS) no Quiz, com algoritmo SM-2 compartilhado
 - feat: Flashcards migrados para avaliação SM-2 (Errei/Difícil/Bom/Fácil)

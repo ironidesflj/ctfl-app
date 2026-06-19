@@ -63,6 +63,12 @@ export const UI = {
       examCardDesc: "40 questões em 75 minutos, igual à prova real. Revisão de erros no fim.",
       statsQuestions: "200 questões",
     },
+    notifications: {
+      title: "Lembretes",
+      enable: "Ativar notificações",
+      enabled: "Notificações ativadas.",
+      blocked: "Notificações bloqueadas no navegador. Ative nas configurações do site.",
+    },
   },
   en: {
     tabs: { quiz: "Quiz", syllabus: "Syllabus", flashcards: "Flashcards", glossary: "Glossary", progress: "Progress" },
@@ -124,6 +130,12 @@ export const UI = {
     onboarding: {
       examCardDesc: "40 questions in 75 minutes, just like the real exam. Mistake review at the end.",
       statsQuestions: "200 questions",
+    },
+    notifications: {
+      title: "Reminders",
+      enable: "Enable notifications",
+      enabled: "Notifications enabled.",
+      blocked: "Notifications blocked in browser. Enable it in site settings.",
     },
   },
 };
