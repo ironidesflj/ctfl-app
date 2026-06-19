@@ -54,7 +54,7 @@ export default function App() {
           <p className="mast-sub">ISTQB Foundation Level v4.0 · {META.total} questões</p>
         </div>
         <button className="btn ghost lang-toggle" onClick={toggleLang}>
-          {lang === "pt" ? "EN" : "PT"}
+          {lang === "pt" ? "PT" : "EN"}
         </button>
       </header>
 

@@ -61,6 +61,9 @@ Material de estudo independente, **não afiliado ao ISTQB**. Baseado na estrutur
 
 ## Changelog
 
+### v2.0.1
+- Fix: toggle PT/EN estava invertido (badge e conteúdo trocados)
+
 ### v2.0.0
 - Arquitetura multilíngue: toggle PT/EN no header
 - Questões exibidas no idioma selecionado (fallback PT quando EN não disponível)
