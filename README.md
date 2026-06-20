@@ -63,6 +63,10 @@ Material de estudo independente, **não afiliado ao ISTQB**. Baseado na estrutur
 
 ## Changelog
 
+### v3.3.0
+- feat: landing page completa (Onboarding expandido) — features detalhadas,
+  mockup visual, prova social, FAQ, seção sobre o autor com links
+
 ### v3.2.1
 - fix: title e description encurtados para evitar truncamento em previews
   sociais; adicionado og:site_name (resolve os 4 avisos do meta-tag inspector)
