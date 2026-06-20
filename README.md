@@ -63,6 +63,10 @@ Material de estudo independente, **não afiliado ao ISTQB**. Baseado na estrutur
 
 ## Changelog
 
+### v3.1.0
+- feat: CI no GitHub Actions — roda os 22 testes unitários e o build a
+  cada push/PR na main, bloqueando merge se algo quebrar
+
 ### v3.0.0
 - feat: suite de testes unitários (Vitest) para a lógica pura — SM-2,
   storage/progresso, e integridade do banco de questões (200 questões,
