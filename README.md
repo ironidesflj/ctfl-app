@@ -63,6 +63,11 @@ Material de estudo independente, **não afiliado ao ISTQB**. Baseado na estrutur
 
 ## Changelog
 
+### v3.2.0
+- feat: SEO básico — meta tags Open Graph/Twitter Card, robots.txt, sitemap.xml
+- feat: imagem de compartilhamento social (og-image.png) para links
+  compartilhados em redes sociais e WhatsApp
+
 ### v3.1.0
 - feat: CI no GitHub Actions — roda os 22 testes unitários e o build a
   cada push/PR na main, bloqueando merge se algo quebrar
