@@ -63,6 +63,11 @@ Material de estudo independente, **não afiliado ao ISTQB**. Baseado na estrutur
 
 ## Changelog
 
+### v3.0.0
+- feat: suite de testes unitários (Vitest) para a lógica pura — SM-2,
+  storage/progresso, e integridade do banco de questões (200 questões,
+  sem duplicatas no simulado, respostas válidas)
+
 ### v2.9.0
 - feat: notificações locais (Web Notifications API) avisando sobre itens
   SRS atrasados e ausência de estudo prolongada — suporte em Android/desktop;
