@@ -63,6 +63,10 @@ Material de estudo independente, **não afiliado ao ISTQB**. Baseado na estrutur
 
 ## Changelog
 
+### v3.2.1
+- fix: title e description encurtados para evitar truncamento em previews
+  sociais; adicionado og:site_name (resolve os 4 avisos do meta-tag inspector)
+
 ### v3.2.0
 - feat: SEO básico — meta tags Open Graph/Twitter Card, robots.txt, sitemap.xml
 - feat: imagem de compartilhamento social (og-image.png) para links
