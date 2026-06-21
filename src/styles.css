@@ -506,3 +506,36 @@ body {
 
 .srs-quality { display: flex; gap: 8px; margin-top: 1rem; flex-wrap: wrap; }
 .srs-quality button { flex: 1; min-width: 70px; padding: 13px 10px; font-size: 12px; }
+
+.btn-saved {
+  background: var(--ok-soft);
+  border-color: var(--ok);
+  color: var(--ok);
+  font-weight: 500;
+}
+.btn-saved:hover { opacity: 0.85; }
+
+.srs-again {
+  background: var(--no-soft);
+  border-color: var(--no);
+  color: var(--no);
+}
+.srs-hard {
+  background: var(--warn-soft);
+  border-color: var(--warn);
+  color: var(--warn);
+}
+.srs-good {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+  color: var(--accent-text);
+}
+.srs-easy {
+  background: var(--ok-soft);
+  border-color: var(--ok);
+  color: var(--ok);
+}
+
+.srs-again:hover, .srs-hard:hover, .srs-good:hover, .srs-easy:hover {
+  opacity: 0.85;
+}

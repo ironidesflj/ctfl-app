@@ -63,6 +63,12 @@ Material de estudo independente, **não afiliado ao ISTQB**. Baseado na estrutur
 
 ## Changelog
 
+### v3.4.1
+- fix: semântica do botão "Salvar questão" corrigida (ação em destaque,
+  estado salvo em cor de confirmação)
+- fix: botões de avaliação SRS (Again/Hard/Good/Easy) agora têm cores
+  distintas por valência, reduzindo carga cognitiva na revisão
+
 ### v3.4.0
 - fix: acessibilidade — touch targets elevados para ≥44px (chips, botões,
   tabs, avaliação SRS), contraste corrigido no botão Voltar e no timer em

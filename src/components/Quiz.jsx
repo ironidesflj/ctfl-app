@@ -363,7 +363,7 @@ export default function Quiz({ onAnswer, progress, setProgress, initialFilter, o
 
         {answered && (
           <button
-            className={"btn " + (saved ? "primary" : "ghost")}
+            className={"btn " + (saved ? "btn-saved" : "primary")}
             onClick={() => setProgress((p) => toggleSaved(p, q.id))}
             style={{ marginTop: '0.5rem' }}
           >
@@ -373,10 +373,10 @@ export default function Quiz({ onAnswer, progress, setProgress, initialFilter, o
 
         {mode === "srs" && answered && (
           <div className="srs-quality">
-            <button className="btn" onClick={() => rateSRS("again")}>{t(lang, "quiz.srsAgain")}</button>
-            <button className="btn" onClick={() => rateSRS("hard")}>{t(lang, "quiz.srsHard")}</button>
-            <button className="btn" onClick={() => rateSRS("good")}>{t(lang, "quiz.srsGood")}</button>
-            <button className="btn" onClick={() => rateSRS("easy")}>{t(lang, "quiz.srsEasy")}</button>
+            <button className="btn srs-again" onClick={() => rateSRS("again")}>{t(lang, "quiz.srsAgain")}</button>
+            <button className="btn srs-hard" onClick={() => rateSRS("hard")}>{t(lang, "quiz.srsHard")}</button>
+            <button className="btn srs-good" onClick={() => rateSRS("good")}>{t(lang, "quiz.srsGood")}</button>
+            <button className="btn srs-easy" onClick={() => rateSRS("easy")}>{t(lang, "quiz.srsEasy")}</button>
           </div>
         )}
 

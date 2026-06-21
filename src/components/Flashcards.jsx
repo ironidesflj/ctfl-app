@@ -73,10 +73,10 @@ export default function Flashcards({ lang = "pt", progress, setProgress }) {
 
       {flipped && (
         <div className="srs-quality">
-          <button className="btn" onClick={() => rate("again")}>{t(lang, "flashcards.again")}</button>
-          <button className="btn" onClick={() => rate("hard")}>{t(lang, "flashcards.hard")}</button>
-          <button className="btn" onClick={() => rate("good")}>{t(lang, "flashcards.good")}</button>
-          <button className="btn" onClick={() => rate("easy")}>{t(lang, "flashcards.easy")}</button>
+          <button className="btn srs-again" onClick={() => rate("again")}>{t(lang, "flashcards.again")}</button>
+          <button className="btn srs-hard" onClick={() => rate("hard")}>{t(lang, "flashcards.hard")}</button>
+          <button className="btn srs-good" onClick={() => rate("good")}>{t(lang, "flashcards.good")}</button>
+          <button className="btn srs-easy" onClick={() => rate("easy")}>{t(lang, "flashcards.easy")}</button>
         </div>
       )}
 
