@@ -63,6 +63,11 @@ Material de estudo independente, **não afiliado ao ISTQB**. Baseado na estrutur
 
 ## Changelog
 
+### v3.4.0
+- fix: acessibilidade — touch targets elevados para ≥44px (chips, botões,
+  tabs, avaliação SRS), contraste corrigido no botão Voltar e no timer em
+  alerta, fonte mínima 12px em badges técnicos (auditoria de design)
+
 ### v3.3.0
 - feat: landing page completa (Onboarding expandido) — features detalhadas,
   mockup visual, prova social, FAQ, seção sobre o autor com links
