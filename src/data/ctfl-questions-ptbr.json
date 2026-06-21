@@ -3692,7 +3692,7 @@
       "chapter": 4,
       "domain": "tec",
       "kLevel": 3,
-      "answer": 2,
+      "answer": 1,
       "locales": {
         "pt": {
           "q": "Numa máquina de estados de conta bancária: estados = {Ativa, Bloqueada, Encerrada}. Quantas transições inválidas existem se há apenas 4 transições válidas definidas?",
