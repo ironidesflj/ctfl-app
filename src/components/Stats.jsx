@@ -73,6 +73,7 @@ export default function Stats({ progress, setProgress, lang = "pt" }) {
       </div>
 
       <div className="card">
+        <div className="card-eyebrow">{t(lang, "stats.precisionLabel")}</div>
         <h3>{t(lang, "stats.byDomain")}</h3>
         {DOMAINS.map((d) => {
           const bd = progress.byDomain[d.id] || { t: 0, c: 0 };
@@ -91,6 +92,7 @@ export default function Stats({ progress, setProgress, lang = "pt" }) {
       </div>
 
       <div className="card">
+        <div className="card-eyebrow">{t(lang, "stats.coverageLabel")}</div>
         <h3>{t(lang, "stats.coverage")}</h3>
         <p className="muted" style={{marginBottom: '1rem', fontSize: '13px'}}>
           {t(lang, "stats.coverageDesc")}

@@ -23,8 +23,9 @@ export default function Onboarding({ onDismiss, lang = "pt" }) {
       {/* 1. Hero */}
       <span className="ob-badge">{t(lang, "onboarding.badge")}</span>
 
+      <span className="ob-name-tag">CTFL Prep</span>
       <div className="ob-hero">
-        CTFL Prep
+        {t(lang, "onboarding.heroValueProp")}
       </div>
       <p className="ob-subtitle">{t(lang, "onboarding.heroSubtitle")}</p>
 

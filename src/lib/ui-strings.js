@@ -54,6 +54,7 @@ export const UI = {
       metaText: "40 questões, mínimo 26 acertos (65%). Os capítulos 4 (Técnicas) e 5 (Gerenciamento) somam metade do exame — priorize-os. Há cerca de 8 questões K3 (aplicação), as mais difíceis.",
       exportBtn: "Exportar progresso", importBtn: "Importar progresso",
       resetBtn: "Zerar", resetConfirm: "Zerar todo o progresso?",
+      precisionLabel: "PRECISÃO", coverageLabel: "ALCANCE",
     },
     flashcards: {
       flip: "toque para revelar", prev: "← Anterior", next: "Próximo →",
@@ -65,6 +66,7 @@ export const UI = {
       examCardDesc: "40 questões em 75 minutos, igual à prova real. Revisão de erros no fim.",
       statsQuestions: "200 questões",
       badge: "Baseado no syllabus oficial ISTQB CTFL v4.0",
+      heroValueProp: "Tudo que você precisa para passar no CTFL, de graça.",
       heroSubtitle: "Preparação gratuita para o exame ISTQB Foundation Level v4.0",
       statDomains: "6 domínios",
       statLang: "PT/EN",
@@ -170,6 +172,7 @@ export const UI = {
       metaText: "40 questions, minimum 26 correct (65%). Chapters 4 (Techniques) and 5 (Management) make up half the exam — prioritize them. There are about 8 K3 (application) questions, the hardest ones.",
       exportBtn: "Export progress", importBtn: "Import progress",
       resetBtn: "Reset", resetConfirm: "Reset all progress?",
+      precisionLabel: "ACCURACY", coverageLabel: "COVERAGE",
     },
     flashcards: {
       flip: "tap to reveal", prev: "← Previous", next: "Next →",
@@ -181,6 +184,7 @@ export const UI = {
       examCardDesc: "40 questions in 75 minutes, just like the real exam. Mistake review at the end.",
       statsQuestions: "200 questions",
       badge: "Based on the official ISTQB CTFL v4.0 syllabus",
+      heroValueProp: "Everything you need to pass CTFL, for free.",
       heroSubtitle: "Free prep for the ISTQB Foundation Level v4.0 exam",
       statDomains: "6 domains",
       statLang: "PT/EN",

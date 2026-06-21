@@ -63,6 +63,15 @@ Material de estudo independente, **não afiliado ao ISTQB**. Baseado na estrutur
 
 ## Changelog
 
+### v3.6.0
+- fix: hero do onboarding agora destaca a proposta de valor em vez de
+  repetir o nome do produto
+- feat: animação de flip 3D nos flashcards
+- fix: tab bar usa scroll horizontal em vez de wrap imprevisível em
+  telas pequenas
+- fix: seções de Progresso (Precisão/Cobertura) com rótulos distintivos
+  para reduzir confusão visual
+
 ### v3.5.0
 - feat: grade de navegação no modo Simulado — visualiza e salta entre
   as 40 questões, com indicação de respondidas/em branco (auditoria de

@@ -59,16 +59,17 @@ export default function Flashcards({ lang = "pt", progress, setProgress }) {
       <>
       <button className="card flash" onClick={() => setFlipped((f) => !f)}>
         {lang === "en" && !hasEN(card.id) && (
-          <span style={{fontSize:'11px', color:'var(--text-3)'}}>EN coming soon · showing PT</span>
+          <span style={{position:'absolute', top:8, left:8, zIndex:2, fontSize:'11px', color:'var(--text-3)'}}>EN coming soon · showing PT</span>
         )}
-        {!flipped ? (
-          <>
+        <div className={"flash-card-inner" + (flipped ? " flipped" : "")}>
+          <div className="flash-card-front">
             <span className="flash-front">{card.front}</span>
             <span className="flash-hint">{t(lang, "flashcards.flip")}</span>
-          </>
-        ) : (
-          <span className="flash-back">{card.back}</span>
-        )}
+          </div>
+          <div className="flash-card-back">
+            <span className="flash-back">{card.back}</span>
+          </div>
+        </div>
       </button>
 
       {flipped && (
