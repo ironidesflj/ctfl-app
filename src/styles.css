@@ -539,3 +539,41 @@ body {
 .srs-again:hover, .srs-hard:hover, .srs-good:hover, .srs-easy:hover {
   opacity: 0.85;
 }
+
+.exam-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(36px, 1fr));
+  gap: 6px;
+  margin: 1rem 0 0;
+}
+.exam-grid-item {
+  aspect-ratio: 1;
+  min-height: 36px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line);
+  background: var(--surface-2);
+  color: var(--text-2);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all .15s;
+}
+.exam-grid-item.answered {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+  color: var(--accent-text);
+}
+.exam-grid-item.current {
+  border: 2px solid var(--accent);
+  font-weight: 700;
+}
+.exam-grid-item:hover { opacity: 0.85; }
+
+.exam-grid-summary {
+  font-size: 13px;
+  color: var(--text-2);
+  margin-bottom: 0.5rem;
+}

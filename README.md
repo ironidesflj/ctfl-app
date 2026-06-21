@@ -63,6 +63,11 @@ Material de estudo independente, **não afiliado ao ISTQB**. Baseado na estrutur
 
 ## Changelog
 
+### v3.5.0
+- feat: grade de navegação no modo Simulado — visualiza e salta entre
+  as 40 questões, com indicação de respondidas/em branco (auditoria de
+  design, item de maior impacto identificado)
+
 ### v3.4.1
 - fix: semântica do botão "Salvar questão" corrigida (ação em destaque,
   estado salvo em cor de confirmação)

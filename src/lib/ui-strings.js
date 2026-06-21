@@ -38,6 +38,8 @@ export const UI = {
       terms: "Termos: ",
       modeSRS: "Revisão", srsDueDesc: "questão(ões) para revisar hoje",
       srsAgain: "Errei", srsHard: "Difícil", srsGood: "Bom", srsEasy: "Fácil",
+      showGrid: "Ver todas as questões", hideGrid: "Ocultar grade",
+      gridSummary: "{answered} de {total} respondidas · {blank} em branco",
     },
     stats: {
       importSuccess: "Progresso importado com sucesso.",
@@ -152,6 +154,8 @@ export const UI = {
       terms: "Terms: ",
       modeSRS: "Review", srsDueDesc: "question(s) due today",
       srsAgain: "Again", srsHard: "Hard", srsGood: "Good", srsEasy: "Easy",
+      showGrid: "View all questions", hideGrid: "Hide grid",
+      gridSummary: "{answered} of {total} answered · {blank} blank",
     },
     stats: {
       importSuccess: "Progress imported successfully.",

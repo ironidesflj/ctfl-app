@@ -16,6 +16,26 @@ function fmtTime(s) {
   return `${m}:${String(r).padStart(2, "0")}`;
 }
 
+function QuestionGrid({ answers, currentIndex, onJump }) {
+  return (
+    <div className="exam-grid">
+      {answers.map((ans, i) => (
+        <button
+          key={i}
+          className={
+            "exam-grid-item" +
+            (i === currentIndex ? " current" : "") +
+            (ans !== null && ans !== undefined ? " answered" : " unanswered")
+          }
+          onClick={() => onJump(i)}
+        >
+          {i + 1}
+        </button>
+      ))}
+    </div>
+  );
+}
+
 export default function Quiz({ onAnswer, progress, setProgress, initialFilter, onFilterConsumed, lang = "pt" }) {
   const [phase, setPhase] = useState("setup"); // setup | running | result
   const [mode, setMode] = useState("practice"); // practice | exam
@@ -38,6 +58,7 @@ export default function Quiz({ onAnswer, progress, setProgress, initialFilter, o
   const [idx, setIdx] = useState(0);
   const [answers, setAnswers] = useState([]); // índice escolhido por questão
   const [showReview, setShowReview] = useState(false);
+  const [showGrid, setShowGrid] = useState(false);
 
   const [timeLeft, setTimeLeft] = useState(0);
   const timerRef = useRef(null);
@@ -64,6 +85,7 @@ export default function Quiz({ onAnswer, progress, setProgress, initialFilter, o
     setAnswers(new Array(qs.length).fill(null));
     setIdx(0);
     setShowReview(false);
+    setShowGrid(false);
     setPhase("running");
     if (mode === "exam") {
       setTimeLeft(META.examFormat.timeMinutesNonNative * 60);
@@ -310,6 +332,28 @@ export default function Quiz({ onAnswer, progress, setProgress, initialFilter, o
         {mode === "exam" && <span className={"timer " + timerClass}>{fmtTime(timeLeft)}</span>}
       </div>
       <div className="progress"><div className="progress-fill" style={{ width: pct + "%" }} /></div>
+
+      {mode === "exam" && (
+        <>
+          <div className="actions" style={{ marginTop: 0, marginBottom: '0.8rem' }}>
+            <button className="btn" onClick={() => setShowGrid((v) => !v)}>
+              {showGrid ? t(lang, "quiz.hideGrid") : t(lang, "quiz.showGrid")}
+            </button>
+          </div>
+          {showGrid && (
+            <div className="card">
+              <div className="exam-grid-summary">
+                {t(lang, "quiz.gridSummary", {
+                  answered: answers.filter((a) => a !== null && a !== undefined).length,
+                  total: questions.length,
+                  blank: answers.filter((a) => a === null || a === undefined).length,
+                })}
+              </div>
+              <QuestionGrid answers={answers} currentIndex={idx} onJump={(i) => setIdx(i)} />
+            </div>
+          )}
+        </>
+      )}
 
       <div className="card">
         <div className="q-meta">
