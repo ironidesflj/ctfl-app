@@ -63,6 +63,13 @@ Material de estudo independente, **não afiliado ao ISTQB**. Baseado na estrutur
 
 ## Changelog
 
+### v3.6.1
+- fix: corrige desalinhamento de conteúdo PT/EN em 77 questões (38% do
+  banco) onde o texto em inglês tratava de tópico diferente do
+  português — causa raiz: questões EN da expansão (120→200) foram
+  geradas como conteúdo novo em vez de tradução fiel. Reescrito com
+  tradução real do PT existente.
+
 ### v3.6.0
 - fix: hero do onboarding agora destaca a proposta de valor em vez de
   repetir o nome do produto
