@@ -140,7 +140,7 @@ export default function Quiz({ onAnswer, progress, setProgress, initialFilter, o
       questions.forEach((q, i) => {
         const a = answers[i];
         const correct = a !== null && opts[i][a].correct;
-        onAnswer(q.domain, !!correct);
+        onAnswer(q.domain, !!correct, q.id);
       });
     }
     setPhase("result");

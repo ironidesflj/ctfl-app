@@ -63,6 +63,13 @@ Material de estudo independente, **não afiliado ao ISTQB**. Baseado na estrutur
 
 ## Changelog
 
+### v3.6.3
+
+- fix: modo Simulado agora registra `seen` por questão (faltava o
+  argumento `questionId` na chamada de `onAnswer()` dentro de `finish()`).
+  A cobertura por capítulo na aba Progresso estava ignorando todas as
+  questões respondidas no exam.
+
 ### v3.6.2
 - fix: corrige 87 questões com índice de resposta EN incorreto (bug de
   ordenação anterior ao desalinhamento de tema já corrigido). O tema
