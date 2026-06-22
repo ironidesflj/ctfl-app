@@ -63,6 +63,15 @@ Material de estudo independente, **não afiliado ao ISTQB**. Baseado na estrutur
 
 ## Changelog
 
+### v3.6.2
+- fix: corrige 87 questões com índice de resposta EN incorreto (bug de
+  ordenação anterior ao desalinhamento de tema já corrigido). O tema
+  EN estava certo, mas a ordem das opções EN não espelhava a ordem PT
+  (já rebalanceada antes do EN existir), então `answer` apontava para
+  a opção errada em inglês. Afeta majoritariamente Cap.1, Cap.2, Cap.4
+  e a totalidade do Cap.5 original (27/27). Inclui caso especial
+  `ch4-11`/`ch4-12`, que tinham o bloco EN inteiro trocado entre si.
+
 ### v3.6.1
 - fix: corrige desalinhamento de conteúdo PT/EN em 77 questões (38% do
   banco) onde o texto em inglês tratava de tópico diferente do

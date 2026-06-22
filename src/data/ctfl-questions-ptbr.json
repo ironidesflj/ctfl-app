@@ -54,9 +54,9 @@
           "q": "Which correctly describes the relationship between error, defect, and failure?",
           "options": [
             "Error is caused by the tester; defect by the developer; failure by the user",
-            "An error (human action) introduces a defect into an artifact, which when executed may cause a failure",
+            "A failure causes a defect, which causes an error",
             "Error and defect are synonyms; failure only occurs in production",
-            "A failure causes a defect, which causes an error"
+            "An error (human action) introduces a defect into an artifact, which when executed may cause a failure"
           ],
           "exp": "The causal chain is: human error → defect in the artifact/code → failure (incorrect behavior at runtime)."
         }
@@ -112,9 +112,9 @@
           "q": "What is the difference between testing and debugging?",
           "options": [
             "They are the same activity",
-            "Testing finds failures; debugging locates, analyzes, and fixes the defect that caused them",
+            "Debugging only occurs in production",
             "Debugging finds failures; testing fixes the code",
-            "Debugging only occurs in production"
+            "Testing finds failures; debugging locates, analyzes, and fixes the defect that caused them"
           ],
           "exp": "Testing reveals failures caused by defects; debugging is the development activity that locates, diagnoses, and corrects the defect."
         }
@@ -141,9 +141,9 @@
           "q": "Why is testing necessary?",
           "options": [
             "To replace code review",
-            "To contribute to project success by reducing the risk of failures in operation",
+            "Because it is required by law",
             "To guarantee defect-free software",
-            "Because it is required by law"
+            "To contribute to project success by reducing the risk of failures in operation"
           ],
           "exp": "Testing reduces the risk of operational failures and helps deliver a product with quality adequate to stakeholder needs."
         }
@@ -170,9 +170,9 @@
           "q": "How do quality control (QC) and quality assurance (QA) relate?",
           "options": [
             "They are synonyms",
-            "QC is product-oriented (includes testing); QA is process-oriented",
+            "Testing is part of QA, not QC",
             "QA is product-oriented; QC is process-oriented",
-            "Testing is part of QA, not QC"
+            "QC is product-oriented (includes testing); QA is process-oriented"
           ],
           "exp": "QC focuses on the product and includes activities such as testing; QA focuses on process improvement to build confidence that quality will be achieved."
         }
@@ -199,9 +199,9 @@
           "q": "The root cause of a defect is:",
           "options": [
             "The failure observed by the user",
-            "The earliest event that, if corrected, prevents the recurrence of the defect",
+            "The test case that failed",
             "The test environment",
-            "The test case that failed"
+            "The earliest event that, if corrected, prevents the recurrence of the defect"
           ],
           "exp": "Root cause analysis seeks the fundamental origin, enabling actions that prevent similar defects from recurring."
         }
@@ -228,9 +228,9 @@
           "q": "The principle 'testing shows the presence of defects, not their absence' means that:",
           "options": [
             "Testing proves there are no defects",
-            "Testing can reveal defects but cannot prove none exist",
+            "Testing is useless",
             "Defects always exist",
-            "Testing is useless"
+            "Testing can reveal defects but cannot prove none exist"
           ],
           "exp": "Finding defects does not prove their absence; even when no defects are found, there is no guarantee of total correctness."
         }
@@ -257,9 +257,9 @@
           "q": "The principle 'exhaustive testing is impossible' has the practical consequence of:",
           "options": [
             "Not worth testing",
-            "Using risk analysis and priorities to focus effort",
+            "Automating everything",
             "Testing only the happy path",
-            "Automating everything"
+            "Using risk analysis and priorities to focus effort"
           ],
           "exp": "Since testing all combinations is not feasible, effort is prioritized based on risk and business priorities."
         }
@@ -286,9 +286,9 @@
           "q": "The 'early testing saves time and money' principle states that:",
           "options": [
             "Tests should only start after the code is complete",
-            "Testing activities should start as early as possible in the lifecycle",
+            "Only requirements can be tested early",
             "Testing early increases costs",
-            "Only requirements can be tested early"
+            "Testing activities should start as early as possible in the lifecycle"
           ],
           "exp": "Starting early (including static testing on requirements) reduces costs because defects found late are more expensive to fix."
         }
@@ -315,9 +315,9 @@
           "q": "The 'defect clustering' principle suggests that:",
           "options": [
             "Defects are evenly distributed",
-            "A small number of modules contain the majority of defects",
+            "Defects only appear in new code",
             "Each module has exactly one defect",
-            "Defects only appear in new code"
+            "A small number of modules contain the majority of defects"
           ],
           "exp": "Typically a minority of modules concentrates most defects (Pareto principle), which guides test prioritization."
         }
@@ -344,9 +344,9 @@
           "q": "The 'pesticide paradox' indicates that:",
           "options": [
             "More testing generates more defects",
-            "Repeating the same tests will eventually stop finding new defects",
+            "Pesticides affect the software",
             "Manual tests are better than automated",
-            "Pesticides affect the software"
+            "Repeating the same tests will eventually stop finding new defects"
           ],
           "exp": "If the same test cases are repeated, they stop revealing new defects; tests must be reviewed and new ones created regularly."
         }
@@ -402,9 +402,9 @@
           "q": "The 'absence-of-errors fallacy' states that:",
           "options": [
             "Defect-free software is always good",
-            "Fixing all known defects is useless if the system does not meet user needs",
+            "Errors do not matter",
             "Errors do not exist",
-            "Errors do not matter"
+            "Fixing all known defects is useless if the system does not meet user needs"
           ],
           "exp": "A product may be free of known defects and still be inadequate if it does not meet real user needs."
         }
@@ -431,9 +431,9 @@
           "q": "A team decides to prioritize testing the payment module, where defects have historically clustered. Which principle justifies this?",
           "options": [
             "Exhaustive testing",
-            "Defect clustering",
+            "Pesticide paradox",
             "Absence-of-errors fallacy",
-            "Pesticide paradox"
+            "Defect clustering"
           ],
           "exp": "Concentrating effort where defects historically cluster applies the defect clustering principle."
         }
@@ -460,9 +460,9 @@
           "q": "Which test process activity defines objectives, approach, and resources?",
           "options": [
             "Test execution",
-            "Test planning",
+            "Test completion",
             "Test analysis",
-            "Test completion"
+            "Test planning"
           ],
           "exp": "Test planning defines objectives, scope, approach, resources, and criteria."
         }
@@ -489,9 +489,9 @@
           "q": "Monitoring and control of testing serves to:",
           "options": [
             "Write test cases",
-            "Compare actual progress against the plan and take corrective actions",
+            "Close the project",
             "Execute the tests",
-            "Close the project"
+            "Compare actual progress against the plan and take corrective actions"
           ],
           "exp": "Monitoring collects metrics; control acts (replan, reallocate) when there are deviations from the plan."
         }
@@ -518,9 +518,9 @@
           "q": "In the test analysis activity, what is primarily produced?",
           "options": [
             "Automated scripts",
-            "Test conditions derived from the test basis and its criteria",
+            "Test data",
             "The final report",
-            "Test data"
+            "Test conditions derived from the test basis and its criteria"
           ],
           "exp": "Analysis identifies what to test — the test conditions — from the test basis (requirements, risks, etc.)."
         }
@@ -547,9 +547,9 @@
           "q": "In test design, the focus is on:",
           "options": [
             "Identifying what to test",
-            "Defining how to test: test cases and sets derived from the conditions",
+            "Reporting defects",
             "Executing the cases",
-            "Reporting defects"
+            "Defining how to test: test cases and sets derived from the conditions"
           ],
           "exp": "Test design elaborates how to cover the test conditions, producing test cases and test sets."
         }
@@ -576,9 +576,9 @@
           "q": "What is the primary output of the test implementation activity?",
           "options": [
             "Test conditions",
-            "Procedures, scripts, and data ready for execution, with the environment prepared",
+            "The progress report",
             "The test plan",
-            "The progress report"
+            "Procedures, scripts, and data ready for execution, with the environment prepared"
           ],
           "exp": "Implementation organizes and prepares everything needed to execute: procedures, data, environment, and schedule."
         }
@@ -605,9 +605,9 @@
           "q": "During test execution, when a divergent result is found, the tester should first:",
           "options": [
             "Fix the code",
-            "Record the result and, if it is an anomaly, create a defect report",
+            "Ignore it if it is minor",
             "Stop testing",
-            "Ignore it if it is minor"
+            "Record the result and, if it is an anomaly, create a defect report"
           ],
           "exp": "Results are compared to expected; divergences (anomalies) are analyzed and, when defects are confirmed, logged in a defect report."
         }
@@ -634,9 +634,9 @@
           "q": "The test completion activity typically includes:",
           "options": [
             "Writing the first test cases",
-            "Archiving testware, recording lessons learned, and producing the completion report",
+            "Preparing the environment",
             "Defining objectives",
-            "Preparing the environment"
+            "Archiving testware, recording lessons learned, and producing the completion report"
           ],
           "exp": "Completion consolidates results, archives reusable testware, records lessons learned, and issues the completion report."
         }
@@ -663,9 +663,9 @@
           "q": "What is 'testware'?",
           "options": [
             "Test hardware",
-            "Artifacts produced during the test process (plans, cases, data, reports)",
+            "The system under test",
             "The automation tool",
-            "The system under test"
+            "Artifacts produced during the test process (plans, cases, data, reports)"
           ],
           "exp": "Testware encompasses all work products of the testing process: plans, conditions, cases, data, scripts, reports."
         }
@@ -692,9 +692,9 @@
           "q": "What is the main benefit of traceability between the test basis and testware?",
           "options": [
             "Reducing the number of tests",
-            "Enabling coverage assessment and impact analysis of changes on the tests",
+            "Speeding up the code",
             "Eliminating documentation",
-            "Speeding up the code"
+            "Enabling coverage assessment and impact analysis of changes on the tests"
           ],
           "exp": "Traceability links requirements/risks to conditions and cases, supporting coverage assessment, impact analysis, and auditing."
         }
@@ -1214,9 +1214,9 @@
           "q": "How does the software development lifecycle model influence testing?",
           "options": [
             "It has no influence; testing is always performed the same way regardless of the model",
-            "It influences the scope, timing, approach, and level of detail of testing activities",
+            "It determines the number of testers required but not the testing approach",
             "It only affects the choice of test automation tool",
-            "It determines the number of testers required but not the testing approach"
+            "It influences the scope, timing, approach, and level of detail of testing activities"
           ],
           "exp": "The SDLC model shapes when, how, and how deeply testing is performed; sequential models tend to test by phase, while iterative/agile models integrate testing continuously."
         }
@@ -1243,9 +1243,9 @@
           "q": "What does 'shift-left' mean in the context of software testing?",
           "options": [
             "Moving test execution to a later phase to allow more development time",
-            "Anticipating testing activities to earlier stages of the development lifecycle",
+            "Reducing the number of test levels by merging them into one phase",
             "Shifting the testing team to the left side of the office floor plan",
-            "Reducing the number of test levels by merging them into one phase"
+            "Anticipating testing activities to earlier stages of the development lifecycle"
           ],
           "exp": "Shift-left moves testing earlier in the lifecycle, enabling earlier defect detection and reducing the cost of fixing them."
         }
@@ -1272,9 +1272,9 @@
           "q": "TDD, ATDD, and BDD are examples of:",
           "options": [
             "Automated UI testing frameworks used in regression suites",
-            "Test-first approaches where tests or acceptance criteria guide development",
+            "Performance testing methodologies applied in load testing scenarios",
             "Configuration management strategies for test environments",
-            "Performance testing methodologies applied in load testing scenarios"
+            "Test-first approaches where tests or acceptance criteria guide development"
           ],
           "exp": "TDD, ATDD, and BDD are test-first approaches: tests or acceptance criteria are defined before or alongside the code, guiding implementation."
         }
@@ -1301,9 +1301,9 @@
           "q": "What is the primary benefit of retrospectives for the test process?",
           "options": [
             "They replace the need for test planning in agile projects",
-            "They promote continuous process improvement based on lessons learned",
+            "They eliminate the need for defect reports by resolving issues verbally",
             "They provide a mechanism for assigning blame for defects found in production",
-            "They eliminate the need for defect reports by resolving issues verbally"
+            "They promote continuous process improvement based on lessons learned"
           ],
           "exp": "Retrospectives identify what to improve (process, tools, collaboration), supporting continuous improvement across iterations."
         }
@@ -1330,9 +1330,9 @@
           "q": "Component testing (unit testing) focuses on:",
           "options": [
             "Verifying interactions between separately developed systems across organizational boundaries",
-            "Testing individual components in isolation, typically performed by developers",
+            "Evaluating system behavior under concurrent load from multiple users",
             "Validating the complete system against user acceptance criteria",
-            "Evaluating system behavior under concurrent load from multiple users"
+            "Testing individual components in isolation, typically performed by developers"
           ],
           "exp": "Component testing verifies individual modules/units in isolation, often using stubs and drivers, and is typically performed by developers."
         }
@@ -1359,9 +1359,9 @@
           "q": "What is the difference between component integration testing and system integration testing?",
           "options": [
             "They are identical; the terms are interchangeable in modern testing practice",
-            "Component integration tests interactions within a system; system integration tests interactions between distinct systems",
+            "Only component integration testing uses interfaces; system integration testing uses only APIs",
             "System integration testing is always performed before component integration testing",
-            "Only component integration testing uses interfaces; system integration testing uses only APIs"
+            "Component integration tests interactions within a system; system integration tests interactions between distinct systems"
           ],
           "exp": "Component integration focuses on internal interfaces between components of one system; system integration focuses on interfaces between different systems or organizations."
         }
@@ -1388,9 +1388,9 @@
           "q": "System testing evaluates:",
           "options": [
             "Individual components in isolation using drivers and stubs to simulate dependencies",
-            "The behavior and capabilities of the complete integrated system as a whole",
+            "Contractual acceptance criteria defined between the customer and the supplier",
             "Only the user interface layer of the application under test",
-            "Contractual acceptance criteria defined between the customer and the supplier"
+            "The behavior and capabilities of the complete integrated system as a whole"
           ],
           "exp": "System testing evaluates the fully integrated system end-to-end, covering both functional and non-functional behavior."
         }
@@ -1417,9 +1417,9 @@
           "q": "Which are common forms of acceptance testing?",
           "options": [
             "Unit testing and integration testing performed by developers before handover",
-            "User acceptance (UAT), operational, contractual, and regulatory acceptance testing",
+            "Static and dynamic testing merged into a unified acceptance review process",
             "White-box and black-box testing combined into a single acceptance phase",
-            "Static and dynamic testing merged into a unified acceptance review process"
+            "User acceptance (UAT), operational, contractual, and regulatory acceptance testing"
           ],
           "exp": "Acceptance testing includes UAT, operational acceptance (backup, security), contractual acceptance, and regulatory acceptance."
         }
@@ -1446,9 +1446,9 @@
           "q": "What is the difference between alpha and beta testing?",
           "options": [
             "Alpha testing is performed in production; beta testing is performed by the development team",
-            "Alpha testing occurs at the developer's site; beta testing is performed by real users in their own environment",
+            "Alpha and beta testing are synonyms for system and acceptance testing respectively",
             "Beta testing always precedes alpha testing in the release lifecycle",
-            "Alpha and beta testing are synonyms for system and acceptance testing respectively"
+            "Alpha testing occurs at the developer's site; beta testing is performed by real users in their own environment"
           ],
           "exp": "Alpha is conducted at the developer's premises (by users or the team); beta is performed by users in their own environment."
         }
@@ -1475,9 +1475,9 @@
           "q": "Functional testing evaluates:",
           "options": [
             "How the system behaves under stress, including performance and resource consumption",
-            "What the system does, based on its specified functional requirements and behavior",
+            "The degree to which the system satisfies operational and regulatory constraints",
             "The internal structure of the code, including statement and branch coverage",
-            "The degree to which the system satisfies operational and regulatory constraints"
+            "What the system does, based on its specified functional requirements and behavior"
           ],
           "exp": "Functional testing verifies the functions and behavior of the system (what it does) against its functional requirements."
         }
@@ -2663,8 +2663,8 @@
         "en": {
           "q": "Test techniques are primarily classified into:",
           "options": [
-            "Manual and automated techniques based on execution method",
             "Black-box, white-box, and experience-based techniques",
+            "Manual and automated techniques based on execution method",
             "Functional and non-functional techniques based on quality characteristic",
             "Static and dynamic techniques based on whether code is executed"
           ],
@@ -2692,8 +2692,8 @@
         "en": {
           "q": "Equivalence partitioning (EP) is based on the idea that:",
           "options": [
-            "Every possible input value must be tested to ensure complete coverage",
             "Values within the same partition are treated equivalently by the system, so one representative suffices",
+            "Every possible input value must be tested to ensure complete coverage",
             "Only boundary values between partitions require testing for adequate coverage",
             "Invalid partitions do not need to be tested because the system should reject them automatically"
           ],
@@ -2721,8 +2721,8 @@
         "en": {
           "q": "A field accepts integers from 1 to 100. Which equivalence partitions exist, including invalid ones?",
           "options": [
-            "Only one valid partition: 1–100",
             "Three partitions: ≤0 (invalid), 1–100 (valid), ≥101 (invalid)",
+            "Only one valid partition: 1–100",
             "Two partitions: 1–50 and 51–100",
             "Four partitions: negative, zero, 1–100, and above 100"
           ],
@@ -2750,8 +2750,8 @@
         "en": {
           "q": "Why should invalid partitions also be tested in equivalence partitioning?",
           "options": [
-            "To increase the total count of test cases and demonstrate thoroughness",
             "To verify that the system correctly handles out-of-range inputs with appropriate rejection or error messages",
+            "To increase the total count of test cases and demonstrate thoroughness",
             "Because invalid partitions are always more likely to contain defects than valid ones",
             "To satisfy regulatory requirements that mandate testing of all possible input combinations"
           ],
@@ -2779,8 +2779,8 @@
         "en": {
           "q": "Boundary value analysis (BVA) is effective because:",
           "options": [
-            "It guarantees 100% statement coverage of the source code under test",
             "Defects tend to cluster at the boundaries between partitions",
+            "It guarantees 100% statement coverage of the source code under test",
             "It eliminates the need for equivalence partitioning by subsumingg that technique",
             "Boundary values are always the easiest inputs for developers to implement correctly"
           ],
@@ -2837,8 +2837,8 @@
         "en": {
           "q": "Using 3-value BVA for the upper boundary of 65, which values are tested?",
           "options": [
-            "65 only",
             "64, 65, and 66",
+            "65 only",
             "63, 64, and 65",
             "65, 66, and 67"
           ],
@@ -2866,8 +2866,8 @@
         "en": {
           "q": "Passwords must be between 8 and 16 characters. Using 2-value BVA, which lengths are tested at the lower boundary?",
           "options": [
-            "8 and 9",
             "7 and 8",
+            "8 and 9",
             "6, 7, and 8",
             "8 and 16"
           ],
@@ -2895,8 +2895,8 @@
         "en": {
           "q": "A decision table is most appropriate when:",
           "options": [
-            "The system behavior depends on a sequence of states triggered by specific events",
             "There are combinations of conditions that lead to different actions (business rules)",
+            "The system behavior depends on a sequence of states triggered by specific events",
             "The focus is on measuring how thoroughly the source code has been exercised",
             "The tester needs to evaluate system performance under varying load conditions"
           ],
@@ -2951,14 +2951,14 @@
           "exp": "A ação só ocorre quando ambas as condições são verdadeiras; com cupom=Não, não há desconto."
         },
         "en": {
-          "q": "In a decision table, conditions and actions represent respectively:",
+          "q": "A discount is granted only when both 'VIP customer = Yes' AND 'valid coupon = Yes'. For the combination VIP=Yes, coupon=No, the expected action is:",
           "options": [
-            "Outputs and inputs of the system under test",
-            "The causes (inputs/conditions) and effects (resulting actions) for each rule",
-            "States and transitions in the system's behavioral model",
-            "Test cases and their associated expected test data values"
+            "Do not grant the discount because not all conditions are satisfied",
+            "Grant the discount because the customer is VIP",
+            "Generate a system error requiring manual intervention",
+            "Grant a partial discount proportional to the conditions satisfied"
           ],
-          "exp": "Conditions are the causes (inputs); actions are the effects (expected results) for each combination of conditions."
+          "exp": "The action (discount) only occurs when all required conditions are true; with coupon=No, the discount is not granted."
         }
       }
     },
@@ -2980,14 +2980,14 @@
           "exp": "Condições são as causas (entradas); ações são os efeitos (resultados) esperados para cada regra."
         },
         "en": {
-          "q": "A discount is granted only when both 'VIP customer = Yes' AND 'valid coupon = Yes'. For the combination VIP=Yes, coupon=No, the expected action is:",
+          "q": "In a decision table, conditions and actions represent respectively:",
           "options": [
-            "Grant the discount because the customer is VIP",
-            "Do not grant the discount because not all conditions are satisfied",
-            "Generate a system error requiring manual intervention",
-            "Grant a partial discount proportional to the conditions satisfied"
+            "The causes (inputs/conditions) and effects (resulting actions) for each rule",
+            "Outputs and inputs of the system under test",
+            "States and transitions in the system's behavioral model",
+            "Test cases and their associated expected test data values"
           ],
-          "exp": "The action (discount) only occurs when all required conditions are true; with coupon=No, the discount is not granted."
+          "exp": "Conditions are the causes (inputs); actions are the effects (expected results) for each combination of conditions."
         }
       }
     },
@@ -3011,8 +3011,8 @@
         "en": {
           "q": "State transition testing is appropriate for systems that:",
           "options": [
-            "Process purely numerical calculations without any dependency on previous inputs",
             "Change their behavior based on the current state and the events received",
+            "Process purely numerical calculations without any dependency on previous inputs",
             "Only have one possible state and respond identically to all inputs",
             "Are stateless REST APIs that process each request independently"
           ],
@@ -3040,8 +3040,8 @@
         "en": {
           "q": "In a state diagram, an 'invalid transition' is:",
           "options": [
-            "A transition that is permitted and should be exercised at least once",
             "An event that should not cause a state change from the current state",
+            "A transition that is permitted and should be exercised at least once",
             "The initial transition from the start state to the first operational state",
             "An exit action that executes when leaving a particular state"
           ],
@@ -3069,8 +3069,8 @@
         "en": {
           "q": "An ATM requires a card to be inserted before accepting a PIN. Attempting to enter a PIN without a card tests:",
           "options": [
-            "A valid transition from the idle state",
             "An invalid transition (unexpected event for the current state)",
+            "A valid transition from the idle state",
             "The terminal state of the ATM workflow",
             "An entry action for the PIN entry state"
           ],
@@ -3098,8 +3098,8 @@
         "en": {
           "q": "0-switch coverage (valid transitions coverage) requires:",
           "options": [
-            "Covering every pair of consecutive valid transitions at least once",
             "Exercising each individual valid transition at least once",
+            "Covering every pair of consecutive valid transitions at least once",
             "Covering all invalid transitions to verify system robustness",
             "Visiting every state at least twice during the test sequence"
           ],
@@ -3127,8 +3127,8 @@
         "en": {
           "q": "When choosing between EP, BVA, decision tables, and state transitions, the primary criterion is:",
           "options": [
-            "The automation tool available to the test team",
             "The nature of the problem: ranges, rule combinations, or state-dependent behavior",
+            "The automation tool available to the test team",
             "The personal preference and experience of the individual tester",
             "The size of the development team and the project deadline"
           ],
@@ -3156,8 +3156,8 @@
         "en": {
           "q": "White-box test techniques derive tests from:",
           "options": [
-            "External requirements and user stories defined by the product owner",
             "The internal structure: code, control flow, and system architecture",
+            "External requirements and user stories defined by the product owner",
             "The tester's experience and intuition about likely failure modes",
             "Acceptance criteria agreed between the development team and stakeholders"
           ],
@@ -3185,8 +3185,8 @@
         "en": {
           "q": "Statement coverage measures:",
           "options": [
-            "The percentage of decision outcomes exercised by the test suite",
             "The percentage of executable statements that have been executed",
+            "The percentage of decision outcomes exercised by the test suite",
             "The total number of independent paths through the code",
             "The number of conditions that independently affect decision outcomes"
           ],
@@ -3243,8 +3243,8 @@
         "en": {
           "q": "Decision coverage (branch coverage) requires:",
           "options": [
-            "Executing every executable statement at least once",
             "Exercising each decision as both true and false at least once",
+            "Executing every executable statement at least once",
             "Covering every possible combination of condition values",
             "Testing all independent paths through the code under test"
           ],
@@ -3272,8 +3272,8 @@
         "en": {
           "q": "For an 'if' statement without an 'else' branch, which coverage criterion ensures the false path is also tested?",
           "options": [
-            "Statement coverage, because all statements must be executed",
             "Decision coverage, because each decision must evaluate to both true and false",
+            "Statement coverage, because all statements must be executed",
             "No standard coverage criterion requires testing the false path of an if without else",
             "Condition coverage, because each individual condition must be evaluated"
           ],
@@ -3301,8 +3301,8 @@
         "en": {
           "q": "Which statement about the relative strength of coverage criteria is correct?",
           "options": [
-            "Statement coverage is stronger than decision coverage",
             "100% decision coverage implies 100% statement coverage, but not vice versa",
+            "Statement coverage is stronger than decision coverage",
             "Statement coverage and decision coverage are equally strong criteria",
             "Decision coverage does not subsume statement coverage in any circumstance"
           ],
@@ -3359,8 +3359,8 @@
         "en": {
           "q": "Error guessing consists of:",
           "options": [
-            "Randomly selecting input values without any systematic approach or heuristic",
             "Anticipating likely defects based on experience, past defects, and knowledge of failure modes",
+            "Randomly selecting input values without any systematic approach or heuristic",
             "Generating test cases automatically using AI tools trained on historical defect data",
             "Measuring code coverage to identify gaps in the existing test suite"
           ],
@@ -3388,8 +3388,8 @@
         "en": {
           "q": "In exploratory testing, the tester:",
           "options": [
-            "Follows pre-defined test scripts step by step without deviation",
             "Simultaneously learns about the system, designs tests, and executes them",
+            "Follows pre-defined test scripts step by step without deviation",
             "Only measures performance metrics without evaluating functional behavior",
             "Documents all test cases in advance before executing any of them"
           ],
@@ -3417,8 +3417,8 @@
         "en": {
           "q": "Checklist-based testing relies on:",
           "options": [
-            "State diagrams showing all valid and invalid system transitions",
             "A list of items or conditions to verify, derived from experience and heuristics",
+            "State diagrams showing all valid and invalid system transitions",
             "Code coverage metrics generated by automated instrumentation tools",
             "Decision tables enumerating all combinations of business rule conditions"
           ],
@@ -3446,8 +3446,8 @@
         "en": {
           "q": "When are experience-based techniques most valuable?",
           "options": [
-            "When a complete and stable specification is available for systematic technique application",
             "When documentation is scarce, time is short, or to complement formal techniques",
+            "When a complete and stable specification is available for systematic technique application",
             "Only in safety-critical systems where formal techniques are mandatory by regulation",
             "Exclusively when automated testing tools are unavailable to the test team"
           ],
@@ -3475,8 +3475,8 @@
         "en": {
           "q": "The '3 C's' of collaborative user story writing are:",
           "options": [
-            "Code, Compile, and Commit — the three steps of test-driven development",
             "Card, Conversation, and Confirmation — the three elements of a well-formed user story",
+            "Code, Compile, and Commit — the three steps of test-driven development",
             "Cost, Customer, and Contract — the three constraints of agile project management",
             "Create, Check, and Close — the three phases of the defect lifecycle"
           ],
@@ -3504,8 +3504,8 @@
         "en": {
           "q": "Acceptance criteria for a user story serve to:",
           "options": [
-            "Estimate the development effort required to implement the story in story points",
             "Define the conditions the story must satisfy to be considered complete and accepted",
+            "Estimate the development effort required to implement the story in story points",
             "Measure the code coverage achieved by the automated tests for that story",
             "Replace the need for test cases by providing sufficient implementation guidance"
           ],
@@ -3533,8 +3533,8 @@
         "en": {
           "q": "In ATDD (Acceptance Test-Driven Development), acceptance tests are:",
           "options": [
-            "Written after delivery to validate that the implemented feature works correctly",
             "Defined collaboratively before implementation, derived from acceptance criteria",
+            "Written after delivery to validate that the implemented feature works correctly",
             "Only automated end-to-end UI tests executed by the continuous integration pipeline",
             "Optional artifacts that supplement but never replace traditional test planning"
           ],
@@ -3562,8 +3562,8 @@
         "en": {
           "q": "A requirement describes both value ranges and multi-field combination rules. The best test strategy is:",
           "options": [
-            "Apply only BVA because it is the most comprehensive black-box technique available",
             "Combine techniques: EP/BVA for the ranges and decision tables for the combinations",
+            "Apply only BVA because it is the most comprehensive black-box technique available",
             "Apply only state transition testing because the system has multiple operational modes",
             "Use exploratory testing exclusively since the requirement is too complex for formal techniques"
           ],
@@ -3591,8 +3591,8 @@
         "en": {
           "q": "Coverage in test techniques measures:",
           "options": [
-            "The total number of defects found by the test suite during execution",
             "The degree to which defined coverage items have been exercised by the tests",
+            "The total number of defects found by the test suite during execution",
             "The elapsed time taken to execute all test cases in the test suite",
             "The number of testers assigned to the project relative to its complexity"
           ],
@@ -4259,8 +4259,8 @@
           "q": "What is the primary purpose of a test plan?",
           "options": [
             "To list every defect found during the testing phase of the project",
-            "To document objectives, scope, approach, resources, schedule, and criteria for the test effort",
             "To replace test cases by providing sufficient guidance for ad hoc execution",
+            "To document objectives, scope, approach, resources, schedule, and criteria for the test effort",
             "To formally approve the system for release to the production environment"
           ],
           "exp": "The test plan communicates objectives, scope, approach, resources, schedule, risks, and entry/exit criteria to all stakeholders."
@@ -4288,8 +4288,8 @@
           "q": "What is the difference between a test strategy and a test approach?",
           "options": [
             "They are synonyms; both terms describe the same planning artifact",
-            "A test strategy is a general organizational description; a test approach is its adaptation to a specific project",
             "A test approach is broader than a test strategy and supersedes it at the project level",
+            "A test strategy is a general organizational description; a test approach is its adaptation to a specific project",
             "A test strategy applies only to agile projects; a test approach applies to waterfall projects"
           ],
           "exp": "The strategy describes the general organizational testing direction; the approach adapts the strategy to the context of a specific project."
@@ -4316,9 +4316,9 @@
         "en": {
           "q": "Entry criteria define:",
           "options": [
-            "The conditions that must be met before a test activity can begin",
-            "The conditions under which a completed test activity can be declared finished",
             "The list of defects that must be resolved before testing can proceed",
+            "The conditions under which a completed test activity can be declared finished",
+            "The conditions that must be met before a test activity can begin",
             "The acceptance thresholds the final product must satisfy before user release"
           ],
           "exp": "Entry criteria are pre-conditions for starting a test activity, such as environment readiness, test cases approved, and test data available."
@@ -4346,8 +4346,8 @@
           "q": "Exit criteria serve to:",
           "options": [
             "Authorize the commencement of the next test level or activity",
-            "Determine when a test activity or level can be considered sufficiently complete",
             "Specify the defects that are acceptable to leave open at product release",
+            "Determine when a test activity or level can be considered sufficiently complete",
             "Define the skills required for testers assigned to the project"
           ],
           "exp": "Exit criteria define when to stop testing: coverage achieved, open defects below threshold, schedule met, or other agreed conditions."
@@ -4375,8 +4375,8 @@
           "q": "In agile methods, the 'Definition of Done' (DoD) functions as:",
           "options": [
             "Entry criteria that must be satisfied before a sprint can begin",
-            "A set of exit criteria defining when a work item is truly complete",
             "A formal test plan that replaces the need for traditional test documentation",
+            "A set of exit criteria defining when a work item is truly complete",
             "A defect report template used to track unresolved issues in the backlog"
           ],
           "exp": "The DoD is a set of exit criteria agreed by the team that defines when a work item (story, sprint, release) is genuinely complete."
@@ -4404,8 +4404,8 @@
           "q": "The ratio-based estimation technique uses:",
           "options": [
             "Expert judgment from team members familiar with similar past projects",
-            "Historical proportions (e.g., the ratio of test effort to development effort) to project the current estimate",
             "Function point analysis to derive test effort from system complexity metrics",
+            "Historical proportions (e.g., the ratio of test effort to development effort) to project the current estimate",
             "Monte Carlo simulation to generate probabilistic effort distributions"
           ],
           "exp": "Ratio-based estimation applies historical proportions from past projects (e.g., test effort = 30% of dev effort) to estimate the current project."
@@ -4433,8 +4433,8 @@
           "q": "Metrics-based estimation (extrapolation) relies on:",
           "options": [
             "Intuitive judgment from the most experienced tester on the team",
-            "Data and measurements from previous iterations or projects, extrapolated to the current work",
             "The project budget as the primary constraint for determining test scope",
+            "Data and measurements from previous iterations or projects, extrapolated to the current work",
             "Vendor-supplied benchmarks for the testing tools used on the project"
           ],
           "exp": "Metrics-based estimation uses historical data (velocity, defect rates, effort per test case) to extrapolate effort estimates for the current project."
@@ -4462,8 +4462,8 @@
           "q": "Expert-based estimation is characterized by:",
           "options": [
             "Ignoring past experience in favor of objective measurement and data analysis",
-            "Relying on the judgment of those experienced with the tasks, e.g., Planning Poker or Wideband Delphi",
             "Using only mathematical formulas derived from project size metrics",
+            "Relying on the judgment of those experienced with the tasks, e.g., Planning Poker or Wideband Delphi",
             "Delegating estimation entirely to project managers rather than testers"
           ],
           "exp": "Expert-based estimation leverages the knowledge of experienced practitioners, using consensus techniques like Planning Poker or Wideband Delphi."
@@ -4491,8 +4491,8 @@
           "q": "In risk-based prioritization, tests are executed first for:",
           "options": [
             "The shortest test cases to maximize the number of tests completed early",
-            "The items with the highest risk level (highest probability × impact)",
             "The oldest test cases that have not been executed in recent cycles",
+            "The items with the highest risk level (highest probability × impact)",
             "The test cases chosen randomly to avoid systematic bias in selection"
           ],
           "exp": "Risk-based prioritization executes tests covering the highest-risk items first, ensuring maximum risk reduction early in the test cycle."
@@ -4520,8 +4520,8 @@
           "q": "Coverage-based prioritization orders test cases by:",
           "options": [
             "The estimated execution time, starting with the fastest cases",
-            "The incremental coverage each test adds to what has not yet been covered",
             "Alphabetical order of the test case identifiers in the test management tool",
+            "The incremental coverage each test adds to what has not yet been covered",
             "The severity of the defects each test case has found in previous cycles"
           ],
           "exp": "Coverage-based prioritization orders tests to maximize new coverage as quickly as possible, executing cases that cover uncovered items first."
@@ -4549,8 +4549,8 @@
           "q": "The test pyramid suggests that a well-structured test suite should have:",
           "options": [
             "More end-to-end UI tests than unit tests, to maximize business-visible coverage",
-            "Many unit tests at the base and few slow, fragile UI/E2E tests at the top",
             "An equal number of tests at every level to ensure balanced coverage",
+            "Many unit tests at the base and few slow, fragile UI/E2E tests at the top",
             "Only automated tests; manual tests have no place in a mature test pyramid"
           ],
           "exp": "The pyramid recommends many fast, cheap unit tests at the base and few slow, expensive UI/E2E tests at the top for optimal ROI."
@@ -4578,8 +4578,8 @@
           "q": "The testing quadrants help to:",
           "options": [
             "Calculate the exact number of test cases required for a given system",
-            "Classify test types by whether they support the team or critique the product, and by technology vs. business focus",
             "Determine the sequence in which test levels should be executed",
+            "Classify test types by whether they support the team or critique the product, and by technology vs. business focus",
             "Select the appropriate test automation tool for each test level"
           ],
           "exp": "The quadrants organize tests (supporting team vs. critiquing product; technology-facing vs. business-facing) to ensure balanced test planning coverage."
@@ -4607,8 +4607,8 @@
           "q": "In test management, 'risk' is defined as:",
           "options": [
             "A defect that has been found but not yet fixed by the development team",
-            "A potential future event with a negative consequence for the project or product",
             "A failed test case that blocks the continuation of the test cycle",
+            "A potential future event with a negative consequence for the project or product",
             "A test case that has been excluded from the scope of the current test plan"
           ],
           "exp": "Risk is the possibility of a future event with negative consequences; it combines the probability of occurrence with the magnitude of impact."
@@ -4636,8 +4636,8 @@
           "q": "How is the risk level determined?",
           "options": [
             "Cost of fixing the defect multiplied by the remaining project timeline",
-            "The likelihood of occurrence combined with the impact of the potential harm",
             "The severity rating multiplied by the priority assigned in the defect tracker",
+            "The likelihood of occurrence combined with the impact of the potential harm",
             "The number of test cases that cover the area divided by total test cases"
           ],
           "exp": "Risk level = probability of occurrence × impact (magnitude of harm). This combination guides test prioritization."
@@ -4665,8 +4665,8 @@
           "q": "What is the difference between product risk and project risk?",
           "options": [
             "They are the same; both refer to risks that affect software quality",
-            "Product risk affects the quality of the product; project risk affects achieving project objectives",
             "Project risk is always technical; product risk is always business-related",
+            "Product risk affects the quality of the product; project risk affects achieving project objectives",
             "Product risk only applies to customer-facing features; project risk applies to internal processes"
           ],
           "exp": "Product risk affects the quality/fitness of the product; project risk (schedule, budget, resources, suppliers) affects the ability to achieve project goals."
@@ -4694,8 +4694,8 @@
           "q": "Which of the following is an example of a PROJECT risk?",
           "options": [
             "An incorrect financial calculation in the billing module",
-            "Key test personnel leaving the project mid-cycle, causing schedule delays",
             "A security vulnerability in the authentication component",
+            "Key test personnel leaving the project mid-cycle, causing schedule delays",
             "Poor performance of the search feature under concurrent user load"
           ],
           "exp": "Loss of key personnel causing delays is a project risk (affects project execution); the others are product risks (affect product quality)."
@@ -4723,8 +4723,8 @@
           "q": "Which of the following is an example of a PRODUCT risk?",
           "options": [
             "The test environment not being available on the planned start date",
-            "A data breach caused by a security defect in the user authentication module",
             "The project budget being exceeded due to unplanned scope additions",
+            "A data breach caused by a security defect in the user authentication module",
             "A third-party supplier delivering a component later than contractually agreed"
           ],
           "exp": "A security defect causing a data breach directly affects product quality and user safety — a product risk. The others are project risks."
@@ -4752,8 +4752,8 @@
           "q": "Risk-based testing uses the risk assessment to:",
           "options": [
             "Eliminate all identified risks before testing begins",
-            "Decide what to test, how much to test, and in what order, allocating effort proportional to risk",
             "Determine the salary budget for the testing team",
+            "Decide what to test, how much to test, and in what order, allocating effort proportional to risk",
             "Choose the programming language used to develop the system under test"
           ],
           "exp": "Risk-based testing uses risk levels to prioritize what to test first, how deeply to test, and where to concentrate the most experienced testers."
@@ -4781,8 +4781,8 @@
           "q": "Risk assessment comprises:",
           "options": [
             "Only fixing the defects found during the risk identification workshop",
-            "Identifying risks and analyzing them by estimating their probability and impact",
             "Executing test cases to verify that identified risks have been mitigated",
+            "Identifying risks and analyzing them by estimating their probability and impact",
             "Approving the test plan after all risks have been reviewed by management"
           ],
           "exp": "Risk assessment includes risk identification followed by risk analysis (estimating probability and impact) to determine risk levels for prioritization."
@@ -4810,8 +4810,8 @@
           "q": "How does risk level influence the depth of testing applied?",
           "options": [
             "Higher risk items receive less testing to preserve budget for lower-risk areas",
-            "Higher risk items receive more rigorous testing, earlier execution, and more experienced testers",
             "Risk level has no influence on test depth; all items are tested equally",
+            "Higher risk items receive more rigorous testing, earlier execution, and more experienced testers",
             "Only items with risk level 'critical' are tested; lower-risk items are excluded"
           ],
           "exp": "Items with higher risk receive more thorough techniques, earlier testing, and more experienced testers to maximize risk reduction."
@@ -4839,8 +4839,8 @@
           "q": "The purpose of test monitoring is:",
           "options": [
             "To write test cases that will be executed in the next test cycle",
-            "To provide visibility of progress by comparing actual results against the test plan",
             "To fix defects found during the execution phase of testing",
+            "To provide visibility of progress by comparing actual results against the test plan",
             "To select the test tools that will be used throughout the project"
           ],
           "exp": "Monitoring collects information about test progress to compare against the plan and support informed control decisions."
@@ -4868,8 +4868,8 @@
           "q": "Which of the following is a typical test metric?",
           "options": [
             "The color theme selected for the test management tool dashboard",
-            "The percentage of test cases executed and the pass/fail ratio",
             "The team's preferred programming language for test automation",
+            "The percentage of test cases executed and the pass/fail ratio",
             "The number of meetings held during the test planning phase"
           ],
           "exp": "Common metrics include: test cases planned/executed/passed/failed, defect density, coverage achieved, and defect trend over time."
@@ -4897,8 +4897,8 @@
           "q": "A test progress report is primarily intended to:",
           "options": [
             "Replace the test plan when the project scope changes significantly",
-            "Inform stakeholders about test status and support decisions during the test effort",
             "Document the final quality assessment at the end of the project",
+            "Inform stakeholders about test status and support decisions during the test effort",
             "List all requirements that have not yet been covered by any test case"
           ],
           "exp": "Progress reports communicate current status, risks, and results to stakeholders to support ongoing decisions during the test cycle."
@@ -4926,8 +4926,8 @@
           "q": "A test completion report is produced:",
           "options": [
             "Before testing begins to communicate the planned approach to stakeholders",
-            "At the end of a test level or milestone, summarizing results and lessons learned",
             "Daily during test execution to track the number of defects found each day",
+            "At the end of a test level or milestone, summarizing results and lessons learned",
             "Immediately after each individual test case is executed and evaluated"
           ],
           "exp": "The completion report summarizes results, coverage achieved, quality assessment, and lessons learned at the end of a test level or major milestone."
@@ -4955,8 +4955,8 @@
           "q": "Configuration management supports testing by:",
           "options": [
             "Automatically generating test cases from configuration files",
-            "Ensuring consistent identification and versioning of test items and testware with full traceability",
             "Replacing the test plan with version-controlled configuration documents",
+            "Ensuring consistent identification and versioning of test items and testware with full traceability",
             "Eliminating the need for defect reports by tracking changes to the codebase"
           ],
           "exp": "Configuration management maintains integrity and traceability of items under test and testware (versions, baselines) throughout the project."
@@ -4984,8 +4984,8 @@
           "q": "What should a good defect report contain?",
           "options": [
             "Only the title and severity rating to keep reporting lightweight and efficient",
-            "Identifier, description, steps to reproduce, expected vs actual result, severity, and priority",
             "Only the name of the developer responsible for the defective code",
+            "Identifier, description, steps to reproduce, expected vs actual result, severity, and priority",
             "A list of all test cases executed in the same session as the defect was found"
           ],
           "exp": "Effective defect reports include: ID, description, reproduction steps, expected vs. actual result, environment, severity, and priority."
@@ -5013,8 +5013,8 @@
           "q": "What is the difference between defect severity and priority?",
           "options": [
             "They are the same; both measure how urgently a defect must be fixed",
-            "Severity measures the technical impact on the system; priority measures the urgency of fixing from a business perspective",
             "Priority is determined by the development team; severity is determined by the business owner",
+            "Severity measures the technical impact on the system; priority measures the urgency of fixing from a business perspective",
             "Severity only applies to critical defects; priority applies to all defect types"
           ],
           "exp": "Severity = technical impact on the system; priority = business urgency to fix. They can be independent: a cosmetic defect on the homepage may have low severity but high priority."
