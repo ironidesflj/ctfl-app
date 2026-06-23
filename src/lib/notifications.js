@@ -25,8 +25,8 @@ export async function showLocalNotification(title, body) {
   const reg = await navigator.serviceWorker.ready;
   reg.showNotification(title, {
     body,
-    icon: "/icon-192.png",
-    badge: "/icon-192.png",
+    icon: "./icon-192.png",
+    badge: "./icon-192.png",
     tag: "ctfl-reminder", // evita acumular notificações duplicadas
   });
   return true;
