@@ -36,11 +36,6 @@ export function localized(q, lang = "pt") {
 
 export const ALL = bank.questions.map((q) => localized(q, "pt"));
 
-export function byDomain(domainId) {
-  if (domainId === "all") return ALL;
-  return ALL.filter((q) => q.domain === domainId);
-}
-
 export function byIds(ids) {
   const set = new Set(ids);
   return ALL.filter((q) => set.has(q.id));
@@ -91,24 +86,6 @@ export function shuffle(arr) {
     [r[i], r[j]] = [r[j], r[i]];
   }
   return r;
-}
-
-// Amostra de simulado: 40 questões na proporção dos capítulos do exame.
-export function buildExam(size = META.examFormat.questions) {
-  const picked = [];
-  DOMAINS.forEach((d) => {
-    const want = Math.round((chapterWeight(d.chapter) / META.total) * size);
-    picked.push(...shuffle(byDomain(d.id)).slice(0, want));
-  });
-  // ajuste fino para bater o tamanho exato
-  let pool = shuffle(picked);
-  if (pool.length > size) pool = pool.slice(0, size);
-  if (pool.length < size) {
-    const used = new Set(pool.map((q) => q.id));
-    const extra = shuffle(ALL).filter((q) => !used.has(q.id));
-    pool.push(...extra.slice(0, size - pool.length));
-  }
-  return shuffle(pool);
 }
 
 // Embaralha as alternativas mantendo o controle de qual é a correta.

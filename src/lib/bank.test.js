@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { ALL, DOMAINS, byDomain, byIds, buildExam, shuffleOptions } from "./bank.js";
+import { ALL, DOMAINS, byDomainInLang, byIds, buildExamInLang, shuffleOptions } from "./bank.js";
 
 describe("bank - data integrity", () => {
   it("has exactly 200 questions", () => {
@@ -20,8 +20,8 @@ describe("bank - data integrity", () => {
     });
   });
 
-  it("byDomain filters correctly", () => {
-    const tec = byDomain("tec");
+  it("byDomainInLang filters correctly", () => {
+    const tec = byDomainInLang("tec");
     expect(tec.every((q) => q.domain === "tec")).toBe(true);
     expect(tec.length).toBeGreaterThan(0);
   });
@@ -32,13 +32,13 @@ describe("bank - data integrity", () => {
     expect(result.length).toBe(3);
   });
 
-  it("buildExam returns exactly 40 questions", () => {
-    const exam = buildExam();
+  it("buildExamInLang returns exactly 40 questions", () => {
+    const exam = buildExamInLang();
     expect(exam.length).toBe(40);
   });
 
-  it("buildExam returns no duplicate questions", () => {
-    const exam = buildExam();
+  it("buildExamInLang returns no duplicate questions", () => {
+    const exam = buildExamInLang();
     const ids = exam.map((q) => q.id);
     expect(new Set(ids).size).toBe(ids.length);
   });
