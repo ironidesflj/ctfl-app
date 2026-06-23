@@ -146,11 +146,21 @@ export function localizedGlossary(lang = "pt") {
   return GLOSSARY.map((g) => ({ id: g.id, chapter: g.chapter, ...g[lang] }));
 }
 
+function escapeRegex(s) {
+  return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+function hasWordBoundaryMatch(text, term) {
+  const pattern = new RegExp(
+    `(^|[^\\p{L}\\p{N}])${escapeRegex(term)}([^\\p{L}\\p{N}]|$)`,
+    "iu"
+  );
+  return pattern.test(text);
+}
+
 // Helper para o link inline: dado um texto de explicação, encontra
 // termos do glossário mencionados nele (case-insensitive, match por palavra)
 export function findGlossaryTermsInText(text, lang = "pt") {
   const terms = localizedGlossary(lang);
-  return terms.filter((t) =>
-    text.toLowerCase().includes(t.term.toLowerCase())
-  );
+  return terms.filter((t) => hasWordBoundaryMatch(text, t.term));
 }
