@@ -23,6 +23,7 @@ export default [
       "react/react-in-jsx-scope": "off",
       "react/prop-types": "off",
       "no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
+      "no-empty": ["error", { allowEmptyCatch: true }],
     },
     settings: { react: { version: "detect" } },
   },
