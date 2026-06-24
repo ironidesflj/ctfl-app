@@ -55,15 +55,31 @@ src/
 
 ## Atualizar o banco de questões
 
-O banco é gerado pelo script `build_bank.py` (no repositório do banco). Após gerar um novo
-`ctfl-questions-ptbr.json`, substitua o arquivo em `src/data/`. O inglês entrará como `locales.en`
-em cada questão, sem alterar o código.
+O banco é gerado pelo script `build_all.py` (no repositório do banco), que encadeia
+`build_bank.py` → `add_en.py` → `check_alignment.py` num único comando. Ao dar push do
+`ctfl-questions-ptbr.json` atualizado na branch `main` do repositório do banco, uma
+GitHub Action (`sync-app.yml`) abre automaticamente um Pull Request neste repositório
+atualizando `src/data/ctfl-questions-ptbr.json` — não é mais necessário copiar o arquivo
+manualmente. Revise e faça o merge do PR gerado.
 
 ## Aviso
 
 Material de estudo independente, **não afiliado ao ISTQB**. Baseado na estrutura pública do syllabus CTFL v4.0.x
 
 ## Changelog
+
+### v3.6.4
+
+Fase 1 de estabilização técnica (sem mudança visível para o usuário final):
+
+- fix: copy de `coverageDesc` atualizado para incluir o modo Simulado
+- fix: `notifications.js` usa paths relativos (`./icon-192.png`), evita 404 em deploy de subpath
+- refactor: código morto removido de `bank.js` (`buildExam`, `byDomain` — substituídas por `*InLang`)
+- refactor: `Quiz.jsx` migrado de `useState` múltiplo para `useReducer` explícito
+- tooling: ESLint + Prettier configurados (`npm run lint`, `npm run format:check`)
+- testes: 30 testes de componente novos cobrindo `Quiz.jsx` (antes sem cobertura), incluindo
+  regressão exata do bug `seen`/5c93296 e do timeout do Simulado
+- testes: total sobe de 22 para 31
 
 ### v3.6.3
 
