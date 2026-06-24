@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, afterEach } from "vitest";
-import { render, screen, cleanup } from "@testing-library/react";
+import { render, screen, cleanup, act, fireEvent } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import Quiz from "./Quiz.jsx";
 
@@ -84,6 +84,30 @@ describe("Quiz — modo Simulado (exam) — regressão do bug seen/5c93296", () 
 
     // TODAS as chamadas devem ter um 3º argumento (questionId) definido —
     // esse é exatamente o bug que existiu até 5c93296.
+    onAnswer.mock.calls.forEach(([, , questionId]) => {
+      expect(questionId).toBeTruthy();
+    });
+  });
+});
+
+describe("Quiz — exam timeout (cobre a mudança de mecanismo do timer no refactor useReducer)", () => {
+  afterEach(() => vi.useRealTimers());
+
+  it("finaliza automaticamente e chama onAnswer 40x quando o tempo do Simulado chega a zero", async () => {
+    vi.useFakeTimers();
+    const { onAnswer } = renderQuiz();
+
+    // fireEvent é síncrono — não conflita com fake timers
+    fireEvent.click(screen.getByRole("button", { name: /^simulado/i }));
+    fireEvent.click(screen.getByRole("button", { name: /iniciar/i }));
+
+    // avança o tempo total do exam (75 min) dentro de act para que os
+    // efeitos React disparados por cada TICK_TIMER sejam processados
+    await act(async () => {
+      vi.advanceTimersByTime(75 * 60 * 1000 + 1000);
+    });
+
+    expect(onAnswer).toHaveBeenCalledTimes(40);
     onAnswer.mock.calls.forEach(([, , questionId]) => {
       expect(questionId).toBeTruthy();
     });

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useMemo } from "react";
+import { useReducer, useEffect, useRef, useMemo } from "react";
 import { DOMAINS, ALL, domainName, domainNameInLang, chapterWeight, byDomainInLang, byIds, buildExamInLang, shuffle, shuffleOptions, META } from "../lib/bank.js";
 import { getWrongIds, isSaved, toggleSaved, getSavedIds, getSRSCard, updateSRSCard, getDueItems } from "../lib/storage.js";
 import { initSM2, sm2, QUALITY } from "../lib/spacedRepetition.js";
@@ -36,33 +36,86 @@ function QuestionGrid({ answers, currentIndex, onJump }) {
   );
 }
 
+const initialState = {
+  phase: "setup", // setup | running | result
+  mode: "practice", // practice | exam | saved | srs
+  domain: "all", // ou "wrong" no modo "errei antes"
+  count: 10,
+  questions: [],
+  opts: [], // alternativas embaralhadas por questão
+  idx: 0,
+  answers: [], // índice escolhido por questão
+  showReview: false,
+  showGrid: false,
+  timeLeft: 0,
+};
+
+function quizReducer(state, action) {
+  switch (action.type) {
+    case "SET_MODE":
+      return { ...state, mode: action.mode };
+    case "SET_DOMAIN":
+      return { ...state, domain: action.domain };
+    case "SET_COUNT":
+      return { ...state, count: action.count };
+    case "APPLY_INITIAL_FILTER":
+      return { ...state, domain: action.domain, mode: "practice" };
+    case "START_QUIZ":
+      return {
+        ...state,
+        questions: action.questions,
+        opts: action.opts,
+        answers: new Array(action.questions.length).fill(null),
+        idx: 0,
+        showReview: false,
+        showGrid: false,
+        phase: "running",
+        timeLeft: action.timeLeft,
+      };
+    case "SELECT_EXAM": {
+      const next = [...state.answers];
+      next[state.idx] = action.optIndex;
+      return { ...state, answers: next };
+    }
+    case "ANSWER_PRACTICE": {
+      const next = [...state.answers];
+      next[state.idx] = action.optIndex;
+      return { ...state, answers: next };
+    }
+    case "SET_IDX":
+      return { ...state, idx: action.idx };
+    case "TICK_TIMER":
+      return { ...state, timeLeft: Math.max(0, state.timeLeft - 1) };
+    case "TOGGLE_REVIEW":
+      return { ...state, showReview: !state.showReview };
+    case "TOGGLE_GRID":
+      return { ...state, showGrid: !state.showGrid };
+    case "FINISH":
+      return { ...state, phase: "result" };
+    case "BACK_TO_SETUP":
+      return { ...state, phase: "setup" };
+    case "RESET":
+      return { ...state, phase: "setup" };
+    default:
+      return state;
+  }
+}
+
 export default function Quiz({ onAnswer, progress, setProgress, initialFilter, onFilterConsumed, lang = "pt" }) {
-  const [phase, setPhase] = useState("setup"); // setup | running | result
-  const [mode, setMode] = useState("practice"); // practice | exam
-  const [domain, setDomain] = useState("all"); // ou "wrong" no modo "errei antes"
-  const [count, setCount] = useState(10);
+  const [state, dispatch] = useReducer(quizReducer, initialState);
+  const { phase, mode, domain, count, questions, opts, idx, answers, showReview, showGrid, timeLeft } = state;
 
   const wrongIds = progress ? getWrongIds(progress) : [];
   const dueIds = progress ? getDueItems(progress, ALL.map((q) => q.id)) : [];
 
   useEffect(() => {
     if (initialFilter) {
-      setDomain(initialFilter.domain);
-      setMode("practice");
+      dispatch({ type: "APPLY_INITIAL_FILTER", domain: initialFilter.domain });
       onFilterConsumed();
     }
   }, [initialFilter]);
 
-  const [questions, setQuestions] = useState([]);
-  const [opts, setOpts] = useState([]); // alternativas embaralhadas por questão
-  const [idx, setIdx] = useState(0);
-  const [answers, setAnswers] = useState([]); // índice escolhido por questão
-  const [showReview, setShowReview] = useState(false);
-  const [showGrid, setShowGrid] = useState(false);
-
-  const [timeLeft, setTimeLeft] = useState(0);
   const timerRef = useRef(null);
-
   useEffect(() => () => clearInterval(timerRef.current), []);
 
   function start() {
@@ -80,35 +133,44 @@ export default function Quiz({ onAnswer, progress, setProgress, initialFilter, o
       const pool = domain === "wrong" ? byIds(wrongIds) : byDomainInLang(domain, lang);
       qs = shuffle(pool).slice(0, Math.min(count, pool.length));
     }
-    setQuestions(qs);
-    setOpts(qs.map((q) => shuffleOptions(q)));
-    setAnswers(new Array(qs.length).fill(null));
-    setIdx(0);
-    setShowReview(false);
-    setShowGrid(false);
-    setPhase("running");
+    const newOpts = qs.map((q) => shuffleOptions(q));
+    const newTimeLeft = mode === "exam" ? META.examFormat.timeMinutesNonNative * 60 : 0;
+    dispatch({ type: "START_QUIZ", questions: qs, opts: newOpts, timeLeft: newTimeLeft });
     if (mode === "exam") {
-      setTimeLeft(META.examFormat.timeMinutesNonNative * 60);
       timerRef.current = setInterval(() => {
-        setTimeLeft((t) => {
-          if (t <= 1) {
-            clearInterval(timerRef.current);
-            finish();
-            return 0;
-          }
-          return t - 1;
-        });
+        dispatch({ type: "TICK_TIMER" });
       }, 1000);
     }
   }
 
+  function finish() {
+    clearInterval(timerRef.current);
+    if (mode === "exam") {
+      questions.forEach((q, i) => {
+        const a = answers[i];
+        const correct = a !== null && opts[i][a].correct;
+        onAnswer(q.domain, !!correct, q.id);
+      });
+    }
+    dispatch({ type: "FINISH" });
+  }
+
+  // Substitui o finish() embutido no updater funcional de setTimeLeft do
+  // código pré-reducer. Mesmo gatilho observável (exam acaba quando o
+  // tempo zera), caminho mais limpo: TICK_TIMER só decrementa estado,
+  // este efeito separado decide quando chamar finish().
+  useEffect(() => {
+    if (mode === "exam" && phase === "running" && timeLeft === 0) {
+      finish();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [timeLeft, phase, mode]);
+
   function answerPractice(optIndex) {
     if (answers[idx] !== null) return;
-    const next = [...answers];
-    next[idx] = optIndex;
-    setAnswers(next);
     const question = questions[idx];
     const correct = opts[idx][optIndex].correct;
+    dispatch({ type: "ANSWER_PRACTICE", optIndex });
     onAnswer(question.domain, correct, question.id);
 
     if (mode !== "srs") {
@@ -129,21 +191,7 @@ export default function Quiz({ onAnswer, progress, setProgress, initialFilter, o
   }
 
   function selectExam(optIndex) {
-    const next = [...answers];
-    next[idx] = optIndex;
-    setAnswers(next);
-  }
-
-  function finish() {
-    clearInterval(timerRef.current);
-    if (mode === "exam") {
-      questions.forEach((q, i) => {
-        const a = answers[i];
-        const correct = a !== null && opts[i][a].correct;
-        onAnswer(q.domain, !!correct, q.id);
-      });
-    }
-    setPhase("result");
+    dispatch({ type: "SELECT_EXAM", optIndex });
   }
 
   const score = useMemo(() => {
@@ -155,7 +203,7 @@ export default function Quiz({ onAnswer, progress, setProgress, initialFilter, o
 
   function reset() {
     clearInterval(timerRef.current);
-    setPhase("setup");
+    dispatch({ type: "RESET" });
   }
 
   // ---------- SETUP ----------
@@ -163,18 +211,18 @@ export default function Quiz({ onAnswer, progress, setProgress, initialFilter, o
     return (
       <div className="quiz">
         <div className="mode-toggle">
-          <button className={"mode-btn" + (mode === "practice" ? " active" : "")} onClick={() => setMode("practice")}>
+          <button className={"mode-btn" + (mode === "practice" ? " active" : "")} onClick={() => dispatch({ type: "SET_MODE", mode: "practice" })}>
             <span className="mode-title">{t(lang, "quiz.modeStudy")}</span>
             <span className="mode-desc">{t(lang, "quiz.modeStudyDesc")}</span>
           </button>
-          <button className={"mode-btn" + (mode === "exam" ? " active" : "")} onClick={() => setMode("exam")}>
+          <button className={"mode-btn" + (mode === "exam" ? " active" : "")} onClick={() => dispatch({ type: "SET_MODE", mode: "exam" })}>
             <span className="mode-title">{t(lang, "quiz.modeExam")}</span>
             <span className="mode-desc">{t(lang, "quiz.modeExamDesc", { n: META.examFormat.questions, min: META.examFormat.timeMinutesNonNative })}</span>
           </button>
           {getSavedIds(progress).length > 0 && (
             <button
               className={"mode-btn" + (mode === "saved" ? " active" : "")}
-              onClick={() => setMode("saved")}
+              onClick={() => dispatch({ type: "SET_MODE", mode: "saved" })}
             >
               <span className="mode-title">{t(lang, "quiz.modeSaved")}</span>
               <span className="mode-desc">
@@ -183,7 +231,7 @@ export default function Quiz({ onAnswer, progress, setProgress, initialFilter, o
             </button>
           )}
           {dueIds.length > 0 && (
-            <button className={"mode-btn" + (mode === "srs" ? " active" : "")} onClick={() => setMode("srs")}>
+            <button className={"mode-btn" + (mode === "srs" ? " active" : "")} onClick={() => dispatch({ type: "SET_MODE", mode: "srs" })}>
               <span className="mode-title">{t(lang, "quiz.modeSRS")}</span>
               <span className="mode-desc">{dueIds.length} {t(lang, "quiz.srsDueDesc")}</span>
             </button>
@@ -194,18 +242,18 @@ export default function Quiz({ onAnswer, progress, setProgress, initialFilter, o
           <div className="card">
             <h3>{t(lang, "quiz.chooseDomain")}</h3>
             <div className="domain-grid">
-              <button className={"domain-card wide" + (domain === "all" ? " selected" : "")} onClick={() => setDomain("all")}>
+              <button className={"domain-card wide" + (domain === "all" ? " selected" : "")} onClick={() => dispatch({ type: "SET_DOMAIN", domain: "all" })}>
                 <span className="domain-weight">{t(lang, "quiz.allDomains")}</span>
                 <span className="domain-sub">{t(lang, "domainAllDesc")}</span>
               </button>
               {wrongIds.length > 0 && (
-                <button className={"domain-card wide" + (domain === "wrong" ? " selected" : "")} onClick={() => setDomain("wrong")}>
+                <button className={"domain-card wide" + (domain === "wrong" ? " selected" : "")} onClick={() => dispatch({ type: "SET_DOMAIN", domain: "wrong" })}>
                   <span className="domain-weight">{t(lang, "quiz.wrongBefore")}</span>
                   <span className="domain-sub">{t(lang, "quiz.wrongBeforeDesc", { n: wrongIds.length })}</span>
                 </button>
               )}
               {DOMAINS.map((d) => (
-                <button key={d.id} className={"domain-card" + (domain === d.id ? " selected" : "")} onClick={() => setDomain(d.id)}>
+                <button key={d.id} className={"domain-card" + (domain === d.id ? " selected" : "")} onClick={() => dispatch({ type: "SET_DOMAIN", domain: d.id })}>
                   <span className="domain-weight">{chapterWeight(d.chapter)} / {META.total}</span>
                   <span className="domain-name">{domainNameInLang(d.id, lang)}</span>
                 </button>
@@ -214,7 +262,7 @@ export default function Quiz({ onAnswer, progress, setProgress, initialFilter, o
             <div className="count-row">
               <span className="muted">{t(lang, "quiz.quantity")}</span>
               {[10, 20, 99].map((n) => (
-                <button key={n} className={"chip" + (count === n ? " on" : "")} onClick={() => setCount(n)}>
+                <button key={n} className={"chip" + (count === n ? " on" : "")} onClick={() => dispatch({ type: "SET_COUNT", count: n })}>
                   {n === 99 ? t(lang, "quiz.all") : n}
                 </button>
               ))}
@@ -228,7 +276,7 @@ export default function Quiz({ onAnswer, progress, setProgress, initialFilter, o
             <div className="count-row">
               <span className="muted">{t(lang, "quiz.quantity")}</span>
               {[10, 20, 99].map((n) => (
-                <button key={n} className={"chip" + (count === n ? " on" : "")} onClick={() => setCount(n)}>
+                <button key={n} className={"chip" + (count === n ? " on" : "")} onClick={() => dispatch({ type: "SET_COUNT", count: n })}>
                   {n === 99 ? t(lang, "quiz.all") : n}
                 </button>
               ))}
@@ -242,7 +290,7 @@ export default function Quiz({ onAnswer, progress, setProgress, initialFilter, o
             <div className="count-row">
               <span className="muted">{t(lang, "quiz.quantity")}</span>
               {[10, 20, 99].map((n) => (
-                <button key={n} className={"chip" + (count === n ? " on" : "")} onClick={() => setCount(n)}>
+                <button key={n} className={"chip" + (count === n ? " on" : "")} onClick={() => dispatch({ type: "SET_COUNT", count: n })}>
                   {n === 99 ? t(lang, "quiz.all") : n}
                 </button>
               ))}
@@ -280,7 +328,7 @@ export default function Quiz({ onAnswer, progress, setProgress, initialFilter, o
           </p>
           <div className="actions center">
             <button className="btn ghost" onClick={reset}>{t(lang, "quiz.backHome")}</button>
-            <button className="btn" onClick={() => setShowReview((v) => !v)}>{showReview ? t(lang, "quiz.hideReview") : t(lang, "quiz.showReview")}</button>
+            <button className="btn" onClick={() => dispatch({ type: "TOGGLE_REVIEW" })}>{showReview ? t(lang, "quiz.hideReview") : t(lang, "quiz.showReview")}</button>
             <button className="btn primary" onClick={reset}>{t(lang, "quiz.retakeQuiz")}</button>
           </div>
         </div>
@@ -323,7 +371,7 @@ export default function Quiz({ onAnswer, progress, setProgress, initialFilter, o
     <div className="quiz">
       <button
         className="btn ghost back-btn"
-        onClick={() => { clearInterval(timerRef.current); setPhase("setup"); }}
+        onClick={() => { clearInterval(timerRef.current); dispatch({ type: "BACK_TO_SETUP" }); }}
       >
         {t(lang, "quiz.backShort")}
       </button>
@@ -336,7 +384,7 @@ export default function Quiz({ onAnswer, progress, setProgress, initialFilter, o
       {mode === "exam" && (
         <>
           <div className="actions" style={{ marginTop: 0, marginBottom: '0.8rem' }}>
-            <button className="btn" onClick={() => setShowGrid((v) => !v)}>
+            <button className="btn" onClick={() => dispatch({ type: "TOGGLE_GRID" })}>
               {showGrid ? t(lang, "quiz.hideGrid") : t(lang, "quiz.showGrid")}
             </button>
           </div>
@@ -349,7 +397,7 @@ export default function Quiz({ onAnswer, progress, setProgress, initialFilter, o
                   blank: answers.filter((a) => a === null || a === undefined).length,
                 })}
               </div>
-              <QuestionGrid answers={answers} currentIndex={idx} onJump={(i) => setIdx(i)} />
+              <QuestionGrid answers={answers} currentIndex={idx} onJump={(i) => dispatch({ type: "SET_IDX", idx: i })} />
             </div>
           )}
         </>
@@ -425,8 +473,8 @@ export default function Quiz({ onAnswer, progress, setProgress, initialFilter, o
         )}
 
         <div className="actions">
-          {mode === "exam" && idx > 0 && <button className="btn" onClick={() => setIdx(idx - 1)}>{t(lang, "quiz.prev")}</button>}
-          {!isLast && (mode === "exam" || answered) && <button className="btn primary" onClick={() => setIdx(idx + 1)}>{t(lang, "quiz.next")}</button>}
+          {mode === "exam" && idx > 0 && <button className="btn" onClick={() => dispatch({ type: "SET_IDX", idx: idx - 1 })}>{t(lang, "quiz.prev")}</button>}
+          {!isLast && (mode === "exam" || answered) && <button className="btn primary" onClick={() => dispatch({ type: "SET_IDX", idx: idx + 1 })}>{t(lang, "quiz.next")}</button>}
           {isLast && (mode === "exam" || answered) && <button className="btn primary" onClick={finish}>{mode === "exam" ? t(lang, "quiz.finishExam") : t(lang, "quiz.seeResult")}</button>}
         </div>
       </div>
