@@ -24,6 +24,8 @@ npm install
 npm run dev
 ```
 
+Para verificar lint e formatação: `npm run lint` e `npm run format:check`.
+
 Abra o endereço mostrado no terminal (normalmente http://localhost:5173).
 Aqui o `localStorage` funciona de verdade, então o progresso persiste entre sessões.
 
