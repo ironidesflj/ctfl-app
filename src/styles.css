@@ -6,7 +6,7 @@
   --line-strong: #cdc8e4;
   --text: #1b1830;
   --text-2: #5c5775;
-  --text-3: #8a85a3;
+  --text-3: #6e6a86;
   --accent: #5a4be7;
   --accent-soft: #ece9fc;
   --accent-text: #3b2fb0;
@@ -21,6 +21,12 @@
   --font-display: "Space Grotesk", system-ui, sans-serif;
   --font-body: "Inter", system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  /* Hook multi-certificação (Fase 5) — por padrão espelha --accent,
+     sem efeito visual hoje. Futuras paletas por certificação
+     sobrescrevem só --cert-accent via [data-cert="x"], sem tocar
+     em --accent (mantém retrocompatibilidade). */
+  --cert-accent: var(--accent);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -57,7 +63,7 @@
   --line-strong: #cdc8e4;
   --text: #1b1830;
   --text-2: #5c5775;
-  --text-3: #8a85a3;
+  --text-3: #6e6a86;
   --accent: #5a4be7;
   --accent-soft: #ece9fc;
   --accent-text: #3b2fb0;
