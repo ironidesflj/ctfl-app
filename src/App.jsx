@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Analytics } from "@vercel/analytics/react";
 import Quiz from "./components/Quiz.jsx";
 import Flashcards from "./components/Flashcards.jsx";
 import Syllabus from "./components/Syllabus.jsx";
@@ -149,6 +150,7 @@ export default function App() {
         {t(lang, "footer")}
         <span style={{marginLeft: '1rem', opacity: 0.5}}>v{__APP_VERSION__}</span>
       </footer>
+      <Analytics />
     </div>
   );
 }
