@@ -140,7 +140,7 @@ export default function App() {
             )}
             {tab === "flash" && <Flashcards lang={lang} progress={progress} setProgress={setProgress} />}
             {tab === "glossary" && <Glossary lang={lang} />}
-            {tab === "stats" && <Stats progress={progress} setProgress={setProgress} lang={lang} />}
+            {tab === "stats" && <Stats progress={progress} setProgress={setProgress} lang={lang} onGoToQuiz={() => setTab("quiz")} />}
           </main>
         </>
       )}

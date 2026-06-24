@@ -43,7 +43,14 @@ export default function Glossary({ lang = "pt" }) {
 
       <div className="card">
         {terms.length === 0 ? (
-          <p className="muted">{lang === "pt" ? "Nenhum termo encontrado." : "No terms found."}</p>
+          <div>
+            <p className="muted">{lang === "pt" ? "Nenhum termo encontrado." : "No terms found."}</p>
+            {query.trim() !== "" && (
+              <button className="btn" onClick={() => setQuery("")}>
+                {t(lang, "glossary.clearSearch")}
+              </button>
+            )}
+          </div>
         ) : (
           terms.map((t) => (
             <div className="syl-item" key={t.id}>

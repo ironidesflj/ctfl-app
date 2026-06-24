@@ -54,7 +54,11 @@ export default function Flashcards({ lang = "pt", progress, setProgress }) {
       </div>
 
       {!card ? (
-        <p className="muted">{t(lang, "flashcards.dueToday")}: 0</p>
+        <p className="muted">
+          {domain === "due"
+            ? `${t(lang, "flashcards.dueToday")}: 0`
+            : t(lang, "flashcards.emptyDomain")}
+        </p>
       ) : (
       <>
       <button className="card flash" onClick={() => setFlipped((f) => !f)}>

@@ -16,7 +16,7 @@ function groupByDay(history) {
     .slice(-14); // últimos 14 dias com atividade
 }
 
-export default function Stats({ progress, setProgress, lang = "pt" }) {
+export default function Stats({ progress, setProgress, lang = "pt", onGoToQuiz }) {
   const fileRef = useRef(null);
   const [msg, setMsg] = useState("");
   const [notifStatus, setNotifStatus] = useState(getNotificationPermission());
@@ -45,6 +45,12 @@ export default function Stats({ progress, setProgress, lang = "pt" }) {
 
   return (
     <div className="study">
+      {progress.total === 0 && (
+        <div className="card" style={{ textAlign: "center" }}>
+          <p>{t(lang, "stats.emptyWelcome")}</p>
+          <button className="btn primary" onClick={onGoToQuiz}>{t(lang, "stats.emptyCta")}</button>
+        </div>
+      )}
       <div className="stat-grid">
         <div className="stat"><div className="stat-val">{progress.total}</div><div className="stat-lbl">{t(lang, "stats.answered")}</div></div>
         <div className="stat"><div className="stat-val">{progress.correct}</div><div className="stat-lbl">{t(lang, "stats.correct")}</div></div>
