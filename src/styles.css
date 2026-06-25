@@ -384,6 +384,15 @@ body {
 @media (max-width: 480px) {
   .mode-toggle { flex-direction: column; }
   .stat-grid { grid-template-columns: 1fr; }
+  .quiz .actions {
+    position: sticky;
+    bottom: 0;
+    background: var(--surface);
+    padding-top: 12px;
+    padding-bottom: 12px;
+    border-top: 1px solid var(--line);
+    z-index: 5;
+  }
 }
 
 .onboarding {
