@@ -335,6 +335,16 @@ body {
 .syl-kw { font-weight: 500; font-size: var(--fs-14); }
 .syl-desc { font-size: var(--fs-13); color: var(--text-2); margin-top: 2px; line-height: 1.5; }
 
+.syl-chapter { border: 1px solid var(--line); border-radius: 8px; margin-bottom: 8px; overflow: hidden; }
+.syl-chapter-summary {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 12px 14px; cursor: pointer; font-weight: 500; list-style: none;
+}
+.syl-chapter-summary::-webkit-details-marker { display: none; }
+.syl-chapter-progress { display: flex; align-items: center; gap: 8px; }
+.syl-chapter-progress .bar { width: 60px; }
+.syl-chapter .syl-item { padding: 8px 14px; border-top: 1px solid var(--line); }
+
 .stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 1rem; }
 .stat { background: var(--surface-2); border-radius: var(--radius-sm); padding: 14px; text-align: center; }
 .stat-val { font-family: var(--font-display); font-size: var(--fs-24); font-weight: 700; }
