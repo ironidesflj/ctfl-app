@@ -334,6 +334,7 @@ body {
   width: 100%; height: 210px; cursor: pointer;
   position: relative; perspective: 1000px;
   text-align: center; color: var(--text);
+  touch-action: none;
 }
 .flash-card-inner {
   position: relative;

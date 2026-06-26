@@ -52,6 +52,7 @@ export default function Flashcards({ lang = "pt", progress, setProgress }) {
   }
   function handleTouchMove(e) {
     if (!isDraggingRef.current || touchStartX.current === null) return;
+    e.preventDefault();
     const delta = e.touches[0].clientX - touchStartX.current;
     dragXRef.current = delta;
     setDragX(delta);
