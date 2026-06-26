@@ -3,6 +3,7 @@ import { t } from "../lib/ui-strings.js";
 
 export default function Onboarding({ onDismiss, lang = "pt" }) {
   const [openFaq, setOpenFaq] = useState(null);
+  const [demoAnswer, setDemoAnswer] = useState(null);
 
   const features = [
     { icon: "📚", title: t(lang, "onboarding.featureStudyTitle"), desc: t(lang, "onboarding.featureStudyDesc") },
@@ -17,6 +18,17 @@ export default function Onboarding({ onDismiss, lang = "pt" }) {
     q: t(lang, `onboarding.faqQ${n}`),
     a: t(lang, `onboarding.faqA${n}`),
   }));
+
+  const demoOptions = [
+    { letter: "A", text: t(lang, "onboarding.mockupOptA"), correct: false },
+    { letter: "B", text: t(lang, "onboarding.mockupOptB"), correct: true },
+    { letter: "C", text: t(lang, "onboarding.mockupOptC"), correct: false },
+  ];
+
+  function handleDemoClick(i) {
+    if (demoAnswer !== null) return;
+    setDemoAnswer(i);
+  }
 
   return (
     <div className="onboarding">
@@ -57,9 +69,12 @@ export default function Onboarding({ onDismiss, lang = "pt" }) {
         </div>
       </div>
 
-      {/* 3. Mockup / como funciona */}
+      {/* 3. Mini-demo interativo / como funciona */}
       <div className="ob-section">
         <h2 className="ob-section-title">{t(lang, "onboarding.mockupTitle")}</h2>
+        <p className="muted" style={{textAlign: "center", marginBottom: "0.5rem"}}>
+          {t(lang, "onboarding.mockupHint")}
+        </p>
         <div className="ob-mockup-wrap">
           <div className="card">
             <div className="q-meta">
@@ -68,19 +83,24 @@ export default function Onboarding({ onDismiss, lang = "pt" }) {
             </div>
             <p className="q-text">{t(lang, "onboarding.mockupQuestion")}</p>
             <div className="options">
-              <button className="opt" disabled>
-                <span className="opt-letter">A</span>
-                <span>{t(lang, "onboarding.mockupOptA")}</span>
-              </button>
-              <button className="opt correct" disabled>
-                <span className="opt-letter">B</span>
-                <span>{t(lang, "onboarding.mockupOptB")}</span>
-              </button>
-              <button className="opt" disabled>
-                <span className="opt-letter">C</span>
-                <span>{t(lang, "onboarding.mockupOptC")}</span>
-              </button>
+              {demoOptions.map((opt, i) => {
+                let cls = "opt";
+                if (demoAnswer !== null) {
+                  cls += " locked";
+                  if (opt.correct) cls += demoAnswer === i ? " correct" : " reveal";
+                  else if (demoAnswer === i) cls += " wrong";
+                }
+                return (
+                  <button key={i} className={cls} onClick={() => handleDemoClick(i)} disabled={demoAnswer !== null}>
+                    <span className="opt-letter">{opt.letter}</span>
+                    <span>{opt.text}</span>
+                  </button>
+                );
+              })}
             </div>
+            {demoAnswer !== null && (
+              <div className="explanation">{t(lang, "onboarding.mockupExp")}</div>
+            )}
           </div>
         </div>
       </div>

@@ -97,6 +97,8 @@ export const UI = {
       mockupOptA: "São sinônimos",
       mockupOptB: "Erro gera defeito, que gera falha",
       mockupOptC: "Falha gera erro",
+      mockupHint: "Clique numa alternativa para ver como funciona:",
+      mockupExp: "Um erro (ação humana) introduz um defeito no código, que pode causar uma falha (comportamento incorreto observável) durante a execução.",
 
       socialFreeText: "100% gratuito, sem cadastro, sem anúncios",
       socialOpenSourceText: "Código aberto no GitHub",
@@ -219,6 +221,8 @@ export const UI = {
       mockupOptA: "They are synonyms",
       mockupOptB: "Error causes a defect, which causes a failure",
       mockupOptC: "Failure causes an error",
+      mockupHint: "Click an option to see how it works:",
+      mockupExp: "An error (human action) introduces a defect into the code, which may cause a failure (observable incorrect behavior) during execution.",
 
       socialFreeText: "100% free, no sign-up, no ads",
       socialOpenSourceText: "Open source on GitHub",
