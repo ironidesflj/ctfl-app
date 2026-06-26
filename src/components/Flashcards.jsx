@@ -61,20 +61,24 @@ export default function Flashcards({ lang = "pt", progress, setProgress }) {
         </p>
       ) : (
       <>
-      <button className="card flash" onClick={() => setFlipped((f) => !f)}>
-        {lang === "en" && !hasEN(card.id) && (
-          <span style={{position:'absolute', top:8, left:8, zIndex:2, fontSize:'11px', color:'var(--text-3)'}}>EN coming soon · showing PT</span>
-        )}
-        <div className={"flash-card-inner" + (flipped ? " flipped" : "")}>
-          <div className="flash-card-front">
-            <span className="flash-front">{card.front}</span>
-            <span className="flash-hint">{t(lang, "flashcards.flip")}</span>
+      <div className="flash-stack">
+        {cards.length > 2 && <div className="flash-stack-peek depth-2" aria-hidden="true" />}
+        {cards.length > 1 && <div className="flash-stack-peek depth-1" aria-hidden="true" />}
+        <button className="card flash" onClick={() => setFlipped((f) => !f)}>
+          {lang === "en" && !hasEN(card.id) && (
+            <span style={{position:'absolute', top:8, left:8, zIndex:2, fontSize:'11px', color:'var(--text-3)'}}>EN coming soon · showing PT</span>
+          )}
+          <div className={"flash-card-inner" + (flipped ? " flipped" : "")}>
+            <div className="flash-card-front">
+              <span className="flash-front">{card.front}</span>
+              <span className="flash-hint">{t(lang, "flashcards.flip")}</span>
+            </div>
+            <div className="flash-card-back">
+              <span className="flash-back">{card.back}</span>
+            </div>
           </div>
-          <div className="flash-card-back">
-            <span className="flash-back">{card.back}</span>
-          </div>
-        </div>
-      </button>
+        </button>
+      </div>
 
       {flipped && (
         <div className="srs-quality">

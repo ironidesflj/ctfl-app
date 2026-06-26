@@ -366,6 +366,18 @@ body {
 .flash-back { font-size: var(--fs-14); color: var(--text-2); white-space: pre-line; line-height: 1.7; text-align: left; }
 .flash-hint { font-size: var(--fs-12); color: var(--text-3); }
 
+.flash-stack { position: relative; }
+.flash-stack-peek {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius);
+  background: var(--surface);
+  border: 1px solid var(--line);
+}
+.flash-stack-peek.depth-1 { transform: translateY(8px) scale(0.97); opacity: 0.7; z-index: 1; }
+.flash-stack-peek.depth-2 { transform: translateY(16px) scale(0.94); opacity: 0.4; z-index: 0; }
+.flash-stack .flash { z-index: 2; }
+
 .syl-head { font-family: var(--font-mono); font-size: var(--fs-12); color: var(--accent-text); margin-bottom: .8rem; }
 .syl-item { padding: 11px 0; border-bottom: 1px solid var(--line); }
 .syl-item:last-child { border-bottom: none; }
