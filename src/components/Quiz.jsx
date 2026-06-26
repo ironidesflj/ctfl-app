@@ -404,73 +404,79 @@ export default function Quiz({ onAnswer, progress, setProgress, initialFilter, o
       )}
 
       <div className="card">
-        <div className="q-meta">
-          <span className="q-domain">{domainName(q.domain, lang)}</span>
-          <span className={"klvl k" + q.kLevel}>K{q.kLevel}</span>
-        </div>
-        {lang === "en" && !hasEN(questions[idx]?.id) && (
-          <span style={{fontSize:'11px', color:'var(--text-3)'}}>
-            EN coming soon · showing PT
-          </span>
-        )}
-        <p className="q-text">{q.q}</p>
-
-        <div className="options">
-          {o.map((opt, i) => {
-            let cls = "opt";
-            if (mode === "exam") {
-              if (answers[idx] === i) cls += " picked";
-            } else if (answered) {
-              cls += " locked";
-              if (opt.correct) cls += answers[idx] === i ? " correct" : " reveal";
-              else if (answers[idx] === i) cls += " wrong";
-            }
-            return (
-              <button
-                key={i}
-                className={cls}
-                onClick={() => (mode === "exam" ? selectExam(i) : answerPractice(i))}
-                disabled={answered}
-              >
-                <span className="opt-letter">{LETTERS[i]}</span>
-                <span>{opt.text}</span>
-              </button>
-            );
-          })}
-        </div>
-
-        {answered && <div className="explanation">{q.exp}</div>}
-
-        {answered && (() => {
-          const matchedTerms = findGlossaryTermsInText(q.exp, lang);
-          return matchedTerms.length > 0 && (
-            <div className="glossary-hint">
-              {t(lang, "quiz.terms")}
-              {matchedTerms.map((term) => (
-                <span key={term.id} className="glossary-tag">{term.term}</span>
-              ))}
+        <div className={"quiz-split" + (answered ? " has-explain" : "")}>
+          <div className="quiz-question-col">
+            <div className="q-meta">
+              <span className="q-domain">{domainName(q.domain, lang)}</span>
+              <span className={"klvl k" + q.kLevel}>K{q.kLevel}</span>
             </div>
-          );
-        })()}
+            {lang === "en" && !hasEN(questions[idx]?.id) && (
+              <span style={{fontSize:'11px', color:'var(--text-3)'}}>
+                EN coming soon · showing PT
+              </span>
+            )}
+            <p className="q-text">{q.q}</p>
 
-        {answered && (
-          <button
-            className={"btn " + (saved ? "btn-saved" : "primary")}
-            onClick={() => setProgress((p) => toggleSaved(p, q.id))}
-            style={{ marginTop: '0.5rem' }}
-          >
-            {saved ? t(lang, "quiz.saved") : t(lang, "quiz.saveQuestion")}
-          </button>
-        )}
-
-        {mode === "srs" && answered && (
-          <div className="srs-quality">
-            <button className="btn srs-again" onClick={() => rateSRS("again")}>{t(lang, "quiz.srsAgain")}</button>
-            <button className="btn srs-hard" onClick={() => rateSRS("hard")}>{t(lang, "quiz.srsHard")}</button>
-            <button className="btn srs-good" onClick={() => rateSRS("good")}>{t(lang, "quiz.srsGood")}</button>
-            <button className="btn srs-easy" onClick={() => rateSRS("easy")}>{t(lang, "quiz.srsEasy")}</button>
+            <div className="options">
+              {o.map((opt, i) => {
+                let cls = "opt";
+                if (mode === "exam") {
+                  if (answers[idx] === i) cls += " picked";
+                } else if (answered) {
+                  cls += " locked";
+                  if (opt.correct) cls += answers[idx] === i ? " correct" : " reveal";
+                  else if (answers[idx] === i) cls += " wrong";
+                }
+                return (
+                  <button
+                    key={i}
+                    className={cls}
+                    onClick={() => (mode === "exam" ? selectExam(i) : answerPractice(i))}
+                    disabled={answered}
+                  >
+                    <span className="opt-letter">{LETTERS[i]}</span>
+                    <span>{opt.text}</span>
+                  </button>
+                );
+              })}
+            </div>
           </div>
-        )}
+
+          {answered && (
+            <div className="quiz-explain-col">
+              <div className="explanation">{q.exp}</div>
+
+              {(() => {
+                const matchedTerms = findGlossaryTermsInText(q.exp, lang);
+                return matchedTerms.length > 0 && (
+                  <div className="glossary-hint">
+                    {t(lang, "quiz.terms")}
+                    {matchedTerms.map((term) => (
+                      <span key={term.id} className="glossary-tag">{term.term}</span>
+                    ))}
+                  </div>
+                );
+              })()}
+
+              <button
+                className={"btn " + (saved ? "btn-saved" : "primary")}
+                onClick={() => setProgress((p) => toggleSaved(p, q.id))}
+                style={{ marginTop: '0.5rem' }}
+              >
+                {saved ? t(lang, "quiz.saved") : t(lang, "quiz.saveQuestion")}
+              </button>
+
+              {mode === "srs" && (
+                <div className="srs-quality">
+                  <button className="btn srs-again" onClick={() => rateSRS("again")}>{t(lang, "quiz.srsAgain")}</button>
+                  <button className="btn srs-hard" onClick={() => rateSRS("hard")}>{t(lang, "quiz.srsHard")}</button>
+                  <button className="btn srs-good" onClick={() => rateSRS("good")}>{t(lang, "quiz.srsGood")}</button>
+                  <button className="btn srs-easy" onClick={() => rateSRS("easy")}>{t(lang, "quiz.srsEasy")}</button>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
 
         <div className="actions">
           {mode === "exam" && idx > 0 && <button className="btn" onClick={() => dispatch({ type: "SET_IDX", idx: idx - 1 })}>{t(lang, "quiz.prev")}</button>}

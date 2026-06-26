@@ -246,6 +246,17 @@ body {
 .timer.warn { background: var(--warn-soft); color: #8a5306; }
 .timer.danger { background: var(--no-soft); color: var(--no); }
 
+/* ---------- quiz split-screen (≥920px) ---------- */
+.quiz-split { display: flex; flex-direction: column; gap: 1rem; }
+@media (min-width: 920px) {
+  .quiz-split.has-explain { flex-direction: row; align-items: flex-start; }
+  .quiz-split.has-explain .quiz-question-col,
+  .quiz-split.has-explain .quiz-explain-col {
+    flex: 1 1 50%;
+    min-width: 0;
+  }
+}
+
 /* ---------- question ---------- */
 .q-meta { display: flex; gap: 8px; align-items: center; margin-bottom: .9rem; }
 .q-domain { font-size: var(--fs-12); background: var(--surface-2); color: var(--text-2); padding: 4px 12px; border-radius: 999px; }
