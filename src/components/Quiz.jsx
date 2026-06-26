@@ -404,7 +404,7 @@ export default function Quiz({ onAnswer, progress, setProgress, initialFilter, o
       )}
 
       <div className="card">
-        <div className={"quiz-split" + (answered ? " has-explain" : "")}>
+        <div key={idx} className={"quiz-split" + (answered ? " has-explain" : "")}>
           <div className="quiz-question-col">
             <div className="q-meta">
               <span className="q-domain">{domainName(q.domain, lang)}</span>
