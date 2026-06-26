@@ -139,7 +139,7 @@ export default function App() {
               <Syllabus onStudy={(domain) => { setQuizFilter({ domain }); setTab("quiz"); }} lang={lang} progress={progress} />
             )}
             {tab === "flash" && <Flashcards lang={lang} progress={progress} setProgress={setProgress} />}
-            {tab === "glossary" && <Glossary lang={lang} />}
+            {tab === "glossary" && <Glossary lang={lang} progress={progress} />}
             {tab === "stats" && <Stats progress={progress} setProgress={setProgress} lang={lang} onGoToQuiz={() => setTab("quiz")} />}
           </main>
         </>

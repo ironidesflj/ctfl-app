@@ -64,7 +64,7 @@ export const UI = {
       dueToday: "Para revisar hoje",
       emptyDomain: "Nenhum flashcard neste domínio ainda.",
     },
-    glossary: { clearSearch: "Limpar busca" },
+    glossary: { clearSearch: "Limpar busca", termOfDay: "Termo do dia", wrongOnly: "Termos que errei" },
     syllabus: { ofQuestions: "de {total} questões neste banco", studyChapter: "Estudar este capítulo →" },
     onboarding: {
       examCardDesc: "40 questões em 75 minutos, igual à prova real. Revisão de erros no fim.",
@@ -186,7 +186,7 @@ export const UI = {
       dueToday: "Due today",
       emptyDomain: "No flashcards in this domain yet.",
     },
-    glossary: { clearSearch: "Clear search" },
+    glossary: { clearSearch: "Clear search", termOfDay: "Term of the day", wrongOnly: "Terms I got wrong" },
     syllabus: { ofQuestions: "of {total} questions in this bank", studyChapter: "Study this chapter →" },
     onboarding: {
       examCardDesc: "40 questions in 75 minutes, just like the real exam. Mistake review at the end.",
