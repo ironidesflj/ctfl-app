@@ -119,6 +119,7 @@ body {
   font-family: var(--font-body);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+  overscroll-behavior-x: none;
 }
 
 .app {
@@ -367,7 +368,7 @@ body {
 .flash-back { font-size: var(--fs-14); color: var(--text-2); white-space: pre-line; line-height: 1.7; text-align: left; }
 .flash-hint { font-size: var(--fs-12); color: var(--text-3); }
 
-.flash-stack { position: relative; }
+.flash-stack { position: relative; touch-action: none; }
 .flash-stack-peek {
   position: absolute;
   inset: 0;
