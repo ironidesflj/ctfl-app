@@ -1,18 +1,21 @@
-import { useState, useMemo } from "react";
-import { DOMAINS, domainNameInLang, byIds } from "../lib/bank.js";
+import { useState, useMemo, useRef } from "react";
+import { DOMAINS, domainNameInLang, allInLang } from "../lib/bank.js";
 import { getWrongIds } from "../lib/storage.js";
 import { localizedGlossary, findGlossaryTermsInText } from "../data/glossary.js";
 import { t } from "../lib/ui-strings.js";
 
 const ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
-function highlightText(text, query) {
-  const q = query.trim();
-  if (!q) return text;
-  const escaped = q.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  const parts = text.split(new RegExp(`(${escaped})`, "gi"));
+function escapeRegex(s) {
+  return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+function highlightText(text, query, regex) {
+  if (!text || !regex) return text;
+  const parts = text.split(regex);
+  const q = query.trim().toLowerCase();
   return parts.map((part, i) =>
-    part.toLowerCase() === q.toLowerCase() ? <mark key={i}>{part}</mark> : part
+    part.toLowerCase() === q ? <mark key={i}>{part}</mark> : part
   );
 }
 
@@ -20,6 +23,7 @@ export default function Glossary({ lang = "pt", progress }) {
   const [domain, setDomain] = useState("all");
   const [query, setQuery] = useState("");
   const [wrongOnly, setWrongOnly] = useState(false);
+  const headingRefs = useRef({});
 
   const allTerms = useMemo(() => localizedGlossary(lang), [lang]);
   const dom = DOMAINS.find((d) => d.id === domain);
@@ -28,7 +32,8 @@ export default function Glossary({ lang = "pt", progress }) {
     if (!progress) return new Set();
     const wrongIds = getWrongIds(progress);
     if (wrongIds.length === 0) return new Set();
-    const wrongQuestions = byIds(wrongIds);
+    const wrongIdSet = new Set(wrongIds);
+    const wrongQuestions = allInLang(lang).filter((q) => wrongIdSet.has(q.id));
     const idSet = new Set();
     wrongQuestions.forEach((q) => {
       findGlossaryTermsInText(q.exp, lang).forEach((m) => idSet.add(m.id));
@@ -37,11 +42,18 @@ export default function Glossary({ lang = "pt", progress }) {
   }, [progress, lang]);
 
   const termOfDay = useMemo(() => {
+    if (allTerms.length === 0) return null;
     const start = new Date(new Date().getFullYear(), 0, 0);
     const diff = Date.now() - start.getTime();
     const dayOfYear = Math.floor(diff / 86400000);
     return allTerms[dayOfYear % allTerms.length];
   }, [allTerms]);
+
+  const searchRegex = useMemo(() => {
+    const q = query.trim();
+    if (!q) return null;
+    return new RegExp(`(${escapeRegex(q)})`, "gi");
+  }, [query]);
 
   const terms = useMemo(() => {
     let list = dom ? allTerms.filter((t) => t.chapter === dom.chapter) : allTerms;
@@ -69,20 +81,35 @@ export default function Glossary({ lang = "pt", progress }) {
     return new Set(sortedTerms.map((t) => t.term[0].toUpperCase()));
   }, [sortedTerms, showAZIndex]);
 
-  function jumpToLetter(letter) {
-    const el = document.getElementById(`glossary-letter-${letter}`);
-    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-  }
+  // Agrupamento por letra calculado uma vez aqui, fora do JSX
+  // (antes mutava uma variável `lastLetter` durante o .map de render).
+  const termsWithLetterFlag = useMemo(() => {
+    let last = null;
+    return sortedTerms.map((term) => {
+      const firstLetter = term.term[0].toUpperCase();
+      const isNewLetter = showAZIndex && firstLetter !== last;
+      if (isNewLetter) last = firstLetter;
+      return { term, firstLetter, isNewLetter };
+    });
+  }, [sortedTerms, showAZIndex]);
 
-  let lastLetter = null;
+  function jumpToLetter(letter) {
+    const el = headingRefs.current[letter];
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+      el.focus();
+    }
+  }
 
   return (
     <div className="study">
-      <div className="card glossary-term-of-day">
-        <span className="card-eyebrow">{t(lang, "glossary.termOfDay")}</span>
-        <div className="syl-kw">{termOfDay.term}</div>
-        <div className="syl-desc">{termOfDay.def}</div>
-      </div>
+      {termOfDay && (
+        <div className="card glossary-term-of-day">
+          <span className="card-eyebrow">{t(lang, "glossary.termOfDay")}</span>
+          <div className="syl-kw">{termOfDay.term}</div>
+          <div className="syl-desc">{termOfDay.def}</div>
+        </div>
+      )}
 
       <input
         className="search-input"
@@ -105,6 +132,7 @@ export default function Glossary({ lang = "pt", progress }) {
             className={"chip" + (wrongOnly ? " on" : "")}
             onClick={() => setWrongOnly((w) => !w)}
             disabled={wrongTermIds.size === 0}
+            aria-pressed={wrongOnly}
           >
             {t(lang, "glossary.wrongOnly")} ({wrongTermIds.size})
           </button>
@@ -127,7 +155,7 @@ export default function Glossary({ lang = "pt", progress }) {
       )}
 
       <div className="card">
-        {sortedTerms.length === 0 ? (
+        {termsWithLetterFlag.length === 0 ? (
           <div>
             <p className="muted">{lang === "pt" ? "Nenhum termo encontrado." : "No terms found."}</p>
             {query.trim() !== "" && (
@@ -137,24 +165,23 @@ export default function Glossary({ lang = "pt", progress }) {
             )}
           </div>
         ) : (
-          sortedTerms.map((term) => {
-            const firstLetter = term.term[0].toUpperCase();
-            const isNewLetter = showAZIndex && firstLetter !== lastLetter;
-            if (isNewLetter) lastLetter = firstLetter;
-            return (
-              <div key={term.id}>
-                {isNewLetter && (
-                  <div id={`glossary-letter-${firstLetter}`} className="glossary-letter-heading">
-                    {firstLetter}
-                  </div>
-                )}
-                <div className="syl-item">
-                  <div className="syl-kw">{highlightText(term.term, query)}</div>
-                  <div className="syl-desc">{highlightText(term.def, query)}</div>
+          termsWithLetterFlag.map(({ term, firstLetter, isNewLetter }) => (
+            <div key={term.id}>
+              {isNewLetter && (
+                <div
+                  ref={(el) => { headingRefs.current[firstLetter] = el; }}
+                  tabIndex={-1}
+                  className="glossary-letter-heading"
+                >
+                  {firstLetter}
                 </div>
+              )}
+              <div className="syl-item">
+                <div className="syl-kw">{highlightText(term.term, query, searchRegex)}</div>
+                <div className="syl-desc">{highlightText(term.def, query, searchRegex)}</div>
               </div>
-            );
-          })
+            </div>
+          ))
         )}
       </div>
     </div>
