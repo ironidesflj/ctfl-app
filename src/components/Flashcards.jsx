@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useRef } from "react";
 import { DOMAINS, domainNameInLang } from "../lib/bank.js";
 import { FLASHCARDS, flashcardsInLang } from "../data/study.js";
 import { t } from "../lib/ui-strings.js";
@@ -11,6 +11,12 @@ export default function Flashcards({ lang = "pt", progress, setProgress }) {
   const [domain, setDomain] = useState("all");
   const [idx, setIdx] = useState(0);
   const [flipped, setFlipped] = useState(false);
+  const [dragX, setDragX] = useState(0);
+
+  const touchStartX = useRef(null);
+  const dragXRef = useRef(0);
+  const isDraggingRef = useRef(false);
+  const SWIPE_THRESHOLD = 80;
 
   const allCards = useMemo(() => flashcardsInLang(lang), [lang]);
   const dueIds = progress ? getDueItems(progress, FLASHCARDS.map((c) => c.id)) : [];
@@ -39,6 +45,31 @@ export default function Flashcards({ lang = "pt", progress, setProgress }) {
     go(1);
   }
 
+  function handleTouchStart(e) {
+    if (!flipped) return;
+    touchStartX.current = e.touches[0].clientX;
+    isDraggingRef.current = true;
+  }
+  function handleTouchMove(e) {
+    if (!isDraggingRef.current || touchStartX.current === null) return;
+    const delta = e.touches[0].clientX - touchStartX.current;
+    dragXRef.current = delta;
+    setDragX(delta);
+  }
+  function handleTouchEnd() {
+    if (!isDraggingRef.current) return;
+    const finalDragX = dragXRef.current;
+    if (finalDragX > SWIPE_THRESHOLD) {
+      rate("good");
+    } else if (finalDragX < -SWIPE_THRESHOLD) {
+      rate("again");
+    }
+    isDraggingRef.current = false;
+    dragXRef.current = 0;
+    setDragX(0);
+    touchStartX.current = null;
+  }
+
   return (
     <div className="study">
       <div className="filter-bar">
@@ -64,7 +95,14 @@ export default function Flashcards({ lang = "pt", progress, setProgress }) {
       <div className="flash-stack">
         {cards.length > 2 && <div className="flash-stack-peek depth-2" aria-hidden="true" />}
         {cards.length > 1 && <div className="flash-stack-peek depth-1" aria-hidden="true" />}
-        <button className="card flash" onClick={() => setFlipped((f) => !f)}>
+        <button
+          className="card flash"
+          onClick={() => setFlipped((f) => !f)}
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+          style={isDraggingRef.current ? { transform: `translateX(${dragX}px) rotate(${dragX / 20}deg)`, transition: "none" } : undefined}
+        >
           {lang === "en" && !hasEN(card.id) && (
             <span style={{position:'absolute', top:8, left:8, zIndex:2, fontSize:'11px', color:'var(--text-3)'}}>EN coming soon · showing PT</span>
           )}
