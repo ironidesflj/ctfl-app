@@ -57,6 +57,9 @@ export const UI = {
       exportBtn: "Exportar progresso", importBtn: "Importar progresso",
       resetBtn: "Zerar", resetConfirm: "Zerar todo o progresso?",
       precisionLabel: "PRECISÃO", coverageLabel: "ALCANCE",
+      readinessPrefix: "Você está em", readinessSuffix: "% de prontidão pra CTFL.",
+      pacePrefix: "Nesse ritmo, chega a 90% em ~", paceSuffix: " semanas.",
+      level: "Nível", achievementsLabel: "conquistas",
     },
     flashcards: {
       flip: "toque para revelar", prev: "← Anterior", next: "Próximo →",
@@ -181,6 +184,9 @@ export const UI = {
       exportBtn: "Export progress", importBtn: "Import progress",
       resetBtn: "Reset", resetConfirm: "Reset all progress?",
       precisionLabel: "ACCURACY", coverageLabel: "COVERAGE",
+      readinessPrefix: "You're at", readinessSuffix: "% readiness for CTFL.",
+      pacePrefix: "At this pace, you'll reach 90% in ~", paceSuffix: " weeks.",
+      level: "Level", achievementsLabel: "achievements",
     },
     flashcards: {
       flip: "tap to reveal", prev: "← Previous", next: "Next →",

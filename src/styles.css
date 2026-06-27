@@ -396,6 +396,18 @@ body {
 .syl-chapter-progress .bar { width: 60px; }
 .syl-chapter .syl-item { padding: 8px 14px; border-top: 1px solid var(--line); }
 
+.gamification-strip {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: var(--fs-13);
+  color: var(--text-2);
+  margin-bottom: 0.75rem;
+  flex-wrap: wrap;
+}
+.gam-sep { color: var(--text-3); }
+.readiness-card p { margin: 0; font-size: var(--fs-14); }
+
 .stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 1rem; }
 .stat { background: var(--surface-2); border-radius: var(--radius-sm); padding: 14px; text-align: center; }
 .stat-val { font-family: var(--font-display); font-size: var(--fs-24); font-weight: 700; }
