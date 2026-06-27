@@ -3,6 +3,7 @@ export default function RadarChart({ domains, precision, coverage, size = 200 })
   const cy = size / 2;
   const maxR = size / 2 - 28; // leave room for labels
   const n = domains.length;
+  if (n === 0) return null;
   const rings = [0.33, 0.66, 1.0];
 
   function polar(angleDeg, pct) {
@@ -17,7 +18,7 @@ export default function RadarChart({ domains, precision, coverage, size = 200 })
 
   function polygonPoints(values) {
     return values
-      .map((v, i) => polar(angle(i), Math.min(v, 100)).join(","))
+      .map((v, i) => polar(angle(i), Math.max(0, Math.min(v, 100))).join(","))
       .join(" ");
   }
 
@@ -30,9 +31,10 @@ export default function RadarChart({ domains, precision, coverage, size = 200 })
       viewBox={`0 0 ${size} ${size}`}
       width={size}
       height={size}
-      aria-hidden="true"
+      role="img"
       style={{ overflow: "visible" }}
     >
+      <title>Precisão e cobertura por domínio</title>
       {/* Grid rings */}
       {ringPoints.map((pts, ri) => (
         <polygon

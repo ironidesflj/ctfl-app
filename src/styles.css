@@ -407,6 +407,7 @@ body {
 }
 .gam-sep { color: var(--text-3); }
 .readiness-card p { margin: 0; font-size: var(--fs-14); }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
 
 .stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 1rem; }
 .stat { background: var(--surface-2); border-radius: var(--radius-sm); padding: 14px; text-align: center; }

@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { DOMAINS, domainNameInLang, coverageByDomain, META } from "../lib/bank.js";
-import { exportProgress, importProgress, clearProgress, getStreak, getReadiness } from "../lib/storage.js";
+import { exportProgress, importProgress, clearProgress, getStreak, getReadiness, todayLocal } from "../lib/storage.js";
 import { t } from "../lib/ui-strings.js";
 import { getNotificationPermission, requestNotificationPermission } from "../lib/notifications.js";
 import RadarChart from "./RadarChart.jsx";
@@ -18,11 +18,13 @@ function groupByDay(history) {
 }
 
 function calcPace(history, readiness) {
+  if (readiness >= 90) return null;
   const dates = [...new Set(history.map((h) => h.date))].sort();
   if (dates.length < 7) return null;
 
-  const today = new Date().toISOString().slice(0, 10);
+  const today = todayLocal();
   const recent7 = dates.filter((d) => d <= today).slice(-7);
+  // Requer 2 janelas de 7 dias distintos para comparar tendência de acerto
   const prev7 = dates.filter((d) => d < recent7[0]).slice(-7);
   if (prev7.length < 7) return null;
 
@@ -163,6 +165,11 @@ export default function Stats({ progress, setProgress, lang = "pt", onGoToQuiz }
             coverage={radarCoverage}
             size={220}
           />
+          <ul className="sr-only">
+            {DOMAINS.map((d, i) => (
+              <li key={d.id}>{radarDomains[i]}: {radarPrecision[i]}% {t(lang, "stats.precisionLabel").toLowerCase()}, {radarCoverage[i]}% {t(lang, "stats.coverageLabel").toLowerCase()}</li>
+            ))}
+          </ul>
           <div style={{ display: "flex", gap: "1.25rem", fontSize: "var(--fs-12)", color: "var(--text-2)" }}>
             <span style={{ display: "flex", alignItems: "center", gap: "4px" }}>
               <svg width="16" height="4"><line x1="0" y1="2" x2="16" y2="2" stroke="var(--accent)" strokeWidth="2" /></svg>

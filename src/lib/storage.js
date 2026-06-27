@@ -2,6 +2,10 @@ import { isDue } from "./spacedRepetition.js";
 
 const KEY = "ctfl_progress_v1";
 
+export function todayLocal() {
+  return new Date().toLocaleDateString("en-CA", { timeZone: "America/Sao_Paulo" });
+}
+
 const EMPTY = { total: 0, correct: 0, byDomain: {}, seen: {}, flashcards: {}, saved: [], history: [], srs: {}, lastStudyDate: null, achievements: [], examHistory: [] };
 
 export function loadProgress() {
@@ -31,8 +35,8 @@ export function recordAnswer(state, domain, correct, questionId) {
     correct: state.correct + (correct ? 1 : 0),
     byDomain: { ...state.byDomain },
     seen: { ...(state.seen || {}) },
-    history: [...(state.history || []), { date: new Date().toISOString().slice(0, 10), correct }].slice(-90),
-    lastStudyDate: new Date().toISOString().slice(0, 10)
+    history: [...(state.history || []), { date: todayLocal(), correct }].slice(-90),
+    lastStudyDate: todayLocal()
   };
   const d = next.byDomain[domain] || { t: 0, c: 0 };
   next.byDomain[domain] = { t: d.t + 1, c: d.c + (correct ? 1 : 0) };
@@ -86,19 +90,19 @@ export function getDueItems(state, allIds) {
 
 export function getStreak(progress) {
   const dates = new Set((progress.history || []).map((h) => h.date));
-  const today = new Date().toISOString().slice(0, 10);
+  const today = todayLocal();
   let streak = 0;
   let cursor = new Date();
   // Start from today; if today has no entry, check yesterday before giving up
   if (!dates.has(today)) {
     cursor.setDate(cursor.getDate() - 1);
-    if (!dates.has(cursor.toISOString().slice(0, 10))) return 0;
+    if (!dates.has(cursor.toLocaleDateString("en-CA", { timeZone: "America/Sao_Paulo" }))) return 0;
     streak = 1;
     cursor.setDate(cursor.getDate() - 1);
   }
   // Walk backwards counting consecutive days
   while (true) {
-    const d = cursor.toISOString().slice(0, 10);
+    const d = cursor.toLocaleDateString("en-CA", { timeZone: "America/Sao_Paulo" });
     if (!dates.has(d)) break;
     streak++;
     cursor.setDate(cursor.getDate() - 1);
@@ -111,7 +115,7 @@ export function getReadiness(progress, totalBank) {
   const seenCount = seenIds.length;
   if (seenCount === 0) return 0;
   const correctCount = seenIds.filter((id) => progress.seen[id] === "correct").length;
-  const k = Math.max(10, Math.round(totalBank * 0.1));
+  const k = Math.max(10, Number.isFinite(totalBank) ? Math.round(totalBank * 0.1) : 10);
   return Math.round((correctCount + k * 0.5) / (seenCount + k) * 100);
 }
 
@@ -126,7 +130,7 @@ export function checkAchievements(progress) {
 }
 
 export function logExamResult(progress, pct) {
-  const entry = { date: new Date().toISOString().slice(0, 10), pct, passed: pct >= 65 };
+  const entry = { date: todayLocal(), pct, passed: pct >= 65 };
   const examHistory = [...(progress.examHistory || []), entry].slice(-20);
   const next = { ...progress, examHistory };
   next.achievements = checkAchievements(next);
