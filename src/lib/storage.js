@@ -2,14 +2,14 @@ import { isDue } from "./spacedRepetition.js";
 
 const KEY = "ctfl_progress_v1";
 
-const EMPTY = { total: 0, correct: 0, byDomain: {}, seen: {}, flashcards: {}, saved: [], history: [], srs: {}, lastStudyDate: null };
+const EMPTY = { total: 0, correct: 0, byDomain: {}, seen: {}, flashcards: {}, saved: [], history: [], srs: {}, lastStudyDate: null, achievements: [], examHistory: [] };
 
 export function loadProgress() {
   try {
     const raw = localStorage.getItem(KEY);
     if (!raw) return { ...EMPTY };
     const parsed = JSON.parse(raw);
-    return { ...EMPTY, ...parsed, byDomain: parsed.byDomain || {}, seen: parsed.seen || {}, saved: parsed.saved || [], history: parsed.history || [], srs: parsed.srs || {}, lastStudyDate: parsed.lastStudyDate || null };
+    return { ...EMPTY, ...parsed, byDomain: parsed.byDomain || {}, seen: parsed.seen || {}, saved: parsed.saved || [], history: parsed.history || [], srs: parsed.srs || {}, lastStudyDate: parsed.lastStudyDate || null, achievements: parsed.achievements || [], examHistory: parsed.examHistory || [] };
   } catch {
     return { ...EMPTY };
   }
@@ -37,6 +37,7 @@ export function recordAnswer(state, domain, correct, questionId) {
   const d = next.byDomain[domain] || { t: 0, c: 0 };
   next.byDomain[domain] = { t: d.t + 1, c: d.c + (correct ? 1 : 0) };
   if (questionId) next.seen[questionId] = correct ? "correct" : "wrong";
+  next.achievements = checkAchievements(next);
   return next;
 }
 
@@ -83,6 +84,55 @@ export function getDueItems(state, allIds) {
   });
 }
 
+export function getStreak(progress) {
+  const dates = new Set((progress.history || []).map((h) => h.date));
+  const today = new Date().toISOString().slice(0, 10);
+  let streak = 0;
+  let cursor = new Date();
+  // Start from today; if today has no entry, check yesterday before giving up
+  if (!dates.has(today)) {
+    cursor.setDate(cursor.getDate() - 1);
+    if (!dates.has(cursor.toISOString().slice(0, 10))) return 0;
+    streak = 1;
+    cursor.setDate(cursor.getDate() - 1);
+  }
+  // Walk backwards counting consecutive days
+  while (true) {
+    const d = cursor.toISOString().slice(0, 10);
+    if (!dates.has(d)) break;
+    streak++;
+    cursor.setDate(cursor.getDate() - 1);
+  }
+  return streak;
+}
+
+export function getReadiness(progress, totalBank) {
+  const seenIds = Object.keys(progress.seen || {});
+  const seenCount = seenIds.length;
+  if (seenCount === 0) return 0;
+  const correctCount = seenIds.filter((id) => progress.seen[id] === "correct").length;
+  const k = Math.max(10, Math.round(totalBank * 0.1));
+  return Math.round((correctCount + k * 0.5) / (seenCount + k) * 100);
+}
+
+export function checkAchievements(progress) {
+  const existing = new Set(progress.achievements || []);
+  const streak = getStreak(progress);
+  if (progress.total >= 1) existing.add("first-step");
+  if (streak >= 7) existing.add("streak-7");
+  if (streak >= 30) existing.add("streak-30");
+  if ((progress.examHistory || []).some((e) => e.passed)) existing.add("passed-exam");
+  return [...existing];
+}
+
+export function logExamResult(progress, pct) {
+  const entry = { date: new Date().toISOString().slice(0, 10), pct, passed: pct >= 65 };
+  const examHistory = [...(progress.examHistory || []), entry].slice(-20);
+  const next = { ...progress, examHistory };
+  next.achievements = checkAchievements(next);
+  return next;
+}
+
 export function clearProgress() {
   try {
     localStorage.removeItem(KEY);
@@ -113,7 +163,7 @@ export function importProgress(file) {
         const data = JSON.parse(reader.result);
         const p = data.progress || data;
         if (typeof p.total !== "number") throw new Error("Formato inválido");
-        resolve({ ...EMPTY, ...p, byDomain: p.byDomain || {}, seen: p.seen || {}, saved: p.saved || [], history: p.history || [], srs: p.srs || {}, lastStudyDate: p.lastStudyDate || null });
+        resolve({ ...EMPTY, ...p, byDomain: p.byDomain || {}, seen: p.seen || {}, saved: p.saved || [], history: p.history || [], srs: p.srs || {}, lastStudyDate: p.lastStudyDate || null, achievements: p.achievements || [], examHistory: p.examHistory || [] });
       } catch (e) {
         reject(e);
       }
