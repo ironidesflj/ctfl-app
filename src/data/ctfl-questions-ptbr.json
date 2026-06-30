@@ -2,7 +2,7 @@
   "meta": {
     "title": "Banco de Questões CTFL v4.0",
     "syllabus": "ISTQB Certified Tester Foundation Level v4.0",
-    "version": "1.0.0",
+    "version": "2.3.0",
     "defaultLanguage": "pt",
     "availableLanguages": [
       "pt",
@@ -373,9 +373,9 @@
           "q": "The principle 'testing is context-dependent' means that:",
           "options": [
             "All software is tested the same way",
-            "The way of testing varies according to domain, risk, and context",
+            "Only critical systems need testing",
             "Context does not matter",
-            "Only critical systems need testing"
+            "The way of testing varies according to domain, risk, and context"
           ],
           "exp": "Different systems (e.g., e-commerce vs. medical software) require different approaches, techniques, and rigor."
         }
@@ -721,9 +721,9 @@
           "q": "Regarding test independence, which statement is correct?",
           "options": [
             "Greater independence always finds more defects",
-            "Independence can reduce author bias, but extreme degrees have disadvantages such as less context knowledge",
+            "Independence does not influence testing",
             "The author is always the best tester of their own code",
-            "Independence does not influence testing"
+            "Independence can reduce author bias, but extreme degrees have disadvantages such as less context knowledge"
           ],
           "exp": "Some degree of independence reduces the author's cognitive bias, but full independence can distance the tester from context and communication."
         }
@@ -2373,10 +2373,10 @@
         "en": {
           "q": "Which defect type is most effectively found by static testing but is difficult to detect through dynamic testing?",
           "options": [
-            "Race conditions that only manifest under specific concurrent execution timing",
-            "Deviations from coding standards and unreachable (dead) code in the codebase",
-            "Performance bottlenecks that only appear under high production load conditions",
-            "Integration failures that occur only when two specific modules interact at runtime"
+            "A performance failure detected under real load",
+            "An ambiguous or contradictory requirement, before any implementation exists",
+            "A runtime error detected in a module that has already been executed",
+            "A visual failure in the graphical user interface"
           ],
           "exp": "Static testing uniquely finds standard violations, dead code, and inconsistencies in requirements that may never cause a runtime failure."
         }
@@ -2400,14 +2400,14 @@
           "exp": "Ferramentas de análise estática examinam o código sem executá-lo, detectando padrões suspeitos, violações e vulnerabilidades."
         },
         "en": {
-          "q": "Static analysis tools are most useful for:",
+          "q": "Which tool supports static testing through automated source code analysis?",
           "options": [
-            "Executing test cases automatically and recording pass/fail results",
-            "Detecting code defects such as security vulnerabilities, dead code, and standard violations without execution",
-            "Generating realistic test data for use in performance and load testing scenarios",
-            "Managing test case repositories and tracking defect resolution progress"
+            "Performance test execution tool",
+            "Static analysis tool (linter/code analyzer)",
+            "UI record-and-playback tool",
+            "Configuration management tool"
           ],
-          "exp": "Static analysis tools examine code without executing it, finding issues like security flaws, unreachable code, and coding standard violations."
+          "exp": "Static analysis tools examine code without executing it, detecting suspicious patterns, violations, and vulnerabilities."
         }
       }
     },
@@ -2808,8 +2808,8 @@
         "en": {
           "q": "A field accepts ages from 18 to 65. Which values are tested using 2-value BVA?",
           "options": [
-            "18 and 65 only",
             "17, 18, 65, and 66",
+            "18 and 65 only",
             "17 and 66 only",
             "0, 18, 65, and 100"
           ],
@@ -3214,8 +3214,8 @@
         "en": {
           "q": "A code segment has 10 executable statements; a test suite executed 7 of them. The statement coverage is:",
           "options": [
-            "100%",
             "70%",
+            "100%",
             "7%",
             "30%"
           ],
@@ -3275,7 +3275,7 @@
             "Decision coverage, because each decision must evaluate to both true and false",
             "Statement coverage, because all statements must be executed",
             "No standard coverage criterion requires testing the false path of an if without else",
-            "Condition coverage, because each individual condition must be evaluated"
+            "Function coverage"
           ],
           "exp": "Without an else branch, 100% statement coverage can be achieved without testing the false path; decision coverage forces both true and false outcomes."
         }
@@ -3330,8 +3330,8 @@
         "en": {
           "q": "What is the value of white-box testing?",
           "options": [
-            "It completely replaces black-box testing by providing superior defect detection",
             "It reveals untested code segments and measures the thoroughness of the test suite",
+            "It completely replaces black-box testing by providing superior defect detection",
             "It eliminates the need for requirements-based testing by focusing on implementation",
             "It guarantees that all defects will be found once 100% statement coverage is achieved"
           ],
@@ -4316,10 +4316,10 @@
         "en": {
           "q": "Entry criteria define:",
           "options": [
-            "The list of defects that must be resolved before testing can proceed",
-            "The conditions under which a completed test activity can be declared finished",
+            "When to stop testing",
+            "The acceptable number of defects",
             "The conditions that must be met before a test activity can begin",
-            "The acceptance thresholds the final product must satisfy before user release"
+            "The final coverage achieved"
           ],
           "exp": "Entry criteria are pre-conditions for starting a test activity, such as environment readiness, test cases approved, and test data available."
         }
@@ -4430,14 +4430,14 @@
           "exp": "A abordagem baseada em métricas usa dados históricos para extrapolar o esforço esperado."
         },
         "en": {
-          "q": "Metrics-based estimation (extrapolation) relies on:",
+          "q": "Metrics-based (extrapolation) estimation is based on:",
           "options": [
-            "Intuitive judgment from the most experienced tester on the team",
-            "The project budget as the primary constraint for determining test scope",
-            "Data and measurements from previous iterations or projects, extrapolated to the current work",
-            "Vendor-supplied benchmarks for the testing tools used on the project"
+            "Pure intuition and guesswork, ignoring any objective measurement",
+            "Only on the budget available for the current project",
+            "Data/measurements from previous iterations or projects, extrapolated to the current one",
+            "Exclusively on the number of testers available"
           ],
-          "exp": "Metrics-based estimation uses historical data (velocity, defect rates, effort per test case) to extrapolate effort estimates for the current project."
+          "exp": "The metrics-based approach uses historical data to extrapolate the expected effort."
         }
       }
     },
@@ -4607,9 +4607,9 @@
           "q": "In test management, 'risk' is defined as:",
           "options": [
             "A defect that has been found but not yet fixed by the development team",
-            "A failed test case that blocks the continuation of the test cycle",
+            "A failure in production",
             "A potential future event with a negative consequence for the project or product",
-            "A test case that has been excluded from the scope of the current test plan"
+            "A failed test case"
           ],
           "exp": "Risk is the possibility of a future event with negative consequences; it combines the probability of occurrence with the magnitude of impact."
         }
@@ -4868,7 +4868,7 @@
           "q": "Which of the following is a typical test metric?",
           "options": [
             "The color theme selected for the test management tool dashboard",
-            "The team's preferred programming language for test automation",
+            "The team's salary",
             "The percentage of test cases executed and the pass/fail ratio",
             "The number of meetings held during the test planning phase"
           ],
@@ -4928,7 +4928,7 @@
             "Before testing begins to communicate the planned approach to stakeholders",
             "Daily during test execution to track the number of defects found each day",
             "At the end of a test level or milestone, summarizing results and lessons learned",
-            "Immediately after each individual test case is executed and evaluated"
+            "After each defect"
           ],
           "exp": "The completion report summarizes results, coverage achieved, quality assessment, and lessons learned at the end of a test level or major milestone."
         }
@@ -4983,10 +4983,10 @@
         "en": {
           "q": "What should a good defect report contain?",
           "options": [
-            "Only the title and severity rating to keep reporting lightweight and efficient",
-            "Only the name of the developer responsible for the defective code",
+            "Only the title",
+            "Only the severity",
             "Identifier, description, steps to reproduce, expected vs actual result, severity, and priority",
-            "A list of all test cases executed in the same session as the defect was found"
+            "The name of the developer at fault"
           ],
           "exp": "Effective defect reports include: ID, description, reproduction steps, expected vs. actual result, environment, severity, and priority."
         }
@@ -5060,7 +5060,7 @@
         "pt": {
           "q": "Dois riscos: Risco A (probabilidade 20%, impacto 5) e Risco B (probabilidade 50%, impacto 2). Qual deve ser priorizado?",
           "options": [
-            "Risco A, nível 1,0 < Risco B 1,0 — empate; prioriza o que for mais barato de mitigar",
+            "Risco A, pois seu nível de risco (1,0) é maior que o de Risco B (0,50 × 2 = 0,5, calculado incorretamente)",
             "Risco B por ter maior probabilidade",
             "Risco A (nível 1,0) e Risco B (nível 1,0) têm o mesmo nível; outros fatores decidem",
             "Risco A por ter maior impacto"
@@ -5070,7 +5070,7 @@
         "en": {
           "q": "Two risks: Risk A (20% probability, impact 5) and Risk B (50% probability, impact 2). Which should be prioritized?",
           "options": [
-            "Risk A, level 1.0 < Risk B 1.0 — tie; prioritize whichever is cheaper to mitigate",
+            "Risk A, because its risk level (1.0) is higher than Risk B's (0.50 × 2 = 0.5, miscalculated)",
             "Risk B due to higher probability",
             "Risk A (level 1.0) and Risk B (level 1.0) have the same level; other factors decide",
             "Risk A due to higher impact"
@@ -5116,7 +5116,7 @@
       "answer": 0,
       "locales": {
         "pt": {
-          "q": "Uma estimativa de esforço de teste baseada em ratios usa a proporção histórica de que o teste consome 30% do esforço total. Se o desenvolvimento está estimado em 1000h, o esforço de teste estimado é:",
+          "q": "Uma estimativa de esforço de teste baseada em ratios usa a proporção histórica de que o teste consome 30% do esforço de desenvolvimento. Se o desenvolvimento está estimado em 1000h, o esforço de teste estimado é:",
           "options": [
             "300h",
             "700h",
@@ -5126,7 +5126,7 @@
           "exp": "Ratio de 30%: esforço de teste = 30% × 1000h = 300h."
         },
         "en": {
-          "q": "A ratio-based test effort estimate uses the historical proportion that testing consumes 30% of total effort. If development is estimated at 1000h, the estimated test effort is:",
+          "q": "A ratio-based test effort estimate uses the historical proportion that testing consumes 30% of development effort. If development is estimated at 1000h, the estimated test effort is:",
           "options": [
             "300h",
             "700h",
