@@ -1,5 +1,5 @@
 import { useState, useMemo } from "react";
-import { DOMAINS, domainNameInLang, chapterWeight, META, coverageByDomain } from "../lib/bank.js";
+import { DOMAINS, domainName, chapterWeight, META, coverageByDomain } from "../lib/bank.js";
 import { SYLLABUS_ITEMS, syllabusInLang } from "../data/study.js";
 import { t } from "../lib/ui-strings.js";
 
@@ -25,7 +25,7 @@ export default function Syllabus({ onStudy, lang = "pt", progress }) {
       <div className="filter-bar">
         <button className={"chip" + (domain === "all" ? " on" : "")} onClick={() => setDomain("all")}>{t(lang, "domainAll")}</button>
         {DOMAINS.map((d) => (
-          <button key={d.id} className={"chip" + (domain === d.id ? " on" : "")} onClick={() => setDomain(d.id)}>{domainNameInLang(d.id, lang)}</button>
+          <button key={d.id} className={"chip" + (domain === d.id ? " on" : "")} onClick={() => setDomain(d.id)}>{domainName(d.id, lang)}</button>
         ))}
       </div>
 
@@ -37,7 +37,7 @@ export default function Syllabus({ onStudy, lang = "pt", progress }) {
             return (
               <details key={d.id} className="syl-chapter">
                 <summary className="syl-chapter-summary">
-                  <span>{domainNameInLang(d.id, lang)}</span>
+                  <span>{domainName(d.id, lang)}</span>
                   <span className="syl-chapter-progress">
                     <span className="bar"><span className="bar-fill" style={{ width: pct + "%" }} /></span>
                     <span className="muted">{pct}%</span>

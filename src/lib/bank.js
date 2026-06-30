@@ -17,8 +17,6 @@ export const domainName = (id, lang = "pt") => {
   return d ? (d[lang]?.name || d.pt.name) : id;
 };
 
-export const domainNameInLang = (id, lang = "pt") => domainName(id, lang);
-
 export const chapterWeight = (chapter) => META.chapterWeights[String(chapter)] || 0;
 
 // Texto da questão no idioma corrente, com índice de resposta neutro.

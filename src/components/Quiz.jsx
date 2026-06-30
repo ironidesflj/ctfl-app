@@ -1,5 +1,5 @@
 import { useReducer, useEffect, useRef, useMemo } from "react";
-import { DOMAINS, ALL, domainName, domainNameInLang, chapterWeight, byDomainInLang, byIds, buildExamInLang, shuffle, shuffleOptions, META } from "../lib/bank.js";
+import { DOMAINS, ALL, domainName, chapterWeight, byDomainInLang, byIds, buildExamInLang, shuffle, shuffleOptions, META } from "../lib/bank.js";
 import { getWrongIds, isSaved, toggleSaved, getSavedIds, getSRSCard, updateSRSCard, getDueItems } from "../lib/storage.js";
 import { initSM2, sm2, QUALITY } from "../lib/spacedRepetition.js";
 import { findGlossaryTermsInText } from "../data/glossary.js";
@@ -255,7 +255,7 @@ export default function Quiz({ onAnswer, progress, setProgress, initialFilter, o
               {DOMAINS.map((d) => (
                 <button key={d.id} className={"domain-card" + (domain === d.id ? " selected" : "")} onClick={() => dispatch({ type: "SET_DOMAIN", domain: d.id })}>
                   <span className="domain-weight">{chapterWeight(d.chapter)} / {META.total}</span>
-                  <span className="domain-name">{domainNameInLang(d.id, lang)}</span>
+                  <span className="domain-name">{domainName(d.id, lang)}</span>
                 </button>
               ))}
             </div>

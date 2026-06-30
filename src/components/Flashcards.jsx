@@ -1,5 +1,5 @@
 import { useState, useMemo, useRef } from "react";
-import { DOMAINS, domainNameInLang } from "../lib/bank.js";
+import { DOMAINS, domainName } from "../lib/bank.js";
 import { FLASHCARDS, flashcardsInLang } from "../data/study.js";
 import { t } from "../lib/ui-strings.js";
 import { getSRSCard, updateSRSCard, getDueItems } from "../lib/storage.js";
@@ -81,7 +81,7 @@ export default function Flashcards({ lang = "pt", progress, setProgress }) {
           </button>
         )}
         {DOMAINS.map((d) => (
-          <button key={d.id} className={"chip" + (domain === d.id ? " on" : "")} onClick={() => pickDomain(d.id)}>{domainNameInLang(d.id, lang)}</button>
+          <button key={d.id} className={"chip" + (domain === d.id ? " on" : "")} onClick={() => pickDomain(d.id)}>{domainName(d.id, lang)}</button>
         ))}
       </div>
 

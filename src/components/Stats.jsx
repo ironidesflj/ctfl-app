@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { DOMAINS, domainNameInLang, coverageByDomain, META } from "../lib/bank.js";
+import { DOMAINS, domainName, coverageByDomain, META } from "../lib/bank.js";
 import { exportProgress, importProgress, clearProgress, getStreak, getReadiness, todayLocal } from "../lib/storage.js";
 import { t } from "../lib/ui-strings.js";
 import { getNotificationPermission, requestNotificationPermission } from "../lib/notifications.js";
@@ -68,7 +68,7 @@ export default function Stats({ progress, setProgress, lang = "pt", onGoToQuiz }
   const level = Math.floor(progress.total / 20) + 1;
 
   const coverage = coverageByDomain(progress.seen || {});
-  const radarDomains = DOMAINS.map((d) => domainNameInLang(d.id, lang).split(" ")[0]);
+  const radarDomains = DOMAINS.map((d) => domainName(d.id, lang).split(" ")[0]);
   const radarPrecision = DOMAINS.map((d) => {
     const bd = progress.byDomain?.[d.id] || { t: 0, c: 0 };
     return bd.t > 0 ? Math.round((bd.c / bd.t) * 100) : 0;
