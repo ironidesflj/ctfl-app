@@ -2,7 +2,7 @@
   "meta": {
     "title": "Banco de Questões CTFL v4.0",
     "syllabus": "ISTQB Certified Tester Foundation Level v4.0",
-    "version": "1.0.0",
+    "version": "2.3.0",
     "defaultLanguage": "pt",
     "availableLanguages": [
       "pt",
@@ -2400,14 +2400,14 @@
           "exp": "Ferramentas de análise estática examinam o código sem executá-lo, detectando padrões suspeitos, violações e vulnerabilidades."
         },
         "en": {
-          "q": "Static analysis tools are most useful for:",
+          "q": "Which tool supports static testing through automated source code analysis?",
           "options": [
-            "Executing test cases automatically and recording pass/fail results",
-            "Detecting code defects such as security vulnerabilities, dead code, and standard violations without execution",
-            "Generating realistic test data for use in performance and load testing scenarios",
-            "Managing test case repositories and tracking defect resolution progress"
+            "Performance test execution tool",
+            "Static analysis tool (linter/code analyzer)",
+            "UI record-and-playback tool",
+            "Configuration management tool"
           ],
-          "exp": "Static analysis tools examine code without executing it, finding issues like security flaws, unreachable code, and coding standard violations."
+          "exp": "Static analysis tools examine code without executing it, detecting suspicious patterns, violations, and vulnerabilities."
         }
       }
     },
@@ -4430,14 +4430,14 @@
           "exp": "A abordagem baseada em métricas usa dados históricos para extrapolar o esforço esperado."
         },
         "en": {
-          "q": "Metrics-based estimation (extrapolation) relies on:",
+          "q": "Metrics-based (extrapolation) estimation is based on:",
           "options": [
-            "Intuitive judgment from the most experienced tester on the team",
-            "The project budget as the primary constraint for determining test scope",
-            "Data and measurements from previous iterations or projects, extrapolated to the current work",
-            "Vendor-supplied benchmarks for the testing tools used on the project"
+            "Pure intuition and guesswork, ignoring any objective measurement",
+            "Only on the budget available for the current project",
+            "Data/measurements from previous iterations or projects, extrapolated to the current one",
+            "Exclusively on the number of testers available"
           ],
-          "exp": "Metrics-based estimation uses historical data (velocity, defect rates, effort per test case) to extrapolate effort estimates for the current project."
+          "exp": "The metrics-based approach uses historical data to extrapolate the expected effort."
         }
       }
     },
