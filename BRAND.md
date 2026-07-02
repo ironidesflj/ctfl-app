@@ -1,4 +1,4 @@
-# Identidade Visual — CTFL Prep (referência atual)
+# Identidade Visual — Synapse (referência atual)
 
 Este documento registra a identidade visual **já implementada** em produção, extraída
 de `src/styles.css`. Não é uma proposta nova — é o estado real, para servir de
@@ -50,11 +50,10 @@ Tema segue `prefers-color-scheme` por padrão, com override manual via
 
 Carregadas via Google Fonts no `index.html`.
 
-## Logo / marca
-
+## Nome e Logo
 - Mark: quadrado roxo (`--accent`) 46×46px, `border-radius: 12px`, com as letras
   **"CT"** em JetBrains Mono branco, `letter-spacing: -1px`.
-- Não há logotipo tipográfico separado — o nome "CTFL Prep" é exibido em texto
+- Não há logotipo tipográfico separado — o nome "Synapse" é exibido em texto
   Space Grotesk ao lado do mark, não como parte de um logo único.
 - Favicon: SVG simplificado do mesmo mark (fundo roxo + "CT").
 

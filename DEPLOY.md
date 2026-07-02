@@ -1,4 +1,4 @@
-# Guia de Deploy — CTFL Prep
+# Guia de Deploy — Synapse
 
 Como a estrutura do repositório afeta o deploy, e o passo a passo para publicar.
 

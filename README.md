@@ -1,9 +1,21 @@
-# CTFL Prep — ISTQB Foundation Level v4.0
+# Synapse — Multi-Certificação ISTQB
 
-App de preparação para o exame **ISTQB Certified Tester Foundation Level (CTFL) v4.0**.
-React + Vite, instalável como PWA, funciona offline. Banco de **300 questões** em PT-BR.
+App de preparação para os exames de certificação ISTQB.
+React + Vite, instalável como PWA, funciona offline.
 
-**Total do projeto (5 certificações): 1.100 questões** — CTFL (300) e CTFL-AT (200) já publicadas = 500; as outras três (CTAL-TA, CTAL-TM, CT-AI) somam 600 (200 cada), geradas e no repositório, aguardando lançamento na Fase 5.
+## Estado atual (1.100 questões)
+
+**Conteúdo no Ar (Lançado):**
+- **CTFL v4.0:** 300 questões
+- **CTAL-TA v4.0:** 200 itens
+
+**Roadmap de Lançamentos Futuros (Em Breve):**
+- **CTAL-TM v3.0:** 200 itens (em breve)
+- **CT-AI v2.0:** 200 itens (em breve)
+- **CTAL-AT v2.0:** 200 itens (em breve - syllabus totalmente novo do zero, a ser gerado)
+
+**Conteúdo Legado:**
+- **CTFL-AT (Agile Tester v2014):** 200 itens (adormecido/sunset pela ISTQB, substituído pelo CTAL-AT v2.0. O conteúdo é mantido no repositório por razões de arquivo, mas não entrará no roadmap de lançamentos).
 
 ## Funcionalidades
 
