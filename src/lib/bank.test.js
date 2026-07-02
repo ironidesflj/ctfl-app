@@ -2,8 +2,8 @@ import { describe, it, expect } from "vitest";
 import { ALL, DOMAINS, byDomainInLang, byIds, buildExamInLang, shuffleOptions } from "./bank.js";
 
 describe("bank - data integrity", () => {
-  it("has exactly 200 questions", () => {
-    expect(ALL.length).toBe(200);
+  it("has exactly 300 questions", () => {
+    expect(ALL.length).toBe(300);
   });
 
   it("every question has a valid answer index within its options", () => {
