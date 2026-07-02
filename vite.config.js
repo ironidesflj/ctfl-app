@@ -2,10 +2,10 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import { VitePWA } from "vite-plugin-pwa";
 
-// base: "./" mantém os caminhos relativos, funcionando tanto em
-// GitHub Pages (subdiretório) quanto em Vercel/Netlify (raiz).
+// base: "/" é necessário para BrowserRouter — caminhos absolutos garantem que
+// assets carregam corretamente em qualquer rota (ex: /ctfl/quiz).
 export default defineConfig({
-  base: "./",
+  base: "/",
   define: {
     __APP_VERSION__: JSON.stringify(process.env.npm_package_version)
   },
