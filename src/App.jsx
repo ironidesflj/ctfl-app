@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Routes, Route, Navigate, useParams, useNavigate, useLocation } from "react-router-dom";
 import Quiz from "./components/Quiz.jsx";
 import Flashcards from "./components/Flashcards.jsx";
@@ -7,7 +7,7 @@ import Glossary from "./components/Glossary.jsx";
 import Stats from "./components/Stats.jsx";
 import Onboarding from "./components/Onboarding.jsx";
 import { loadProgress, saveProgress, recordAnswer, getDueItems } from "./lib/storage.js";
-import { META, ALL } from "./lib/bank.js";
+import { getBank } from "./lib/bank.js";
 import { t } from "./lib/ui-strings.js";
 import { isNotificationSupported, showLocalNotification, daysSinceLastStudy } from "./lib/notifications.js";
 import { VALID_CERTS, DEFAULT_SECTION, LAST_CERT_KEY } from "./certs.js";
@@ -67,6 +67,14 @@ function TabNav({ lang }) {
 }
 
 export default function App() {
+  const location = useLocation();
+  const certId = (location.pathname.split("/")[1] || "ctfl").toLowerCase();
+  
+  const bank = useMemo(() => {
+    try { return getBank(certId); }
+    catch { return getBank("ctfl"); }
+  }, [certId]);
+  const { META, ALL } = bank;
   const [progress, setProgress] = useState(loadProgress);
   const [quizFilter, setQuizFilter] = useState(null);
   const [showOnboarding, setShowOnboarding] = useState(() => {

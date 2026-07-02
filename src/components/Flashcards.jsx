@@ -1,5 +1,6 @@
 import { useState, useMemo, useRef } from "react";
-import { DOMAINS, domainName } from "../lib/bank.js";
+import { useParams } from "react-router-dom";
+import { getBank } from "../lib/bank.js";
 import { FLASHCARDS, flashcardsInLang } from "../data/study.js";
 import { t } from "../lib/ui-strings.js";
 import { getSRSCard, updateSRSCard, getDueItems } from "../lib/storage.js";
@@ -8,7 +9,11 @@ import { initSM2, sm2, QUALITY } from "../lib/spacedRepetition.js";
 const hasEN = (id) => !!FLASHCARDS.find((c) => c.id === id)?.locales?.en;
 
 export default function Flashcards({ lang = "pt", progress, setProgress }) {
-  const [domain, setDomain] = useState("all");
+  const { cert: certId } = useParams();
+  const bank = useMemo(() => getBank(certId), [certId]);
+  const { chapters, chapterName } = bank;
+  
+  const [domain, setDomain] = useState("all"); // conceptually chapterId now
   const [idx, setIdx] = useState(0);
   const [flipped, setFlipped] = useState(false);
   const [dragX, setDragX] = useState(0);
@@ -21,8 +26,8 @@ export default function Flashcards({ lang = "pt", progress, setProgress }) {
   const allCards = useMemo(() => flashcardsInLang(lang), [lang]);
   const dueIds = progress ? getDueItems(progress, FLASHCARDS.map((c) => c.id)) : [];
   const cards = useMemo(
-    () => (domain === "due" ? allCards.filter((c) => dueIds.includes(c.id)) : domain === "all" ? allCards : allCards.filter((c) => c.d === domain)),
-    [domain, allCards, dueIds]
+    () => (domain === "due" ? allCards.filter((c) => dueIds.includes(c.id)) : domain === "all" ? allCards : allCards.filter((c) => String(c.d) === chapters.find(ch => String(ch.chapter) === String(domain))?.domain)),
+    [domain, allCards, dueIds, chapters]
   );
 
   const card = cards[idx] || cards[0] || null;
@@ -80,8 +85,8 @@ export default function Flashcards({ lang = "pt", progress, setProgress }) {
             {t(lang, "flashcards.dueToday")} ({dueIds.length})
           </button>
         )}
-        {DOMAINS.map((d) => (
-          <button key={d.id} className={"chip" + (domain === d.id ? " on" : "")} onClick={() => pickDomain(d.id)}>{domainName(d.id, lang)}</button>
+        {chapters.map((c) => (
+          <button key={c.chapter} className={"chip" + (domain === String(c.chapter) ? " on" : "")} onClick={() => pickDomain(String(c.chapter))}>{chapterName(c.chapter, lang)}</button>
         ))}
       </div>
 

@@ -1,5 +1,6 @@
 import { useState, useMemo, useRef } from "react";
-import { DOMAINS, domainName, allInLang } from "../lib/bank.js";
+import { useParams } from "react-router-dom";
+import { getBank } from "../lib/bank.js";
 import { getWrongIds } from "../lib/storage.js";
 import { localizedGlossary, findGlossaryTermsInText } from "../data/glossary.js";
 import { t } from "../lib/ui-strings.js";
@@ -20,13 +21,17 @@ function highlightText(text, query, regex) {
 }
 
 export default function Glossary({ lang = "pt", progress }) {
+  const { cert: certId } = useParams();
+  const bank = useMemo(() => getBank(certId), [certId]);
+  const { chapters, chapterName, allInLang } = bank;
+  
   const [domain, setDomain] = useState("all");
   const [query, setQuery] = useState("");
   const [wrongOnly, setWrongOnly] = useState(false);
   const headingRefs = useRef({});
 
   const allTerms = useMemo(() => localizedGlossary(lang), [lang]);
-  const dom = DOMAINS.find((d) => d.id === domain);
+  const dom = chapters.find((c) => String(c.chapter) === String(domain));
 
   const wrongTermIds = useMemo(() => {
     if (!progress) return new Set();
@@ -122,9 +127,9 @@ export default function Glossary({ lang = "pt", progress }) {
         <button className={"chip" + (domain === "all" ? " on" : "")} onClick={() => setDomain("all")}>
           {t(lang, "domainAll")}
         </button>
-        {DOMAINS.map((d) => (
-          <button key={d.id} className={"chip" + (domain === d.id ? " on" : "")} onClick={() => setDomain(d.id)}>
-            {domainName(d.id, lang)}
+        {chapters.map((c) => (
+          <button key={c.chapter} className={"chip" + (domain === String(c.chapter) ? " on" : "")} onClick={() => setDomain(String(c.chapter))}>
+            {chapterName(c.chapter, lang)}
           </button>
         ))}
         {progress && (

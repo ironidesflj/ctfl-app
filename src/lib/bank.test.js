@@ -1,5 +1,7 @@
 import { describe, it, expect } from "vitest";
-import { ALL, DOMAINS, byDomainInLang, byIds, buildExamInLang, shuffleOptions } from "./bank.js";
+import { getBank } from "./bank.js";
+
+const { ALL, chapters, byChapterInLang, byIds, buildExamInLang, shuffleOptions } = getBank("ctfl");
 
 describe("bank - data integrity", () => {
   it("has exactly 300 questions", () => {
@@ -13,16 +15,16 @@ describe("bank - data integrity", () => {
     });
   });
 
-  it("every question belongs to a known domain", () => {
-    const domainIds = DOMAINS.map((d) => d.id);
+  it("every question belongs to a known chapter", () => {
+    const chapterIds = chapters.map((c) => String(c.chapter));
     ALL.forEach((q) => {
-      expect(domainIds).toContain(q.domain);
+      expect(chapterIds).toContain(String(q.chapter));
     });
   });
 
-  it("byDomainInLang filters correctly", () => {
-    const tec = byDomainInLang("tec");
-    expect(tec.every((q) => q.domain === "tec")).toBe(true);
+  it("byChapterInLang filters correctly", () => {
+    const tec = byChapterInLang(4);
+    expect(tec.every((q) => String(q.chapter) === "4")).toBe(true);
     expect(tec.length).toBeGreaterThan(0);
   });
 
