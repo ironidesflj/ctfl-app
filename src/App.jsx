@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Routes, Route, Navigate, useParams, useNavigate, useLocation } from "react-router-dom";
 import Quiz from "./components/Quiz.jsx";
 import Flashcards from "./components/Flashcards.jsx";
 import Syllabus from "./components/Syllabus.jsx";
@@ -9,9 +10,63 @@ import { loadProgress, saveProgress, recordAnswer, getDueItems } from "./lib/sto
 import { META, ALL } from "./lib/bank.js";
 import { t } from "./lib/ui-strings.js";
 import { isNotificationSupported, showLocalNotification, daysSinceLastStudy } from "./lib/notifications.js";
+import { VALID_CERTS, DEFAULT_SECTION, LAST_CERT_KEY } from "./certs.js";
+
+/* ─── Route guard: validates :cert param ─── */
+function CertGuard({ children }) {
+  const { cert } = useParams();
+  useEffect(() => {
+    if (VALID_CERTS.includes(cert)) {
+      localStorage.setItem(LAST_CERT_KEY, cert);
+    }
+  }, [cert]);
+  if (!VALID_CERTS.includes(cert)) return <Navigate to="/" replace />;
+  return children;
+}
+
+/* ─── Root redirect: restores last cert or falls back to ctfl ─── */
+function RootRedirect() {
+  let last;
+  try { last = localStorage.getItem(LAST_CERT_KEY); } catch { /* ignore */ }
+  if (last && VALID_CERTS.includes(last)) {
+    return <Navigate to={`/${last}/${DEFAULT_SECTION}`} replace />;
+  }
+  // TODO Fase 5 Briefing 2: virar tela de seleção de certificação
+  return <Navigate to={`/ctfl/${DEFAULT_SECTION}`} replace />;
+}
+
+/* ─── Tab navigation (reads cert from URL) ─── */
+function TabNav({ lang }) {
+  const { cert } = useParams();
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const TABS = [
+    { id: "quiz", label: t(lang, "tabs.quiz") },
+    { id: "syllabus", label: t(lang, "tabs.syllabus") },
+    { id: "flash", label: t(lang, "tabs.flashcards") },
+    { id: "glossary", label: t(lang, "tabs.glossary") },
+    { id: "stats", label: t(lang, "tabs.progress") }
+  ];
+
+  return (
+    <nav className="tabs" role="tablist">
+      {TABS.map((tb) => (
+        <button
+          key={tb.id}
+          role="tab"
+          aria-selected={location.pathname === `/${cert}/${tb.id}`}
+          className={"tab" + (location.pathname === `/${cert}/${tb.id}` ? " active" : "")}
+          onClick={() => navigate(`/${cert}/${tb.id}`)}
+        >
+          {tb.label}
+        </button>
+      ))}
+    </nav>
+  );
+}
 
 export default function App() {
-  const [tab, setTab] = useState("quiz");
   const [progress, setProgress] = useState(loadProgress);
   const [quizFilter, setQuizFilter] = useState(null);
   const [showOnboarding, setShowOnboarding] = useState(() => {
@@ -82,14 +137,6 @@ export default function App() {
     setTheme(next);
   }
 
-  const TABS = [
-    { id: "quiz", label: t(lang, "tabs.quiz") },
-    { id: "syllabus", label: t(lang, "tabs.syllabus") },
-    { id: "flash", label: t(lang, "tabs.flashcards") },
-    { id: "glossary", label: t(lang, "tabs.glossary") },
-    { id: "stats", label: t(lang, "tabs.progress") }
-  ];
-
   return (
     <div className="app">
       <header className="masthead">
@@ -109,40 +156,42 @@ export default function App() {
       {showOnboarding ? (
         <Onboarding onDismiss={dismissOnboarding} lang={lang} />
       ) : (
-        <>
-          <nav className="tabs" role="tablist">
-            {TABS.map((t) => (
-              <button
-                key={t.id}
-                role="tab"
-                aria-selected={tab === t.id}
-                className={"tab" + (tab === t.id ? " active" : "")}
-                onClick={() => setTab(t.id)}
-              >
-                {t.label}
-              </button>
-            ))}
-          </nav>
+        <Routes>
+          <Route path="/" element={<RootRedirect />} />
 
-          <main>
-            {tab === "quiz" && (
-              <Quiz
-                onAnswer={onAnswer}
-                progress={progress}
-                setProgress={setProgress}
-                initialFilter={quizFilter}
-                onFilterConsumed={() => setQuizFilter(null)}
-                lang={lang}
-              />
-            )}
-            {tab === "syllabus" && (
-              <Syllabus onStudy={(domain) => { setQuizFilter({ domain }); setTab("quiz"); }} lang={lang} progress={progress} />
-            )}
-            {tab === "flash" && <Flashcards lang={lang} progress={progress} setProgress={setProgress} />}
-            {tab === "glossary" && <Glossary lang={lang} progress={progress} />}
-            {tab === "stats" && <Stats progress={progress} setProgress={setProgress} lang={lang} onGoToQuiz={() => setTab("quiz")} />}
-          </main>
-        </>
+          <Route path="/:cert/quiz" element={
+            <CertGuard>
+              <TabNav lang={lang} />
+              <main><CertRouteQuiz quizFilter={quizFilter} setQuizFilter={setQuizFilter} onAnswer={onAnswer} progress={progress} setProgress={setProgress} lang={lang} /></main>
+            </CertGuard>
+          } />
+          <Route path="/:cert/syllabus" element={
+            <CertGuard>
+              <TabNav lang={lang} />
+              <main><CertRouteSyllabus setQuizFilter={setQuizFilter} lang={lang} progress={progress} /></main>
+            </CertGuard>
+          } />
+          <Route path="/:cert/flash" element={
+            <CertGuard>
+              <TabNav lang={lang} />
+              <main><Flashcards lang={lang} progress={progress} setProgress={setProgress} /></main>
+            </CertGuard>
+          } />
+          <Route path="/:cert/glossary" element={
+            <CertGuard>
+              <TabNav lang={lang} />
+              <main><Glossary lang={lang} progress={progress} /></main>
+            </CertGuard>
+          } />
+          <Route path="/:cert/stats" element={
+            <CertGuard>
+              <TabNav lang={lang} />
+              <main><CertRouteStats progress={progress} setProgress={setProgress} lang={lang} /></main>
+            </CertGuard>
+          } />
+
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
       )}
 
       <footer className="foot">
@@ -150,5 +199,44 @@ export default function App() {
         <span style={{marginLeft: '1rem', opacity: 0.5}}>v{__APP_VERSION__}</span>
       </footer>
     </div>
+  );
+}
+
+/* ─── Thin wrappers that need useParams/useNavigate inside the Route tree ─── */
+function CertRouteQuiz({ quizFilter, setQuizFilter, onAnswer, progress, setProgress, lang }) {
+  return (
+    <Quiz
+      onAnswer={onAnswer}
+      progress={progress}
+      setProgress={setProgress}
+      initialFilter={quizFilter}
+      onFilterConsumed={() => setQuizFilter(null)}
+      lang={lang}
+    />
+  );
+}
+
+function CertRouteSyllabus({ setQuizFilter, lang, progress }) {
+  const { cert } = useParams();
+  const navigate = useNavigate();
+  return (
+    <Syllabus
+      onStudy={(domain) => { setQuizFilter({ domain }); navigate(`/${cert}/${DEFAULT_SECTION}`); }}
+      lang={lang}
+      progress={progress}
+    />
+  );
+}
+
+function CertRouteStats({ progress, setProgress, lang }) {
+  const { cert } = useParams();
+  const navigate = useNavigate();
+  return (
+    <Stats
+      progress={progress}
+      setProgress={setProgress}
+      lang={lang}
+      onGoToQuiz={() => navigate(`/${cert}/${DEFAULT_SECTION}`)}
+    />
   );
 }
