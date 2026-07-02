@@ -71,7 +71,7 @@ export const UI = {
     syllabus: { ofQuestions: "de {total} questões neste banco", studyChapter: "Estudar este capítulo →" },
     onboarding: {
       examCardDesc: "40 questões em 75 minutos, igual à prova real. Revisão de erros no fim.",
-      statsQuestions: "200 questões",
+      statsQuestions: "300 questões",
       badge: "Baseado no syllabus oficial ISTQB CTFL v4.0",
       heroValueProp: "Tudo que você precisa para passar no CTFL, de graça.",
       heroSubtitle: "Preparação gratuita para o exame ISTQB Foundation Level v4.0",
@@ -198,7 +198,7 @@ export const UI = {
     syllabus: { ofQuestions: "of {total} questions in this bank", studyChapter: "Study this chapter →" },
     onboarding: {
       examCardDesc: "40 questions in 75 minutes, just like the real exam. Mistake review at the end.",
-      statsQuestions: "200 questions",
+      statsQuestions: "300 questions",
       badge: "Based on the official ISTQB CTFL v4.0 syllabus",
       heroValueProp: "Everything you need to pass CTFL, for free.",
       heroSubtitle: "Free prep for the ISTQB Foundation Level v4.0 exam",
