@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { ALL, DOMAINS, byDomainInLang, byIds, buildExamInLang, shuffleOptions } from "./bank.js";
+import { ALL, DOMAINS, META, byDomainInLang, byIds, buildExamInLang, shuffleOptions } from "./bank.js";
 
 describe("bank - data integrity", () => {
   it("has exactly 300 questions", () => {
@@ -48,5 +48,19 @@ describe("bank - data integrity", () => {
     const shuffled = shuffleOptions(q);
     const correctCount = shuffled.filter((o) => o.correct).length;
     expect(correctCount).toBe(1);
+  });
+});
+
+describe("bank - distribuição do simulado (blueprint)", () => {
+  it("buildExamInLang segue os pesos oficiais por capítulo, sem filler aleatório", () => {
+    const WEIGHTS_TOTAL = Object.values(META.chapterWeights).reduce((s, w) => s + Number(w), 0);
+    const exam = buildExamInLang("pt");
+    expect(exam.length).toBe(META.examFormat.questions);
+    const counts = {};
+    exam.forEach((q) => { counts[q.chapter] = (counts[q.chapter] || 0) + 1; });
+    DOMAINS.forEach((d) => {
+      const want = Math.round((META.chapterWeights[String(d.chapter)] / WEIGHTS_TOTAL) * META.examFormat.questions);
+      expect(counts[d.chapter] || 0).toBe(want);
+    });
   });
 });

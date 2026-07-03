@@ -19,6 +19,9 @@ export const domainName = (id, lang = "pt") => {
 
 export const chapterWeight = (chapter) => META.chapterWeights[String(chapter)] || 0;
 
+// Soma dos pesos oficiais do blueprint (independe do total físico de questões).
+export const WEIGHTS_TOTAL = Object.values(META.chapterWeights).reduce((sum, w) => sum + Number(w), 0);
+
 // Texto da questão no idioma corrente, com índice de resposta neutro.
 export function localized(q, lang = "pt") {
   const loc = q.locales[lang] || q.locales["pt"];
@@ -54,7 +57,7 @@ export function buildExamInLang(lang = "pt") {
   const picked = [];
   DOMAINS.forEach((d) => {
     const pool = shuffle(allQ.filter((q) => q.domain === d.id));
-    const want = Math.round((chapterWeight(d.chapter) / META.total) * META.examFormat.questions);
+    const want = Math.round((chapterWeight(d.chapter) / WEIGHTS_TOTAL) * META.examFormat.questions);
     picked.push(...pool.slice(0, want));
   });
   let pool = shuffle(picked);
