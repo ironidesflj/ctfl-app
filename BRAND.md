@@ -51,11 +51,27 @@ Tema segue `prefers-color-scheme` por padrão, com override manual via
 Carregadas via Google Fonts no `index.html`.
 
 ## Nome e Logo
-- Mark: quadrado roxo (`--accent`) 46×46px, `border-radius: 12px`, com as letras
-  **"CT"** em JetBrains Mono branco, `letter-spacing: -1px`.
-- Não há logotipo tipográfico separado — o nome "Synapse" é exibido em texto
-  Space Grotesk ao lado do mark, não como parte de um logo único.
-- Favicon: SVG simplificado do mesmo mark (fundo roxo + "CT").
+
+- **Mark**: grafo de 4 nós conectados (`polyline points="9,36 18,17 29,26 39,11"`,
+  viewBox 48×48) — não é mais texto/iniciais. Duas variantes, cores propositalmente
+  invertidas entre si:
+  - `BrandMark` (`src/components/BrandMark.jsx`, export default) — pra uso *dentro*
+    de uma caixa `background: var(--cert-accent)` (masthead, badge). Traço branco,
+    nó final branco, 3 nós intermediários com `fill: var(--cert-accent)` (mesma cor
+    do fundo, criam o efeito de "furo" com anel branco).
+  - `BrandMarkOutline` (mesmo arquivo, named export) — pra uso *solto*, sem caixa de
+    fundo (grid do seletor de certificação). `currentColor` no traço e no nó final;
+    3 nós intermediários com `fill: var(--surface-2)` (cor de fundo do card, mesmo
+    princípio de "furo", invertido porque aqui o fundo é claro/escuro neutro, não
+    colorido).
+  - **Não homogeneizar as duas** — a inversão é intencional, não inconsistência.
+- Favicon (`public/favicon.svg`) e ícone-fonte PWA (`public/icon-source.svg`,
+  gera `icon-192.png`/`icon-512.png`) usam o mesmo grafo, fixos na cor-base do
+  app (`#5a4be7`) — não variam por cert, só o mark dentro do app varia.
+- Origem: `brand-assets/` entregue pelo Claude Design (2 rodadas — v1 era um
+  checkmark simples, já substituído; v2, atual, é este grafo).
+- "Synapse" segue em texto Space Grotesk ao lado do mark — sem logotipo
+  tipográfico único combinando os dois.
 
 ## Raio de borda
 
@@ -75,8 +91,6 @@ Carregadas via Google Fonts no `index.html`.
 
 ## O que NÃO existe ainda (decidir apenas na fase de rebranding multi-certificação)
 
-- Logotipo formal/wordmark
 - Variações de logo (monocromático, ícone isolado para redes sociais)
-- Paleta secundária por certificação (ex: cor diferente para CTAL vs CTFL)
 - Guia de tom de voz para marketing/landing page (hoje só existe tom de produto)
 - Brand voice em inglês formalizado além da tradução literal de strings
