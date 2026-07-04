@@ -2,7 +2,7 @@
   "meta": {
     "title": "Synapse — Multi-Certification Question Bank",
     "description": "Banco de questões profissional bilíngue (EN/PT-BR) para certificações ISTQB",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "generatedDate": "2026-06-30",
     "totalQuestions": 1100,
     "availableLanguages": [
@@ -10,6 +10,14 @@
       "en"
     ],
     "defaultLanguage": "pt",
+    "chapterWeights": {
+      "ctfl": {"1":40,"2":25,"3":25,"4":55,"5":45,"6":10},
+      "ctal-ta": {"1":8,"2":3,"3":22,"4":4,"5":8}
+    },
+    "examFormat": {
+      "ctfl": {"questions":40,"passMark":26,"timeMinutes":60,"timeMinutesNonNative":75},
+      "ctal-ta": {"questions":45,"passMark":29,"timeMinutes":120,"timeMinutesNonNative":150}
+    },
     "certifications": {
       "CTFL": {
         "title": "ISTQB CTFL v4.0",
@@ -25894,7 +25902,7 @@
       "chapter": 1,
       "domain": "manager",
       "kLevel": 3,
-      "answer": 3,
+      "answer": 0,
       "lo": "TM-1.4.3",
       "locales": {
         "en": {
@@ -28281,7 +28289,7 @@
       "chapter": 1,
       "domain": "ai",
       "kLevel": 2,
-      "answer": 0,
+      "answer": 2,
       "lo": "AI-1.1.3",
       "locales": {
         "en": {
@@ -28560,7 +28568,7 @@
       "chapter": 3,
       "domain": "ai",
       "kLevel": 2,
-      "answer": 0,
+      "answer": 1,
       "lo": "AI-3.1.1",
       "locales": {
         "en": {
