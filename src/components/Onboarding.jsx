@@ -44,7 +44,7 @@ export default function Onboarding({ onDismiss, lang = "pt" }) {
       <div className="ob-stats">
         <span>{t(lang, "onboarding.statsQuestions")}</span>
         <span>·</span>
-        <span>{t(lang, "onboarding.statDomains")}</span>
+        <span>{t(lang, "onboarding.statCerts")}</span>
         <span>·</span>
         <span>{t(lang, "onboarding.statLang")}</span>
         <span>·</span>
