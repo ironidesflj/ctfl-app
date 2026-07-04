@@ -775,14 +775,14 @@ mark { background: var(--accent-soft); color: var(--text); border-radius: 2px; p
   --cert-accent-text: #3b2fb0;
 }
 [data-cert="ctfl-at"] {
+  --cert-accent: #6e6a86;
+  --cert-accent-soft: #e2dff0;
+  --cert-accent-text: #4a4660;
+}
+[data-cert="ctal-ta"] {
   --cert-accent: #0f8a86;
   --cert-accent-soft: #dff5f3;
   --cert-accent-text: #0b615e;
-}
-[data-cert="ctal-ta"] {
-  --cert-accent: #2565d1;
-  --cert-accent-soft: #e7eefc;
-  --cert-accent-text: #1a4aa0;
 }
 [data-cert="ctal-tm"] {
   --cert-accent: #7d3a72;
@@ -808,14 +808,14 @@ mark { background: var(--accent-soft); color: var(--text); border-radius: 2px; p
     --cert-accent-text: #b9aeff;
   }
   [data-cert="ctfl-at"] {
+    --cert-accent: #9691ab;
+    --cert-accent-soft: #2c2940;
+    --cert-accent-text: #c4c0d6;
+  }
+  [data-cert="ctal-ta"] {
     --cert-accent: #4dd4cf;
     --cert-accent-soft: #123330;
     --cert-accent-text: #7fe8e3;
-  }
-  [data-cert="ctal-ta"] {
-    --cert-accent: #7aa8ff;
-    --cert-accent-soft: #1c2a45;
-    --cert-accent-text: #a8c4ff;
   }
   [data-cert="ctal-tm"] {
     --cert-accent: #d99bd0;
@@ -841,14 +841,14 @@ mark { background: var(--accent-soft); color: var(--text); border-radius: 2px; p
   --cert-accent-text: #b9aeff;
 }
 [data-theme="dark"][data-cert="ctfl-at"] {
+  --cert-accent: #9691ab;
+  --cert-accent-soft: #2c2940;
+  --cert-accent-text: #c4c0d6;
+}
+[data-theme="dark"][data-cert="ctal-ta"] {
   --cert-accent: #4dd4cf;
   --cert-accent-soft: #123330;
   --cert-accent-text: #7fe8e3;
-}
-[data-theme="dark"][data-cert="ctal-ta"] {
-  --cert-accent: #7aa8ff;
-  --cert-accent-soft: #1c2a45;
-  --cert-accent-text: #a8c4ff;
 }
 [data-theme="dark"][data-cert="ctal-tm"] {
   --cert-accent: #d99bd0;
