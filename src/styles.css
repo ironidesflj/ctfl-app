@@ -899,30 +899,24 @@ mark { background: var(--accent-soft); color: var(--text); border-radius: 2px; p
 .cert-select { max-width: 640px; margin: 0 auto; }
 .cert-select h2 { font-family: var(--font-display); font-size: var(--fs-24); margin-bottom: .25rem; }
 .cert-select .cert-select-sub { color: var(--text-2); font-size: var(--fs-14); margin-bottom: 1.25rem; }
-.cert-list { display: grid; gap: 12px; }
+.cert-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
 .cert-card {
-  display: flex; align-items: center; gap: 14px;
-  padding: 16px; border-radius: var(--radius);
-  border: 1px solid var(--line); background: var(--surface);
-  text-align: left; width: 100%; cursor: pointer;
-  transition: border-color .15s, transform .1s;
+  position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: 6px;
+  padding: 18px 14px; border-radius: var(--radius);
+  border: 2px solid transparent; background: var(--surface-2);
+  text-align: left; cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
 }
-.cert-card:hover:not(:disabled) { border-color: var(--cert-accent); transform: translateY(-1px); }
-.cert-card:disabled { cursor: default; opacity: .6; }
-.cert-card .cc-mark {
-  font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-16);
-  color: #fff; background: var(--cert-accent);
-  width: 42px; height: 42px; flex-shrink: 0;
-  display: flex; align-items: center; justify-content: center;
-  border-radius: 10px; letter-spacing: -1px;
-}
-.cert-card .cc-body { flex: 1; }
-.cert-card .cc-title { font-family: var(--font-display); font-weight: 700; font-size: var(--fs-16); }
-.cert-card .cc-sub { color: var(--text-2); font-size: var(--fs-13); }
+.cert-card:hover:not(:disabled) { transform: translateY(-3px); box-shadow: 0 10px 20px -12px rgba(0,0,0,0.25); }
+.cert-card:disabled { cursor: default; border-style: dashed; border-color: var(--line); opacity: .7; }
+.cert-card .cc-mark { color: var(--cert-accent); margin-bottom: 6px; }
+.cert-card .cc-title { font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-12); color: var(--cert-accent-text); }
+.cert-card .cc-sub { color: var(--text-3); font-size: var(--fs-12); }
 .cert-card .cc-soon {
+  position: absolute; top: 12px; right: 12px;
   font-family: var(--font-mono); font-size: var(--fs-11);
-  color: var(--cert-accent-text); background: var(--cert-accent-soft);
-  padding: 3px 8px; border-radius: 999px; flex-shrink: 0;
+  color: var(--text-3); background: var(--surface); border: 1px solid var(--line);
+  padding: 3px 8px; border-radius: 999px;
 }
 .cert-legacy-note {
   margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--line);
