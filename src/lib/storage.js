@@ -148,7 +148,7 @@ export function clearProgress() {
 
 // "Sincronização manual": exporta o progresso para um arquivo.
 export function exportProgress(state) {
-  const payload = { app: "ctfl-prep", exportedAt: new Date().toISOString(), progress: state };
+  const payload = { app: "synapse", exportedAt: new Date().toISOString(), progress: state };
   const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
