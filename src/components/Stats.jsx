@@ -1,5 +1,6 @@
-import { useRef, useState } from "react";
-import { DOMAINS, domainName, coverageByDomain, META } from "../lib/bank.js";
+import { useRef, useState, useMemo } from "react";
+import { useParams } from "react-router-dom";
+import { getBank } from "../lib/bank.js";
 import { exportProgress, importProgress, clearProgress, getStreak, getReadiness, todayLocal } from "../lib/storage.js";
 import { t } from "../lib/ui-strings.js";
 import { getNotificationPermission, requestNotificationPermission } from "../lib/notifications.js";
@@ -49,6 +50,10 @@ function calcPace(history, readiness) {
 }
 
 export default function Stats({ progress, setProgress, lang = "pt", onGoToQuiz }) {
+  const { cert: certId } = useParams();
+  const bank = useMemo(() => getBank(certId), [certId]);
+  const { chapters, chapterName, coverageByChapter, META } = bank;
+
   const fileRef = useRef(null);
   const [msg, setMsg] = useState("");
   const [notifStatus, setNotifStatus] = useState(getNotificationPermission());
@@ -67,14 +72,14 @@ export default function Stats({ progress, setProgress, lang = "pt", onGoToQuiz }
   const achievements = progress.achievements || [];
   const level = Math.floor(progress.total / 20) + 1;
 
-  const coverage = coverageByDomain(progress.seen || {});
-  const radarDomains = DOMAINS.map((d) => domainName(d.id, lang).split(" ")[0]);
-  const radarPrecision = DOMAINS.map((d) => {
-    const bd = progress.byDomain?.[d.id] || { t: 0, c: 0 };
+  const coverage = coverageByChapter(progress.seen || {});
+  const radarDomains = chapters.map((c) => chapterName(c.chapter, lang).split(" ")[0]);
+  const radarPrecision = chapters.map((c) => {
+    const bd = progress.byDomain?.[c.chapter] || { t: 0, c: 0 };
     return bd.t > 0 ? Math.round((bd.c / bd.t) * 100) : 0;
   });
-  const radarCoverage = DOMAINS.map((d) => {
-    const cov = coverage[d.id];
+  const radarCoverage = chapters.map((c) => {
+    const cov = coverage[c.chapter];
     return Math.round((cov.seen / cov.total) * 100);
   });
 
@@ -166,8 +171,8 @@ export default function Stats({ progress, setProgress, lang = "pt", onGoToQuiz }
             size={220}
           />
           <ul className="sr-only">
-            {DOMAINS.map((d, i) => (
-              <li key={d.id}>{radarDomains[i]}: {radarPrecision[i]}% {t(lang, "stats.precisionLabel").toLowerCase()}, {radarCoverage[i]}% {t(lang, "stats.coverageLabel").toLowerCase()}</li>
+            {chapters.map((c, i) => (
+              <li key={c.chapter}>{radarDomains[i]}: {radarPrecision[i]}% {t(lang, "stats.precisionLabel").toLowerCase()}, {radarCoverage[i]}% {t(lang, "stats.coverageLabel").toLowerCase()}</li>
             ))}
           </ul>
           <div style={{ display: "flex", gap: "1.25rem", fontSize: "var(--fs-12)", color: "var(--text-2)" }}>

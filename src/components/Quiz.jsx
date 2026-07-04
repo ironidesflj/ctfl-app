@@ -1,12 +1,13 @@
 import { useReducer, useEffect, useRef, useMemo } from "react";
-import { DOMAINS, ALL, domainName, chapterWeight, byDomainInLang, byIds, buildExamInLang, shuffle, shuffleOptions, META } from "../lib/bank.js";
+import { useParams } from "react-router-dom";
+import { getBank } from "../lib/bank.js";
 import { getWrongIds, isSaved, toggleSaved, getSavedIds, getSRSCard, updateSRSCard, getDueItems } from "../lib/storage.js";
 import { initSM2, sm2, QUALITY } from "../lib/spacedRepetition.js";
 import { findGlossaryTermsInText } from "../data/glossary.js";
 import { t } from "../lib/ui-strings.js";
-import bank from "../data/ctfl-questions-ptbr.json";
+import monolith from "../data/synapse-question-bank.json" with { type: "json" };
 
-const hasEN = (id) => !!bank.questions.find((q) => q.id === id)?.locales?.en;
+const hasEN = (id) => !!monolith.questions.find((q) => q.id === id)?.locales?.en;
 
 const LETTERS = ["A", "B", "C", "D", "E"];
 
@@ -102,6 +103,10 @@ function quizReducer(state, action) {
 }
 
 export default function Quiz({ onAnswer, progress, setProgress, initialFilter, onFilterConsumed, lang = "pt" }) {
+  const { cert: certId } = useParams();
+  const bank = useMemo(() => getBank(certId), [certId]);
+  const { chapters, ALL, chapterName, chapterWeight, byChapterInLang, byIds, buildExamInLang, shuffle, shuffleOptions, META } = bank;
+
   const [state, dispatch] = useReducer(quizReducer, initialState);
   const { phase, mode, domain, count, questions, opts, idx, answers, showReview, showGrid, timeLeft } = state;
 
@@ -130,11 +135,11 @@ export default function Quiz({ onAnswer, progress, setProgress, initialFilter, o
       const pool = byIds(dueIds);
       qs = shuffle(pool).slice(0, Math.min(count, pool.length));
     } else {
-      const pool = domain === "wrong" ? byIds(wrongIds) : byDomainInLang(domain, lang);
+      const pool = domain === "wrong" ? byIds(wrongIds) : byChapterInLang(domain, lang);
       qs = shuffle(pool).slice(0, Math.min(count, pool.length));
     }
     const newOpts = qs.map((q) => shuffleOptions(q));
-    const newTimeLeft = mode === "exam" ? META.examFormat.timeMinutesNonNative * 60 : 0;
+    const newTimeLeft = mode === "exam" ? META.examFormat[certId].timeMinutesNonNative * 60 : 0;
     dispatch({ type: "START_QUIZ", questions: qs, opts: newOpts, timeLeft: newTimeLeft });
     if (mode === "exam") {
       timerRef.current = setInterval(() => {
@@ -149,7 +154,7 @@ export default function Quiz({ onAnswer, progress, setProgress, initialFilter, o
       questions.forEach((q, i) => {
         const a = answers[i];
         const correct = a !== null && opts[i][a].correct;
-        onAnswer(q.domain, !!correct, q.id);
+        onAnswer(String(q.chapter), !!correct, q.id);
       });
     }
     dispatch({ type: "FINISH" });
@@ -171,7 +176,7 @@ export default function Quiz({ onAnswer, progress, setProgress, initialFilter, o
     const question = questions[idx];
     const correct = opts[idx][optIndex].correct;
     dispatch({ type: "ANSWER_PRACTICE", optIndex });
-    onAnswer(question.domain, correct, question.id);
+    onAnswer(String(question.chapter), correct, question.id);
 
     if (mode !== "srs") {
       const existing = getSRSCard(progress, question.id);
@@ -217,7 +222,7 @@ export default function Quiz({ onAnswer, progress, setProgress, initialFilter, o
           </button>
           <button className={"mode-btn" + (mode === "exam" ? " active" : "")} onClick={() => dispatch({ type: "SET_MODE", mode: "exam" })}>
             <span className="mode-title">{t(lang, "quiz.modeExam")}</span>
-            <span className="mode-desc">{t(lang, "quiz.modeExamDesc", { n: META.examFormat.questions, min: META.examFormat.timeMinutesNonNative })}</span>
+            <span className="mode-desc">{t(lang, "quiz.modeExamDesc", { n: META.examFormat[certId].questions, min: META.examFormat[certId].timeMinutesNonNative })}</span>
           </button>
           {getSavedIds(progress).length > 0 && (
             <button
@@ -252,10 +257,10 @@ export default function Quiz({ onAnswer, progress, setProgress, initialFilter, o
                   <span className="domain-sub">{t(lang, "quiz.wrongBeforeDesc", { n: wrongIds.length })}</span>
                 </button>
               )}
-              {DOMAINS.map((d) => (
-                <button key={d.id} className={"domain-card" + (domain === d.id ? " selected" : "")} onClick={() => dispatch({ type: "SET_DOMAIN", domain: d.id })}>
-                  <span className="domain-weight">{chapterWeight(d.chapter)} / {META.total}</span>
-                  <span className="domain-name">{domainName(d.id, lang)}</span>
+              {chapters.map((c) => (
+                <button key={c.chapter} className={"domain-card" + (domain === String(c.chapter) ? " selected" : "")} onClick={() => dispatch({ type: "SET_DOMAIN", domain: String(c.chapter) })}>
+                  <span className="domain-weight">{chapterWeight(c.chapter)} / {META.total}</span>
+                  <span className="domain-name">{chapterName(c.chapter, lang)}</span>
                 </button>
               ))}
             </div>
@@ -299,7 +304,7 @@ export default function Quiz({ onAnswer, progress, setProgress, initialFilter, o
         ) : (
           <div className="card">
             <p className="muted">
-              {t(lang, "quiz.examExplain", { n: META.examFormat.questions, min: META.examFormat.timeMinutesNonNative })}
+              {t(lang, "quiz.examExplain", { n: META.examFormat[certId].questions, min: META.examFormat[certId].timeMinutesNonNative })}
             </p>
           </div>
         )}
@@ -407,7 +412,7 @@ export default function Quiz({ onAnswer, progress, setProgress, initialFilter, o
         <div key={idx} className={"quiz-split" + (answered ? " has-explain" : "")}>
           <div className="quiz-question-col">
             <div className="q-meta">
-              <span className="q-domain">{domainName(q.domain, lang)}</span>
+              <span className="q-domain">{chapterName(q.chapter, lang)}</span>
               <span className={"klvl k" + q.kLevel}>K{q.kLevel}</span>
             </div>
             {lang === "en" && !hasEN(questions[idx]?.id) && (
