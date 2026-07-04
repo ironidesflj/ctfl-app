@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { CERT_CATALOG } from "../certs-catalog.js";
 import { DEFAULT_SECTION } from "../certs.js";
+import BrandMark from "./BrandMark.jsx";
 
 // Tela de seleção de certificação (/select) e destino do badge do masthead.
 // Live → navega pra /{id}/{seção}; coming-soon → desabilitado; legacy →
@@ -33,7 +34,7 @@ export default function CertSelector({ lang = "pt" }) {
               aria-disabled={!isLive}
               onClick={isLive ? () => navigate(`/${c.id}/${DEFAULT_SECTION}`) : undefined}
             >
-              <span className="cc-mark" aria-hidden="true">{c.mark}</span>
+              <span className="cc-mark" aria-hidden="true"><BrandMark size={22} /></span>
               <span className="cc-body">
                 <span className="cc-title">{c.label}</span>
                 <span className="cc-sub">ISTQB {c.fullName} {c.version}</span>

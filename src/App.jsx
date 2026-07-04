@@ -7,6 +7,7 @@ import Glossary from "./components/Glossary.jsx";
 import Stats from "./components/Stats.jsx";
 import Onboarding from "./components/Onboarding.jsx";
 import CertSelector from "./components/CertSelector.jsx";
+import BrandMark from "./components/BrandMark.jsx";
 import { loadProgress, saveProgress, recordAnswer, getDueItems, setActiveCertForStorage } from "./lib/storage.js";
 import { getBank } from "./lib/bank.js";
 import { t } from "./lib/ui-strings.js";
@@ -171,7 +172,7 @@ export default function App() {
   return (
     <div className="app" {...(activeCert ? { "data-cert": activeCert } : {})}>
       <header className="masthead">
-        <div className="mast-mark" aria-hidden="true">{catalogCert ? catalogCert.mark : "S"}</div>
+        <div className="mast-mark" aria-hidden="true"><BrandMark size={26} /></div>
         <div>
           <h1>{catalogCert ? catalogCert.fullName : "Synapse"}</h1>
           {catalogCert && (
