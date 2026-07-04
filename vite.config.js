@@ -19,6 +19,10 @@ export default defineConfig({
     VitePWA({
       registerType: "autoUpdate",
       includeAssets: ["favicon.svg"],
+      workbox: {
+        // banco multi-cert (1100q) passou do limite default de 2MiB
+        maximumFileSizeToCacheInBytes: 3 * 1024 * 1024
+      },
       manifest: {
         name: "CTFL Prep — ISTQB v4.0",
         short_name: "CTFL Prep",
