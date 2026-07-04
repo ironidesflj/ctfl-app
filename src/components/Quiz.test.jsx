@@ -1,6 +1,7 @@
 import { describe, it, expect, vi, afterEach } from "vitest";
 import { render, screen, cleanup, act, fireEvent } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { MemoryRouter, Routes, Route } from "react-router-dom";
 import Quiz from "./Quiz.jsx";
 
 afterEach(cleanup);
@@ -15,15 +16,24 @@ function renderQuiz(props = {}) {
   const setProgress = vi.fn();
   const onFilterConsumed = vi.fn();
   const utils = render(
-    <Quiz
-      onAnswer={onAnswer}
-      progress={EMPTY_PROGRESS}
-      setProgress={setProgress}
-      initialFilter={null}
-      onFilterConsumed={onFilterConsumed}
-      lang="pt"
-      {...props}
-    />
+    <MemoryRouter initialEntries={["/ctfl/quiz"]}>
+      <Routes>
+        <Route
+          path="/:cert/quiz"
+          element={
+            <Quiz
+              onAnswer={onAnswer}
+              progress={EMPTY_PROGRESS}
+              setProgress={setProgress}
+              initialFilter={null}
+              onFilterConsumed={onFilterConsumed}
+              lang="pt"
+              {...props}
+            />
+          }
+        />
+      </Routes>
+    </MemoryRouter>
   );
   return { ...utils, onAnswer, setProgress };
 }
