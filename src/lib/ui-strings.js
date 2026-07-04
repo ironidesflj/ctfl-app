@@ -6,6 +6,7 @@ export const UI = {
     tabs: { quiz: "Quiz", syllabus: "Syllabus", flashcards: "Flashcards", glossary: "Glossário", progress: "Progresso" },
     footer: "Material de estudo independente, não afiliado ao ISTQB.",
     questionsCount: "questões",
+    changeCert: "Trocar certificação",
     domainAll: "Todos",
     domainAllDesc: "Mistura de todos os capítulos",
     quiz: {
@@ -133,6 +134,7 @@ export const UI = {
     tabs: { quiz: "Quiz", syllabus: "Syllabus", flashcards: "Flashcards", glossary: "Glossary", progress: "Progress" },
     footer: "Independent study material, not affiliated with ISTQB.",
     questionsCount: "questions",
+    changeCert: "Change certification",
     domainAll: "All",
     domainAllDesc: "Mix of all chapters",
     quiz: {

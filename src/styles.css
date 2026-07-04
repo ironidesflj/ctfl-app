@@ -27,6 +27,8 @@
      sobrescrevem só --cert-accent via [data-cert="x"], sem tocar
      em --accent (mantém retrocompatibilidade). */
   --cert-accent: var(--accent);
+  --cert-accent-soft: var(--accent-soft);
+  --cert-accent-text: var(--accent-text);
 
   /* Escala tipográfica (Fase 2) — cada token = valor que já existia no
      arquivo antes desta tokenização. Nenhum valor foi alterado/arredondado. */
@@ -135,7 +137,7 @@ body {
   font-weight: 500;
   font-size: var(--fs-20);
   color: #fff;
-  background: var(--accent);
+  background: var(--cert-accent);
   width: 46px; height: 46px;
   display: flex; align-items: center; justify-content: center;
   border-radius: 12px;
@@ -756,4 +758,158 @@ mark { background: var(--accent-soft); color: var(--text); border-radius: 2px; p
   font-size: var(--fs-13);
   color: var(--text-2);
   margin-bottom: 0.5rem;
+}
+
+/* ============================================================
+   Multi-cert — tokens de cor por certificação (Fase 5 / P4)
+   Origem: brand-assets/synapse-cert-tokens.css (rebrand).
+   data-cert é setado no elemento raiz do app só quando há cert
+   ativo na rota; na tela de seleção (/select, /) o atributo é
+   omitido e cai no fallback --cert-accent do :root.
+   ============================================================ */
+
+/* ---------- tema claro (padrão + prefers-color-scheme: light) ---------- */
+[data-cert="ctfl"] {
+  --cert-accent: #5a4be7;
+  --cert-accent-soft: #ece9fc;
+  --cert-accent-text: #3b2fb0;
+}
+[data-cert="ctfl-at"] {
+  --cert-accent: #0f8a86;
+  --cert-accent-soft: #dff5f3;
+  --cert-accent-text: #0b615e;
+}
+[data-cert="ctal-ta"] {
+  --cert-accent: #2565d1;
+  --cert-accent-soft: #e7eefc;
+  --cert-accent-text: #1a4aa0;
+}
+[data-cert="ctal-tm"] {
+  --cert-accent: #7d3a72;
+  --cert-accent-soft: #f3e7f1;
+  --cert-accent-text: #5c2a56;
+}
+[data-cert="ct-ai"] {
+  --cert-accent: #b0245a;
+  --cert-accent-soft: #fbe7ee;
+  --cert-accent-text: #7f1a43;
+}
+
+/* ---------- tema escuro (prefers-color-scheme: dark) ---------- */
+@media (prefers-color-scheme: dark) {
+  [data-cert="ctfl"] {
+    --cert-accent: #8b7dff;
+    --cert-accent-soft: #241f3d;
+    --cert-accent-text: #b9aeff;
+  }
+  [data-cert="ctfl-at"] {
+    --cert-accent: #4dd4cf;
+    --cert-accent-soft: #123330;
+    --cert-accent-text: #7fe8e3;
+  }
+  [data-cert="ctal-ta"] {
+    --cert-accent: #7aa8ff;
+    --cert-accent-soft: #1c2a45;
+    --cert-accent-text: #a8c4ff;
+  }
+  [data-cert="ctal-tm"] {
+    --cert-accent: #d99bd0;
+    --cert-accent-soft: #3a2438;
+    --cert-accent-text: #eab8e2;
+  }
+  [data-cert="ct-ai"] {
+    --cert-accent: #ff7fa8;
+    --cert-accent-soft: #3a1826;
+    --cert-accent-text: #ffa8c2;
+  }
+}
+
+/* ---------- tema escuro forçado (data-theme="dark") ---------- */
+[data-theme="dark"][data-cert="ctfl"] {
+  --cert-accent: #8b7dff;
+  --cert-accent-soft: #241f3d;
+  --cert-accent-text: #b9aeff;
+}
+[data-theme="dark"][data-cert="ctfl-at"] {
+  --cert-accent: #4dd4cf;
+  --cert-accent-soft: #123330;
+  --cert-accent-text: #7fe8e3;
+}
+[data-theme="dark"][data-cert="ctal-ta"] {
+  --cert-accent: #7aa8ff;
+  --cert-accent-soft: #1c2a45;
+  --cert-accent-text: #a8c4ff;
+}
+[data-theme="dark"][data-cert="ctal-tm"] {
+  --cert-accent: #d99bd0;
+  --cert-accent-soft: #3a2438;
+  --cert-accent-text: #eab8e2;
+}
+[data-theme="dark"][data-cert="ct-ai"] {
+  --cert-accent: #ff7fa8;
+  --cert-accent-soft: #3a1826;
+  --cert-accent-text: #ffa8c2;
+}
+
+/* ---------- selo discreto do masthead (dot + label) ---------- */
+.cert-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: var(--cert-accent-soft);
+  color: var(--cert-accent-text);
+  font-family: var(--font-mono);
+  font-size: var(--fs-12);
+  animation: cert-indicator-in 0.25s ease-out;
+}
+.cert-indicator::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: var(--cert-accent);
+  flex-shrink: 0;
+}
+@keyframes cert-indicator-in {
+  from { opacity: 0; transform: scale(.88); }
+  to { opacity: 1; transform: scale(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cert-indicator { animation: none; }
+}
+
+/* ---------- seletor de certificação (/select) ---------- */
+.cert-select { max-width: 640px; margin: 0 auto; }
+.cert-select h2 { font-family: var(--font-display); font-size: var(--fs-24); margin-bottom: .25rem; }
+.cert-select .cert-select-sub { color: var(--text-2); font-size: var(--fs-14); margin-bottom: 1.25rem; }
+.cert-list { display: grid; gap: 12px; }
+.cert-card {
+  display: flex; align-items: center; gap: 14px;
+  padding: 16px; border-radius: var(--radius);
+  border: 1px solid var(--line); background: var(--surface);
+  text-align: left; width: 100%; cursor: pointer;
+  transition: border-color .15s, transform .1s;
+}
+.cert-card:hover:not(:disabled) { border-color: var(--cert-accent); transform: translateY(-1px); }
+.cert-card:disabled { cursor: default; opacity: .6; }
+.cert-card .cc-mark {
+  font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-16);
+  color: #fff; background: var(--cert-accent);
+  width: 42px; height: 42px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 10px; letter-spacing: -1px;
+}
+.cert-card .cc-body { flex: 1; }
+.cert-card .cc-title { font-family: var(--font-display); font-weight: 700; font-size: var(--fs-16); }
+.cert-card .cc-sub { color: var(--text-2); font-size: var(--fs-13); }
+.cert-card .cc-soon {
+  font-family: var(--font-mono); font-size: var(--fs-11);
+  color: var(--cert-accent-text); background: var(--cert-accent-soft);
+  padding: 3px 8px; border-radius: 999px; flex-shrink: 0;
+}
+.cert-legacy-note {
+  margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--line);
+  font-size: var(--fs-13); color: var(--text-3);
 }

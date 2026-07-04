@@ -1,16 +1,18 @@
 import { useState, useEffect, useMemo } from "react";
-import { Routes, Route, Navigate, useParams, useNavigate, useLocation } from "react-router-dom";
+import { Routes, Route, Navigate, Link, useParams, useNavigate, useLocation } from "react-router-dom";
 import Quiz from "./components/Quiz.jsx";
 import Flashcards from "./components/Flashcards.jsx";
 import Syllabus from "./components/Syllabus.jsx";
 import Glossary from "./components/Glossary.jsx";
 import Stats from "./components/Stats.jsx";
 import Onboarding from "./components/Onboarding.jsx";
+import CertSelector from "./components/CertSelector.jsx";
 import { loadProgress, saveProgress, recordAnswer, getDueItems } from "./lib/storage.js";
 import { getBank } from "./lib/bank.js";
 import { t } from "./lib/ui-strings.js";
 import { isNotificationSupported, showLocalNotification, daysSinceLastStudy } from "./lib/notifications.js";
 import { VALID_CERTS, DEFAULT_SECTION, LAST_CERT_KEY } from "./certs.js";
+import { CATALOG_BY_ID } from "./certs-catalog.js";
 
 /* ─── Route guard: validates :cert param ─── */
 function CertGuard({ children }) {
@@ -24,15 +26,15 @@ function CertGuard({ children }) {
   return children;
 }
 
-/* ─── Root redirect: restores last cert or falls back to ctfl ─── */
-function RootRedirect() {
+/* ─── Root: volta pro último cert salvo, ou cai na tela de seleção ─── */
+function RootRedirect({ lang }) {
   let last;
   try { last = localStorage.getItem(LAST_CERT_KEY); } catch { /* ignore */ }
   if (last && VALID_CERTS.includes(last)) {
     return <Navigate to={`/${last}/${DEFAULT_SECTION}`} replace />;
   }
-  // TODO Fase 5 Briefing 2: virar tela de seleção de certificação
-  return <Navigate to={`/ctfl/${DEFAULT_SECTION}`} replace />;
+  // sem cert salvo (1ª visita / storage limpo): tela dedicada, não fallback fixo
+  return <CertSelector lang={lang} />;
 }
 
 /* ─── Tab navigation (reads cert from URL) ─── */
@@ -68,13 +70,20 @@ function TabNav({ lang }) {
 
 export default function App() {
   const location = useLocation();
-  const certId = (location.pathname.split("/")[1] || "ctfl").toLowerCase();
-  
+  // Segmento cru da rota. `activeCert` = null fora de uma rota de cert válida
+  // (ex: "/", "/select") → masthead neutro + sem data-cert (cai no fallback
+  // --accent). `certId` mantém fallback "ctfl" só pra getBank() não quebrar
+  // na "/" — os dois usos são distintos, um tolera fallback, o outro não.
+  const certSeg = (location.pathname.split("/")[1] || "").toLowerCase();
+  const activeCert = VALID_CERTS.includes(certSeg) ? certSeg : null;
+  const certId = activeCert || "ctfl";
+
   const bank = useMemo(() => {
     try { return getBank(certId); }
     catch { return getBank("ctfl"); }
   }, [certId]);
-  const { META, ALL } = bank;
+  const { ALL } = bank;
+  const catalogCert = activeCert ? CATALOG_BY_ID[activeCert] : null;
   const [progress, setProgress] = useState(loadProgress);
   const [quizFilter, setQuizFilter] = useState(null);
   const [showOnboarding, setShowOnboarding] = useState(() => {
@@ -146,13 +155,22 @@ export default function App() {
   }
 
   return (
-    <div className="app">
+    <div className="app" {...(activeCert ? { "data-cert": activeCert } : {})}>
       <header className="masthead">
-        <div className="mast-mark" aria-hidden="true">CT</div>
+        <div className="mast-mark" aria-hidden="true">{catalogCert ? catalogCert.mark : "S"}</div>
         <div>
-          <h1>CTFL Prep</h1>
-          <p className="mast-sub">ISTQB Foundation Level v4.0 · {META.total} {t(lang, "questionsCount")}</p>
+          <h1>{catalogCert ? catalogCert.fullName : "Synapse"}</h1>
+          {catalogCert && (
+            <p className="mast-sub">
+              ISTQB {catalogCert.label} {catalogCert.version} · {ALL.length} {t(lang, "questionsCount")}
+            </p>
+          )}
         </div>
+        {activeCert && (
+          <Link className="cert-indicator" to="/select" aria-label={t(lang, "changeCert")}>
+            {catalogCert.label}
+          </Link>
+        )}
         <button className="btn ghost lang-toggle" onClick={toggleLang}>
           {lang === "pt" ? "PT" : "EN"}
         </button>
@@ -165,34 +183,38 @@ export default function App() {
         <Onboarding onDismiss={dismissOnboarding} lang={lang} />
       ) : (
         <Routes>
-          <Route path="/" element={<RootRedirect />} />
+          <Route path="/" element={<RootRedirect lang={lang} />} />
+          <Route path="/select" element={<CertSelector lang={lang} />} />
 
+          {/* key={certId}: força remount na troca de cert (mesmo padrão de
+              rota /:cert/*), senão estado local (useReducer do Quiz etc.)
+              vaza do cert antigo pro novo. */}
           <Route path="/:cert/quiz" element={
-            <CertGuard>
+            <CertGuard key={certId}>
               <TabNav lang={lang} />
               <main><CertRouteQuiz quizFilter={quizFilter} setQuizFilter={setQuizFilter} onAnswer={onAnswer} progress={progress} setProgress={setProgress} lang={lang} /></main>
             </CertGuard>
           } />
           <Route path="/:cert/syllabus" element={
-            <CertGuard>
+            <CertGuard key={certId}>
               <TabNav lang={lang} />
               <main><CertRouteSyllabus setQuizFilter={setQuizFilter} lang={lang} progress={progress} /></main>
             </CertGuard>
           } />
           <Route path="/:cert/flash" element={
-            <CertGuard>
+            <CertGuard key={certId}>
               <TabNav lang={lang} />
               <main><Flashcards lang={lang} progress={progress} setProgress={setProgress} /></main>
             </CertGuard>
           } />
           <Route path="/:cert/glossary" element={
-            <CertGuard>
+            <CertGuard key={certId}>
               <TabNav lang={lang} />
               <main><Glossary lang={lang} progress={progress} /></main>
             </CertGuard>
           } />
           <Route path="/:cert/stats" element={
-            <CertGuard>
+            <CertGuard key={certId}>
               <TabNav lang={lang} />
               <main><CertRouteStats progress={progress} setProgress={setProgress} lang={lang} /></main>
             </CertGuard>
