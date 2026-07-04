@@ -45,6 +45,33 @@ describe("Quiz — setup", () => {
   });
 });
 
+describe("Quiz — cert ctal-ta (regressão VALID_CERTS)", () => {
+  it("renderiza tela de setup pra /ctal-ta/quiz sem redirecionar", () => {
+    render(
+      <MemoryRouter initialEntries={["/ctal-ta/quiz"]}>
+        <Routes>
+          <Route
+            path="/:cert/quiz"
+            element={
+              <Quiz
+                onAnswer={vi.fn()}
+                progress={EMPTY_PROGRESS}
+                setProgress={vi.fn()}
+                initialFilter={null}
+                onFilterConsumed={vi.fn()}
+                lang="pt"
+              />
+            }
+          />
+          <Route path="/" element={<div>redirecionou pra home</div>} />
+        </Routes>
+      </MemoryRouter>
+    );
+    expect(screen.getByRole("button", { name: /iniciar/i })).toBeInTheDocument();
+    expect(screen.queryByText("redirecionou pra home")).not.toBeInTheDocument();
+  });
+});
+
 describe("Quiz — modo Estudo (practice)", () => {
   it("responder uma questão chama onAnswer com domain, correct e questionId, e trava as opções", async () => {
     const user = userEvent.setup();
