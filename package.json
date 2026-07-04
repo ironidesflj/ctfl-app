@@ -1,7 +1,7 @@
 {
   "name": "synapse",
   "private": true,
-  "version": "3.7.0",
+  "version": "3.8.1",
   "type": "module",
   "description": "App de preparação para o exame ISTQB CTFL v4.0",
   "scripts": {

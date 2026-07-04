@@ -89,6 +89,68 @@ Material de estudo independente, **não afiliado ao ISTQB**. Baseado na estrutur
 
 ## Changelog
 
+### v3.8.1
+
+Varredura de QA adversarial (4 frentes em paralelo — storage, quiz/simulado,
+roteamento, dados/i18n) + correções. Causa raiz principal: progresso era um
+único objeto global (`ctfl_progress_v1`), cego a certificação.
+
+- fix: **progresso agora é por certificação** (`synapse.progress.v1.<certId>`,
+  antes global) — corrige questão salva/errada em CTFL aparecendo no CTAL-TA,
+  e a colisão de `byDomain` por número de capítulo entre certs (CTFL cap.1
+  "fund" e CTAL-TA cap.1 "analyst" gravavam no mesmo balde). Migração
+  automática da chave legada pro namespace `ctfl`. Export/import/reset agora
+  escopados por cert (arquivo exportado identifica de qual cert veio, import
+  rejeita arquivo de cert diferente).
+- fix: card de capítulo no Quiz mostrava "x/" com denominador vazio
+  (`META.total` nunca existiu no meta do banco) — agora mostra contagem real
+  de questões disponíveis no capítulo sobre o total do cert.
+- fix: simulado do CTAL-TA que batia o corte oficial (29/45 = 64,4%) era
+  reportado como reprovado — corte estava fixo em 65% em vez de ler
+  `examFormat[certId].passMark`. Corrigido na tela E no histórico persistido
+  (`logExamResult`, que tinha o mesmo hardcode independente).
+- fix: resultado do simulado nunca era salvo no histórico (`logExamResult`
+  existia e era testado, mas nunca chamado no fluxo real do app).
+- fix: corrida entre auto-finish (tempo zerou) e clique manual em "Finalizar"
+  podia contar cada resposta em dobro — `finish()` agora é idempotente.
+- fix: trocar PT/EN no meio do simulado/quiz deixava o texto da questão
+  travado no idioma do início — agora re-localiza ao trocar, sem perder
+  respostas já dadas.
+- feat: Flashcards/Syllabus/Glossário mostram "conteúdo em breve" no CTAL-TA
+  em vez de vazar material do CTFL (esses três só têm conteúdo pro CTFL
+  ainda — decisão de produto: empty state, não gerar conteúdo agora).
+- fix: `Syllabus.jsx` tinha o mesmo bug do `META.total` (denominador vazio).
+- fix: **rebrand nunca tinha sido integrado** — favicon/ícones novos
+  (`brand-assets/`, gerados na Fase 4 mas nunca copiados pro app), título/
+  meta OG/Twitter/manifest PWA trocados de "CTFL Prep" pra "Synapse", brand
+  tag do onboarding.
+- fix: cert "coming soon" `ctal-at-v2` no seletor não tinha token de cor no
+  CSS (bug introduzido no v3.8.0, corrigido no mesmo ciclo).
+
+Execução: 4 agentes em lanes de arquivo disjuntas (sem sobreposição),
+supervisionados — reconciliação entre lanes (o hardcode duplicado do corte
+em `logExamResult`) fechada pelo supervisor com teste de regressão próprio.
+62 testes (era 47), build limpo, verificado ao vivo no browser.
+
+### v3.8.0
+
+Masthead dinâmico por certificação + seletor de certificações (P4).
+
+- feat: masthead lê `mark`/`fullName`/label/versão do cert ativo na rota
+  (antes hardcoded "CT"/"CTFL Prep" mesmo dentro do CTAL-TA); neutro
+  ("Synapse") em `/` e `/select`, sem cor de cert aplicada.
+- feat: cores por certificação via `data-cert` no elemento raiz + tokens
+  CSS (`brand-assets/synapse-cert-tokens.css`, mesclados em `styles.css`).
+- feat: `CertSelector` — tela dedicada (`/` sem `lastCert` salvo, e
+  `/select`) e badge no masthead (clicável, troca de cert em qualquer
+  tela). Lista certs vivos (CTFL, CTAL-TA) e "coming soon" (CTAL-TM, CT-AI,
+  CTAL-AT v2.0); CTFL-AT (legado/sunset) fica fora da lista, numa nota
+  separada — não é removido do repo, só sem destaque.
+- fix: troca de cert força remount das rotas (`key={certId}`) — sem isso,
+  estado local do Quiz (`useReducer`) vazava do cert antigo pro novo.
+- fix: `VALID_CERTS` incluía só `"ctfl"` mesmo com CTAL-TA já pronto no
+  banco — rota `/ctal-ta/*` redirecionava pra home sem motivo.
+
 ### v3.7.0
 
 Multi-cert de verdade — merge do refactor `getBank(certId)` (branch
