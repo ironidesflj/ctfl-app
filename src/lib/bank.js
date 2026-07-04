@@ -62,18 +62,20 @@ export function getBank(certId) {
 
   function buildExamInLang(lang = "pt") {
     const allQ = allInLang(lang);
+    const weightsTotal = Object.values(META.chapterWeights[cert.id]).reduce((s, w) => s + Number(w), 0);
+    const examQuestions = META.examFormat[cert.id].questions;
     const picked = [];
     chapters.forEach((c) => {
       const pool = shuffle(allQ.filter((q) => matchesChapter(q.chapter, c.chapter)));
-      const want = Math.round((chapterWeight(c.chapter) / META.total) * META.examFormat.questions);
+      const want = Math.round((chapterWeight(c.chapter) / weightsTotal) * examQuestions);
       picked.push(...pool.slice(0, want));
     });
     let pool = shuffle(picked);
-    if (pool.length > META.examFormat.questions) pool = pool.slice(0, META.examFormat.questions);
-    if (pool.length < META.examFormat.questions) {
+    if (pool.length > examQuestions) pool = pool.slice(0, examQuestions);
+    if (pool.length < examQuestions) {
       const used = new Set(pool.map((q) => q.id));
       const extra = shuffle(allQ).filter((q) => !used.has(q.id));
-      pool.push(...extra.slice(0, META.examFormat.questions - pool.length));
+      pool.push(...extra.slice(0, examQuestions - pool.length));
     }
     return shuffle(pool);
   }

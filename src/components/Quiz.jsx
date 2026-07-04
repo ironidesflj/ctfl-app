@@ -139,7 +139,7 @@ export default function Quiz({ onAnswer, progress, setProgress, initialFilter, o
       qs = shuffle(pool).slice(0, Math.min(count, pool.length));
     }
     const newOpts = qs.map((q) => shuffleOptions(q));
-    const newTimeLeft = mode === "exam" ? META.examFormat.timeMinutesNonNative * 60 : 0;
+    const newTimeLeft = mode === "exam" ? META.examFormat[certId].timeMinutesNonNative * 60 : 0;
     dispatch({ type: "START_QUIZ", questions: qs, opts: newOpts, timeLeft: newTimeLeft });
     if (mode === "exam") {
       timerRef.current = setInterval(() => {
@@ -222,7 +222,7 @@ export default function Quiz({ onAnswer, progress, setProgress, initialFilter, o
           </button>
           <button className={"mode-btn" + (mode === "exam" ? " active" : "")} onClick={() => dispatch({ type: "SET_MODE", mode: "exam" })}>
             <span className="mode-title">{t(lang, "quiz.modeExam")}</span>
-            <span className="mode-desc">{t(lang, "quiz.modeExamDesc", { n: META.examFormat.questions, min: META.examFormat.timeMinutesNonNative })}</span>
+            <span className="mode-desc">{t(lang, "quiz.modeExamDesc", { n: META.examFormat[certId].questions, min: META.examFormat[certId].timeMinutesNonNative })}</span>
           </button>
           {getSavedIds(progress).length > 0 && (
             <button
@@ -304,7 +304,7 @@ export default function Quiz({ onAnswer, progress, setProgress, initialFilter, o
         ) : (
           <div className="card">
             <p className="muted">
-              {t(lang, "quiz.examExplain", { n: META.examFormat.questions, min: META.examFormat.timeMinutesNonNative })}
+              {t(lang, "quiz.examExplain", { n: META.examFormat[certId].questions, min: META.examFormat[certId].timeMinutesNonNative })}
             </p>
           </div>
         )}
