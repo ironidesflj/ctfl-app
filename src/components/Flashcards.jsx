@@ -8,11 +8,16 @@ import { initSM2, sm2, QUALITY } from "../lib/spacedRepetition.js";
 
 const hasEN = (id) => !!FLASHCARDS.find((c) => c.id === id)?.locales?.en;
 
+const EMPTY_STATE_TEXT = {
+  pt: "Conteúdo em breve para esta certificação.",
+  en: "Content coming soon for this certification.",
+};
+
 export default function Flashcards({ lang = "pt", progress, setProgress }) {
   const { cert: certId } = useParams();
   const bank = useMemo(() => getBank(certId), [certId]);
   const { chapters, chapterName } = bank;
-  
+
   const [domain, setDomain] = useState("all"); // conceptually chapterId now
   const [idx, setIdx] = useState(0);
   const [flipped, setFlipped] = useState(false);
@@ -23,7 +28,14 @@ export default function Flashcards({ lang = "pt", progress, setProgress }) {
   const isDraggingRef = useRef(false);
   const SWIPE_THRESHOLD = 80;
 
-  const allCards = useMemo(() => flashcardsInLang(lang), [lang]);
+  // ponytail: content (FLASHCARDS) only exists for CTFL domains today; scope
+  // to the current cert's domain set so other certs never see CTFL cards.
+  const certDomains = useMemo(() => new Set(chapters.map((c) => c.domain)), [chapters]);
+  const allCards = useMemo(
+    () => flashcardsInLang(lang).filter((c) => certDomains.has(c.d)),
+    [lang, certDomains]
+  );
+  const hasContent = allCards.length > 0;
   const dueIds = progress ? getDueItems(progress, FLASHCARDS.map((c) => c.id)) : [];
   const cards = useMemo(
     () => (domain === "due" ? allCards.filter((c) => dueIds.includes(c.id)) : domain === "all" ? allCards : allCards.filter((c) => String(c.d) === chapters.find(ch => String(ch.chapter) === String(domain))?.domain)),
@@ -74,6 +86,16 @@ export default function Flashcards({ lang = "pt", progress, setProgress }) {
     dragXRef.current = 0;
     setDragX(0);
     touchStartX.current = null;
+  }
+
+  if (!hasContent) {
+    return (
+      <div className="study">
+        <div className="card">
+          <p className="muted">{EMPTY_STATE_TEXT[lang]}</p>
+        </div>
+      </div>
+    );
   }
 
   return (

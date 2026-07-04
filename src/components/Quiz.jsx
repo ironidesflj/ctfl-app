@@ -1,7 +1,7 @@
 import { useReducer, useEffect, useRef, useMemo } from "react";
 import { useParams } from "react-router-dom";
 import { getBank } from "../lib/bank.js";
-import { getWrongIds, isSaved, toggleSaved, getSavedIds, getSRSCard, updateSRSCard, getDueItems } from "../lib/storage.js";
+import { getWrongIds, isSaved, toggleSaved, getSavedIds, getSRSCard, updateSRSCard, getDueItems, logExamResult } from "../lib/storage.js";
 import { initSM2, sm2, QUALITY } from "../lib/spacedRepetition.js";
 import { findGlossaryTermsInText } from "../data/glossary.js";
 import { t } from "../lib/ui-strings.js";
@@ -105,7 +105,7 @@ function quizReducer(state, action) {
 export default function Quiz({ onAnswer, progress, setProgress, initialFilter, onFilterConsumed, lang = "pt" }) {
   const { cert: certId } = useParams();
   const bank = useMemo(() => getBank(certId), [certId]);
-  const { chapters, ALL, chapterName, chapterWeight, byChapterInLang, byIds, buildExamInLang, shuffle, shuffleOptions, META } = bank;
+  const { chapters, ALL, chapterName, chapterWeight, byChapterInLang, byIds, buildExamInLang, shuffle, shuffleOptions, META, localized } = bank;
 
   const [state, dispatch] = useReducer(quizReducer, initialState);
   const { phase, mode, domain, count, questions, opts, idx, answers, showReview, showGrid, timeLeft } = state;
@@ -138,7 +138,19 @@ export default function Quiz({ onAnswer, progress, setProgress, initialFilter, o
       const pool = domain === "wrong" ? byIds(wrongIds) : byChapterInLang(domain, lang);
       qs = shuffle(pool).slice(0, Math.min(count, pool.length));
     }
-    const newOpts = qs.map((q) => shuffleOptions(q));
+    // ponytail: shuffleOptions() only returns {text, correct}; we tag each
+    // option with its original index so a later lang switch can re-localize
+    // option text without re-shuffling (keeps the user's picked index valid).
+    const newOpts = qs.map((q) => {
+      const origOrder = q.options.map((text, i) => ({ text, i }));
+      const shuffled = shuffleOptions({ ...q, options: origOrder.map((o) => o.text) });
+      // shuffleOptions shuffles a copy of q.options in place-equivalent order;
+      // recompute origIndex by matching text (options are unique strings in this bank).
+      return shuffled.map((opt) => ({
+        ...opt,
+        origIndex: q.options.indexOf(opt.text),
+      }));
+    });
     const newTimeLeft = mode === "exam" ? META.examFormat[certId].timeMinutesNonNative * 60 : 0;
     dispatch({ type: "START_QUIZ", questions: qs, opts: newOpts, timeLeft: newTimeLeft });
     if (mode === "exam") {
@@ -149,13 +161,25 @@ export default function Quiz({ onAnswer, progress, setProgress, initialFilter, o
   }
 
   function finish() {
+    // ponytail: idempotency guard — auto-finish (timer=0) and manual
+    // "Finalizar" click can both fire; phase check blocks the double-run.
+    if (phase !== "running") return;
     clearInterval(timerRef.current);
     if (mode === "exam") {
+      let examScore = 0;
       questions.forEach((q, i) => {
         const a = answers[i];
         const correct = a !== null && opts[i][a].correct;
+        if (correct) examScore++;
         onAnswer(String(q.chapter), !!correct, q.id);
       });
+      const examTotal = questions.length;
+      const examPct = examTotal > 0 ? Math.round((examScore / examTotal) * 100) : 0;
+      // veredito com o passMark do cert (mesmo cálculo da tela de resultado,
+      // linha ~374) — sem isso o histórico persistido usaria o default de
+      // 65% da storage.js, que reprova errado o CTAL-TA (corte real 64.4%).
+      const examPassed = examScore >= META.examFormat[certId].passMark;
+      setProgress((p) => logExamResult(p, examPct, examPassed));
     }
     dispatch({ type: "FINISH" });
   }
@@ -211,6 +235,33 @@ export default function Quiz({ onAnswer, progress, setProgress, initialFilter, o
     dispatch({ type: "RESET" });
   }
 
+  // ponytail: questions/opts get localized once at start() time, so toggling
+  // `lang` mid-quiz left stems/options/explanations stale. Re-localize the
+  // display text from the raw monolith record on every render (cheap: one
+  // question) instead of re-fetching/re-shuffling the whole quiz — this
+  // preserves answers/progress/opt order exactly, only the text changes.
+  // Tradeoff: relies on monolith.questions ids matching state.questions ids
+  // (true here) and on option text being unique per question (true in this
+  // bank) so origIndex round-trips through shuffle correctly.
+  const displayQuestions = useMemo(() => {
+    return questions.map((sq) => {
+      const raw = monolith.questions.find((rq) => rq.id === sq.id);
+      if (!raw) return sq;
+      return localized(raw, lang);
+    });
+  }, [questions, lang, localized]);
+
+  const displayOpts = useMemo(() => {
+    return opts.map((rowOpts, i) => {
+      const dq = displayQuestions[i];
+      if (!dq) return rowOpts;
+      return rowOpts.map((opt) => ({
+        ...opt,
+        text: dq.options[opt.origIndex] ?? opt.text,
+      }));
+    });
+  }, [opts, displayQuestions]);
+
   // ---------- SETUP ----------
   if (phase === "setup") {
     return (
@@ -257,12 +308,17 @@ export default function Quiz({ onAnswer, progress, setProgress, initialFilter, o
                   <span className="domain-sub">{t(lang, "quiz.wrongBeforeDesc", { n: wrongIds.length })}</span>
                 </button>
               )}
-              {chapters.map((c) => (
-                <button key={c.chapter} className={"domain-card" + (domain === String(c.chapter) ? " selected" : "")} onClick={() => dispatch({ type: "SET_DOMAIN", domain: String(c.chapter) })}>
-                  <span className="domain-weight">{chapterWeight(c.chapter)} / {META.total}</span>
-                  <span className="domain-name">{chapterName(c.chapter, lang)}</span>
-                </button>
-              ))}
+              {chapters.map((c) => {
+                // ponytail: real pool size (questions available / total in bank),
+                // not the exam-blueprint weight — that's a different metric.
+                const chapterCount = ALL.filter((q) => String(q.chapter) === String(c.chapter)).length;
+                return (
+                  <button key={c.chapter} className={"domain-card" + (domain === String(c.chapter) ? " selected" : "")} onClick={() => dispatch({ type: "SET_DOMAIN", domain: String(c.chapter) })}>
+                    <span className="domain-weight">{chapterCount} / {ALL.length}</span>
+                    <span className="domain-name">{chapterName(c.chapter, lang)}</span>
+                  </button>
+                );
+              })}
             </div>
             <div className="count-row">
               <span className="muted">{t(lang, "quiz.quantity")}</span>
@@ -318,8 +374,9 @@ export default function Quiz({ onAnswer, progress, setProgress, initialFilter, o
   if (phase === "result") {
     const total = questions.length;
     const pct = Math.round((score / total) * 100);
-    const passed = pct >= 65;
-    const wrong = questions
+    const passMark = META.examFormat[certId].passMark;
+    const passed = mode === "exam" ? score >= passMark : pct >= 65;
+    const wrong = displayQuestions
       .map((q, i) => ({ q, i }))
       .filter(({ i }) => !(answers[i] !== null && opts[i][answers[i]].correct));
 
@@ -329,7 +386,15 @@ export default function Quiz({ onAnswer, progress, setProgress, initialFilter, o
           <div className="result-score">{score}/{total} · {pct}%</div>
           <div className={"verdict " + (passed ? "ok" : "no")}>{passed ? t(lang, "quiz.passed") : t(lang, "quiz.failed")}</div>
           <p className="muted">
-            {pct >= 85 ? t(lang, "quiz.excellentMsg") : passed ? t(lang, "quiz.passedMsg") : t(lang, "quiz.failedMsg")}
+            {pct >= 85
+              ? t(lang, "quiz.excellentMsg")
+              : passed
+              ? t(lang, "quiz.passedMsg")
+              : mode === "exam"
+              // ponytail: ui-strings.js hardcodes "65% (26/40)" for every cert;
+              // can't edit that file here, so build the real per-cert message inline.
+              ? `${lang === "en" ? "Passing score is" : "A nota de corte é"} ${passMark}/${META.examFormat[certId].questions}. ${lang === "en" ? "Review the mistakes below." : "Revise os erros abaixo."}`
+              : t(lang, "quiz.failedMsg")}
           </p>
           <div className="actions center">
             <button className="btn ghost" onClick={reset}>{t(lang, "quiz.backHome")}</button>
@@ -345,8 +410,8 @@ export default function Quiz({ onAnswer, progress, setProgress, initialFilter, o
               <p className="ok">{t(lang, "quiz.noErrors")}</p>
             ) : (
               wrong.map(({ q, i }) => {
-                const correct = opts[i].find((o) => o.correct);
-                const chosen = answers[i] === null ? null : opts[i][answers[i]];
+                const correct = displayOpts[i].find((o) => o.correct);
+                const chosen = answers[i] === null ? null : displayOpts[i][answers[i]];
                 return (
                   <div className="review-item" key={q.id}>
                     <div className="review-q">{i + 1}. {q.q}</div>
@@ -364,8 +429,8 @@ export default function Quiz({ onAnswer, progress, setProgress, initialFilter, o
   }
 
   // ---------- RUNNING ----------
-  const q = questions[idx];
-  const o = opts[idx];
+  const q = displayQuestions[idx];
+  const o = displayOpts[idx];
   const answered = (mode === "practice" || mode === "saved" || mode === "srs") && answers[idx] !== null;
   const saved = isSaved(progress, q?.id);
   const isLast = idx === questions.length - 1;

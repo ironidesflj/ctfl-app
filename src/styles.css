@@ -794,6 +794,11 @@ mark { background: var(--accent-soft); color: var(--text); border-radius: 2px; p
   --cert-accent-soft: #fbe7ee;
   --cert-accent-text: #7f1a43;
 }
+[data-cert="ctal-at-v2"] {
+  --cert-accent: #b5720f;
+  --cert-accent-soft: #faeed9;
+  --cert-accent-text: #8a5509;
+}
 
 /* ---------- tema escuro (prefers-color-scheme: dark) ---------- */
 @media (prefers-color-scheme: dark) {
@@ -822,6 +827,11 @@ mark { background: var(--accent-soft); color: var(--text); border-radius: 2px; p
     --cert-accent-soft: #3a1826;
     --cert-accent-text: #ffa8c2;
   }
+  [data-cert="ctal-at-v2"] {
+    --cert-accent: #e0a53f;
+    --cert-accent-soft: #3a2c11;
+    --cert-accent-text: #f0c46e;
+  }
 }
 
 /* ---------- tema escuro forçado (data-theme="dark") ---------- */
@@ -849,6 +859,11 @@ mark { background: var(--accent-soft); color: var(--text); border-radius: 2px; p
   --cert-accent: #ff7fa8;
   --cert-accent-soft: #3a1826;
   --cert-accent-text: #ffa8c2;
+}
+[data-theme="dark"][data-cert="ctal-at-v2"] {
+  --cert-accent: #e0a53f;
+  --cert-accent-soft: #3a2c11;
+  --cert-accent-text: #f0c46e;
 }
 
 /* ---------- selo discreto do masthead (dot + label) ---------- */

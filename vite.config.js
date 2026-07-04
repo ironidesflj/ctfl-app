@@ -24,9 +24,9 @@ export default defineConfig({
         maximumFileSizeToCacheInBytes: 3 * 1024 * 1024
       },
       manifest: {
-        name: "CTFL Prep — ISTQB v4.0",
-        short_name: "CTFL Prep",
-        description: "Preparação para o exame ISTQB Certified Tester Foundation Level v4.0",
+        name: "Synapse — Preparação ISTQB",
+        short_name: "Synapse",
+        description: "Preparação para certificações ISTQB (CTFL, CTAL e mais)",
         theme_color: "#5a4be7",
         background_color: "#14141c",
         display: "standalone",

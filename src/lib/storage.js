@@ -1,6 +1,30 @@
 import { isDue } from "./spacedRepetition.js";
 
-const KEY = "ctfl_progress_v1";
+const LEGACY_KEY = "ctfl_progress_v1";
+const keyFor = (certId) => `synapse.progress.v1.${certId}`;
+
+// ponytail: module-level "current cert" instead of threading certId through
+// every call site (export/import/clear are called from Stats.jsx, which is
+// out of scope to edit here). App.jsx calls setActiveCertForStorage() on
+// cert change; defaults to "ctfl" so existing no-arg test calls keep working.
+let activeCert = "ctfl";
+export function setActiveCertForStorage(certId) {
+  activeCert = certId || "ctfl";
+}
+
+// Migração única: usuários existentes eram só-CTFL, então a chave legada
+// (global, sem namespace) vira o progresso do cert "ctfl" se ele ainda não
+// existir namespaced.
+function migrateLegacyIfNeeded() {
+  try {
+    const legacy = localStorage.getItem(LEGACY_KEY);
+    if (legacy && !localStorage.getItem(keyFor("ctfl"))) {
+      localStorage.setItem(keyFor("ctfl"), legacy);
+    }
+  } catch {
+    /* ignore */
+  }
+}
 
 export function todayLocal() {
   return new Date().toLocaleDateString("en-CA", { timeZone: "America/Sao_Paulo" });
@@ -8,9 +32,10 @@ export function todayLocal() {
 
 const EMPTY = { total: 0, correct: 0, byDomain: {}, seen: {}, flashcards: {}, saved: [], history: [], srs: {}, lastStudyDate: null, achievements: [], examHistory: [] };
 
-export function loadProgress() {
+export function loadProgress(certId = activeCert) {
+  migrateLegacyIfNeeded();
   try {
-    const raw = localStorage.getItem(KEY);
+    const raw = localStorage.getItem(keyFor(certId));
     if (!raw) return { ...EMPTY };
     const parsed = JSON.parse(raw);
     return { ...EMPTY, ...parsed, byDomain: parsed.byDomain || {}, seen: parsed.seen || {}, saved: parsed.saved || [], history: parsed.history || [], srs: parsed.srs || {}, lastStudyDate: parsed.lastStudyDate || null, achievements: parsed.achievements || [], examHistory: parsed.examHistory || [] };
@@ -19,9 +44,9 @@ export function loadProgress() {
   }
 }
 
-export function saveProgress(state) {
+export function saveProgress(state, certId = activeCert) {
   try {
-    localStorage.setItem(KEY, JSON.stringify(state));
+    localStorage.setItem(keyFor(certId), JSON.stringify(state));
     return true;
   } catch {
     return false; // iframe/sandbox ou armazenamento desabilitado
@@ -129,42 +154,51 @@ export function checkAchievements(progress) {
   return [...existing];
 }
 
-export function logExamResult(progress, pct) {
-  const entry = { date: todayLocal(), pct, passed: pct >= 65 };
+// `passed` opcional: caller pode informar o veredito já calculado com o
+// passMark correto do cert (Quiz.jsx faz isso). Sem isso, cai no default
+// de 65% — só correto pro CTFL, mantido pra não quebrar chamadas antigas
+// sem cert (ex: testes existentes).
+export function logExamResult(progress, pct, passed = pct >= 65) {
+  const entry = { date: todayLocal(), pct, passed };
   const examHistory = [...(progress.examHistory || []), entry].slice(-20);
   const next = { ...progress, examHistory };
   next.achievements = checkAchievements(next);
   return next;
 }
 
-export function clearProgress() {
+export function clearProgress(certId = activeCert) {
   try {
-    localStorage.removeItem(KEY);
+    localStorage.removeItem(keyFor(certId));
   } catch {
     /* ignore */
   }
   return { ...EMPTY };
 }
 
-// "Sincronização manual": exporta o progresso para um arquivo.
-export function exportProgress(state) {
-  const payload = { app: "synapse", exportedAt: new Date().toISOString(), progress: state };
+// "Sincronização manual": exporta o progresso do cert ativo para um arquivo.
+export function exportProgress(state, certId = activeCert) {
+  const payload = { app: "synapse", cert: certId, exportedAt: new Date().toISOString(), progress: state };
   const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;
-  a.download = `ctfl-progresso-${new Date().toISOString().slice(0, 10)}.json`;
+  a.download = `synapse-progresso-${certId}-${new Date().toISOString().slice(0, 10)}.json`;
   a.click();
   URL.revokeObjectURL(url);
 }
 
-// Importa o progresso a partir de um arquivo escolhido pelo usuário.
-export function importProgress(file) {
+// Importa o progresso a partir de um arquivo escolhido pelo usuário. O
+// arquivo tem que ser do cert ativo (ou não ter cert, formato legado) —
+// se for de outro cert, rejeita em vez de misturar progresso entre certs.
+export function importProgress(file, certId = activeCert) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onload = () => {
       try {
         const data = JSON.parse(reader.result);
+        if (data.cert && data.cert !== certId) {
+          throw new Error(`Este arquivo é do certificado "${data.cert}", não de "${certId}".`);
+        }
         const p = data.progress || data;
         if (typeof p.total !== "number") throw new Error("Formato inválido");
         resolve({ ...EMPTY, ...p, byDomain: p.byDomain || {}, seen: p.seen || {}, saved: p.saved || [], history: p.history || [], srs: p.srs || {}, lastStudyDate: p.lastStudyDate || null, achievements: p.achievements || [], examHistory: p.examHistory || [] });

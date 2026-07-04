@@ -7,6 +7,16 @@ import { t } from "../lib/ui-strings.js";
 
 const ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
+const EMPTY_STATE_TEXT = {
+  pt: "Conteúdo em breve para esta certificação.",
+  en: "Content coming soon for this certification.",
+};
+
+// ponytail: glossary entries have no cert/domain field, only ids like
+// "gl-fund-01" that encode the CTFL domain code. Derive it from the id so
+// this stays dynamic when content for other certs is added later.
+const domainFromId = (id) => id.split("-")[1];
+
 function escapeRegex(s) {
   return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
@@ -30,7 +40,12 @@ export default function Glossary({ lang = "pt", progress }) {
   const [wrongOnly, setWrongOnly] = useState(false);
   const headingRefs = useRef({});
 
-  const allTerms = useMemo(() => localizedGlossary(lang), [lang]);
+  const certDomains = useMemo(() => new Set(chapters.map((c) => c.domain)), [chapters]);
+  const allTerms = useMemo(
+    () => localizedGlossary(lang).filter((term) => certDomains.has(domainFromId(term.id))),
+    [lang, certDomains]
+  );
+  const hasContent = allTerms.length > 0;
   const dom = chapters.find((c) => String(c.chapter) === String(domain));
 
   const wrongTermIds = useMemo(() => {
@@ -104,6 +119,16 @@ export default function Glossary({ lang = "pt", progress }) {
       el.scrollIntoView({ behavior: "smooth", block: "start" });
       el.focus();
     }
+  }
+
+  if (!hasContent) {
+    return (
+      <div className="study">
+        <div className="card">
+          <p className="muted">{EMPTY_STATE_TEXT[lang]}</p>
+        </div>
+      </div>
+    );
   }
 
   return (

@@ -7,7 +7,7 @@ import Glossary from "./components/Glossary.jsx";
 import Stats from "./components/Stats.jsx";
 import Onboarding from "./components/Onboarding.jsx";
 import CertSelector from "./components/CertSelector.jsx";
-import { loadProgress, saveProgress, recordAnswer, getDueItems } from "./lib/storage.js";
+import { loadProgress, saveProgress, recordAnswer, getDueItems, setActiveCertForStorage } from "./lib/storage.js";
 import { getBank } from "./lib/bank.js";
 import { t } from "./lib/ui-strings.js";
 import { isNotificationSupported, showLocalNotification, daysSinceLastStudy } from "./lib/notifications.js";
@@ -84,7 +84,20 @@ export default function App() {
   }, [certId]);
   const { ALL } = bank;
   const catalogCert = activeCert ? CATALOG_BY_ID[activeCert] : null;
-  const [progress, setProgress] = useState(loadProgress);
+  // Progresso é por cert (namespaced em storage.js por certId). Recarrega
+  // sempre que activeCert muda; em rotas neutras (/, /select) não há cert
+  // ativo pra persistir, então mantém o último progresso carregado só em
+  // memória (o effect de save abaixo pula quando !activeCert).
+  const [progress, setProgress] = useState(() => {
+    setActiveCertForStorage(certId);
+    return loadProgress(certId);
+  });
+
+  useEffect(() => {
+    if (!activeCert) return;
+    setActiveCertForStorage(activeCert);
+    setProgress(loadProgress(activeCert));
+  }, [activeCert]);
   const [quizFilter, setQuizFilter] = useState(null);
   const [showOnboarding, setShowOnboarding] = useState(() => {
     try { return !localStorage.getItem("ctfl_onboarding_done"); }
@@ -100,8 +113,9 @@ export default function App() {
   });
 
   useEffect(() => {
-    saveProgress(progress);
-  }, [progress]);
+    if (!activeCert) return; // rotas neutras (/, /select) não persistem
+    saveProgress(progress, activeCert);
+  }, [progress, activeCert]);
 
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
@@ -117,12 +131,12 @@ export default function App() {
       if (Notification.permission === "granted") {
         if (dueCount > 0) {
           showLocalNotification(
-            "CTFL Prep",
+            "Synapse",
             `Você tem ${dueCount} questão(ões) para revisar hoje.`
           );
         } else if (days !== null && days >= 3) {
           showLocalNotification(
-            "CTFL Prep",
+            "Synapse",
             `Você não estuda há ${days} dias. Que tal uma sessão rápida?`
           );
         }

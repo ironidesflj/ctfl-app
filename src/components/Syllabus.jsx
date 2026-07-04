@@ -6,14 +6,26 @@ import { t } from "../lib/ui-strings.js";
 
 const hasEN = (id) => !!SYLLABUS_ITEMS.find((i) => i.id === id)?.locales?.en;
 
+const EMPTY_STATE_TEXT = {
+  pt: "Conteúdo em breve para esta certificação.",
+  en: "Content coming soon for this certification.",
+};
+
 export default function Syllabus({ onStudy, lang = "pt", progress }) {
   const { cert: certId } = useParams();
   const bank = useMemo(() => getBank(certId), [certId]);
-  const { chapters, chapterName, chapterWeight, META, coverageByChapter } = bank;
-  
+  const { chapters, chapterName, chapterWeight, ALL, coverageByChapter } = bank;
+
   const [domain, setDomain] = useState("all"); // conceptually chapterId now
 
-  const allItems = useMemo(() => syllabusInLang(lang), [lang]);
+  // ponytail: SYLLABUS_ITEMS only exists for CTFL domains today; scope to
+  // the current cert's domain set so other certs never see CTFL content.
+  const certDomains = useMemo(() => new Set(chapters.map((c) => c.domain)), [chapters]);
+  const allItems = useMemo(
+    () => syllabusInLang(lang).filter((i) => certDomains.has(i.d)),
+    [lang, certDomains]
+  );
+  const hasContent = allItems.length > 0;
   const items = useMemo(
     () => (domain === "all" ? allItems : allItems.filter((i) => i.d === chapters.find(c => String(c.chapter) === String(domain))?.domain)),
     [domain, allItems, chapters]
@@ -24,6 +36,16 @@ export default function Syllabus({ onStudy, lang = "pt", progress }) {
   const itemsByDomain = domain === "all"
     ? chapters.map((c) => ({ c, list: allItems.filter((i) => i.d === c.domain) }))
     : null;
+
+  if (!hasContent) {
+    return (
+      <div className="study">
+        <div className="card">
+          <p className="muted">{EMPTY_STATE_TEXT[lang]}</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="study">
@@ -62,7 +84,7 @@ export default function Syllabus({ onStudy, lang = "pt", progress }) {
           })
         ) : (
           <>
-            {dom && <p className="syl-head">{chapterWeight(dom.chapter)} {t(lang, "syllabus.ofQuestions", { total: META.total })}</p>}
+            {dom && <p className="syl-head">{chapterWeight(dom.chapter)} {t(lang, "syllabus.ofQuestions", { total: ALL.length })}</p>}
             {items.map((i) => (
               <div className="syl-item" key={i.id}>
                 <div className="syl-kw">{i.kw}</div>
