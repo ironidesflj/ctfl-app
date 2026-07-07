@@ -123,6 +123,10 @@ export default function App() {
   }, [theme]);
 
   useEffect(() => {
+    document.documentElement.lang = lang === "en" ? "en" : "pt-BR";
+  }, [lang]);
+
+  useEffect(() => {
     if (!isNotificationSupported()) return;
 
     const checkAndNotify = () => {
@@ -133,12 +137,12 @@ export default function App() {
         if (dueCount > 0) {
           showLocalNotification(
             "Synapse",
-            `Você tem ${dueCount} questão(ões) para revisar hoje.`
+            t(lang, "notifications.dueBody", { count: dueCount })
           );
         } else if (days !== null && days >= 3) {
           showLocalNotification(
             "Synapse",
-            `Você não estuda há ${days} dias. Que tal uma sessão rápida?`
+            t(lang, "notifications.staleBody", { days })
           );
         }
       }
@@ -186,10 +190,18 @@ export default function App() {
             {catalogCert.label}
           </Link>
         )}
-        <button className="btn ghost lang-toggle" onClick={toggleLang}>
+        <button
+          className="btn ghost lang-toggle"
+          onClick={toggleLang}
+          aria-label={t(lang, lang === "pt" ? "langToggleToEn" : "langToggleToPt")}
+        >
           {lang === "pt" ? "PT" : "EN"}
         </button>
-        <button className="btn ghost theme-toggle" onClick={cycleTheme}>
+        <button
+          className="btn ghost theme-toggle"
+          onClick={cycleTheme}
+          aria-label={t(lang, theme === "auto" ? "themeAuto" : theme === "light" ? "themeLight" : "themeDark")}
+        >
           {theme === "auto" ? "🌗" : theme === "light" ? "☀️" : "🌙"}
         </button>
       </header>

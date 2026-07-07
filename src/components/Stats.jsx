@@ -52,7 +52,7 @@ function calcPace(history, readiness) {
 export default function Stats({ progress, setProgress, lang = "pt", onGoToQuiz }) {
   const { cert: certId } = useParams();
   const bank = useMemo(() => getBank(certId), [certId]);
-  const { chapters, chapterName, coverageByChapter, META } = bank;
+  const { cert, chapters, chapterName, coverageByChapter, META } = bank;
 
   const fileRef = useRef(null);
   const [msg, setMsg] = useState("");
@@ -65,9 +65,14 @@ export default function Stats({ progress, setProgress, lang = "pt", onGoToQuiz }
 
   const pct = progress.total > 0 ? Math.round((progress.correct / progress.total) * 100) : 0;
   const days = groupByDay(progress.history || []);
+  const examFormat = META.examFormat?.[cert.id];
+  const passPct = examFormat ? Math.round((examFormat.passMark / examFormat.questions) * 100) : 65;
 
   const streak = getStreak(progress);
-  const readiness = getReadiness(progress, META.total);
+  const totalBank = META.certifications?.[cert.label]?.totalQuestions;
+  const readiness = getReadiness(progress, totalBank);
+  const seenCount = Object.keys(progress.seen || {}).length;
+  const MIN_N_READINESS = 20;
   const pace = calcPace(progress.history || [], readiness);
   const achievements = progress.achievements || [];
   const level = Math.floor(progress.total / 20) + 1;
@@ -123,10 +128,14 @@ export default function Stats({ progress, setProgress, lang = "pt", onGoToQuiz }
       {/* Card de prontidão */}
       {progress.total > 0 && (
         <div className="card readiness-card">
-          <p>
-            {t(lang, "stats.readinessPrefix")} <strong>{readiness}%</strong> {t(lang, "stats.readinessSuffix")}
-          </p>
-          {pace !== null && (
+          {seenCount < MIN_N_READINESS ? (
+            <p className="muted">{t(lang, "stats.readinessLowConfidence", { n: MIN_N_READINESS - seenCount })}</p>
+          ) : (
+            <p>
+              {t(lang, "stats.readinessPrefix")} <strong>{readiness}%</strong> {t(lang, "stats.readinessSuffix", { cert: cert.label })}
+            </p>
+          )}
+          {seenCount >= MIN_N_READINESS && pace !== null && (
             <p className="muted" style={{ marginTop: "0.25rem", fontSize: "var(--fs-13)" }}>
               {t(lang, "stats.pacePrefix")}{pace}{t(lang, "stats.paceSuffix")}
             </p>
@@ -147,7 +156,7 @@ export default function Stats({ progress, setProgress, lang = "pt", onGoToQuiz }
         ) : (
           days.map(([date, d]) => {
             const dpct = Math.round((d.correct / d.total) * 100);
-            const tone = dpct >= 65 ? "ok" : "no";
+            const tone = dpct >= passPct ? "ok" : "no";
             return (
               <div className="bar-row" key={date}>
                 <div className="bar-head">
@@ -189,7 +198,9 @@ export default function Stats({ progress, setProgress, lang = "pt", onGoToQuiz }
       )}
 
       <div className="card note">
-        <strong>{t(lang, "stats.metaTitle")}</strong> {t(lang, "stats.metaText")}
+        <strong>{t(lang, "stats.metaTitle", { cert: cert.label })}</strong> {t(lang, "stats.metaText", {
+          n: examFormat?.questions, pass: examFormat?.passMark, pct: passPct,
+        })}
       </div>
 
       {notifStatus !== "unsupported" && (

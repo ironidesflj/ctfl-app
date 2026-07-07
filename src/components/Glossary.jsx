@@ -143,6 +143,7 @@ export default function Glossary({ lang = "pt", progress }) {
 
       <input
         className="search-input"
+        aria-label={lang === "pt" ? "Buscar termo" : "Search term"}
         placeholder={lang === "pt" ? "Buscar termo..." : "Search term..."}
         value={query}
         onChange={(e) => setQuery(e.target.value)}

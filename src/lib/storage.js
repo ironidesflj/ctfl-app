@@ -26,8 +26,16 @@ function migrateLegacyIfNeeded() {
   }
 }
 
+const LOCAL_TZ = (() => {
+  try {
+    return Intl.DateTimeFormat().resolvedOptions().timeZone || "America/Sao_Paulo";
+  } catch {
+    return "America/Sao_Paulo";
+  }
+})();
+
 export function todayLocal() {
-  return new Date().toLocaleDateString("en-CA", { timeZone: "America/Sao_Paulo" });
+  return new Date().toLocaleDateString("en-CA", { timeZone: LOCAL_TZ });
 }
 
 const EMPTY = { total: 0, correct: 0, byDomain: {}, seen: {}, flashcards: {}, saved: [], history: [], srs: {}, lastStudyDate: null, achievements: [], examHistory: [] };
@@ -121,13 +129,13 @@ export function getStreak(progress) {
   // Start from today; if today has no entry, check yesterday before giving up
   if (!dates.has(today)) {
     cursor.setDate(cursor.getDate() - 1);
-    if (!dates.has(cursor.toLocaleDateString("en-CA", { timeZone: "America/Sao_Paulo" }))) return 0;
+    if (!dates.has(cursor.toLocaleDateString("en-CA", { timeZone: LOCAL_TZ }))) return 0;
     streak = 1;
     cursor.setDate(cursor.getDate() - 1);
   }
   // Walk backwards counting consecutive days
   while (true) {
-    const d = cursor.toLocaleDateString("en-CA", { timeZone: "America/Sao_Paulo" });
+    const d = cursor.toLocaleDateString("en-CA", { timeZone: LOCAL_TZ });
     if (!dates.has(d)) break;
     streak++;
     cursor.setDate(cursor.getDate() - 1);

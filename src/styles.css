@@ -10,11 +10,12 @@
   --accent: #5a4be7;
   --accent-soft: #ece9fc;
   --accent-text: #3b2fb0;
-  --ok: #0f8a5f;
+  --on-accent: #ffffff;
+  --ok: #0a6e4a;
   --ok-soft: #e2f4ec;
   --no: #c5362f;
   --no-soft: #fae9e8;
-  --warn: #b5730a;
+  --warn: #8a5306;
   --warn-soft: #fbeeda;
   --radius: 14px;
   --radius-sm: 10px;
@@ -54,10 +55,11 @@
     --line-strong: #3a3654;
     --text: #ecebf5;
     --text-2: #a8a3c2;
-    --text-3: #76728f;
+    --text-3: #8b87a3;
     --accent: #8b7dff;
     --accent-soft: #241f3d;
     --accent-text: #b9aeff;
+    --on-accent: #14121f;
     --ok: #45c98e;
     --ok-soft: #16271f;
     --no: #f0726a;
@@ -83,11 +85,12 @@
   --accent: #5a4be7;
   --accent-soft: #ece9fc;
   --accent-text: #3b2fb0;
-  --ok: #0f8a5f;
+  --on-accent: #ffffff;
+  --ok: #0a6e4a;
   --ok-soft: #e2f4ec;
   --no: #c5362f;
   --no-soft: #fae9e8;
-  --warn: #b5730a;
+  --warn: #8a5306;
   --warn-soft: #fbeeda;
 }
 
@@ -99,10 +102,11 @@
   --line-strong: #3a3654;
   --text: #ecebf5;
   --text-2: #a8a3c2;
-  --text-3: #76728f;
+  --text-3: #8b87a3;
   --accent: #8b7dff;
   --accent-soft: #241f3d;
   --accent-text: #b9aeff;
+  --on-accent: #14121f;
   --ok: #45c98e;
   --ok-soft: #16271f;
   --no: #f0726a;
@@ -162,7 +166,7 @@ body {
   transition: all .15s; flex-shrink: 0;
 }
 .tab:hover { border-color: var(--line-strong); }
-.tab.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+.tab.active { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
 
 /* ---------- cards ---------- */
 .card {
@@ -231,7 +235,7 @@ body {
 }
 .btn:hover { background: var(--surface-2); }
 .btn:active { transform: scale(.98); }
-.btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 500; }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--on-accent); font-weight: 500; }
 .btn.primary:hover { filter: brightness(1.08); }
 .btn.ghost { border-color: transparent; color: var(--text-3); }
 .actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 1rem; }
