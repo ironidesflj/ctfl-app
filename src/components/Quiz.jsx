@@ -409,11 +409,7 @@ export default function Quiz({ onAnswer, progress, setProgress, initialFilter, o
               ? t(lang, "quiz.excellentMsg")
               : passed
               ? t(lang, "quiz.passedMsg")
-              : mode === "exam"
-              // ponytail: ui-strings.js hardcodes "65% (26/40)" for every cert;
-              // can't edit that file here, so build the real per-cert message inline.
-              ? `${lang === "en" ? "Passing score is" : "A nota de corte é"} ${passMark}/${META.examFormat[certId].questions}. ${lang === "en" ? "Review the mistakes below." : "Revise os erros abaixo."}`
-              : t(lang, "quiz.failedMsg")}
+              : t(lang, "quiz.failedMsg", { passMark, total: META.examFormat[certId].questions })}
           </p>
           {showRecommendation && (
             <p style={{ marginTop: "0.5rem", fontWeight: 500 }}>
