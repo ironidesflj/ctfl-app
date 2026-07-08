@@ -90,10 +90,25 @@ export function getBank(certId) {
     return result;
   }
 
+  // Spec 2 passo 2: cobertura por K-level. NORMALIZA: banco usa kLevel
+  // numérico (1-4, verificado — 100% int em synapse-question-bank.json),
+  // examBlueprint usa chaves "K1".."K4" (verificado no JSON commitado). Sem
+  // essa normalização os dois nunca se cruzam e o gate trava pra sempre.
+  function coverageByKLevel(seenMap) {
+    const result = {};
+    ALL.forEach((q) => {
+      const k = "K" + q.kLevel;
+      if (!result[k]) result[k] = { seen: 0, total: 0 };
+      result[k].total += 1;
+      if (seenMap[q.id]) result[k].seen += 1;
+    });
+    return result;
+  }
+
   return {
     cert, chapters, META, ALL,
     localized, byIds, allInLang, byChapterInLang,
     chapterName, chapterWeight, shuffle, shuffleOptions,
-    buildExamInLang, coverageByChapter
+    buildExamInLang, coverageByChapter, coverageByKLevel
   };
 }

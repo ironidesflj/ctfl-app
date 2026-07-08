@@ -1,7 +1,7 @@
 import { useRef, useState, useMemo } from "react";
 import { useParams } from "react-router-dom";
 import { getBank } from "../lib/bank.js";
-import { exportProgress, importProgress, clearProgress, getStreak, getReadiness, todayLocal } from "../lib/storage.js";
+import { exportProgress, importProgress, clearProgress, getStreak, getReadinessV2, todayLocal } from "../lib/storage.js";
 import { t } from "../lib/ui-strings.js";
 import { getNotificationPermission, requestNotificationPermission } from "../lib/notifications.js";
 import RadarChart from "./RadarChart.jsx";
@@ -79,7 +79,7 @@ export default function Stats({ progress, setProgress, lang = "pt", onGoToQuiz }
   // ex: "CTFL"/"CTAL-TA" — mais robusto que derivar de certId.toUpperCase(),
   // que quebraria pra certs cujo label não é o certId maiúsculo)
   const totalBank = META.certifications?.[cert.label]?.totalQuestions || 300;
-  const readiness = getReadiness(progress, totalBank);
+  const readiness = getReadinessV2(progress, bank);
   const pace = calcPace(progress.history || [], readiness.point);
   const achievements = progress.achievements || [];
 
@@ -215,9 +215,11 @@ export default function Stats({ progress, setProgress, lang = "pt", onGoToQuiz }
               </p>
               {readiness.confidence === "high" && (
                 <p style={{ marginTop: "0.25rem", fontSize: "var(--fs-13)", fontWeight: 500 }}>
-                  {readiness.point >= passPct
-                    ? t(lang, "stats.readinessReady")
-                    : t(lang, "stats.readinessNotReady")}
+                  {readiness.gatesPassed === false
+                    ? t(lang, "stats.readinessGateBlocked")
+                    : readiness.point >= passPct
+                      ? t(lang, "stats.readinessReady")
+                      : t(lang, "stats.readinessNotReady")}
                 </p>
               )}
             </>

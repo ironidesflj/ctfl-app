@@ -269,6 +269,86 @@ export function getReadiness(progress, totalBank) {
   return { point, ciLow, ciHigh, seenCount, confidence, minMet };
 }
 
+// Spec 2 passo 2: prontidão via blueprint oficial (spec-prontidao-blueprint.md
+// §5). Dois gates de cobertura (capítulo + K-level), ambos obrigatórios —
+// falhar qualquer um bloqueia "pronto" mesmo com boa taxa de acerto. Sem
+// examBlueprint (ou blueprint malformado), degrada pro getReadiness
+// estatístico. ciLow/ciHigh/confidence/seenCount preservados do cálculo
+// estatístico de base — só "point" e os campos de gate mudam de fonte.
+const CHAPTER_COVERAGE_MIN_PCT = 0.4;
+const KLEVEL_COVERAGE_FRACTION = 0.5;
+
+export function getReadinessV2(progress, bank) {
+  const totalBank = bank.ALL.length;
+  const base = getReadiness(progress, totalBank);
+  const blueprint = bank.META?.examBlueprint?.[bank.cert.id];
+  if (!blueprint || !blueprint.chapters) {
+    return { ...base, gatesPassed: undefined, source: "statistical" };
+  }
+
+  // seen[id] só é escrito em recordAnswer(), sempre na mesma chamada que
+  // escreve attempts[id], e migrateV1toV2 constrói attempts a partir de
+  // 100% das chaves de seen na migração — attempts é sempre igual (nunca
+  // subconjunto) de seen em chaves. Não existe estado misto que perca
+  // cobertura aqui.
+  const attempts = progress.attempts || {};
+  const seen = progress.seen || {};
+  const seenMap = Object.keys(attempts).length > 0 ? attempts : seen;
+
+  const chapterCoverage = bank.coverageByChapter(seenMap);
+  const missingChapters = Object.entries(chapterCoverage)
+    .filter(([, v]) => v.total > 0 && v.seen / v.total < CHAPTER_COVERAGE_MIN_PCT)
+    .map(([ch]) => ch);
+
+  const examKLevelTotals = {};
+  Object.values(blueprint.chapters).forEach((c) => {
+    Object.entries(c.kLevels || {}).forEach(([k, n]) => {
+      examKLevelTotals[k] = (examKLevelTotals[k] || 0) + n;
+    });
+  });
+  const kLevelCoverage = bank.coverageByKLevel(seenMap);
+  const missingKLevels = Object.entries(examKLevelTotals)
+    .filter(([, n]) => n > 0)
+    .filter(([k, n]) => {
+      const floor = Math.max(1, Math.round(KLEVEL_COVERAGE_FRACTION * n));
+      return (kLevelCoverage[k]?.seen || 0) < floor;
+    })
+    .map(([k]) => k);
+
+  const gatesPassed = missingChapters.length === 0 && missingKLevels.length === 0;
+
+  // Capítulo não tentado ENTRA no weightTotal com 0% — não é excluído.
+  // Excluir inflava o point (ex: 100% acertando 1 capítulo pequeno e
+  // ignorando o resto), contraditório com o gate dizendo "não pronto" ao lado.
+  const blueprintTotal = blueprint.totalQuestions || 1;
+  let weightedSum = 0;
+  let weightTotal = 0;
+  Object.entries(blueprint.chapters).forEach(([ch, c]) => {
+    const w = c.questions / blueprintTotal;
+    const chQuestions = bank.ALL.filter((q) => String(q.chapter) === String(ch));
+    const chAttempted = chQuestions.filter((q) => seenMap[q.id]);
+    const chCorrect = chAttempted.filter((q) => {
+      const a = attempts[q.id];
+      return a ? a.lastCorrect : seen[q.id] === "correct";
+    }).length;
+    const chPct = chAttempted.length > 0 ? chCorrect / chAttempted.length : 0;
+    weightedSum += w * chPct;
+    weightTotal += w;
+  });
+  const point = weightTotal > 0 ? Math.round((weightedSum / weightTotal) * 100) : base.point;
+
+  return {
+    ...base,
+    point,
+    gatesPassed,
+    missingChapters,
+    missingKLevels,
+    chapterCoverage,
+    kLevelCoverage,
+    source: "blueprint",
+  };
+}
+
 export function checkAchievements(progress) {
   const existing = new Set(progress.achievements || []);
   const streak = getStreak(progress);
