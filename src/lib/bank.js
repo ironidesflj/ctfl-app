@@ -28,7 +28,7 @@ export function getBank(certId) {
   }
 
   function allInLang(lang = "pt") {
-    return rawQuestions.map((q) => localized(q, lang));
+    return lang === "pt" ? ALL : rawQuestions.map((q) => localized(q, lang));
   }
 
   function byChapterInLang(chapterId, lang = "pt") {
