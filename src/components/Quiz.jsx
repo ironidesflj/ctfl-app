@@ -102,7 +102,7 @@ function quizReducer(state, action) {
   }
 }
 
-export default function Quiz({ onAnswer, progress, setProgress, initialFilter, onFilterConsumed, lang = "pt" }) {
+export default function Quiz({ onAnswer, progress, setProgress, initialFilter, onFilterConsumed, onStudyChapter, lang = "pt" }) {
   const { cert: certId } = useParams();
   const bank = useMemo(() => getBank(certId), [certId]);
   const { chapters, ALL, chapterName, chapterWeight, byChapterInLang, byIds, buildExamInLang, shuffle, shuffleOptions, META, localized } = bank;
@@ -380,6 +380,25 @@ export default function Quiz({ onAnswer, progress, setProgress, initialFilter, o
       .map((q, i) => ({ q, i }))
       .filter(({ i }) => !(answers[i] !== null && opts[i][answers[i]].correct));
 
+    // Fase 2: identificar capítulo com menor acurácia para recomendação
+    const chapterStats = {};
+    questions.forEach((q, i) => {
+      const ch = String(q.chapter);
+      chapterStats[ch] = chapterStats[ch] || { total: 0, correct: 0 };
+      chapterStats[ch].total++;
+      if (answers[i] !== null && opts[i][answers[i]].correct) chapterStats[ch].correct++;
+    });
+    let weakestChapter = null;
+    let weakestPct = 100;
+    Object.entries(chapterStats).forEach(([ch, s]) => {
+      const chPct = s.total > 0 ? (s.correct / s.total) * 100 : 0;
+      if (chPct < weakestPct && s.total >= 2) {
+        weakestPct = chPct;
+        weakestChapter = ch;
+      }
+    });
+    const showRecommendation = weakestChapter !== null && weakestPct < 70;
+
     return (
       <div className="quiz">
         <div className="card result">
@@ -396,9 +415,23 @@ export default function Quiz({ onAnswer, progress, setProgress, initialFilter, o
               ? `${lang === "en" ? "Passing score is" : "A nota de corte é"} ${passMark}/${META.examFormat[certId].questions}. ${lang === "en" ? "Review the mistakes below." : "Revise os erros abaixo."}`
               : t(lang, "quiz.failedMsg")}
           </p>
+          {showRecommendation && (
+            <p style={{ marginTop: "0.5rem", fontWeight: 500 }}>
+              {t(lang, "quiz.weakestChapter", { chapter: chapterName(weakestChapter, lang), pct: Math.round(weakestPct) })}
+            </p>
+          )}
           <div className="actions center">
             <button className="btn ghost" onClick={reset}>{t(lang, "quiz.backHome")}</button>
             <button className="btn" onClick={() => dispatch({ type: "TOGGLE_REVIEW" })}>{showReview ? t(lang, "quiz.hideReview") : t(lang, "quiz.showReview")}</button>
+            {showRecommendation && (
+              <button className="btn" onClick={() => {
+                onFilterConsumed && onFilterConsumed();
+                if (typeof onStudyChapter === "function") onStudyChapter(weakestChapter);
+                reset();
+              }}>
+                {t(lang, "quiz.studyChapter", { chapter: chapterName(weakestChapter, lang) })}
+              </button>
+            )}
             <button className="btn primary" onClick={reset}>{t(lang, "quiz.retakeQuiz")}</button>
           </div>
         </div>

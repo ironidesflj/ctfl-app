@@ -18,14 +18,13 @@ function groupByDay(history) {
     .slice(-14);
 }
 
-function calcPace(history, readiness) {
-  if (readiness >= 90) return null;
+function calcPace(history, readinessPoint) {
+  if (readinessPoint >= 90) return null;
   const dates = [...new Set(history.map((h) => h.date))].sort();
   if (dates.length < 7) return null;
 
   const today = todayLocal();
   const recent7 = dates.filter((d) => d <= today).slice(-7);
-  // Requer 2 janelas de 7 dias distintos para comparar tendência de acerto
   const prev7 = dates.filter((d) => d < recent7[0]).slice(-7);
   if (prev7.length < 7) return null;
 
@@ -46,8 +45,16 @@ function calcPace(history, readiness) {
   const prevPct = avgPct(prev7);
   const delta = recentPct - prevPct;
   if (delta <= 0) return null;
-  return Math.ceil((90 - readiness) / delta);
+  return Math.ceil((90 - readinessPoint) / delta);
 }
+
+// Fase 2: achievement metadata (nomes + descrições para tooltip)
+const ACHIEVEMENTS = {
+  "first-step": { icon: "🎯", pt: "Primeiro passo", en: "First step", ptDesc: "Respondeu sua primeira questão", enDesc: "Answered your first question" },
+  "streak-7": { icon: "🔥", pt: "7 dias", en: "7 days", ptDesc: "Estudou 7 dias seguidos (≥5 questões/dia)", enDesc: "Studied 7 consecutive days (≥5 questions/day)" },
+  "streak-30": { icon: "💎", pt: "30 dias", en: "30 days", ptDesc: "Estudou 30 dias seguidos (≥5 questões/dia)", enDesc: "Studied 30 consecutive days (≥5 questions/day)" },
+  "passed-exam": { icon: "✅", pt: "Aprovado", en: "Passed", ptDesc: "Passou em um simulado", enDesc: "Passed an exam simulation" },
+};
 
 export default function Stats({ progress, setProgress, lang = "pt", onGoToQuiz }) {
   const { cert: certId } = useParams();
@@ -65,17 +72,30 @@ export default function Stats({ progress, setProgress, lang = "pt", onGoToQuiz }
 
   const pct = progress.total > 0 ? Math.round((progress.correct / progress.total) * 100) : 0;
   const days = groupByDay(progress.history || []);
-  const examFormat = META.examFormat?.[cert.id];
-  const passPct = examFormat ? Math.round((examFormat.passMark / examFormat.questions) * 100) : 65;
 
   const streak = getStreak(progress);
-  const totalBank = META.certifications?.[cert.label]?.totalQuestions;
+
+  // totalBank do cert ativo (META.certifications é chaveado por cert.label,
+  // ex: "CTFL"/"CTAL-TA" — mais robusto que derivar de certId.toUpperCase(),
+  // que quebraria pra certs cujo label não é o certId maiúsculo)
+  const totalBank = META.certifications?.[cert.label]?.totalQuestions || 300;
   const readiness = getReadiness(progress, totalBank);
-  const seenCount = Object.keys(progress.seen || {}).length;
-  const MIN_N_READINESS = 20;
-  const pace = calcPace(progress.history || [], readiness);
+  const pace = calcPace(progress.history || [], readiness.point);
   const achievements = progress.achievements || [];
-  const level = Math.floor(progress.total / 20) + 1;
+
+  // Fase 2: level baseado em questões únicas corretas (não total bruto)
+  const uniqueCorrect = Object.values(progress.attempts || {}).filter(a => a.lastCorrect).length;
+  const level = Math.floor(uniqueCorrect / 20) + 1;
+
+  // Fase 2: cobertura real (questões únicas vistas / total do banco)
+  const seenCount = readiness.seenCount;
+  const coveragePct = totalBank > 0 ? Math.round((seenCount / totalBank) * 100) : 0;
+
+  // Fase 0/2: pass mark do cert ativo (examFormat usa certId lowercase)
+  const examFormat = META.examFormat?.[certId];
+  const passMark = examFormat?.passMark || 26;
+  const examQuestions = examFormat?.questions || 40;
+  const passPct = examQuestions > 0 ? Math.round((passMark / examQuestions) * 100) : 65;
 
   const coverage = coverageByChapter(progress.seen || {});
   const radarDomains = chapters.map((c) => chapterName(c.chapter, lang).split(" ")[0]);
@@ -87,6 +107,9 @@ export default function Stats({ progress, setProgress, lang = "pt", onGoToQuiz }
     const cov = coverage[c.chapter];
     return Math.round((cov.seen / cov.total) * 100);
   });
+
+  // Fase 2: label do cert para interpolar strings
+  const certLabel = cert.label;
 
   async function handleImport(e) {
     const file = e.target.files?.[0];
@@ -101,6 +124,14 @@ export default function Stats({ progress, setProgress, lang = "pt", onGoToQuiz }
     e.target.value = "";
   }
 
+  // Fase 2: interpolar suffix/metaText com dados do cert — usar o parâmetro
+  // vars do t() (não .replace() encadeado: t() já roda sua própria
+  // substituição de {word} com vars={} por padrão, então .replace() depois
+  // não encontraria mais o placeholder, que já teria virado "").
+  const readinessSuffix = t(lang, "stats.readinessSuffix", { cert: certLabel });
+  const metaText = t(lang, "stats.metaText", { examQuestions, passMark, passPct });
+  const metaTitle = t(lang, "stats.metaTitle", { cert: certLabel });
+
   return (
     <div className="study">
       {progress.total === 0 && (
@@ -110,32 +141,88 @@ export default function Stats({ progress, setProgress, lang = "pt", onGoToQuiz }
         </div>
       )}
 
+      {/* Fase 2: link persistente para re-abrir o onboarding sob demanda */}
+      <div style={{ textAlign: "center", marginBottom: "0.5rem" }}>
+        <button
+          className="btn ghost"
+          style={{ fontSize: "var(--fs-13)", padding: "4px 12px" }}
+          onClick={() => {
+            try { localStorage.removeItem("ctfl_onboarding_done"); } catch {}
+            window.location.reload();
+          }}
+        >
+          {t(lang, "stats.howItWorks")}
+        </button>
+      </div>
+
       {/* Tira de gamificação */}
       {progress.total > 0 && (
         <div className="gamification-strip">
           {streak >= 2 && (
             <>
-              <span>🔥 {streak} dias</span>
+              <span title={t(lang, "stats.streakDesc")}>🔥 {streak} {lang === "pt" ? "dias" : "days"}</span>
               <span className="gam-sep" aria-hidden="true">·</span>
             </>
           )}
-          <span>{t(lang, "stats.level")} {level}</span>
+          <span title={t(lang, "stats.levelDesc")}>{t(lang, "stats.level")} {level}</span>
           <span className="gam-sep" aria-hidden="true">·</span>
           <span>{achievements.length}/4 {t(lang, "stats.achievementsLabel")}</span>
         </div>
       )}
 
-      {/* Card de prontidão */}
+      {/* Fase 2: Achievements com nomes (se houver algum) */}
+      {progress.total > 0 && achievements.length > 0 && (
+        <div className="card" style={{ padding: "0.75rem" }}>
+          <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap", alignItems: "center" }}>
+            {achievements.map(aid => {
+              const a = ACHIEVEMENTS[aid];
+              if (!a) return null;
+              const name = lang === "pt" ? a.pt : a.en;
+              const desc = lang === "pt" ? a.ptDesc : a.enDesc;
+              return (
+                <span key={aid} title={desc} style={{
+                  display: "inline-flex", alignItems: "center", gap: "4px",
+                  fontSize: "var(--fs-13)", padding: "2px 8px",
+                  borderRadius: "var(--radius-sm)", background: "var(--accent-soft)",
+                  color: "var(--accent-text)"
+                }}>
+                  <span aria-hidden="true">{a.icon}</span>
+                  <span>{name}</span>
+                </span>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
+      {/* Card de prontidão — Fase 2 redesign com Wilson CI + cobertura */}
       {progress.total > 0 && (
-        <div className="card readiness-card">
-          {seenCount < MIN_N_READINESS ? (
-            <p className="muted">{t(lang, "stats.readinessLowConfidence", { n: MIN_N_READINESS - seenCount })}</p>
-          ) : (
-            <p>
-              {t(lang, "stats.readinessPrefix")} <strong>{readiness}%</strong> {t(lang, "stats.readinessSuffix", { cert: cert.label })}
+        <div className="card readiness-card" aria-live="polite">
+          {readiness.confidence === "low" ? (
+            <p className="muted">
+              {t(lang, "stats.readinessPreliminary")}
             </p>
+          ) : (
+            <>
+              <p>
+                {t(lang, "stats.readinessPrefix")} <strong>{readiness.point}%</strong> {readinessSuffix}
+              </p>
+              <p className="muted" style={{ marginTop: "0.25rem", fontSize: "var(--fs-13)" }}>
+                {t(lang, "stats.readinessCI", { low: readiness.ciLow, high: readiness.ciHigh })}
+              </p>
+              <p className="muted" style={{ marginTop: "0.15rem", fontSize: "var(--fs-13)" }}>
+                {t(lang, "stats.readinessCoverage", { pct: coveragePct, seen: seenCount, total: totalBank })}
+              </p>
+              {readiness.confidence === "high" && (
+                <p style={{ marginTop: "0.25rem", fontSize: "var(--fs-13)", fontWeight: 500 }}>
+                  {readiness.point >= passPct
+                    ? t(lang, "stats.readinessReady")
+                    : t(lang, "stats.readinessNotReady")}
+                </p>
+              )}
+            </>
           )}
-          {seenCount >= MIN_N_READINESS && pace !== null && (
+          {pace !== null && (
             <p className="muted" style={{ marginTop: "0.25rem", fontSize: "var(--fs-13)" }}>
               {t(lang, "stats.pacePrefix")}{pace}{t(lang, "stats.paceSuffix")}
             </p>
@@ -144,9 +231,24 @@ export default function Stats({ progress, setProgress, lang = "pt", onGoToQuiz }
       )}
 
       <div className="stat-grid">
-        <div className="stat"><div className="stat-val">{progress.total}</div><div className="stat-lbl">{t(lang, "stats.answered")}</div></div>
-        <div className="stat"><div className="stat-val">{progress.correct}</div><div className="stat-lbl">{t(lang, "stats.correct")}</div></div>
-        <div className="stat"><div className="stat-val">{pct}%</div><div className="stat-lbl">{t(lang, "stats.performance")}</div></div>
+        <div className="stat">
+          <div className="stat-val">{progress.total}</div>
+          <div className="stat-lbl">
+            {t(lang, "stats.answered")}
+            <span style={{ marginLeft: "4px", cursor: "help" }} title={t(lang, "stats.infoAproveitamento")} aria-label={t(lang, "stats.infoAproveitamento")}>ℹ️</span>
+          </div>
+        </div>
+        <div className="stat">
+          <div className="stat-val">{progress.correct}</div>
+          <div className="stat-lbl">{t(lang, "stats.correct")}</div>
+        </div>
+        <div className="stat">
+          <div className="stat-val">{pct}%</div>
+          <div className="stat-lbl">
+            {t(lang, "stats.performance")}
+            <span style={{ marginLeft: "4px", cursor: "help" }} title={t(lang, "stats.infoProntidao")} aria-label={t(lang, "stats.infoProntidao")}>ℹ️</span>
+          </div>
+        </div>
       </div>
 
       <div className="card">
@@ -184,7 +286,7 @@ export default function Stats({ progress, setProgress, lang = "pt", onGoToQuiz }
               <li key={c.chapter}>{radarDomains[i]}: {radarPrecision[i]}% {t(lang, "stats.precisionLabel").toLowerCase()}, {radarCoverage[i]}% {t(lang, "stats.coverageLabel").toLowerCase()}</li>
             ))}
           </ul>
-          <div style={{ display: "flex", gap: "1.25rem", fontSize: "var(--fs-12)", color: "var(--text-2)" }}>
+          <div style={{ display: "flex", gap: "1.25rem", fontSize: "var(--fs-12)", color: "var(--text-3)" }}>
             <span style={{ display: "flex", alignItems: "center", gap: "4px" }}>
               <svg width="16" height="4"><line x1="0" y1="2" x2="16" y2="2" stroke="var(--accent)" strokeWidth="2" /></svg>
               {t(lang, "stats.precisionLabel")}
@@ -198,9 +300,7 @@ export default function Stats({ progress, setProgress, lang = "pt", onGoToQuiz }
       )}
 
       <div className="card note">
-        <strong>{t(lang, "stats.metaTitle", { cert: cert.label })}</strong> {t(lang, "stats.metaText", {
-          n: examFormat?.questions, pass: examFormat?.passMark, pct: passPct,
-        })}
+        <strong>{metaTitle}</strong> {metaText}
       </div>
 
       {notifStatus !== "unsupported" && (

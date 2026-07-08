@@ -3,6 +3,15 @@ import { isDue } from "./spacedRepetition.js";
 const LEGACY_KEY = "ctfl_progress_v1";
 const keyFor = (certId) => `synapse.progress.v1.${certId}`;
 
+// Fase 0: timezone dinâmico (antes hardcoded America/Sao_Paulo).
+const TZ = (() => {
+  try { return Intl.DateTimeFormat().resolvedOptions().timeZone || "America/Sao_Paulo"; }
+  catch { return "America/Sao_Paulo"; }
+})();
+
+// Fase 2: constante do quality gate do streak (mínimo de respostas/dia).
+const STREAK_MIN_ANSWERS_PER_DAY = 5;
+
 // ponytail: module-level "current cert" instead of threading certId through
 // every call site (export/import/clear are called from Stats.jsx, which is
 // out of scope to edit here). App.jsx calls setActiveCertForStorage() on
@@ -26,19 +35,36 @@ function migrateLegacyIfNeeded() {
   }
 }
 
-const LOCAL_TZ = (() => {
-  try {
-    return Intl.DateTimeFormat().resolvedOptions().timeZone || "America/Sao_Paulo";
-  } catch {
-    return "America/Sao_Paulo";
-  }
-})();
-
 export function todayLocal() {
-  return new Date().toLocaleDateString("en-CA", { timeZone: LOCAL_TZ });
+  return new Date().toLocaleDateString("en-CA", { timeZone: TZ });
 }
 
-const EMPTY = { total: 0, correct: 0, byDomain: {}, seen: {}, flashcards: {}, saved: [], history: [], srs: {}, lastStudyDate: null, achievements: [], examHistory: [] };
+const EMPTY = {
+  schemaVersion: 2,
+  total: 0, correct: 0, byDomain: {},
+  seen: {}, attempts: {},
+  flashcards: {}, saved: [], history: [], srs: {},
+  lastStudyDate: null, achievements: [], examHistory: []
+};
+
+// Fase 2: migration v1 → v2. Converte seen[id] em attempts[id] mantendo
+// seen intacto para backwards-compat (getWrongIds, callers existentes).
+function migrateV1toV2(parsed) {
+  if (parsed.schemaVersion >= 2 && parsed.attempts) return parsed;
+  const seen = parsed.seen || {};
+  const attempts = {};
+  const fallbackDate = parsed.lastStudyDate || todayLocal();
+  for (const [id, status] of Object.entries(seen)) {
+    attempts[id] = {
+      count: 1,
+      correct: status === "correct" ? 1 : 0,
+      lastCorrect: status === "correct",
+      lastAt: fallbackDate,
+      firstAt: fallbackDate,
+    };
+  }
+  return { ...parsed, schemaVersion: 2, attempts };
+}
 
 export function loadProgress(certId = activeCert) {
   migrateLegacyIfNeeded();
@@ -46,7 +72,20 @@ export function loadProgress(certId = activeCert) {
     const raw = localStorage.getItem(keyFor(certId));
     if (!raw) return { ...EMPTY };
     const parsed = JSON.parse(raw);
-    return { ...EMPTY, ...parsed, byDomain: parsed.byDomain || {}, seen: parsed.seen || {}, saved: parsed.saved || [], history: parsed.history || [], srs: parsed.srs || {}, lastStudyDate: parsed.lastStudyDate || null, achievements: parsed.achievements || [], examHistory: parsed.examHistory || [] };
+    const migrated = migrateV1toV2(parsed);
+    return {
+      ...EMPTY,
+      ...migrated,
+      byDomain: migrated.byDomain || {},
+      seen: migrated.seen || {},
+      attempts: migrated.attempts || {},
+      saved: migrated.saved || [],
+      history: migrated.history || [],
+      srs: migrated.srs || {},
+      lastStudyDate: migrated.lastStudyDate || null,
+      achievements: migrated.achievements || [],
+      examHistory: migrated.examHistory || [],
+    };
   } catch {
     return { ...EMPTY };
   }
@@ -64,16 +103,32 @@ export function saveProgress(state, certId = activeCert) {
 export function recordAnswer(state, domain, correct, questionId) {
   const next = {
     ...state,
+    schemaVersion: 2,
     total: state.total + 1,
     correct: state.correct + (correct ? 1 : 0),
     byDomain: { ...state.byDomain },
     seen: { ...(state.seen || {}) },
+    attempts: { ...(state.attempts || {}) },
     history: [...(state.history || []), { date: todayLocal(), correct }].slice(-90),
     lastStudyDate: todayLocal()
   };
   const d = next.byDomain[domain] || { t: 0, c: 0 };
   next.byDomain[domain] = { t: d.t + 1, c: d.c + (correct ? 1 : 0) };
-  if (questionId) next.seen[questionId] = correct ? "correct" : "wrong";
+  if (questionId) {
+    // seen: mantido para backwards-compat (getWrongIds, etc.)
+    next.seen[questionId] = correct ? "correct" : "wrong";
+    // attempts: NOVO — acumula histórico de tentativas por questão
+    const prev = (state.attempts || {})[questionId] || {
+      count: 0, correct: 0, lastCorrect: false, lastAt: null, firstAt: null
+    };
+    next.attempts[questionId] = {
+      count: prev.count + 1,
+      correct: prev.correct + (correct ? 1 : 0),
+      lastCorrect: correct,
+      lastAt: todayLocal(),
+      firstAt: prev.firstAt || todayLocal(),
+    };
+  }
   next.achievements = checkAchievements(next);
   return next;
 }
@@ -121,35 +176,97 @@ export function getDueItems(state, allIds) {
   });
 }
 
+// Fase 2: streak com quality gate. Um dia só conta se houve ≥5 respostas
+// (STREAK_MIN_ANSWERS_PER_DAY). Antes, qualquer resposta (1/dia) preservava
+// streak — métrica enganosa que recompensava presença, não prática.
 export function getStreak(progress) {
-  const dates = new Set((progress.history || []).map((h) => h.date));
+  const history = progress.history || [];
+  if (history.length === 0) return 0;
+
+  // Contar respostas por dia
+  const byDay = {};
+  history.forEach((h) => {
+    byDay[h.date] = (byDay[h.date] || 0) + 1;
+  });
+
+  // Um dia "conta" se teve ≥ MIN respostas
+  const qualifies = (date) => (byDay[date] || 0) >= STREAK_MIN_ANSWERS_PER_DAY;
+
   const today = todayLocal();
   let streak = 0;
   let cursor = new Date();
-  // Start from today; if today has no entry, check yesterday before giving up
-  if (!dates.has(today)) {
+
+  // Start from today; if today doesn't qualify, check yesterday before giving up
+  if (!qualifies(today)) {
     cursor.setDate(cursor.getDate() - 1);
-    if (!dates.has(cursor.toLocaleDateString("en-CA", { timeZone: LOCAL_TZ }))) return 0;
+    const yesterday = cursor.toLocaleDateString("en-CA", { timeZone: TZ });
+    if (!qualifies(yesterday)) return 0;
     streak = 1;
     cursor.setDate(cursor.getDate() - 1);
   }
-  // Walk backwards counting consecutive days
+  // Walk backwards counting consecutive qualifying days
   while (true) {
-    const d = cursor.toLocaleDateString("en-CA", { timeZone: LOCAL_TZ });
-    if (!dates.has(d)) break;
+    const d = cursor.toLocaleDateString("en-CA", { timeZone: TZ });
+    if (!qualifies(d)) break;
     streak++;
     cursor.setDate(cursor.getDate() - 1);
   }
   return streak;
 }
 
+// Fase 2: Wilson 95% confidence interval para proporção k/n.
+// Retorna [low, high] como proporções (0-1).
+function wilsonCI(k, n, z = 1.96) {
+  if (n === 0) return [0, 1];
+  const p = k / n;
+  const denom = 1 + (z * z) / n;
+  const center = (p + (z * z) / (2 * n)) / denom;
+  const spread = (z * Math.sqrt((p * (1 - p)) / n + (z * z) / (4 * n * n))) / denom;
+  return [Math.max(0, center - spread), Math.min(1, center + spread)];
+}
+
+// Fase 2: getReadiness retorna objeto rico com point estimate, Wilson CI,
+// seenCount, confidence level e minMet flag. Antes retornava um número único
+// com falsa precisão e sem noção de cobertura.
+//
+// confidence: "low" (N<20) | "medium" (20≤N<40) | "high" (N≥40)
+// minMet: true quando N≥40 (caller verifica coverage≥30% e ≥1/capítulo)
 export function getReadiness(progress, totalBank) {
-  const seenIds = Object.keys(progress.seen || {});
+  // Preferir attempts (schema v2); cair para seen (v1 legacy) se ausente
+  const attempts = progress.attempts || {};
+  const seen = progress.seen || {};
+  const seenIds = Object.keys(attempts).length > 0 ? Object.keys(attempts) : Object.keys(seen);
   const seenCount = seenIds.length;
-  if (seenCount === 0) return 0;
-  const correctCount = seenIds.filter((id) => progress.seen[id] === "correct").length;
+
+  if (seenCount === 0) {
+    return { point: 0, ciLow: 0, ciHigh: 0, seenCount: 0, confidence: "low", minMet: false };
+  }
+
+  // Last-status correct count: usa attempts.lastCorrect se disponível, senão seen
+  const correctCount = seenIds.filter((id) => {
+    if (attempts[id]) return attempts[id].lastCorrect;
+    return seen[id] === "correct";
+  }).length;
+
+  // Bayesian point estimate (mesma fórmula de antes — Laplace smoothing)
   const k = Math.max(10, Number.isFinite(totalBank) ? Math.round(totalBank * 0.1) : 10);
-  return Math.round((correctCount + k * 0.5) / (seenCount + k) * 100);
+  const point = Math.round(((correctCount + k * 0.5) / (seenCount + k)) * 100);
+
+  // Wilson 95% CI sobre a proporção raw (sem smoothing) — representa a
+  // incerteza real da amostra
+  const [ciLowRaw, ciHighRaw] = wilsonCI(correctCount, seenCount);
+  const ciLow = Math.round(ciLowRaw * 100);
+  const ciHigh = Math.round(ciHighRaw * 100);
+
+  // Confidence level
+  let confidence;
+  if (seenCount < 20) confidence = "low";
+  else if (seenCount < 40) confidence = "medium";
+  else confidence = "high";
+
+  const minMet = seenCount >= 40;
+
+  return { point, ciLow, ciHigh, seenCount, confidence, minMet };
 }
 
 export function checkAchievements(progress) {
@@ -209,7 +326,21 @@ export function importProgress(file, certId = activeCert) {
         }
         const p = data.progress || data;
         if (typeof p.total !== "number") throw new Error("Formato inválido");
-        resolve({ ...EMPTY, ...p, byDomain: p.byDomain || {}, seen: p.seen || {}, saved: p.saved || [], history: p.history || [], srs: p.srs || {}, lastStudyDate: p.lastStudyDate || null, achievements: p.achievements || [], examHistory: p.examHistory || [] });
+        // Fase 2: migrar se necessário
+        const migrated = migrateV1toV2(p);
+        resolve({
+          ...EMPTY,
+          ...migrated,
+          byDomain: migrated.byDomain || {},
+          seen: migrated.seen || {},
+          attempts: migrated.attempts || {},
+          saved: migrated.saved || [],
+          history: migrated.history || [],
+          srs: migrated.srs || {},
+          lastStudyDate: migrated.lastStudyDate || null,
+          achievements: migrated.achievements || [],
+          examHistory: migrated.examHistory || [],
+        });
       } catch (e) {
         reject(e);
       }

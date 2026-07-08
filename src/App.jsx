@@ -261,6 +261,8 @@ export default function App() {
 
 /* ─── Thin wrappers that need useParams/useNavigate inside the Route tree ─── */
 function CertRouteQuiz({ quizFilter, setQuizFilter, onAnswer, progress, setProgress, lang }) {
+  const { cert } = useParams();
+  const navigate = useNavigate();
   return (
     <Quiz
       onAnswer={onAnswer}
@@ -268,6 +270,10 @@ function CertRouteQuiz({ quizFilter, setQuizFilter, onAnswer, progress, setProgr
       setProgress={setProgress}
       initialFilter={quizFilter}
       onFilterConsumed={() => setQuizFilter(null)}
+      onStudyChapter={(domain) => {
+        setQuizFilter({ domain });
+        navigate(`/${cert}/quiz`);
+      }}
       lang={lang}
     />
   );
