@@ -5,6 +5,15 @@ import {
   getStreak, getReadiness, checkAchievements, logExamResult,
 } from "./storage.js";
 
+// ponytail: local-date helper matching todayLocal()'s timezone, not UTC —
+// toISOString() rolls over to the next day near midnight UTC, which broke
+// this test whenever it ran late evening in a UTC-behind timezone (e.g. BRT).
+function localDateOffset(offset) {
+  const d = new Date();
+  d.setDate(d.getDate() - offset);
+  return d.toLocaleDateString("en-CA", { timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone });
+}
+
 describe("storage - progress tracking", () => {
   it("recordAnswer increments total and correct counts", () => {
     let state = clearProgress();
@@ -33,32 +42,20 @@ describe("storage - progress tracking", () => {
 
 describe("storage - streak", () => {
   it("returns streak of 3 for 3 consecutive days ending today", () => {
-    const today = new Date();
-    const d = (offset) => {
-      const d = new Date(today);
-      d.setDate(d.getDate() - offset);
-      return d.toISOString().slice(0, 10);
-    };
     const state = clearProgress();
     state.history = [
-      { date: d(2), correct: true },
-      { date: d(1), correct: true },
-      { date: d(0), correct: true },
+      { date: localDateOffset(2), correct: true },
+      { date: localDateOffset(1), correct: true },
+      { date: localDateOffset(0), correct: true },
     ];
     expect(getStreak(state)).toBe(3);
   });
 
   it("returns 0 when there is a gap of 2+ days", () => {
-    const today = new Date();
-    const d = (offset) => {
-      const dt = new Date(today);
-      dt.setDate(dt.getDate() - offset);
-      return dt.toISOString().slice(0, 10);
-    };
     const state = clearProgress();
     state.history = [
-      { date: d(5), correct: true },
-      { date: d(4), correct: true },
+      { date: localDateOffset(5), correct: true },
+      { date: localDateOffset(4), correct: true },
     ];
     expect(getStreak(state)).toBe(0);
   });
