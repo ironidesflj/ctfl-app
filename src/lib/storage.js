@@ -100,7 +100,7 @@ export function saveProgress(state, certId = activeCert) {
   }
 }
 
-export function recordAnswer(state, domain, correct, questionId) {
+export function recordAnswer(state, domain, correct, questionId, bank) {
   const next = {
     ...state,
     schemaVersion: 2,
@@ -129,7 +129,7 @@ export function recordAnswer(state, domain, correct, questionId) {
       firstAt: prev.firstAt || todayLocal(),
     };
   }
-  next.achievements = checkAchievements(next);
+  next.achievements = checkAchievements(next, bank);
   return next;
 }
 
@@ -349,13 +349,22 @@ export function getReadinessV2(progress, bank) {
   };
 }
 
-export function checkAchievements(progress) {
+export function checkAchievements(progress, bank) {
   const existing = new Set(progress.achievements || []);
   const streak = getStreak(progress);
   if (progress.total >= 1) existing.add("first-step");
   if (streak >= 7) existing.add("streak-7");
   if (streak >= 30) existing.add("streak-30");
   if ((progress.examHistory || []).some((e) => e.passed)) existing.add("passed-exam");
+  if (bank) {
+    const attempts = progress.attempts || {};
+    const seen = progress.seen || {};
+    const seenMap = Object.keys(attempts).length > 0 ? attempts : seen;
+    const chapterCoverage = bank.coverageByChapter(seenMap);
+    const entries = Object.values(chapterCoverage).filter((v) => v.total > 0);
+    if (entries.some((v) => v.seen === v.total)) existing.add("chapter-complete");
+    if (entries.length > 0 && entries.every((v) => v.seen === v.total)) existing.add("bank-complete");
+  }
   return [...existing];
 }
 
@@ -363,11 +372,11 @@ export function checkAchievements(progress) {
 // passMark correto do cert (Quiz.jsx faz isso). Sem isso, cai no default
 // de 65% — só correto pro CTFL, mantido pra não quebrar chamadas antigas
 // sem cert (ex: testes existentes).
-export function logExamResult(progress, pct, passed = pct >= 65) {
+export function logExamResult(progress, pct, passed = pct >= 65, bank) {
   const entry = { date: todayLocal(), pct, passed };
   const examHistory = [...(progress.examHistory || []), entry].slice(-20);
   const next = { ...progress, examHistory };
-  next.achievements = checkAchievements(next);
+  next.achievements = checkAchievements(next, bank);
   return next;
 }
 

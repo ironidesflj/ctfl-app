@@ -54,6 +54,8 @@ const ACHIEVEMENTS = {
   "streak-7": { icon: "🔥", pt: "7 dias", en: "7 days", ptDesc: "Estudou 7 dias seguidos (≥5 questões/dia)", enDesc: "Studied 7 consecutive days (≥5 questions/day)" },
   "streak-30": { icon: "💎", pt: "30 dias", en: "30 days", ptDesc: "Estudou 30 dias seguidos (≥5 questões/dia)", enDesc: "Studied 30 consecutive days (≥5 questions/day)" },
   "passed-exam": { icon: "✅", pt: "Aprovado", en: "Passed", ptDesc: "Passou em um simulado", enDesc: "Passed an exam simulation" },
+  "chapter-complete": { icon: "📚", pt: "Capítulo completo", en: "Chapter complete", ptDesc: "Completou a cobertura de um capítulo inteiro", enDesc: "Completed coverage of an entire chapter" },
+  "bank-complete": { icon: "🏆", pt: "Banco completo", en: "Bank complete", ptDesc: "Completou a cobertura de todo o banco de questões do cert", enDesc: "Completed coverage of the entire cert's question bank" },
 };
 
 export default function Stats({ progress, setProgress, lang = "pt", onGoToQuiz }) {
@@ -82,6 +84,9 @@ export default function Stats({ progress, setProgress, lang = "pt", onGoToQuiz }
   const readiness = getReadinessV2(progress, bank);
   const pace = calcPace(progress.history || [], readiness.point);
   const achievements = progress.achievements || [];
+  const missingChapterNames = (readiness.missingChapters || []).map((ch) => chapterName(ch, lang));
+  const missingKLevelLabels = readiness.missingKLevels || [];
+  const missingItems = [...missingChapterNames, ...missingKLevelLabels].join(", ");
 
   // Fase 2: level baseado em questões únicas corretas (não total bruto)
   const uniqueCorrect = Object.values(progress.attempts || {}).filter(a => a.lastCorrect).length;
@@ -166,7 +171,7 @@ export default function Stats({ progress, setProgress, lang = "pt", onGoToQuiz }
           )}
           <span title={t(lang, "stats.levelDesc")}>{t(lang, "stats.level")} {level}</span>
           <span className="gam-sep" aria-hidden="true">·</span>
-          <span>{achievements.length}/4 {t(lang, "stats.achievementsLabel")}</span>
+          <span>{achievements.length}/6 {t(lang, "stats.achievementsLabel")}</span>
         </div>
       )}
 
@@ -204,24 +209,31 @@ export default function Stats({ progress, setProgress, lang = "pt", onGoToQuiz }
             </p>
           ) : (
             <>
-              <p>
-                {t(lang, "stats.readinessPrefix")} <strong>{readiness.point}%</strong> {readinessSuffix}
-              </p>
-              <p className="muted" style={{ marginTop: "0.25rem", fontSize: "var(--fs-13)" }}>
-                {t(lang, "stats.readinessCI", { low: readiness.ciLow, high: readiness.ciHigh })}
-              </p>
-              <p className="muted" style={{ marginTop: "0.15rem", fontSize: "var(--fs-13)" }}>
-                {t(lang, "stats.readinessCoverage", { pct: coveragePct, seen: seenCount, total: totalBank })}
-              </p>
               {readiness.confidence === "high" && (
-                <p style={{ marginTop: "0.25rem", fontSize: "var(--fs-13)", fontWeight: 500 }}>
+                <p style={{ fontWeight: 600 }}>
                   {readiness.gatesPassed === false
-                    ? t(lang, "stats.readinessGateBlocked")
+                    ? (missingItems
+                        ? t(lang, "stats.readinessGateBlockedSpecific", { items: missingItems })
+                        : t(lang, "stats.readinessGateBlocked"))
                     : readiness.point >= passPct
                       ? t(lang, "stats.readinessReady")
                       : t(lang, "stats.readinessNotReady")}
                 </p>
               )}
+              <details style={{ marginTop: "0.25rem" }}>
+                <summary style={{ fontSize: "var(--fs-13)", cursor: "pointer", color: "var(--text-3)" }}>
+                  {t(lang, "stats.readinessSeeDetails")}
+                </summary>
+                <p className="muted" style={{ marginTop: "0.25rem", fontSize: "var(--fs-13)" }}>
+                  {t(lang, "stats.readinessPrefix")} <strong>{readiness.point}%</strong> {readinessSuffix}
+                </p>
+                <p className="muted" style={{ marginTop: "0.15rem", fontSize: "var(--fs-13)" }}>
+                  {t(lang, "stats.readinessCI", { low: readiness.ciLow, high: readiness.ciHigh })}
+                </p>
+                <p className="muted" style={{ marginTop: "0.15rem", fontSize: "var(--fs-13)" }}>
+                  {t(lang, "stats.readinessCoverage", { pct: coveragePct, seen: seenCount, total: totalBank })}
+                </p>
+              </details>
             </>
           )}
           {pace !== null && (

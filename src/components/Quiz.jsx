@@ -179,7 +179,7 @@ export default function Quiz({ onAnswer, progress, setProgress, initialFilter, o
       // linha ~374) — sem isso o histórico persistido usaria o default de
       // 65% da storage.js, que reprova errado o CTAL-TA (corte real 64.4%).
       const examPassed = examScore >= META.examFormat[certId].passMark;
-      setProgress((p) => logExamResult(p, examPct, examPassed));
+      setProgress((p) => logExamResult(p, examPct, examPassed, bank));
     }
     dispatch({ type: "FINISH" });
   }

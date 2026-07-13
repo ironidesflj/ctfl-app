@@ -154,7 +154,7 @@ export default function App() {
   }, []); // só na montagem inicial
 
   const onAnswer = (domain, correct, questionId) =>
-    setProgress((p) => recordAnswer(p, domain, correct, questionId));
+    setProgress((p) => recordAnswer(p, domain, correct, questionId, bank));
 
   function dismissOnboarding() {
     try { localStorage.setItem("ctfl_onboarding_done", "1"); } catch {}
