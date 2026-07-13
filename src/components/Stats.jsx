@@ -103,14 +103,14 @@ export default function Stats({ progress, setProgress, lang = "pt", onGoToQuiz }
   const passPct = examQuestions > 0 ? Math.round((passMark / examQuestions) * 100) : 65;
 
   const coverage = coverageByChapter(progress.seen || {});
-  const radarDomains = chapters.map((c) => chapterName(c.chapter, lang).split(" ")[0]);
+  const radarDomains = chapters.map((c) => c[lang]?.short || chapterName(c.chapter, lang));
   const radarPrecision = chapters.map((c) => {
     const bd = progress.byDomain?.[c.chapter] || { t: 0, c: 0 };
     return bd.t > 0 ? Math.round((bd.c / bd.t) * 100) : 0;
   });
   const radarCoverage = chapters.map((c) => {
     const cov = coverage[c.chapter];
-    return Math.round((cov.seen / cov.total) * 100);
+    return cov.total > 0 ? Math.round((cov.seen / cov.total) * 100) : 0;
   });
 
   // Fase 2: label do cert para interpolar strings
