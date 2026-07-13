@@ -21,6 +21,15 @@ export function setActiveCertForStorage(certId) {
   activeCert = certId || "ctfl";
 }
 
+// Fase 3: callback para erros de storage (catches silenciosos agora notificam).
+// App.jsx registra um callback que mostra toast ao usuário.
+let _onStorageError = null;
+export function setStorageErrorHandler(fn) { _onStorageError = fn; }
+function reportStorageError(context, err) {
+  console.warn(`[storage] ${context}:`, err?.message || err);
+  if (_onStorageError) try { _onStorageError(context, err); } catch { /* prevent callback errors from propagating */ }
+}
+
 // Migração única: usuários existentes eram só-CTFL, então a chave legada
 // (global, sem namespace) vira o progresso do cert "ctfl" se ele ainda não
 // existir namespaced.
@@ -30,8 +39,8 @@ function migrateLegacyIfNeeded() {
     if (legacy && !localStorage.getItem(keyFor("ctfl"))) {
       localStorage.setItem(keyFor("ctfl"), legacy);
     }
-  } catch {
-    /* ignore */
+  } catch (e) {
+    reportStorageError("migrateLegacy", e);
   }
 }
 
@@ -86,7 +95,8 @@ export function loadProgress(certId = activeCert) {
       achievements: migrated.achievements || [],
       examHistory: migrated.examHistory || [],
     };
-  } catch {
+  } catch (e) {
+    reportStorageError("loadProgress", e);
     return { ...EMPTY };
   }
 }
@@ -95,7 +105,8 @@ export function saveProgress(state, certId = activeCert) {
   try {
     localStorage.setItem(keyFor(certId), JSON.stringify(state));
     return true;
-  } catch {
+  } catch (e) {
+    reportStorageError("saveProgress", e);
     return false; // iframe/sandbox ou armazenamento desabilitado
   }
 }
@@ -383,8 +394,8 @@ export function logExamResult(progress, pct, passed = pct >= 65, bank) {
 export function clearProgress(certId = activeCert) {
   try {
     localStorage.removeItem(keyFor(certId));
-  } catch {
-    /* ignore */
+  } catch (e) {
+    reportStorageError("clearProgress", e);
   }
   return { ...EMPTY };
 }
@@ -414,7 +425,12 @@ export function importProgress(file, certId = activeCert) {
           throw new Error(`Este arquivo é do certificado "${data.cert}", não de "${certId}".`);
         }
         const p = data.progress || data;
-        if (typeof p.total !== "number") throw new Error("Formato inválido");
+        // Fase 3: validação de schema mais estrita
+        if (typeof p.total !== "number" || p.total < 0) throw new Error("Campo 'total' inválido");
+        if (typeof p.correct !== "number" || p.correct < 0 || p.correct > p.total) throw new Error("Campo 'correct' inválido");
+        if (p.seen && typeof p.seen !== "object") throw new Error("Campo 'seen' deve ser objeto");
+        if (p.history && !Array.isArray(p.history)) throw new Error("Campo 'history' deve ser array");
+        if (p.saved && !Array.isArray(p.saved)) throw new Error("Campo 'saved' deve ser array");
         // Fase 2: migrar se necessário
         const migrated = migrateV1toV2(p);
         resolve({

@@ -45,6 +45,7 @@ export const UI = {
       gridSummary: "{answered} de {total} respondidas · {blank} em branco",
       weakestChapter: "Capítulo mais fraco: {chapter} ({pct}%). Estude para melhorar.",
       studyChapter: "Estudar {chapter} →",
+      enComingSoon: "EN em breve · mostrando PT",
     },
     stats: {
       importSuccess: "Progresso importado com sucesso.",
@@ -149,6 +150,21 @@ export const UI = {
       dueBody: "Você tem {count} questão(ões) para revisar hoje.",
       staleBody: "Você não estuda há {days} dias. Que tal uma sessão rápida?",
     },
+    metrics: {
+      title: "Entendendo suas métricas",
+      readinessTitle: "📊 Prontidão",
+      readinessDesc: "Percentual de questões únicas que você acertou por último, com ajuste Bayesiano e intervalo de confiança de 95%. Torna-se confiável após ~40 questões únicas com 30%+ de cobertura do syllabus. Abaixo disso, você verá a mensagem 'estimativa preliminar'.",
+      performanceTitle: "📈 Aproveitamento",
+      performanceDesc: "Percentual de acertos sobre TODAS as tentativas, incluindo re-respostas. Diferente da prontidão, que só conta o último status de cada questão única. Ambas as métricas são válidas — medem coisas diferentes.",
+      streakTitle: "🔥 Sequência",
+      streakDesc: "Dias consecutivos onde você respondeu pelo menos 5 questões. Uma única resposta por dia não conta mais — consistência significa prática real, não apenas abrir o app.",
+      levelTitle: "⭐ Nível",
+      levelDesc: "Baseado em questões únicas que você acertou (não total de tentativas). Você sobe de nível a cada 20 acertos únicos — responder a mesma questão fácil 100 vezes não sobe seu nível.",
+    },
+    aria: {
+      sections: "Seções",
+      mastMark: "Synapse {cert}",
+    },
   },
   en: {
     tabs: { quiz: "Quiz", syllabus: "Syllabus", flashcards: "Flashcards", glossary: "Glossary", progress: "Progress" },
@@ -193,6 +209,7 @@ export const UI = {
       gridSummary: "{answered} of {total} answered · {blank} blank",
       weakestChapter: "Weakest chapter: {chapter} ({pct}%). Study it to improve.",
       studyChapter: "Study {chapter} →",
+      enComingSoon: "EN coming soon · showing PT",
     },
     stats: {
       importSuccess: "Progress imported successfully.",
@@ -296,6 +313,21 @@ export const UI = {
       blocked: "Notifications blocked in browser. Enable it in site settings.",
       dueBody: "You have {count} question(s) to review today.",
       staleBody: "You haven't studied in {days} days. How about a quick session?",
+    },
+    metrics: {
+      title: "Understanding your metrics",
+      readinessTitle: "📊 Readiness",
+      readinessDesc: "Percentage of unique questions you last got right, with a Bayesian adjustment and a 95% confidence interval. It becomes reliable after ~40 unique questions with 30%+ syllabus coverage. Below that, you'll see a 'preliminary estimate' message.",
+      performanceTitle: "📈 Performance",
+      performanceDesc: "Percentage of correct answers over ALL attempts, including re-answers. Different from readiness, which only counts the last status of each unique question. Both metrics are valid — they measure different things.",
+      streakTitle: "🔥 Streak",
+      streakDesc: "Consecutive days where you answered at least 5 questions. A single answer per day no longer counts — consistency means real practice, not just opening the app.",
+      levelTitle: "⭐ Level",
+      levelDesc: "Based on unique questions you got right (not total attempts). You level up every 20 unique correct answers — answering the same easy question 100 times doesn't raise your level.",
+    },
+    aria: {
+      sections: "Sections",
+      mastMark: "Synapse {cert}",
     },
   },
 };

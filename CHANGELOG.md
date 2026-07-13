@@ -1,5 +1,42 @@
 # Changelog
 
+### Unreleased
+
+Prontidão baseada em blueprint oficial de exame (Spec 2) + hierarquia do
+Stats e gamificação (Spec 1). 9 commits desde v3.9.0, ainda sem bump de
+versão — decisão de corte de release fica com o Iron.
+
+- feat(readiness): **prontidão agora usa o blueprint oficial do exame**
+  (`getReadinessV2`) em vez de fórmula estatística pura — exige cobertura
+  mínima de todos os capítulos (≥40% do banco) e piso de cobertura por
+  nível cognitivo (K1-K4, proporcional ao peso de cada nível na prova
+  real), ponderado pelo peso real de cada capítulo. Sem afirmar "pronto"
+  com capítulo ou tipo de questão descoberto. Cert sem blueprint preenchido
+  cai no comportamento estatístico anterior sem quebrar.
+- feat(stats): **hierarquia do card de prontidão redesenhada** — veredito em
+  destaque, Wilson CI/cobertura/point movidos pra `<details>` (linguagem
+  natural em primeiro plano, estatística como detalhe explorável). Estado
+  bloqueado nomeia especificamente os capítulos/níveis faltantes.
+- feat(gamification): **2 conquistas novas** (`chapter-complete`,
+  `bank-complete`) somadas às 4 já existentes (`first-step`, `streak-7`,
+  `streak-30`, `passed-exam`) — mesma fonte de dado já computada
+  (`coverageByChapter`), zero tracking novo.
+- fix: `Stats.jsx` usava `certId.toUpperCase()` pra identificar o cert em
+  vez de `cert.label` — funcionava por coincidência nos 2 certs live, mas
+  quebraria num cert futuro cujo label não seja o certId maiúsculo.
+- fix: interpolação de string dupla em `t()` deixava "Intervalo real: %–%"
+  em branco no card de prontidão (placeholder já era consumido antes do
+  `.replace()` externo rodar).
+- fix: cache de `allInLang("pt")` — retorna `ALL` diretamente em vez de
+  remapear, reduz trabalho redundante no hot path do Quiz.
+- content: banco sincronizado pós Fase 1 (elimina viés de comprimento de
+  resposta, CRÍT-1) + HEDGE_RATIO/RUNS_TEST (rebalanceia qualificadores
+  absolutistas e ordem de opções) — ver `ctfl-question-bank-ptbr` pro
+  detalhe completo dessas mudanças de conteúdo.
+- fix: teste de streak usava `toISOString()` (sempre UTC) em vez do
+  timezone local que `getStreak()` realmente usa — falhava
+  deterministicamente perto da meia-noite UTC.
+
 ### v3.9.0
 
 Rebrand visual — 4 briefings em paralelo (cor, mark, copy, layout seletor).

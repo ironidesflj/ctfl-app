@@ -511,7 +511,7 @@ export default function Quiz({ onAnswer, progress, setProgress, initialFilter, o
             </div>
             {lang === "en" && !hasEN(questions[idx]?.id) && (
               <span style={{fontSize:'11px', color:'var(--text-3)'}}>
-                EN coming soon · showing PT
+                {t(lang, "quiz.enComingSoon")}
               </span>
             )}
             <p className="q-text">{q.q}</p>
@@ -543,7 +543,7 @@ export default function Quiz({ onAnswer, progress, setProgress, initialFilter, o
 
           {answered && (
             <div className="quiz-explain-col">
-              <div className="explanation">{q.exp}</div>
+              <div className="explanation" aria-live="polite">{q.exp}</div>
 
               {(() => {
                 const matchedTerms = findGlossaryTermsInText(q.exp, lang);

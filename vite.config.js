@@ -14,6 +14,19 @@ export default defineConfig({
     globals: true,
     setupFiles: "./src/test-setup.js",
   },
+  build: {
+    // Fase 3: separar o banco de questões (2.5MB) em chunk próprio para que
+    // o bundle principal (app code) carregue mais rápido. Code-splitting real
+    // (lazy import por cert) fica como follow-up — requer mudar getBank para
+    // async e atualizar 6 componentes.
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          "question-bank": ["./src/data/synapse-question-bank.json"],
+        },
+      },
+    },
+  },
   plugins: [
     react(),
     VitePWA({

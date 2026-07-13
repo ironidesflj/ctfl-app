@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
 import { Routes, Route, Navigate, Link, useParams, useNavigate, useLocation } from "react-router-dom";
 import Quiz from "./components/Quiz.jsx";
 import Flashcards from "./components/Flashcards.jsx";
@@ -43,6 +43,7 @@ function TabNav({ lang }) {
   const { cert } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
+  const tabRefs = useRef({});
 
   const TABS = [
     { id: "quiz", label: t(lang, "tabs.quiz") },
@@ -52,19 +53,46 @@ function TabNav({ lang }) {
     { id: "stats", label: t(lang, "tabs.progress") }
   ];
 
+  const activeTabId = location.pathname.split("/")[2] || "quiz";
+  const activeIndex = Math.max(0, TABS.findIndex((tb) => tb.id === activeTabId));
+
+  function handleKeyDown(e) {
+    let nextIndex = activeIndex;
+    if (e.key === "ArrowRight") nextIndex = (activeIndex + 1) % TABS.length;
+    else if (e.key === "ArrowLeft") nextIndex = (activeIndex - 1 + TABS.length) % TABS.length;
+    else if (e.key === "Home") nextIndex = 0;
+    else if (e.key === "End") nextIndex = TABS.length - 1;
+    else return;
+    e.preventDefault();
+    const nextId = TABS[nextIndex].id;
+    navigate(`/${cert}/${nextId}`);
+    // Focus the new tab after the DOM updates — NOT on every render.
+    // requestAnimationFrame avoids stealing focus during normal re-renders
+    // (e.g. when progress changes in the Quiz); only keyboard navigation triggers it.
+    requestAnimationFrame(() => tabRefs.current[nextId]?.focus({ preventScroll: true }));
+  }
+
   return (
-    <nav className="tabs" role="tablist">
-      {TABS.map((tb) => (
-        <button
-          key={tb.id}
-          role="tab"
-          aria-selected={location.pathname === `/${cert}/${tb.id}`}
-          className={"tab" + (location.pathname === `/${cert}/${tb.id}` ? " active" : "")}
-          onClick={() => navigate(`/${cert}/${tb.id}`)}
-        >
-          {tb.label}
-        </button>
-      ))}
+    <nav className="tabs" role="tablist" aria-label={t(lang, "aria.sections")}>
+      {TABS.map((tb) => {
+        const isActive = location.pathname === `/${cert}/${tb.id}`;
+        return (
+          <button
+            key={tb.id}
+            id={`tab-${cert}-${tb.id}`}
+            role="tab"
+            aria-selected={isActive}
+            aria-controls={`tabpanel-${cert}`}
+            tabIndex={isActive ? 0 : -1}
+            className={"tab" + (isActive ? " active" : "")}
+            onClick={() => navigate(`/${cert}/${tb.id}`)}
+            onKeyDown={handleKeyDown}
+            ref={(el) => { tabRefs.current[tb.id] = el; }}
+          >
+            {tb.label}
+          </button>
+        );
+      })}
     </nav>
   );
 }
@@ -176,7 +204,7 @@ export default function App() {
   return (
     <div className="app" {...(activeCert ? { "data-cert": activeCert } : {})}>
       <header className="masthead">
-        <div className="mast-mark" aria-hidden="true"><BrandMark size={26} /></div>
+        <div className="mast-mark" role="img" aria-label={catalogCert ? t(lang, "aria.mastMark", { cert: catalogCert.label }) : "Synapse"}><BrandMark size={26} /></div>
         <div>
           <h1>{catalogCert ? catalogCert.fullName : "Synapse"}</h1>
           {catalogCert && (
@@ -219,31 +247,31 @@ export default function App() {
           <Route path="/:cert/quiz" element={
             <CertGuard key={certId}>
               <TabNav lang={lang} />
-              <main><CertRouteQuiz quizFilter={quizFilter} setQuizFilter={setQuizFilter} onAnswer={onAnswer} progress={progress} setProgress={setProgress} lang={lang} /></main>
+              <main role="tabpanel" id={`tabpanel-${certId}`} aria-labelledby={`tab-${certId}-quiz`}><CertRouteQuiz quizFilter={quizFilter} setQuizFilter={setQuizFilter} onAnswer={onAnswer} progress={progress} setProgress={setProgress} lang={lang} /></main>
             </CertGuard>
           } />
           <Route path="/:cert/syllabus" element={
             <CertGuard key={certId}>
               <TabNav lang={lang} />
-              <main><CertRouteSyllabus setQuizFilter={setQuizFilter} lang={lang} progress={progress} /></main>
+              <main role="tabpanel" id={`tabpanel-${certId}`} aria-labelledby={`tab-${certId}-syllabus`}><CertRouteSyllabus setQuizFilter={setQuizFilter} lang={lang} progress={progress} /></main>
             </CertGuard>
           } />
           <Route path="/:cert/flash" element={
             <CertGuard key={certId}>
               <TabNav lang={lang} />
-              <main><Flashcards lang={lang} progress={progress} setProgress={setProgress} /></main>
+              <main role="tabpanel" id={`tabpanel-${certId}`} aria-labelledby={`tab-${certId}-flash`}><Flashcards lang={lang} progress={progress} setProgress={setProgress} /></main>
             </CertGuard>
           } />
           <Route path="/:cert/glossary" element={
             <CertGuard key={certId}>
               <TabNav lang={lang} />
-              <main><Glossary lang={lang} progress={progress} /></main>
+              <main role="tabpanel" id={`tabpanel-${certId}`} aria-labelledby={`tab-${certId}-glossary`}><Glossary lang={lang} progress={progress} /></main>
             </CertGuard>
           } />
           <Route path="/:cert/stats" element={
             <CertGuard key={certId}>
               <TabNav lang={lang} />
-              <main><CertRouteStats progress={progress} setProgress={setProgress} lang={lang} /></main>
+              <main role="tabpanel" id={`tabpanel-${certId}`} aria-labelledby={`tab-${certId}-stats`}><CertRouteStats progress={progress} setProgress={setProgress} lang={lang} /></main>
             </CertGuard>
           } />
 
