@@ -62,6 +62,16 @@ export default function RadarChart({ domains, precision, coverage, size = 200 })
         );
       })}
 
+      {/* Precision polygon (filled accent) — desenhado primeiro, cobertura
+          fica sempre visível por cima */}
+      <polygon
+        points={polygonPoints(precision)}
+        fill="var(--accent)"
+        fillOpacity="0.15"
+        stroke="var(--accent)"
+        strokeWidth="2"
+      />
+
       {/* Coverage polygon (dashed, text-3) */}
       <polygon
         points={polygonPoints(coverage)}
@@ -69,15 +79,6 @@ export default function RadarChart({ domains, precision, coverage, size = 200 })
         stroke="var(--text-3)"
         strokeWidth="1.5"
         strokeDasharray="4 3"
-      />
-
-      {/* Precision polygon (filled accent) */}
-      <polygon
-        points={polygonPoints(precision)}
-        fill="var(--accent)"
-        fillOpacity="0.15"
-        stroke="var(--accent)"
-        strokeWidth="2"
       />
 
       {/* Labels */}
