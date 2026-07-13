@@ -132,6 +132,7 @@ export default function App() {
     try { return !localStorage.getItem("ctfl_onboarding_done"); }
     catch { return false; }
   });
+  const [reentryOnboarding, setReentryOnboarding] = useState(false);
   const [lang, setLang] = useState(() => {
     try { return localStorage.getItem("ctfl_lang") || "pt"; }
     catch { return "pt"; }
@@ -149,6 +150,12 @@ export default function App() {
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
   }, [theme]);
+
+  useEffect(() => {
+    if (!reentryOnboarding) return;
+    document.body.style.overflow = "hidden";
+    return () => { document.body.style.overflow = ""; };
+  }, [reentryOnboarding]);
 
   useEffect(() => {
     document.documentElement.lang = lang === "en" ? "en" : "pt-BR";
@@ -189,6 +196,10 @@ export default function App() {
     setShowOnboarding(false);
   }
 
+  function closeReentryOnboarding() {
+    setReentryOnboarding(false);
+  }
+
   function toggleLang() {
     const next = lang === "pt" ? "en" : "pt";
     try { localStorage.setItem("ctfl_lang", next); } catch {}
@@ -203,36 +214,38 @@ export default function App() {
 
   return (
     <div className="app" {...(activeCert ? { "data-cert": activeCert } : {})}>
-      <header className="masthead">
-        <div className="mast-mark" role="img" aria-label={catalogCert ? t(lang, "aria.mastMark", { cert: catalogCert.label }) : "Synapse"}><BrandMark size={26} /></div>
-        <div>
-          <h1>{catalogCert ? catalogCert.fullName : "Synapse"}</h1>
-          {catalogCert && (
-            <p className="mast-sub">
-              ISTQB {catalogCert.label} {catalogCert.version} · {ALL.length} {t(lang, "questionsCount")}
-            </p>
+      {!reentryOnboarding && (
+        <header className="masthead">
+          <div className="mast-mark" role="img" aria-label={catalogCert ? t(lang, "aria.mastMark", { cert: catalogCert.label }) : "Synapse"}><BrandMark size={26} /></div>
+          <div>
+            <h1>{catalogCert ? catalogCert.fullName : "Synapse"}</h1>
+            {catalogCert && (
+              <p className="mast-sub">
+                ISTQB {catalogCert.label} {catalogCert.version} · {ALL.length} {t(lang, "questionsCount")}
+              </p>
+            )}
+          </div>
+          {activeCert && (
+            <Link className="cert-indicator" to="/select" aria-label={t(lang, "changeCert")}>
+              {catalogCert.label}
+            </Link>
           )}
-        </div>
-        {activeCert && (
-          <Link className="cert-indicator" to="/select" aria-label={t(lang, "changeCert")}>
-            {catalogCert.label}
-          </Link>
-        )}
-        <button
-          className="btn ghost lang-toggle"
-          onClick={toggleLang}
-          aria-label={t(lang, lang === "pt" ? "langToggleToEn" : "langToggleToPt")}
-        >
-          {lang === "pt" ? "PT" : "EN"}
-        </button>
-        <button
-          className="btn ghost theme-toggle"
-          onClick={cycleTheme}
-          aria-label={t(lang, theme === "auto" ? "themeAuto" : theme === "light" ? "themeLight" : "themeDark")}
-        >
-          {theme === "auto" ? "🌗" : theme === "light" ? "☀️" : "🌙"}
-        </button>
-      </header>
+          <button
+            className="btn ghost lang-toggle"
+            onClick={toggleLang}
+            aria-label={t(lang, lang === "pt" ? "langToggleToEn" : "langToggleToPt")}
+          >
+            {lang === "pt" ? "PT" : "EN"}
+          </button>
+          <button
+            className="btn ghost theme-toggle"
+            onClick={cycleTheme}
+            aria-label={t(lang, theme === "auto" ? "themeAuto" : theme === "light" ? "themeLight" : "themeDark")}
+          >
+            {theme === "auto" ? "🌗" : theme === "light" ? "☀️" : "🌙"}
+          </button>
+        </header>
+      )}
 
       {showOnboarding ? (
         <Onboarding onDismiss={dismissOnboarding} lang={lang} />
@@ -271,7 +284,7 @@ export default function App() {
           <Route path="/:cert/stats" element={
             <CertGuard key={certId}>
               <TabNav lang={lang} />
-              <main role="tabpanel" id={`tabpanel-${certId}`} aria-labelledby={`tab-${certId}-stats`}><CertRouteStats progress={progress} setProgress={setProgress} lang={lang} /></main>
+              <main role="tabpanel" id={`tabpanel-${certId}`} aria-labelledby={`tab-${certId}-stats`}><CertRouteStats progress={progress} setProgress={setProgress} lang={lang} onReopenOnboarding={() => setReentryOnboarding(true)} /></main>
             </CertGuard>
           } />
 
@@ -279,10 +292,18 @@ export default function App() {
         </Routes>
       )}
 
-      <footer className="foot">
-        {t(lang, "footer")}
-        <span style={{marginLeft: '1rem', opacity: 0.5}}>v{__APP_VERSION__}</span>
-      </footer>
+      {!showOnboarding && reentryOnboarding && (
+        <div className="onboarding-overlay">
+          <Onboarding variant="reentry" onDismiss={closeReentryOnboarding} lang={lang} />
+        </div>
+      )}
+
+      {!reentryOnboarding && (
+        <footer className="foot">
+          {t(lang, "footer")}
+          <span style={{marginLeft: '1rem', opacity: 0.5}}>v{__APP_VERSION__}</span>
+        </footer>
+      )}
     </div>
   );
 }
@@ -319,7 +340,7 @@ function CertRouteSyllabus({ setQuizFilter, lang, progress }) {
   );
 }
 
-function CertRouteStats({ progress, setProgress, lang }) {
+function CertRouteStats({ progress, setProgress, lang, onReopenOnboarding }) {
   const { cert } = useParams();
   const navigate = useNavigate();
   return (
@@ -328,6 +349,7 @@ function CertRouteStats({ progress, setProgress, lang }) {
       setProgress={setProgress}
       lang={lang}
       onGoToQuiz={() => navigate(`/${cert}/${DEFAULT_SECTION}`)}
+      onReopenOnboarding={onReopenOnboarding}
     />
   );
 }

@@ -58,7 +58,7 @@ const ACHIEVEMENTS = {
   "bank-complete": { icon: "🏆", pt: "Banco completo", en: "Bank complete", ptDesc: "Completou a cobertura de todo o banco de questões do cert", enDesc: "Completed coverage of the entire cert's question bank" },
 };
 
-export default function Stats({ progress, setProgress, lang = "pt", onGoToQuiz }) {
+export default function Stats({ progress, setProgress, lang = "pt", onGoToQuiz, onReopenOnboarding = () => {} }) {
   const { cert: certId } = useParams();
   const bank = useMemo(() => getBank(certId), [certId]);
   const { cert, chapters, chapterName, coverageByChapter, META } = bank;
@@ -151,10 +151,7 @@ export default function Stats({ progress, setProgress, lang = "pt", onGoToQuiz }
         <button
           className="btn ghost"
           style={{ fontSize: "var(--fs-13)", padding: "4px 12px" }}
-          onClick={() => {
-            try { localStorage.removeItem("ctfl_onboarding_done"); } catch {}
-            window.location.reload();
-          }}
+          onClick={onReopenOnboarding}
         >
           {t(lang, "stats.howItWorks")}
         </button>

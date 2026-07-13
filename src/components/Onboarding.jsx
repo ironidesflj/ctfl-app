@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { t } from "../lib/ui-strings.js";
 
-export default function Onboarding({ onDismiss, lang = "pt" }) {
+export default function Onboarding({ onDismiss, lang = "pt", variant = "full" }) {
   const [openFaq, setOpenFaq] = useState(null);
   const [demoAnswer, setDemoAnswer] = useState(null);
 
@@ -32,6 +32,12 @@ export default function Onboarding({ onDismiss, lang = "pt" }) {
 
   return (
     <div className="onboarding">
+      {variant === "reentry" && (
+        <button className="btn ghost ob-close" onClick={onDismiss} aria-label={t(lang, "onboarding.close")}>✕</button>
+      )}
+
+      {variant === "full" && (
+        <>
       {/* 1. Hero */}
       <span className="ob-badge">{t(lang, "onboarding.badge")}</span>
 
@@ -114,6 +120,8 @@ export default function Onboarding({ onDismiss, lang = "pt" }) {
         </a>
         <span className="ob-future-note">{t(lang, "onboarding.socialFutureNote")}</span>
       </div>
+        </>
+      )}
 
       {/* 4.5. Entendendo suas métricas — Fase 2 */}
       <div className="ob-section">
@@ -162,33 +170,34 @@ export default function Onboarding({ onDismiss, lang = "pt" }) {
         </div>
       </div>
 
-      {/* 6. Sobre o autor */}
-      <div className="ob-author">
-        <h2 className="ob-section-title">{t(lang, "onboarding.authorTitle")}</h2>
-        <p className="ob-author-bio">{t(lang, "onboarding.authorBio")}</p>
-        <div className="ob-author-links">
-          <a
-            className="ob-author-link"
-            href="https://linkedin.com/in/ironjunior"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            in LinkedIn
-          </a>
-          <a
-            className="ob-author-link"
-            href="https://github.com/ironidesflj"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {"</>"} GitHub
-          </a>
+      {variant === "full" && (
+        <div className="ob-author">
+          <h2 className="ob-section-title">{t(lang, "onboarding.authorTitle")}</h2>
+          <p className="ob-author-bio">{t(lang, "onboarding.authorBio")}</p>
+          <div className="ob-author-links">
+            <a
+              className="ob-author-link"
+              href="https://linkedin.com/in/ironjunior"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              in LinkedIn
+            </a>
+            <a
+              className="ob-author-link"
+              href="https://github.com/ironidesflj"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {"</>"} GitHub
+            </a>
+          </div>
         </div>
-      </div>
+      )}
 
       {/* 7. CTA final */}
       <button className="btn primary ob-cta" onClick={onDismiss}>
-        {t(lang, "onboarding.ctaStartFinal")}
+        {variant === "reentry" ? t(lang, "onboarding.back") : t(lang, "onboarding.ctaStartFinal")}
       </button>
 
       <p className="ob-disclaimer">

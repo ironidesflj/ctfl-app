@@ -100,6 +100,8 @@ export const UI = {
       statFree: "Gratuito",
       ctaStart: "Escolher certificação →",
       ctaStartFinal: "Escolher minha certificação →",
+      close: "Fechar",
+      back: "Voltar",
 
       featuresTitle: "O que você vai encontrar",
       featureStudyTitle: "Quiz — modo Estudo",
@@ -264,6 +266,8 @@ export const UI = {
       statFree: "Free",
       ctaStart: "Choose your certification →",
       ctaStartFinal: "Choose my certification →",
+      close: "Close",
+      back: "Back",
 
       featuresTitle: "What you'll find",
       featureStudyTitle: "Quiz — Study mode",

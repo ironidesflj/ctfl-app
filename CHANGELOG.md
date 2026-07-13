@@ -2,9 +2,12 @@
 
 ### Unreleased
 
-Prontidão baseada em blueprint oficial de exame (Spec 2) + hierarquia do
-Stats e gamificação (Spec 1). 9 commits desde v3.9.0, ainda sem bump de
-versão — decisão de corte de release fica com o Iron.
+### v3.10.0 — 2026-07-13
+
+Prontidão baseada em blueprint oficial de exame (Spec 2), hierarquia do
+Stats e gamificação (Spec 1), fix de rótulos do radar, sync do banco de
+questões embutido no app e hardening de acessibilidade/i18n/persistência
+(Fase 3). 12 commits desde v3.9.0.
 
 - feat(readiness): **prontidão agora usa o blueprint oficial do exame**
   (`getReadinessV2`) em vez de fórmula estatística pura — exige cobertura
@@ -36,6 +39,29 @@ versão — decisão de corte de release fica com o Iron.
 - fix: teste de streak usava `toISOString()` (sempre UTC) em vez do
   timezone local que `getStreak()` realmente usa — falhava
   deterministicamente perto da meia-noite UTC.
+- fix(a11y): rótulos de eixo do radar (Stats) tinham colisão em 3
+  combinações cert/idioma (CTFL PT cap2≡cap3, CTFL EN cap4≡cap5, CTAL-TA
+  EN cap1≡cap3) — dois capítulos diferentes mostrando o mesmo texto no
+  gráfico. Campo `short` explícito por capítulo substitui o corte
+  automático da primeira palavra do nome. Guarda adicionada contra `NaN`
+  em `radarCoverage` quando um capítulo não tem questões no banco
+  (`cov.total===0`).
+- content: banco de questões embutido no app (`src/data/`) sincronizado
+  com o repo do banco pela primeira vez desde antes da Spec 2 — traz
+  `chapterWeights.ctfl` corrigido, `examBlueprint` (ausente até aqui, o
+  que fazia `getReadinessV2` cair sempre no fallback estatístico em
+  produção) e as reescritas de desalinhamento de letra da Spec 3. A
+  prontidão por blueprint só passa a funcionar de fato a partir desta
+  versão.
+- feat(a11y): hardening de acessibilidade, i18n e persistência (Fase 3) —
+  navegação por abas com ARIA completo (`tablist`/`tabpanel`, roving
+  `tabindex`, setas/Home/End pelo teclado), `aria-live` no feedback do
+  quiz (leitor de tela anuncia a explicação ao responder), `aria-label`
+  no logo do masthead, strings do Onboarding/Quiz movidas pro dicionário
+  de i18n (fim de condicionais `lang==="en"` inline), erros de
+  `localStorage` deixam de falhar silenciosamente, validação de import de
+  progresso mais estrita, banco de questões (2,5MB) separado em chunk
+  próprio no build.
 
 ### v3.9.0
 
