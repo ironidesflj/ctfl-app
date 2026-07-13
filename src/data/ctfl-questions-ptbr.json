@@ -16,11 +16,25 @@
     },
     "chapterWeights": {
       "1": 40,
-      "2": 25,
-      "3": 25,
+      "2": 30,
+      "3": 20,
       "4": 55,
       "5": 45,
       "6": 10
+    },
+    "examBlueprint": {
+      "source": "ISTQB Exam Structures & Rules tables",
+      "sourceVersion": "v1.18, 2026-05-27",
+      "totalQuestions": 40,
+      "passMarkPct": 65,
+      "chapters": {
+        "1": { "questions": 8,  "kLevels": { "K1": 2, "K2": 6, "K3": 0, "K4": 0 } },
+        "2": { "questions": 6,  "kLevels": { "K1": 2, "K2": 4, "K3": 0, "K4": 0 } },
+        "3": { "questions": 4,  "kLevels": { "K1": 2, "K2": 2, "K3": 0, "K4": 0 } },
+        "4": { "questions": 11, "kLevels": { "K1": 0, "K2": 6, "K3": 5, "K4": 0 } },
+        "5": { "questions": 9,  "kLevels": { "K1": 1, "K2": 5, "K3": 3, "K4": 0 } },
+        "6": { "questions": 2,  "kLevels": { "K1": 1, "K2": 1, "K3": 0, "K4": 0 } }
+      }
     },
     "domainNames": {
       "fund": "Fundamentos do Teste",
@@ -6051,7 +6065,7 @@
             "Testing and debugging are essentially the same activity, performed at different stages of the lifecycle, with no distinction of objectives",
             "Testing focuses, in general, on preventing defects from being introduced, while debugging focuses strictly on confirming that defects have been removed from the code"
           ],
-          "exp": "Testing and debugging are complementary but distinct activities. Testing aims to identify failures (observable deviations from expected behavior) caused by defects. Debugging is the developer activity that locates the root cause of those failures (the defects) and fixes them. Option A is incorrect because testing can be performed by various people (including developers), not solely by independent testers. Option C is incorrect because the two are different activities, not the same activity at different stages. Option D is incorrect because testing does not directly prevent defects — that is the role of reviews, coding standards, and other quality practices."
+          "exp": "Testing and debugging are complementary but distinct activities. Testing aims to identify failures (observable deviations from expected behavior) caused by defects. Debugging is the developer activity that locates the root cause of those failures (the defects) and fixes them. The option about independent testers in late phases is incorrect because testing can be performed by various people (including developers), not solely by independent testers. The option about testing and debugging as the same activity at different stages is incorrect because the two are different activities, not the same activity at different stages. The option about testing preventing defect introduction is incorrect because testing does not directly prevent defects — that is the role of reviews, coding standards, and other quality practices."
         },
         "pt": {
           "q": "Qual das seguintes afirmações descreve com maior precisão uma diferença chave entre teste e debugging?",
@@ -6061,7 +6075,7 @@
             "O teste e o debugging são essencialmente a mesma atividade, realizados em estágios diferentes do ciclo de vida, sem distinção de objetivos",
             "O teste foca, em geral, em prevenir a introdução de defeitos, enquanto o debugging foca em confirmar que os defeitos foram removidos do código"
           ],
-          "exp": "O teste e o debugging são atividades complementares mas distintas. O teste visa identificar falhas (desvios observáveis do comportamento esperado) causadas por defeitos. O debugging é a atividade do desenvolvedor que localiza a causa raiz daquelas falhas (os defeitos) e os corrige. A opção A está incorreta porque o teste pode ser realizado por diversas pessoas (incluindo desenvolvedores), não se restringindo a testadores independentes. A opção C está incorreta porque as duas são atividades diferentes, não a mesma atividade em estágios diferentes. A opção D está incorreta porque o teste não previne defeitos diretamente — esse é o papel das revisões, padrões de codificação e outras práticas de qualidade."
+          "exp": "O teste e o debugging são atividades complementares mas distintas. O teste visa identificar falhas (desvios observáveis do comportamento esperado) causadas por defeitos. O debugging é a atividade do desenvolvedor que localiza a causa raiz daquelas falhas (os defeitos) e os corrige. A opção sobre testadores independentes em fases tardias está incorreta porque o teste pode ser realizado por diversas pessoas (incluindo desenvolvedores), não se restringindo a testadores independentes. A opção sobre teste e debugging como mesma atividade em estágios diferentes está incorreta porque as duas são atividades diferentes, não a mesma atividade em estágios diferentes. A opção sobre teste prevenindo a introdução de defeitos está incorreta porque o teste não previne defeitos diretamente — esse é o papel das revisões, padrões de codificação e outras práticas de qualidade."
         }
       }
     },
@@ -6080,7 +6094,7 @@
             "(a) and (d) — running automated tests and writing new test cases",
             "(b) and (d) — reproducing the issue with a debugger and writing new test cases"
           ],
-          "exp": "Testing activities include running tests and writing test cases (activities (a) and (d)). Debugging activities include reproducing the issue with a debugger (b) and modifying source code to correct defects (c). Option C correctly groups the two testing activities. Option A groups two debugging activities. Option B mixes one testing and one debugging activity. Option D mixes one debugging and one testing activity."
+          "exp": "Testing activities include running tests and writing test cases (activities (a) and (d)). Debugging activities include reproducing the issue with a debugger (b) and modifying source code to correct defects (c). The option grouping (a) and (d) correctly groups the two testing activities. The option grouping (b) and (c) groups two debugging activities. The option grouping (a) and (c) mixes one testing and one debugging activity. The option grouping (b) and (d) mixes one debugging and one testing activity."
         },
         "pt": {
           "q": "Uma equipe está revisando suas atividades durante uma sprint. A equipe realizou as seguintes tarefas: (a) executar scripts de teste automatizados e analisar os resultados, (b) reproduzir um problema usando um depurador para percorrer o código, (c) modificar o código-fonte para corrigir um cálculo errado, e (d) escrever novos casos de teste com base em um requisito. Qual par identifica corretamente as atividades que pertencem ao teste e não ao debugging?",
@@ -6090,7 +6104,7 @@
             "(a) e (d) — executar testes automatizados e escrever novos casos de teste",
             "(b) e (d) — reproduzir o problema com um depurador e escrever novos casos de teste"
           ],
-          "exp": "As atividades de teste incluem executar testes e escrever casos de teste (atividades (a) e (d)). As atividades de debugging incluem reproduzir o problema com um depurador (b) e modificar o código-fonte para corrigir defeitos (c). A opção C agrupa corretamente as duas atividades de teste. A opção A agrupa duas atividades de debugging. A opção B mistura uma atividade de teste com uma de debugging. A opção D mistura uma atividade de debugging com uma de teste."
+          "exp": "As atividades de teste incluem executar testes e escrever casos de teste (atividades (a) e (d)). As atividades de debugging incluem reproduzir o problema com um depurador (b) e modificar o código-fonte para corrigir defeitos (c). A opção que agrupa (a) e (d) agrupa corretamente as duas atividades de teste. A opção que agrupa (b) e (c) agrupa duas atividades de debugging. A opção que agrupa (a) e (c) mistura uma atividade de teste com uma de debugging. A opção que agrupa (b) e (d) mistura uma atividade de debugging com uma de teste."
         }
       }
     },
@@ -6109,7 +6123,7 @@
             "Verifying that all specified requirements have been correctly implemented",
             "Guaranteeing that the software is free of all defects before release"
           ],
-          "exp": "The first three options are all recognized testing objectives in the ISTQB syllabus: evaluating work products, causing failures and finding defects, and verifying requirements implementation. Option D is NOT a testing objective because it is impossible to achieve — testing can show the presence of defects but cannot prove their absence (Principle #1). No amount of testing can guarantee that a system is free of all defects, so this cannot be a typical objective of testing."
+          "exp": "The three options about evaluating work products, causing failures and finding defects, and verifying requirements implementation are all recognized testing objectives in the ISTQB syllabus. The option about guaranteeing the software is free of all defects before release is NOT a testing objective because it is impossible to achieve — testing can show the presence of defects but cannot prove their absence (Principle #1). No amount of testing can guarantee that a system is free of all defects, so this cannot be a typical objective of testing."
         },
         "pt": {
           "q": "Qual das seguintes NÃO é um objetivo típico do teste de software conforme definido no syllabus do ISTQB Foundation Level?",
@@ -6119,7 +6133,7 @@
             "Verificar se todos os requisitos especificados foram corretamente implementados",
             "Garantir que o software está livre de todos os defeitos antes do release"
           ],
-          "exp": "As três primeiras opções são todos objetivos reconhecidos do teste no syllabus do ISTQB: avaliar produtos de trabalho, causar falhas e encontrar defeitos, e verificar a implementação de requisitos. A opção D NÃO é um objetivo de teste porque é impossível de alcançar — o teste pode mostrar a presença de defeitos mas não pode provar a sua ausência (Princípio #1). Nenhuma quantidade de teste pode garantir que um sistema está livre de todos os defeitos, então isso não pode ser um objetivo típico do teste."
+          "exp": "As três opções sobre avaliar produtos de trabalho, causar falhas e encontrar defeitos, e verificar a implementação de requisitos são objetivos reconhecidos do teste no syllabus do ISTQB. A opção sobre garantir software livre de todos os defeitos antes do release NÃO é um objetivo de teste porque é impossível de alcançar — o teste pode mostrar a presença de defeitos mas não pode provar a sua ausência (Princípio #1). Nenhuma quantidade de teste pode garantir que um sistema está livre de todos os defeitos, então isso não pode ser um objetivo típico do teste."
         }
       }
     },
@@ -6283,7 +6297,7 @@
             "Project B should have more rigorous testing than Project A because more users access it internally, regardless of the impact of failures",
             "The test process depends primarily on the development methodology used (Agile vs Waterfall), with little regard for the risk or criticality of the operational system"
           ],
-          "exp": "The test process should adapt to the project context, including risk, criticality, complexity, and constraints. Project A (life-critical) requires more rigorous testing, formal techniques, greater test independence, and more comprehensive documentation due to the potential for patient harm. Project B (low-impact internal tool) can use a lighter test process because defects have minor consequences. Option A wrongly enforces uniformity; Option C wrongly prioritizes user count over criticality; Option D wrongly reduces context primarily to methodology."
+          "exp": "The test process should adapt to the project context, including risk, criticality, complexity, and constraints. Project A (life-critical) requires more rigorous testing, formal techniques, greater test independence, and more comprehensive documentation due to the potential for patient harm. Project B (low-impact internal tool) can use a lighter test process because defects have minor consequences. The option about mandatorily uniform test process wrongly enforces uniformity; the option about prioritizing Project B based on internal user count wrongly prioritizes user count over criticality; the option about the test process depending primarily on development methodology (Agile vs Waterfall) wrongly reduces context primarily to methodology."
         },
         "pt": {
           "q": "Uma empresa está iniciando dois projetos simultaneamente. O Projeto A é um dispositivo médico de suporte de vida onde falhas de software podem causar dano ao paciente. O Projeto B é um site interno de diretório de funcionários onde defeitos causam apenas pequeno incômodo. Qual afirmação melhor reflete como o contexto de teste deve influenciar o processo de teste para esses dois projetos?",
@@ -6293,7 +6307,7 @@
             "O Projeto B deve ter teste mais rigoroso do que o Projeto A porque mais usuários o acessam internamente, independentemente do impacto das falhas",
             "O processo de teste depende principalmente da metodologia de desenvolvimento usada (Agile vs Waterfall), com pouca consideração pelo risco ou criticidade do sistema em operação"
           ],
-          "exp": "O processo de teste deve se adaptar ao contexto do projeto, incluindo risco, criticidade, complexidade e restrições. O Projeto A (suporte de vida) requer teste mais rigoroso, técnicas formais, maior independência de teste e documentação mais abrangente devido ao potencial de dano ao paciente. O Projeto B (ferramenta interna de baixo impacto) pode usar um processo de teste mais leve porque defeitos têm consequências menores. A opção A impõe uniformidade erroneamente; a opção C prioriza erroneamente o número de usuários sobre a criticidade; a opção D reduz erroneamente o contexto principalmente à metodologia."
+          "exp": "O processo de teste deve se adaptar ao contexto do projeto, incluindo risco, criticidade, complexidade e restrições. O Projeto A (suporte de vida) requer teste mais rigoroso, técnicas formais, maior independência de teste e documentação mais abrangente devido ao potencial de dano ao paciente. O Projeto B (ferramenta interna de baixo impacto) pode usar um processo de teste mais leve porque defeitos têm consequências menores. A opção sobre uniformidade obrigatória do processo de teste impõe uniformidade erroneamente; a opção sobre priorizar o Projeto B pelo número de usuários internos prioriza erroneamente o número de usuários sobre a criticidade; a opção sobre o processo depender principalmente da metodologia de desenvolvimento (Agile vs Waterfall) reduz erroneamente o contexto principalmente à metodologia."
         }
       }
     },
@@ -6341,7 +6355,7 @@
             "The test team should skip regression testing because the system has been reliable for two years, considering that, in general, changes to stable databases rarely cause side effects",
             "The test team should perform impact analysis to determine which parts of the system may be affected by the change, then focus regression testing on those areas while also confirming the specific fix"
           ],
-          "exp": "Maintenance activities influence the test process by triggering impact analysis to determine which parts of the system may be affected by the change. The test team should then perform targeted regression testing on those affected areas, plus confirmation testing on the specific fix. Option A is incorrect because full regression is not always required — impact analysis determines scope. Option B is incorrect because testing the patch itself misses dependent functionality that may have been broken by the change. Option C is incorrect because skipping regression ignores the risk of unintended side effects. This question addresses the PROCESS response (impact analysis + targeted regression + confirmation), distinct from the question of which TYPE of testing applies (maintenance testing, covered in ch2-27)."
+          "exp": "Maintenance activities influence the test process by triggering impact analysis to determine which parts of the system may be affected by the change. The test team should then perform targeted regression testing on those affected areas, plus confirmation testing on the specific fix. The option about re-executing the entire original system test suite is incorrect because full regression is not always required — impact analysis determines scope. The option about testing only the database patch itself is incorrect because testing the patch itself misses dependent functionality that may have been broken by the change. The option about simply skipping regression testing is incorrect because skipping regression ignores the risk of unintended side effects. This question addresses the PROCESS response (impact analysis + targeted regression + confirmation), distinct from the question of which TYPE of testing applies (maintenance testing, covered in ch2-27)."
         },
         "pt": {
           "q": "Um sistema em produção tem operado de forma confiável há dois anos. Um fornecedor libera um patch de segurança para o banco de dados subjacente, e a equipe de operações o aplica durante uma janela de manutenção agendada. Pouco depois, os usuários reportam comportamento inesperado. A equipe de teste é solicitada a investigar e verificar a correção. Como atividades de manutenção como essa devem influenciar mais apropriadamente o processo de teste?",
@@ -6351,7 +6365,7 @@
             "A equipe de teste deveria simplesmente pular o teste de regressão porque o sistema tem sido confiável por dois anos, considerando que, em geral, mudanças em bancos de dados estáveis raramente causam efeitos colaterais relevantes",
             "A equipe de teste deve realizar análise de impacto para determinar quais partes do sistema podem ser afetadas pela mudança, então focar o teste de regressão naquelas áreas enquanto também confirma a correção específica"
           ],
-          "exp": "Atividades de manutenção influenciam o processo de teste ao disparar análise de impacto para determinar quais partes do sistema podem ser afetadas pela mudança. A equipe de teste deve então realizar teste de regressão direcionado àquelas áreas afetadas, mais teste de confirmação na correção específica. A opção A está incorreta porque regressão completa nem sempre é necessária — a análise de impacto determina o escopo. A opção B está incorreta porque testar o patch em si perde funcionalidade dependente que pode ter sido quebrada pela mudança. A opção C está incorreta porque pular a regressão ignora o risco de efeitos colaterais não intencionais. Esta questão endereça a resposta do PROCESSO (análise de impacto + regressão direcionada + confirmação), distinta da questão de qual TIPO de teste se aplica (teste de manutenção, coberto em ch2-27)."
+          "exp": "Atividades de manutenção influenciam o processo de teste ao disparar análise de impacto para determinar quais partes do sistema podem ser afetadas pela mudança. A equipe de teste deve então realizar teste de regressão direcionado àquelas áreas afetadas, mais teste de confirmação na correção específica. A opção sobre re-executar toda a suíte original de teste de sistema está incorreta porque regressão completa nem sempre é necessária — a análise de impacto determina o escopo. A opção sobre testar apenas o patch do banco de dados está incorreta porque testar o patch em si perde funcionalidade dependente que pode ter sido quebrada pela mudança. A opção sobre pular o teste de regressão está incorreta porque pular a regressão ignora o risco de efeitos colaterais não intencionais. Esta questão endereça a resposta do PROCESSO (análise de impacto + regressão direcionada + confirmação), distinta da questão de qual TIPO de teste se aplica (teste de manutenção, coberto em ch2-27)."
         }
       }
     },
@@ -6370,7 +6384,7 @@
             "The number of test cases in the regression suite, which directly influences execution time and the global coverage of automated tests",
             "The programming language used by the development team to implement the software, affecting coding style and static analysis tools"
           ],
-          "exp": "The quality of communication and the level of trust between testers and developers is a recognized psychological factor that influences testing success. The ISTQB syllabus (§1.5) explicitly identifies communication, the tester-developer relationship, and trust as psychological factors that affect how test results and defect reports are received and acted upon. The other options are not psychological factors: Option B is a tool/technical choice, Option C is a quantitative metric, and Option D is a technical characteristic of the implementation."
+          "exp": "The quality of communication and the level of trust between testers and developers is a recognized psychological factor that influences testing success. The ISTQB syllabus (§1.5) explicitly identifies communication, the tester-developer relationship, and trust as psychological factors that affect how test results and defect reports are received and acted upon. The other options are not psychological factors: the option about test management tool is a tool/technical choice, the option about number of test cases in the regression suite is a quantitative metric, and the option about programming language used by the development team is a technical characteristic of the implementation."
         },
         "pt": {
           "q": "Qual dos seguintes é um fator psicológico reconhecido que pode influenciar o sucesso das atividades de teste dentro de uma equipe?",
@@ -6380,7 +6394,7 @@
             "O número de casos de teste presentes na suíte de regressão, que influencia diretamente o tempo de execução e a cobertura global dos testes automatizados",
             "A linguagem de programação específica usada pela equipe de desenvolvimento para implementar o software, afetando o estilo de codificação e as ferramentas de análise estática disponíveis"
           ],
-          "exp": "A qualidade da comunicação e o nível de confiança entre testadores e desenvolvedores é um fator psicológico reconhecido que influencia o sucesso do teste. O syllabus do ISTQB (§1.5) identifica explicitamente comunicação, a relação testador-desenvolvedor e confiança como fatores psicológicos que afetam como resultados de teste e relatórios de defeito são recebidos e tratados. As outras opções não são fatores psicológicos: a opção B é uma escolha técnica/ferramenta, a opção C é uma métrica quantitativa, e a opção D é uma característica técnica da implementação."
+          "exp": "A qualidade da comunicação e o nível de confiança entre testadores e desenvolvedores é um fator psicológico reconhecido que influencia o sucesso do teste. O syllabus do ISTQB (§1.5) identifica explicitamente comunicação, a relação testador-desenvolvedor e confiança como fatores psicológicos que afetam como resultados de teste e relatórios de defeito são recebidos e tratados. As outras opções não são fatores psicológicos: a opção sobre ferramenta de gerenciamento de teste é uma escolha técnica/ferramenta, a opção sobre número de casos de teste na suíte de regressão é uma métrica quantitativa, e a opção sobre linguagem de programação usada pela equipe é uma característica técnica da implementação."
         }
       }
     },
@@ -6399,7 +6413,7 @@
             "The developer is required by ISTQB standards to refuse testing their own code under typical circumstances, even when no other tester is available on the project",
             "The developer's mindset is, in general, identical to a tester's mindset, so no special adjustment is needed when switching between building and verifying"
           ],
-          "exp": "The ISTQB syllabus (§1.5) explains that the mindset used while testing and reviewing is different from the mindset used while analyzing and developing. A developer's constructive mindset, focused on building the code to work as intended, makes it harder to critically challenge the code and find where it might fail. This is the main mindset challenge. Option A is incorrect because developers have the technical skills; the issue is mindset, not skill. Option C is incorrect because ISTQB does not forbid self-testing; it notes the challenge. Option D is incorrect because the mindsets differ, requiring an active adjustment."
+          "exp": "The ISTQB syllabus (§1.5) explains that the mindset used while testing and reviewing is different from the mindset used while analyzing and developing. A developer's constructive mindset, focused on building the code to work as intended, makes it harder to critically challenge the code and find where it might fail. This is the main mindset challenge. The option about the developer lacking technical skills is incorrect because developers have the technical skills; the issue is mindset, not skill. The option about ISTQB prohibiting self-testing is incorrect because ISTQB does not forbid self-testing; it notes the challenge. The option about identical mindsets between developer and tester is incorrect because the mindsets differ, requiring an active adjustment."
         },
         "pt": {
           "q": "Um desenvolvedor que recentemente escreveu um módulo complexo é solicitado a testá-lo antes de entregá-lo à equipe de teste. Qual afirmação melhor descreve o principal desafio de mindset que o desenvolvedor enfrenta ao testar seu próprio código?",
@@ -6409,7 +6423,7 @@
             "O desenvolvedor é exigido pelos padrões do ISTQB a recusar testar seu próprio código sob circunstâncias típicas, mesmo quando não há outro testador disponível no projeto",
             "O mindset do desenvolvedor é, em geral, idêntico ao mindset de um testador, então nenhum ajuste especial é necessário ao alternar entre construção e verificação"
           ],
-          "exp": "O syllabus do ISTQB (§1.5) explica que o mindset usado enquanto testa e revisa é diferente do mindset usado enquanto analisa e desenvolve. O mindset construtivo do desenvolvedor, focado em construir o código para funcionar como pretendido, torna mais difícil desafiar criticamente o código e encontrar onde ele pode falhar. Este é o principal desafio de mindset. A opção A está incorreta porque desenvolvedores têm as habilidades técnicas; a questão é mindset, não habilidade. A opção C está incorreta porque o ISTQB não proíbe auto-teste; ele nota o desafio. A opção D está incorreta porque os mindsets diferem, exigindo um ajuste ativo."
+          "exp": "O syllabus do ISTQB (§1.5) explica que o mindset usado enquanto testa e revisa é diferente do mindset usado enquanto analisa e desenvolve. O mindset construtivo do desenvolvedor, focado em construir o código para funcionar como pretendido, torna mais difícil desafiar criticamente o código e encontrar onde ele pode falhar. Este é o principal desafio de mindset. A opção sobre falta de habilidades técnicas do desenvolvedor está incorreta porque desenvolvedores têm as habilidades técnicas; a questão é mindset, não habilidade. A opção sobre o ISTQB proibir auto-teste está incorreta porque o ISTQB não proíbe auto-teste; ele nota o desafio. A opção sobre mindsets idênticos entre desenvolvedor e testador está incorreta porque os mindsets diferem, exigindo um ajuste ativo."
         }
       }
     },
@@ -6834,7 +6848,7 @@
             "O teste estático pode, em geral, provar que um produto de trabalho está livre de defeitos antes da execução",
             "O teste estático pode identificar certos defeitos mais cedo no ciclo de vida, antes que código executável exista"
           ],
-          "exp": "O teste estático examina produtos de trabalho sem executar o código. Isso significa que pode encontrar defeitos em documentos (requisitos, designs) e no código-fonte antes de qualquer executável existir — mais cedo no ciclo de vida do que o teste dinâmico, que requer código executável. As opções A e C descrevem capacidades do teste dinâmico (comportamento em tempo de execução e medição não-funcional). A opção D contradiz o princípio de teste de que o teste não pode provar a ausência de defeitos."
+          "exp": "O teste estático examina produtos de trabalho sem executar o código. Isso significa que pode encontrar defeitos em documentos (requisitos, designs) e no código-fonte antes de qualquer executável existir — mais cedo no ciclo de vida do que o teste dinâmico, que requer código executável. As opções sobre teste estático detectando defeitos em tempo de execução e teste estático medindo características não-funcionais descrevem capacidades do teste dinâmico (comportamento em tempo de execução e medição não-funcional). A opção sobre teste estático provando que um produto de trabalho está livre de defeitos contradiz o princípio de teste de que o teste não pode provar a ausência de defeitos."
         },
         "en": {
           "q": "Which of the following is a recognized advantage of static testing compared to dynamic testing?",
@@ -6844,7 +6858,7 @@
             "Static testing can, in general, prove that a work product is free of defects before execution",
             "Static testing can identify certain defects earlier in the lifecycle, before executable code exists"
           ],
-          "exp": "Static testing examines work products without executing the code. This means it can find defects in documents (requirements, designs) and in source code before any executable exists — earlier in the lifecycle than dynamic testing, which requires runnable code. Options A and C describe capabilities of dynamic testing (runtime behavior and non-functional measurement). Option D contradicts the testing principle that testing cannot prove the absence of defects."
+          "exp": "Static testing examines work products without executing the code. This means it can find defects in documents (requirements, designs) and in source code before any executable exists — earlier in the lifecycle than dynamic testing, which requires runnable code. The options about static testing detecting runtime defects and static testing measuring non-functional characteristics describe capabilities of dynamic testing (runtime behavior and non-functional measurement). The option about static testing proving that a work product is free of defects contradicts the testing principle that testing cannot prove the absence of defects."
         }
       }
     },
@@ -6921,7 +6935,7 @@
             "Permite que as partes interessadas verifiquem se seus requisitos foram compreendidos corretamente antes que esforço significativo de implementação seja gasto",
             "Reduz o custo total do projeto a praticamente zero ao evitar retrabalho de defeitos em fases posteriores do ciclo de vida"
           ],
-          "exp": "Feedback cedo das partes interessadas permite que elas confirmem que os requisitos e decisões de design correspondem às suas expectativas antes que esforço substancial de implementação seja investido, evitando retrabalho custoso mais tarde. A opção A é falsa (nenhum feedback pode garantir ausência de defeitos — isso contradiz o princípio de teste de que teste não pode provar ausência de defeitos). A opção B é falsa (feedback complementa mas não substitui o teste). A opção D é falsa (mesmo que reduza retrabalho, o custo não pode ser reduzido a praticamente zero — sempre há custos fixos e variáveis no projeto)."
+          "exp": "Feedback cedo das partes interessadas permite que elas confirmem que os requisitos e decisões de design correspondem às suas expectativas antes que esforço substancial de implementação seja investido, evitando retrabalho custoso mais tarde. A opção sobre garantia de ausência de defeitos em produção é falsa (nenhum feedback pode garantir ausência de defeitos — isso contradiz o princípio de teste de que teste não pode provar ausência de defeitos). A opção sobre eliminação da necessidade de teste é falsa (feedback complementa mas não substitui o teste). A opção sobre redução do custo a praticamente zero é falsa (mesmo que reduza retrabalho, o custo não pode ser reduzido a praticamente zero — sempre há custos fixos e variáveis no projeto)."
         },
         "en": {
           "q": "Which of the following is a recognized benefit of obtaining stakeholder feedback EARLY in the development lifecycle?",
@@ -6931,7 +6945,7 @@
             "It allows stakeholders to verify that their requirements were understood correctly before significant implementation effort is spent",
             "It reduces the total project cost to nearly zero by avoiding defect rework in later phases of the lifecycle"
           ],
-          "exp": "Early stakeholder feedback allows stakeholders to confirm that requirements and design decisions match their expectations before substantial implementation effort is invested, avoiding costly rework later. Option A is false (no feedback can guarantee zero defects — this contradicts the testing principle that testing cannot prove absence of defects). Option B is false (feedback complements but does not replace testing). Option D is false (even though it may reduce rework, cost cannot be reduced to nearly zero — projects always have fixed and variable costs)."
+          "exp": "Early stakeholder feedback allows stakeholders to confirm that requirements and design decisions match their expectations before substantial implementation effort is invested, avoiding costly rework later. The option about guaranteeing the system has no defects in production is false (no feedback can guarantee zero defects — this contradicts the testing principle that testing cannot prove absence of defects). The option about eliminating the need for testing is false (feedback complements but does not replace testing). The option about reducing total project cost to nearly zero is false (even though it may reduce rework, cost cannot be reduced to nearly zero — projects always have fixed and variable costs)."
         }
       }
     },
@@ -6950,7 +6964,7 @@
             "Tende a garantir que o projeto seja concluído antes do cronograma ao evitar discussões prolongadas com as partes interessadas",
             "Permite que o time detecte e corrija mal-entendidos e mudanças de direção incrementalmente, reduzindo o risco de grande retrabalho no final do ciclo"
           ],
-          "exp": "Feedback frequente fornece oportunidades regulares de correção de rumo: mal-entendidos e mudanças de prioridade são detectados em pequenos incrementos em vez de se acumularem em grande retrabalho no final do ciclo. Este é um benefício primário do feedback frequente (vs. apenas no final do ciclo). A opção A é falsa (feedback não elimina o teste estático, que encontra tipos diferentes de defeitos). A opção B é falsa (feedback não remove a necessidade de gerenciamento de teste). A opção C é falsa (feedback melhora o alinhamento e reduz o risco, mas não garante — nem mesmo tende a garantir de forma confiável — aceleração do cronograma)."
+          "exp": "Feedback frequente fornece oportunidades regulares de correção de rumo: mal-entendidos e mudanças de prioridade são detectados em pequenos incrementos em vez de se acumularem em grande retrabalho no final do ciclo. Este é um benefício primário do feedback frequente (vs. apenas no final do ciclo). A opção sobre pular completamente o teste estático é falsa (feedback não elimina o teste estático, que encontra tipos diferentes de defeitos). A opção sobre remover a necessidade de um gerente de teste é falsa (feedback não remove a necessidade de gerenciamento de teste). A opção sobre garantia de conclusão antes do cronograma é falsa (feedback melhora o alinhamento e reduz o risco, mas não garante — nem mesmo tende a garantir de forma confiável — aceleração do cronograma)."
         },
         "en": {
           "q": "A development team obtains stakeholder feedback every two weeks instead of only at the end of each release. Which of the following is the MOST direct benefit of this FREQUENT feedback?",
@@ -6960,7 +6974,7 @@
             "It tends to ensure the project completes ahead of schedule by avoiding prolonged stakeholder discussions",
             "It enables the team to detect and correct misunderstandings and direction changes incrementally, reducing the risk of large late-cycle rework"
           ],
-          "exp": "Frequent feedback provides regular course-correction opportunities: misunderstandings and changing priorities are detected in small increments rather than accumulating into large late-cycle rework. This is a primary benefit of frequent (vs. only end-of-cycle) feedback. Option A is false (feedback does not eliminate static testing, which finds different defect types). Option B is false (feedback does not remove the need for test management). Option C is false (feedback improves alignment and reduces risk, but does not guarantee — nor even tend to reliably guarantee — schedule acceleration)."
+          "exp": "Frequent feedback provides regular course-correction opportunities: misunderstandings and changing priorities are detected in small increments rather than accumulating into large late-cycle rework. This is a primary benefit of frequent (vs. only end-of-cycle) feedback. The option about completely skipping static testing is false (feedback does not eliminate static testing, which finds different defect types). The option about removing the need for a test manager is false (feedback does not remove the need for test management). The option about guaranteeing the project completes ahead of schedule is false (feedback improves alignment and reduces risk, but does not guarantee — nor even tend to reliably guarantee — schedule acceleration)."
         }
       }
     },
@@ -7066,7 +7080,7 @@
             "O teste dinâmico pode ser aplicado diretamente a documentos de requisitos e especificações de design sem necessidade de executar o sistema em hipótese alguma durante o ciclo de desenvolvimento",
             "O teste estático e o teste dinâmico são complementares: o teste estático pode encontrar defeitos em produtos de trabalho sem execução, enquanto o teste dinâmico pode encontrar defeitos que só se manifestam durante a execução"
           ],
-          "exp": "O teste estático e o teste dinâmico são complementares. O teste estático examina produtos de trabalho sem executá-los (encontrando defeitos como requisitos ausentes, violações de padrões de codificação, ambiguidades). O teste dinâmico executa o código (encontrando defeitos de tempo de execução como problemas de desempenho, bugs de concorrência, cálculos incorretos). A opção A é falsa — eles encontram tipos diferentes de defeitos, então ambos são necessários. A opção B é falsa — o teste estático não pode encontrar defeitos de execução em tempo de execução; esse é o domínio do teste dinâmico. A opção C é falsa — o teste dinâmico requer execução, então não pode ser aplicado a documentos."
+          "exp": "O teste estático e o teste dinâmico são complementares. O teste estático examina produtos de trabalho sem executá-los (encontrando defeitos como requisitos ausentes, violações de padrões de codificação, ambiguidades). O teste dinâmico executa o código (encontrando defeitos de tempo de execução como problemas de desempenho, bugs de concorrência, cálculos incorretos). A opção sobre teste estático e dinâmico encontrando os mesmos tipos de defeitos é falsa — eles encontram tipos diferentes de defeitos, então ambos são necessários. A opção sobre teste estático encontrando defeitos de tempo de execução é falsa — o teste estático não pode encontrar defeitos de execução em tempo de execução; esse é o domínio do teste dinâmico. A opção sobre teste dinâmico aplicado diretamente a documentos é falsa — o teste dinâmico requer execução, então não pode ser aplicado a documentos."
         },
         "en": {
           "q": "Which of the following statements CORRECTLY compares static testing and dynamic testing?",
@@ -7076,7 +7090,7 @@
             "Dynamic testing can be applied directly to requirements documents and design specifications without executing the system in any circumstance during the development cycle",
             "Static testing and dynamic testing are complementary: static testing can find defects in work products without execution, while dynamic testing can find defects that only manifest during execution"
           ],
-          "exp": "Static and dynamic testing are complementary. Static testing examines work products without executing them (finding defects like missing requirements, coding standard violations, ambiguities). Dynamic testing executes the code (finding runtime defects like performance issues, concurrency bugs, incorrect calculations). Option A is false — they find different defect types, so both are needed. Option B is false — static testing cannot find runtime execution defects; that is dynamic testing's domain. Option C is false — dynamic testing requires execution, so it cannot be applied to documents."
+          "exp": "Static and dynamic testing are complementary. Static testing examines work products without executing them (finding defects like missing requirements, coding standard violations, ambiguities). Dynamic testing executes the code (finding runtime defects like performance issues, concurrency bugs, incorrect calculations). The option about static and dynamic testing finding the same types of defects is false — they find different defect types, so both are needed. The option about static testing finding runtime defects is false — static testing cannot find runtime execution defects; that is dynamic testing's domain. The option about dynamic testing applied directly to documents is false — dynamic testing requires execution, so it cannot be applied to documents."
         }
       }
     },
@@ -7182,7 +7196,7 @@
             "0, 25, 50, -1, 51",
             "0, 1, 49, 50, -1, 51"
           ],
-          "exp": "O particionamento por equivalência identifica três partições para este campo: válida (inteiros de 0 a 50), inválida baixa (abaixo de 0) e inválida alta (acima de 50). A cobertura mínima requer um representante de cada partição (3 valores no total). A opção A (-1, 25, 51) cobre as três partições com o menor número de valores: -1 representa a partição inválida baixa, 25 representa a partição válida, e 51 representa a partição inválida alta. A opção B cobre apenas a partição válida. As opções C e D incluem valores extras da partição válida (0 e 50 ainda estão dentro da partição válida, não são partições separadas em EP) e não representam cobertura mínima."
+          "exp": "O particionamento por equivalência identifica três partições para este campo: válida (inteiros de 0 a 50), inválida baixa (abaixo de 0) e inválida alta (acima de 50). A cobertura mínima requer um representante de cada partição (3 valores no total). A opção com os valores (-1, 25, 51) cobre as três partições com o menor número de valores: -1 representa a partição inválida baixa, 25 representa a partição válida, e 51 representa a partição inválida alta. A opção com os valores (0, 50) cobre apenas a partição válida. As opções com os valores (0, 25, 50, -1, 51) e (0, 1, 49, 50, -1, 51) incluem valores extras da partição válida (0 e 50 ainda estão dentro da partição válida, não são partições separadas em EP) e não representam cobertura mínima."
         },
         "en": {
           "q": "A web form has a \"Discount Percentage\" field that accepts integer values from 0 to 50, inclusive. Values below 0 or above 50 are rejected with an error message. Using equivalence partitioning, which set of test values provides minimum coverage of all identified partitions?",
@@ -7192,7 +7206,7 @@
             "0, 25, 50, -1, 51",
             "0, 1, 49, 50, -1, 51"
           ],
-          "exp": "Equivalence partitioning identifies three partitions for this field: valid (integers 0-50), invalid low (below 0), and invalid high (above 50). Minimum coverage requires one representative from each partition (3 values total). Option A (-1, 25, 51) covers all three partitions with the fewest values: -1 represents the invalid-low partition, 25 represents the valid partition, and 51 represents the invalid-high partition. Option B covers only the valid partition. Options C and D include extra values from the valid partition (0 and 50 are still within the valid partition, not separate partitions in EP) and do not represent minimum coverage."
+          "exp": "Equivalence partitioning identifies three partitions for this field: valid (integers 0-50), invalid low (below 0), and invalid high (above 50). Minimum coverage requires one representative from each partition (3 values total). The option with the values (-1, 25, 51) covers all three partitions with the fewest values: -1 represents the invalid-low partition, 25 represents the valid partition, and 51 represents the invalid-high partition. The option with the values (0, 50) covers only the valid partition. The options with the values (0, 25, 50, -1, 51) and (0, 1, 49, 50, -1, 51) include extra values from the valid partition (0 and 50 are still within the valid partition, not separate partitions in EP) and do not represent minimum coverage."
         }
       }
     },
@@ -7211,7 +7225,7 @@
             "10 e 11",
             "9, 10 e 11"
           ],
-          "exp": "O limite entre as duas partições (frete grátis para >=10 itens, frete pago para <10 itens) está entre 9 e 10. A técnica de BVA de 2 valores seleciona os valores imediatamente em cada lado do limite: 9 (o valor mais alto na partição \"paga\") e 10 (o valor mais baixo na partição \"grátis\"). A opção B usa corretamente esses dois valores. A opção C testa apenas valores no limite ou acima dele, perdendo o lado \"abaixo\". A opção D usa três valores, o que corresponde à técnica de BVA de 3 valores, não de 2. A opção A inclui valores extremos irrelevantes e não segue BVA."
+          "exp": "O limite entre as duas partições (frete grátis para >=10 itens, frete pago para <10 itens) está entre 9 e 10. A técnica de BVA de 2 valores seleciona os valores imediatamente em cada lado do limite: 9 (o valor mais alto na partição 'paga') e 10 (o valor mais baixo na partição 'grátis'). A opção com os valores (9 e 10) usa corretamente esses dois valores. A opção com os valores (10 e 11) testa apenas valores no limite ou acima dele, perdendo o lado 'abaixo'. A opção com os valores (9, 10 e 11) usa três valores, o que corresponde à técnica de BVA de 3 valores, não de 2. A opção com os valores (0, 9, 10 e 100) inclui valores extremos irrelevantes e não segue BVA."
         },
         "en": {
           "q": "An online store offers free shipping when a customer orders 10 or more items. For orders of fewer than 10 items, a flat shipping fee is charged. Using the 2-value boundary value analysis technique, which test values should be selected for the boundary between free and paid shipping?",
@@ -7221,7 +7235,7 @@
             "10 and 11",
             "9, 10, and 11"
           ],
-          "exp": "The boundary between the two partitions (free shipping for >=10 items, paid shipping for <10 items) lies between 9 and 10. The 2-value BVA technique selects the values immediately on either side of the boundary: 9 (the highest value in the \"paid\" partition) and 10 (the lowest value in the \"free\" partition). Option B correctly uses these two values. Option C tests only values at or above the boundary, missing the \"below\" side. Option D uses three values, which corresponds to the 3-value BVA technique, not 2-value. Option A includes irrelevant extreme values and does not follow BVA."
+          "exp": "The boundary between the two partitions (free shipping for >=10 items, paid shipping for <10 items) lies between 9 and 10. The 2-value BVA technique selects the values immediately on either side of the boundary: 9 (the highest value in the 'paid' partition) and 10 (the lowest value in the 'free' partition). The option with the values (9 and 10) correctly uses these two values. The option with the values (10 and 11) tests only values at or above the boundary, missing the 'below' side. The option with the values (9, 10, and 11) uses three values, which corresponds to the 3-value BVA technique, not 2-value. The option with the values (0, 9, 10, and 100) includes irrelevant extreme values and does not follow BVA."
         }
       }
     },
@@ -7327,7 +7341,7 @@
             "Casos de teste são desenhados com base na experiência pessoal do testador com sistemas similares, frequentemente de domínio comparável",
             "Casos de teste são desenhados com base na especificação do comportamento externo do componente ou sistema"
           ],
-          "exp": "Técnicas caixa-preta derivam casos de teste da especificação do comportamento externo do sistema (requisitos, use cases, regras de negócio), sem examinar a estrutura interna. As alternativas A e B descrevem características de técnicas caixa-branca (estrutura interna, grafo de fluxo de controle). A alternativa C descreve a categoria baseada em experiência."
+          "exp": "Técnicas caixa-preta derivam casos de teste da especificação do comportamento externo do sistema (requisitos, use cases, regras de negócio), sem examinar a estrutura interna. A opção sobre estrutura interna do componente e a opção sobre grafo de fluxo de controle do código-fonte descrevem características de técnicas caixa-branca. A opção sobre experiência pessoal do testador com sistemas similares descreve a categoria baseada em experiência."
         },
         "en": {
           "q": "Which of the following is a characteristic of black-box test techniques?",
@@ -7337,7 +7351,7 @@
             "Test cases are designed based on the tester's personal experience with similar systems, frequently of comparable domain",
             "Test cases are designed based on the specification of the component or system's external behavior"
           ],
-          "exp": "Black-box techniques derive test cases from the specification of the system's external behavior (requirements, use cases, business rules), without examining internal structure. Options A and B describe characteristics of white-box techniques (internal structure, control flow graph). Option C describes the experience-based category."
+          "exp": "Black-box techniques derive test cases from the specification of the system's external behavior (requirements, use cases, business rules), without examining internal structure. The option about the internal structure of the component and the option about the control flow graph of the source code describe characteristics of white-box techniques. The option about the tester's personal experience with similar systems describes the experience-based category."
         }
       }
     },
@@ -7356,7 +7370,7 @@
             "0, 1, 6, 7",
             "1, 3, 6"
           ],
-          "exp": "O particionamento por equivalência identifica três partições: válida (inteiros 1-6), inválida baixa (≤0) e inválida alta (≥7). A cobertura mínima requer um representante de cada partição (3 valores no total). A opção A (0, 3, 7) cobre as três partições: 0 representa a inválida baixa, 3 representa a válida, e 7 representa a inválida alta. A opção B cobre apenas a partição válida. A opção C inclui valores extras (1 e 6 ainda estão dentro da partição válida, não são partições separadas em EP puro). A opção D cobre apenas a partição válida com múltiplos representantes."
+          "exp": "O particionamento por equivalência identifica três partições: válida (inteiros 1-6), inválida baixa (≤0) e inválida alta (≥7). A cobertura mínima requer um representante de cada partição (3 valores no total). A opção com os valores (0, 3, 7) cobre as três partições: 0 representa a inválida baixa, 3 representa a válida, e 7 representa a inválida alta. A opção com os valores (1, 6) cobre apenas a partição válida. A opção com os valores (0, 1, 6, 7) inclui valores extras (1 e 6 ainda estão dentro da partição válida, não são partições separadas em EP puro). A opção com os valores (1, 3, 6) cobre apenas a partição válida com múltiplos representantes."
         },
         "en": {
           "q": "A train booking system has a \"Number of Passengers\" field that accepts integer values from 1 to 6, inclusive. Values of 0 or below, and 7 or above, are rejected with an error message. Using equivalence partitioning, which set of test values provides minimum coverage of all identified partitions?",
@@ -7366,7 +7380,7 @@
             "0, 1, 6, 7",
             "1, 3, 6"
           ],
-          "exp": "Equivalence partitioning identifies three partitions: valid (integers 1-6), invalid low (≤0), and invalid high (≥7). Minimum coverage requires one representative from each partition (3 values total). Option A (0, 3, 7) covers all three partitions: 0 represents the invalid-low partition, 3 represents the valid partition, and 7 represents the invalid-high partition. Option B covers only the valid partition. Option C includes extra values (1 and 6 are still within the valid partition, not separate partitions in pure EP). Option D covers only the valid partition with multiple representatives."
+          "exp": "Equivalence partitioning identifies three partitions: valid (integers 1-6), invalid low (≤0), and invalid high (≥7). Minimum coverage requires one representative from each partition (3 values total). The option with the values (0, 3, 7) covers all three partitions: 0 represents the invalid-low partition, 3 represents the valid partition, and 7 represents the invalid-high partition. The option with the values (1, 6) covers only the valid partition. The option with the values (0, 1, 6, 7) includes extra values (1 and 6 are still within the valid partition, not separate partitions in pure EP). The option with the values (1, 3, 6) covers only the valid partition with multiple representatives."
         }
       }
     },
@@ -7385,7 +7399,7 @@
             "17, 18, 65, 66",
             "18, 65"
           ],
-          "exp": "O particionamento por equivalência identifica três partições: válida (18-65), inválida baixa (<18) e inválida alta (>65). A cobertura mínima requer um representante de cada partição (3 valores). A opção B (17, 41, 66) cobre as três partições: 17 representa a inválida baixa, 41 representa a válida, e 66 representa a inválida alta. A opção A usa três valores da partição válida, sem cobrir as inválidas. A opção C mistura EP com BVA (adiciona valores de borda) e não representa cobertura mínima. A opção D cobre apenas a partição válida."
+          "exp": "O particionamento por equivalência identifica três partições: válida (18-65), inválida baixa (<18) e inválida alta (>65). A cobertura mínima requer um representante de cada partição (3 valores). A opção com os valores (17, 41, 66) cobre as três partições: 17 representa a inválida baixa, 41 representa a válida, e 66 representa a inválida alta. A opção com os valores (18, 41, 65) usa três valores da partição válida, sem cobrir as inválidas. A opção com os valores (17, 18, 65, 66) mistura EP com BVA (adiciona valores de borda) e não representa cobertura mínima. A opção com os valores (18, 65) cobre apenas a partição válida."
         },
         "en": {
           "q": "A volunteer program accepts applicants aged 18 to 65, inclusive. Applicants younger than 18 or older than 65 are rejected. Using equivalence partitioning, which set of test values provides minimum coverage of all identified partitions?",
@@ -7395,7 +7409,7 @@
             "17, 18, 65, 66",
             "18, 65"
           ],
-          "exp": "Equivalence partitioning identifies three partitions: valid (18-65), invalid low (<18), and invalid high (>65). Minimum coverage requires one representative from each partition (3 values). Option B (17, 41, 66) covers all three partitions: 17 represents the invalid-low partition, 41 represents the valid partition, and 66 represents the invalid-high partition. Option A uses three values from the valid partition without covering the invalid ones. Option C mixes EP with BVA (adds boundary values) and is not minimum coverage. Option D covers only the valid partition."
+          "exp": "Equivalence partitioning identifies three partitions: valid (18-65), invalid low (<18), and invalid high (>65). Minimum coverage requires one representative from each partition (3 values). The option with the values (17, 41, 66) covers all three partitions: 17 represents the invalid-low partition, 41 represents the valid partition, and 66 represents the invalid-high partition. The option with the values (18, 41, 65) uses three values from the valid partition without covering the invalid ones. The option with the values (17, 18, 65, 66) mixes EP with BVA (adds boundary values) and is not minimum coverage. The option with the values (18, 65) covers only the valid partition."
         }
       }
     },
@@ -7414,7 +7428,7 @@
             "4999, 5000, 5001",
             "4998, 4999, 5000"
           ],
-          "exp": "A BVA de 3 valores testa o valor no limite, o valor imediatamente abaixo e o valor imediatamente acima. Para o limite superior 5000, os três valores são 4999 (abaixo), 5000 (no limite) e 5001 (acima). A opção A (4999, 5000, 5002) usa o valor no limite e o abaixo, mas pula o valor imediatamente acima (5001), usando 5002 em seu lugar. A opção B (5000, 5001, 5002) testa apenas o limite e valores acima, omitindo o lado abaixo. A opção D (4998, 4999, 5000) testa valores abaixo do limite e o próprio limite, mas omite o valor imediatamente acima. Apenas a opção C aplica corretamente a BVA de 3 valores no limite superior."
+          "exp": "A BVA de 3 valores testa o valor no limite, o valor imediatamente abaixo e o valor imediatamente acima. Para o limite superior 5000, os três valores são 4999 (abaixo), 5000 (no limite) e 5001 (acima). A opção com os valores (4999, 5000, 5002) usa o valor no limite e o abaixo, mas pula o valor imediatamente acima (5001), usando 5002 em seu lugar. A opção com os valores (5000, 5001, 5002) testa apenas o limite e valores acima, omitindo o lado abaixo. A opção com os valores (4998, 4999, 5000) testa valores abaixo do limite e o próprio limite, mas omite o valor imediatamente acima. Apenas a opção com os valores (4999, 5000, 5001) aplica corretamente a BVA de 3 valores no limite superior."
         },
         "en": {
           "q": "A digital kitchen scale is calibrated to measure weights from 0 g to 5000 g, inclusive. Weights below 0 g or above 5000 g are physically impossible; if reported, they indicate a sensor fault. Using 3-value boundary value analysis, which test values should be selected to test the upper boundary?",
@@ -7424,7 +7438,7 @@
             "4999, 5000, 5001",
             "4998, 4999, 5000"
           ],
-          "exp": "The 3-value BVA technique tests the value at the boundary, the value immediately below it, and the value immediately above it. For the upper boundary 5000, the three values are 4999 (below), 5000 (at boundary), and 5001 (above). Option A (4999, 5000, 5002) uses the value at the boundary and the one below, but skips the value immediately above (5001), using 5002 instead. Option B (5000, 5001, 5002) tests only the boundary and values above, omitting the below side. Option D (4998, 4999, 5000) tests values below the boundary and the boundary itself, but omits the value immediately above. Only Option C correctly applies 3-value BVA at the upper boundary."
+          "exp": "The 3-value BVA technique tests the value at the boundary, the value immediately below it, and the value immediately above it. For the upper boundary 5000, the three values are 4999 (below), 5000 (at boundary), and 5001 (above). The option with the values (4999, 5000, 5002) uses the value at the boundary and the one below, but skips the value immediately above (5001), using 5002 instead. The option with the values (5000, 5001, 5002) tests only the boundary and values above, omitting the below side. The option with the values (4998, 4999, 5000) tests values below the boundary and the boundary itself, but omits the value immediately above. Only the option with the values (4999, 5000, 5001) correctly applies 3-value BVA at the upper boundary."
         }
       }
     },
@@ -7443,7 +7457,7 @@
             "5, 25, 50",
             "4, 5, 50, 51"
           ],
-          "exp": "Há dois limites na faixa válida: o inferior (5) e o superior (50). A BVA de 2 valores seleciona o valor no limite e o adjacente do lado testado em cada limite. No limite inferior: 4 (abaixo) e 5 (no limite). No limite superior: 50 (no limite) e 51 (acima). O conjunto completo é {4, 5, 50, 51}. A opção A testa apenas os pontos de limite, não os adjacentes. A opção B usa BVA de 3 valores. A opção C testa valores médios, não limites. Apenas a opção D aplica corretamente a BVA de 2 valores em ambos os limites."
+          "exp": "Há dois limites na faixa válida: o inferior (5) e o superior (50). A BVA de 2 valores seleciona o valor no limite e o adjacente do lado testado em cada limite. No limite inferior: 4 (abaixo) e 5 (no limite). No limite superior: 50 (no limite) e 51 (acima). O conjunto completo é {4, 5, 50, 51}. A opção com os valores (5, 50) testa apenas os pontos de limite, não os adjacentes. A opção com os valores (4, 5, 6, 49, 50, 51) usa BVA de 3 valores. A opção com os valores (5, 25, 50) testa valores médios, não limites. Apenas a opção com os valores (4, 5, 50, 51) aplica corretamente a BVA de 2 valores em ambos os limites."
         },
         "en": {
           "q": "A corporate event registration system requires a company to register between 5 and 50 attendees, inclusive. Values outside this range are rejected. Using the 2-value boundary value analysis technique, which set of test values covers all the boundaries of the valid input range?",
@@ -7453,7 +7467,7 @@
             "5, 25, 50",
             "4, 5, 50, 51"
           ],
-          "exp": "There are two boundaries in the valid range: the lower (5) and the upper (50). The 2-value BVA technique selects the value at the boundary and the adjacent value on the tested side at each boundary. At the lower boundary: 4 (below) and 5 (at boundary). At the upper boundary: 50 (at boundary) and 51 (above). The complete set is {4, 5, 50, 51}. Option A tests only the boundary points, not the adjacent ones. Option B uses 3-value BVA. Option C tests mid-range values, not boundaries. Only Option D correctly applies 2-value BVA at both boundaries."
+          "exp": "There are two boundaries in the valid range: the lower (5) and the upper (50). The 2-value BVA technique selects the value at the boundary and the adjacent value on the tested side at each boundary. At the lower boundary: 4 (below) and 5 (at boundary). At the upper boundary: 50 (at boundary) and 51 (above). The complete set is {4, 5, 50, 51}. The option with the values (5, 50) tests only the boundary points, not the adjacent ones. The option with the values (4, 5, 6, 49, 50, 51) uses 3-value BVA. The option with the values (5, 25, 50) tests mid-range values, not boundaries. Only the option with the values (4, 5, 50, 51) correctly applies 2-value BVA at both boundaries."
         }
       }
     },
@@ -7559,7 +7573,7 @@
             "Erro — a transição é inválida",
             "Parado"
           ],
-          "exp": "A transição \"Pausado + Pressionar Parar → Parado\" está explicitamente listada como válida. Portanto, quando o usuário pressiona Parar no estado Pausado, o sistema transita para o estado Parado. A opção A está incorreta — Play (não Parar) causaria a transição Pausado → Tocando. A opção B está incorreta — a transição existe, então algo ocorre. A opção C está incorreta — a transição é válida, não inválida."
+          "exp": "A transição 'Pausado + Pressionar Parar → Parado' está explicitamente listada como válida. Portanto, quando o usuário pressiona Parar no estado Pausado, o sistema transita para o estado Parado. A opção sobre o resultado 'Tocando' está incorreta — Play (não Parar) causaria a transição Pausado → Tocando. A opção sobre o resultado 'Pausado (nenhuma transição ocorre)' está incorreta — a transição existe, então algo ocorre. A opção sobre o resultado 'Erro — a transição é inválida' está incorreta — a transição é válida, não inválida."
         },
         "en": {
           "q": "A media player has the following states and transitions:\n- States: Stopped, Playing, Paused\n- Valid transitions:\n  - Stopped + Press Play → Playing\n  - Playing + Press Pause → Paused\n  - Paused + Press Play → Playing\n  - Playing + Press Stop → Stopped\n  - Paused + Press Stop → Stopped\n\nThe player is currently in the Paused state. The user presses Stop. What is the resulting state?",
@@ -7569,7 +7583,7 @@
             "Error — the transition is invalid",
             "Stopped"
           ],
-          "exp": "The transition \"Paused + Press Stop → Stopped\" is explicitly listed as valid. Therefore, when the user presses Stop in the Paused state, the system transitions to the Stopped state. Option A is incorrect — Play (not Stop) would cause the Paused → Playing transition. Option B is incorrect — the transition exists, so something does occur. Option C is incorrect — the transition is valid, not invalid."
+          "exp": "The transition 'Paused + Press Stop → Stopped' is explicitly listed as valid. Therefore, when the user presses Stop in the Paused state, the system transitions to the Stopped state. The option about the result 'Playing' is incorrect — Play (not Stop) would cause the Paused → Playing transition. The option about the result 'Paused (no transition occurs)' is incorrect — the transition exists, so something does occur. The option about the result 'Error — the transition is invalid' is incorrect — the transition is valid, not invalid."
         }
       }
     },
@@ -7704,7 +7718,7 @@
             "Checklists estão restritos ao nível de teste de unidade (componente), devido à sua natureza técnica detalhada",
             "Checklists geralmente não podem ser reutilizados entre projetos ou releases diferentes, exigindo recriação a cada novo ciclo"
           ],
-          "exp": "Checklists são, por natureza, listas finitas de itens de teste ou condições previamente compiladas. Sua principal limitação é que defeitos de tipos não antecipados na checklist podem não ser encontrados, porque o testador tende a focar nos itens listados. A opção B está incorreta — checklists são técnicas caixa-preta e não exigem código-fonte. A opção C está incorreta — checklists podem ser aplicados em qualquer nível. A opção D está incorreta — checklists são frequentemente reutilizáveis entre releases e até projetos similares."
+          "exp": "Checklists são, por natureza, listas finitas de itens de teste ou condições previamente compiladas. Sua principal limitação é que defeitos de tipos não antecipados na checklist podem não ser encontrados, porque o testador tende a focar nos itens listados. A opção sobre exigência de código-fonte disponível está incorreta — checklists são técnicas caixa-preta e não exigem código-fonte. A opção sobre restrição ao nível de teste de unidade está incorreta — checklists podem ser aplicados em qualquer nível. A opção sobre não reutilização entre projetos ou releases está incorreta — checklists são frequentemente reutilizáveis entre releases e até projetos similares."
         },
         "en": {
           "q": "What is a recognized limitation of checklist-based testing as described in the CTFL v4.0 syllabus?",
@@ -7714,7 +7728,7 @@
             "Checklists are restricted to the unit (component) test level, due to their detailed technical nature",
             "Checklists generally cannot be reused across different projects or releases, requiring recreation each new cycle"
           ],
-          "exp": "Checklists are, by nature, finite lists of previously compiled test items or conditions. Their main limitation is that defects of types not anticipated in the checklist may not be found, because the tester tends to focus on the listed items. Option B is incorrect — checklists are black-box techniques and do not require source code. Option C is incorrect — checklists can be applied at any level. Option D is incorrect — checklists are often reusable across releases and even similar projects."
+          "exp": "Checklists are, by nature, finite lists of previously compiled test items or conditions. Their main limitation is that defects of types not anticipated in the checklist may not be found, because the tester tends to focus on the listed items. The option about requiring source code to be available is incorrect — checklists are black-box techniques and do not require source code. The option about restriction to the unit test level is incorrect — checklists can be applied at any level. The option about not being reusable across projects or releases is incorrect — checklists are often reusable across releases and even similar projects."
         }
       }
     },
@@ -7733,7 +7747,7 @@
             "Casos de teste são derivados da experiência pessoal do testador com sistemas similares, frequentemente em domínios comparáveis",
             "Casos de teste são derivados de diagramas formais de casos de uso e interações ator-sistema de ponta a ponta"
           ],
-          "exp": "Técnicas caixa-branca derivam testes da estrutura interna do sistema (código-fonte, design detalhado, grafo de fluxo de controle). As opções A e D descrevem técnicas caixa-preta (especificação externa e casos de uso). A opção C descreve a categoria baseada em experiência. Apenas a opção B descreve corretamente uma característica caixa-branca."
+          "exp": "Técnicas caixa-branca derivam testes da estrutura interna do sistema (código-fonte, design detalhado, grafo de fluxo de controle). A opção sobre especificação do comportamento externo descreve técnicas caixa-preta. A opção sobre diagramas formais de casos de uso também descreve técnicas caixa-preta. A opção sobre experiência pessoal do testador descreve a categoria baseada em experiência. Apenas a opção sobre estrutura interna do sistema descreve corretamente uma característica caixa-branca."
         },
         "en": {
           "q": "Which of the following is a characteristic of white-box test techniques?",
@@ -7743,7 +7757,7 @@
             "Test cases are derived from the tester's personal experience with similar systems, frequently in comparable domains",
             "Test cases are derived from formal use case diagrams and end-to-end actor-system interactions"
           ],
-          "exp": "White-box techniques derive tests from the internal structure of the system (source code, detailed design, control flow graph). Options A and D describe black-box techniques (external specification and use cases). Option C describes the experience-based category. Only Option B correctly describes a white-box characteristic."
+          "exp": "White-box techniques derive tests from the internal structure of the system (source code, detailed design, control flow graph). The option about specification of external behavior describes black-box techniques. The option about formal use case diagrams also describes black-box techniques. The option about the tester's personal experience describes the experience-based category. Only the option about internal structure of the system correctly describes a white-box characteristic."
         }
       }
     },
@@ -7820,7 +7834,7 @@
             "Ambas as técnicas são funcionalmente idênticas e intercambiáveis na maioria dos contextos de teste de software, sem diferença significativa em sua aplicação prática no dia a dia",
             "O teste baseado em checklist é um subtipo estrito do teste exploratório, geralmente conduzido sem lista predefinida de condições de teste em sua execução"
           ],
-          "exp": "A distinção central é que o teste exploratório é concorrente e adaptativo (aprendizado, design e execução ao mesmo tempo, guiados pelo raciocínio em tempo real), enquanto o teste baseado em checklist usa uma lista predefinida de itens ou condições de teste que os testadores verificam sistematicamente. A opção B inverte a característica do exploratório. A opção C é falsa — não são idênticas. A opção D é falsa — checklist não é subtipo de exploratório."
+          "exp": "A distinção central é que o teste exploratório é concorrente e adaptativo (aprendizado, design e execução ao mesmo tempo, guiados pelo raciocínio em tempo real), enquanto o teste baseado em checklist usa uma lista predefinida de itens ou condições de teste que os testadores verificam sistematicamente. A opção sobre teste exploratório totalmente scriptado inverte a característica do exploratório. A opção sobre ambas as técnicas serem idênticas e intercambiáveis é falsa — não são idênticas. A opção sobre checklist como subtipo estrito do exploratório é falsa — checklist não é subtipo de exploratório."
         },
         "en": {
           "q": "Which statement correctly distinguishes exploratory testing from checklist-based testing?",
@@ -7830,7 +7844,7 @@
             "Both techniques are functionally identical and interchangeable in most software testing contexts, with no significant difference in their practical day-to-day application",
             "Checklist-based testing is a strict subtype of exploratory testing, generally conducted without a predefined list of test conditions in its execution"
           ],
-          "exp": "The central distinction is that exploratory testing is concurrent and adaptive (learning, design, and execution happening at the same time, guided by real-time reasoning), while checklist-based testing uses a predefined list of test items or conditions that testers systematically verify. Option B reverses the exploratory characteristic. Option C is false — they are not identical. Option D is false — checklist is not a subtype of exploratory."
+          "exp": "The central distinction is that exploratory testing is concurrent and adaptive (learning, design, and execution happening at the same time, guided by real-time reasoning), while checklist-based testing uses a predefined list of test items or conditions that testers systematically verify. The option about exploratory testing being fully scripted reverses the exploratory characteristic. The option about both techniques being identical and interchangeable is false — they are not identical. The option about checklist-based testing being a strict subtype of exploratory testing is false — checklist is not a subtype of exploratory."
         }
       }
     },
@@ -7936,7 +7950,7 @@
             "Cobertura de instruções medida contra o código-fonte",
             "Cobertura de tabela de decisão medida contra regras de negócio"
           ],
-          "exp": "A cobertura de instruções (statement coverage) é uma métrica caixa-branca que mede a porcentagem de instruções executáveis do código-fonte exercitadas por um conjunto de testes. As opções A e D descrevem métricas caixa-preta (bordas e tabelas de decisão). A opção B (cobertura de casos de uso) é uma métrica de teste funcional/caixa-preta baseada em artefatos de requisitos. Apenas a opção C é uma métrica caixa-branca que depende da estrutura interna do código."
+          "exp": "A cobertura de instruções (statement coverage) é uma métrica caixa-branca que mede a porcentagem de instruções executáveis do código-fonte exercitadas por um conjunto de testes. A opção sobre cobertura de bordas contra partições de entrada descreve uma métrica caixa-preta. A opção sobre cobertura de tabela de decisão contra regras de negócio também descreve uma métrica caixa-preta. A opção sobre cobertura de casos de uso contra user stories é uma métrica de teste funcional/caixa-preta baseada em artefatos de requisitos. Apenas a opção sobre cobertura de instruções contra o código-fonte é uma métrica caixa-branca que depende da estrutura interna do código."
         },
         "en": {
           "q": "Which of the following is a white-box test coverage metric?",
@@ -7946,7 +7960,7 @@
             "Statement coverage measured against the source code",
             "Decision table coverage measured against business rules"
           ],
-          "exp": "Statement coverage is a white-box metric that measures the percentage of executable statements in the source code exercised by a test suite. Options A and D describe black-box metrics (boundaries and decision tables). Option B (use case coverage) is a functional/black-box metric based on requirements artifacts. Only Option C is a white-box metric that depends on the internal structure of the code."
+          "exp": "Statement coverage is a white-box metric that measures the percentage of executable statements in the source code exercised by a test suite. The option about boundary coverage against input partitions describes a black-box metric. The option about decision table coverage against business rules also describes a black-box metric. The option about use case coverage against user stories is a functional/black-box metric based on requirements artifacts. Only the option about statement coverage against the source code is a white-box metric that depends on the internal structure of the code."
         }
       }
     },
@@ -7994,7 +8008,7 @@
             "A ordem de compra do cliente e os termos contratuais de pagamento acordados",
             "As listagens completas de código-fonte dos módulos em produção"
           ],
-          "exp": "Um plano de teste tipicamente inclui a estratégia de teste, escopo dos testes, cronograma, necessidades de recursos, requisitos de ambiente e critérios de entrada/saída. A opção B (binários compilados) é um artefato de build, não um elemento de planejamento. A opção C (ordem de compra e termos de pagamento) é um artefato contratual/comercial, não um elemento de plano de teste. A opção D (listagens de código-fonte) é um artefato de desenvolvimento. Apenas a opção A descreve elementos tipicamente encontrados em um plano de teste."
+          "exp": "Um plano de teste tipicamente inclui a estratégia de teste, escopo dos testes, cronograma, necessidades de recursos, requisitos de ambiente e critérios de entrada/saída. A opção sobre binários compilados é um artefato de build, não um elemento de planejamento. A opção sobre ordem de compra e termos de pagamento é um artefato contratual/comercial, não um elemento de plano de teste. A opção sobre listagens de código-fonte é um artefato de desenvolvimento. Apenas a opção sobre estratégia de teste, escopo, cronograma e critérios de entrada/saída descreve elementos tipicamente encontrados em um plano de teste."
         },
         "en": {
           "q": "Which of the following is typically included in a project's test plan?",
@@ -8004,7 +8018,7 @@
             "The customer's purchase order and the agreed contractual payment terms",
             "The complete source code listings of production modules"
           ],
-          "exp": "A test plan typically includes the test strategy, scope of testing, schedule, resource needs, environment requirements, and entry/exit criteria. Option B (compiled binaries) is a build artifact, not a planning element. Option C (purchase order and payment terms) is a contractual/commercial artifact, not a test plan element. Option D (source code listings) is a development artifact. Only Option A describes elements that are typically found in a test plan."
+          "exp": "A test plan typically includes the test strategy, scope of testing, schedule, resource needs, environment requirements, and entry/exit criteria. The option about compiled binaries is a build artifact, not a planning element. The option about purchase order and payment terms is a contractual/commercial artifact, not a test plan element. The option about source code listings is a development artifact. Only the option about test strategy, scope, schedule, and entry/exit criteria describes elements typically found in a test plan."
         }
       }
     },
@@ -8023,7 +8037,7 @@
             "O plano de marketing e comunicação para o lançamento do produto de software",
             "O acordo contratual formal entre o cliente e o fornecedor do software"
           ],
-          "exp": "Um plano de teste mestre cobre o esforço de teste inteiro de um projeto, tipicamente abrangendo múltiplos níveis de teste (ex.: componente, integração, sistema, aceitação). Ele coordena a abordagem geral de teste entre os níveis. A opção A descreve o teste de componente/unidade, que seria um plano de fase. A opção C (plano de marketing) não está relacionada a teste. A opção D (acordo contratual) é um documento comercial. Apenas a opção B descreve corretamente o escopo de um plano de teste mestre."
+          "exp": "Um plano de teste mestre cobre o esforço de teste inteiro de um projeto, tipicamente abrangendo múltiplos níveis de teste (ex.: componente, integração, sistema, aceitação). Ele coordena a abordagem geral de teste entre os níveis. A opção sobre teste de componente/unidade corresponderia a um plano de fase. A opção sobre plano de marketing não está relacionada a teste. A opção sobre acordo contratual formal é um documento comercial. Apenas a opção sobre o esforço de teste inteiro, abrangendo múltiplos níveis de teste, descreve corretamente o escopo de um plano de teste mestre."
         },
         "en": {
           "q": "A master test plan is a document that typically covers:",
@@ -8033,7 +8047,7 @@
             "The marketing and communication plan for launching the software product",
             "The formal contractual agreement between the customer and the software vendor"
           ],
-          "exp": "A master test plan covers the entire testing effort for a project, typically spanning multiple test levels (e.g., component, integration, system, acceptance). It coordinates the overall test approach across levels. Option A describes component/unit testing, which would be a phase test plan. Option C (marketing plan) is unrelated to testing. Option D (contractual agreement) is a commercial document. Only Option B correctly describes the scope of a master test plan."
+          "exp": "A master test plan covers the entire testing effort for a project, typically spanning multiple test levels (e.g., component, integration, system, acceptance). It coordinates the overall test approach across levels. The option about component/unit testing would correspond to a phase test plan. The option about the marketing plan is unrelated to testing. The option about the formal contractual agreement is a commercial document. Only the option about the entire testing effort, spanning multiple test levels, correctly describes the scope of a master test plan."
         }
       }
     },
@@ -8052,7 +8066,7 @@
             "A equipe de teste pode não ter testadores suficientemente qualificados para concluir os testes a tempo",
             "A aplicação pode conter uma vulnerabilidade de segurança que expõe dados confidenciais de usuários"
           ],
-          "exp": "Um risco de projeto é um risco que afeta a capacidade do projeto de entregar — incluindo cronograma, orçamento, recursos, escopo e equipe. A opção C (testadores qualificados insuficientes) é um risco de equipe/recurso que afeta a capacidade do projeto de concluir os testes, sendo portanto um risco de projeto. As opções A (performance), B (cálculos incorretos) e D (vulnerabilidade de segurança) descrevem potenciais falhas do produto de software em si, que são riscos de produto. Apenas a opção C é um risco de projeto."
+          "exp": "Um risco de projeto é um risco que afeta a capacidade do projeto de entregar — incluindo cronograma, orçamento, recursos, escopo e equipe. A opção sobre testadores qualificados insuficientes é um risco de equipe/recurso que afeta a capacidade do projeto de concluir os testes, sendo portanto um risco de projeto. As opções sobre performance, cálculos incorretos e vulnerabilidade de segurança descrevem potenciais falhas do produto de software em si, que são riscos de produto. Apenas a opção sobre testadores qualificados insuficientes é um risco de projeto."
         },
         "en": {
           "q": "Which of the following is an example of a project risk?",
@@ -8062,7 +8076,7 @@
             "The test team may not have sufficient skilled testers to complete testing on time",
             "The application may contain a security vulnerability that exposes confidential user data"
           ],
-          "exp": "A project risk is a risk that affects the project's ability to deliver — including schedule, budget, resources, scope, and staffing. Option C (insufficient skilled testers) is a staffing/resource risk that affects the project's capacity to complete testing, making it a project risk. Options A (performance), B (incorrect calculations), and D (security vulnerability) all describe potential failures of the software product itself, which are product risks. Only Option C is a project risk."
+          "exp": "A project risk is a risk that affects the project's ability to deliver — including schedule, budget, resources, scope, and staffing. The option about insufficient skilled testers is a staffing/resource risk that affects the project's capacity to complete testing, making it a project risk. The options about performance, incorrect calculations, and security vulnerability all describe potential failures of the software product itself, which are product risks. Only the option about insufficient skilled testers is a project risk."
         }
       }
     },
@@ -8081,7 +8095,7 @@
             "Stakeholders podem discordar sobre o escopo dos testes, causando atrasos",
             "O software pode produzir resultados incorretos ao processar certas entradas"
           ],
-          "exp": "Um risco de produto é um risco que pode afetar negativamente a qualidade do produto de software entregue — incluindo correção, confiabilidade, performance, segurança e usabilidade. A opção D (resultados incorretos de certas entradas) diz respeito direto ao comportamento do software, sendo um risco de produto. As opções A (atraso de cronograma por hardware atrasado), B (testadores saindo) e C (discordância de escopo entre stakeholders) dizem respeito à capacidade do projeto de entregar, que são riscos de projeto. Apenas a opção D é um risco de produto."
+          "exp": "Um risco de produto é um risco que pode afetar negativamente a qualidade do produto de software entregue — incluindo correção, confiabilidade, performance, segurança e usabilidade. A opção sobre resultados incorretos de certas entradas diz respeito direto ao comportamento do software, sendo um risco de produto. As opções sobre atraso de cronograma por hardware atrasado, testadores saindo e discordância de escopo entre stakeholders dizem respeito à capacidade do projeto de entregar, que são riscos de projeto. Apenas a opção sobre resultados incorretos de certas entradas é um risco de produto."
         },
         "en": {
           "q": "Which of the following is an example of a product risk?",
@@ -8091,7 +8105,7 @@
             "Stakeholders may disagree on the scope of testing, causing delays",
             "The software may produce incorrect results when processing certain inputs"
           ],
-          "exp": "A product risk is a risk that may negatively affect the quality of the software deliverable — including correctness, reliability, performance, security, and usability. Option D (incorrect results from certain inputs) directly concerns the software's behavior, making it a product risk. Options A (schedule slip from delayed hardware), B (testers leaving), and C (stakeholder scope disagreement) all concern the project's ability to deliver, which are project risks. Only Option D is a product risk."
+          "exp": "A product risk is a risk that may negatively affect the quality of the software deliverable — including correctness, reliability, performance, security, and usability. The option about incorrect results from certain inputs directly concerns the software's behavior, making it a product risk. The options about schedule slip from delayed hardware, testers leaving, and stakeholder scope disagreement all concern the project's ability to deliver, which are project risks. Only the option about incorrect results from certain inputs is a product risk."
         }
       }
     },
@@ -8110,7 +8124,7 @@
             "Risco de qualidade, porque diz respeito diretamente à qualidade funcional do produto de software sob teste",
             "Nenhum risco relevante, porque dependências externas costumam estar fora do escopo do projeto de teste"
           ],
-          "exp": "Um risco de projeto é aquele que afeta a capacidade do projeto de entregar, incluindo a capacidade de executar atividades de teste planejadas. A indisponibilidade do gateway de pagamento de terceiros durante a janela de teste bloqueia cenários de teste críticos — isso afeta a execução do projeto de teste, não a qualidade do software sendo testado. A opção B está incorreta porque a disponibilidade do gateway durante o teste é uma preocupação de projeto, não de comportamento do produto. A opção C usa um termo informal (\"risco de qualidade\") que é tipicamente sinônimo de risco de produto no ISTQB. A opção D está incorreta porque dependências externas SÃO riscos de projeto se afetam o projeto. Apenas a opção A está correta."
+          "exp": "Um risco de projeto é aquele que afeta a capacidade do projeto de entregar, incluindo a capacidade de executar atividades de teste planejadas. A indisponibilidade do gateway de pagamento de terceiros durante a janela de teste bloqueia cenários de teste críticos — isso afeta a execução do projeto de teste, não a qualidade do software sendo testado. A opção sobre classificar como risco de produto está incorreta porque a disponibilidade do gateway durante o teste é uma preocupação de projeto, não de comportamento do produto. A opção sobre classificar como risco de qualidade usa um termo informal (\"risco de qualidade\") que é tipicamente sinônimo de risco de produto no ISTQB. A opção sobre nenhum risco relevante está incorreta porque dependências externas SÃO riscos de projeto se afetam o projeto. Apenas a opção sobre classificar como risco de projeto (porque afeta a capacidade da equipe de teste de executar os testes planejados) está correta."
         },
         "en": {
           "q": "During test planning, the team identifies a risk that \"the third-party payment gateway may not be available during the test window, blocking critical test scenarios.\" This is best classified as a:",
@@ -8120,7 +8134,7 @@
             "Quality risk, because it directly concerns the functional quality of the software product under test",
             "No relevant risk, because external dependencies are usually outside the scope of the test project"
           ],
-          "exp": "A project risk is one that affects the project's ability to deliver, including the ability to execute planned test activities. The unavailability of the third-party payment gateway during the test window blocks critical test scenarios — this affects the test project's execution, not the quality of the software being tested. Option B is incorrect because the gateway's availability during testing is a project concern, not a product behavior concern. Option C uses an informal term (\"quality risk\") that is typically a synonym for product risk in ISTQB. Option D is incorrect because external dependencies ARE project risks if they affect the project. Only Option A is correct."
+          "exp": "A project risk is one that affects the project's ability to deliver, including the ability to execute planned test activities. The unavailability of the third-party payment gateway during the test window blocks critical test scenarios — this affects the test project's execution, not the quality of the software being tested. The option about classifying as a product risk is incorrect because the gateway's availability during testing is a project concern, not a product behavior concern. The option about classifying as a quality risk uses an informal term (\"quality risk\") that is typically a synonym for product risk in ISTQB. The option about no relevant risk is incorrect because external dependencies ARE project risks if they affect the project. Only the option about classifying as a project risk (because it affects the test team's ability to execute planned tests) is correct."
         }
       }
     },
@@ -8168,7 +8182,7 @@
             "As opiniões pessoais e impressões subjetivas dos testadores individuais sobre o produto",
             "Resumo das atividades de teste realizadas, resultados e desvios do plano"
           ],
-          "exp": "Um relatório de resumo de teste tipicamente inclui um resumo das atividades de teste realizadas, resultados dos testes, desvios do plano e uma avaliação da qualidade do objeto de teste. A opção A (código-fonte) é um artefato de desenvolvimento. A opção B (obrigações contratuais) é um artefato comercial/legal. A opção C (opiniões pessoais) é subjetiva e não apropriada para um relatório formal. Apenas a opção D descreve conteúdo tipicamente encontrado em um relatório de resumo de teste."
+          "exp": "Um relatório de resumo de teste tipicamente inclui um resumo das atividades de teste realizadas, resultados dos testes, desvios do plano e uma avaliação da qualidade do objeto de teste. A opção sobre código-fonte é um artefato de desenvolvimento. A opção sobre obrigações contratuais é um artefato comercial/legal. A opção sobre opiniões pessoais é subjetiva e não apropriada para um relatório formal. Apenas a opção sobre resumo das atividades de teste, resultados e desvios do plano descreve conteúdo tipicamente encontrado em um relatório de resumo de teste."
         },
         "en": {
           "q": "Which of the following is typically included in a test summary report?",
@@ -8178,7 +8192,7 @@
             "The personal opinions and subjective impressions of individual testers about the product",
             "Summary of testing activities performed, results, and deviations from plan"
           ],
-          "exp": "A test summary report typically includes a summary of testing activities performed, test results, deviations from the plan, and an evaluation of the test object's quality. Option A (source code) is a development artifact. Option B (contractual obligations) is a commercial/legal artifact. Option C (personal opinions) is subjective and not appropriate for a formal report. Only Option D describes content that is typically found in a test summary report."
+          "exp": "A test summary report typically includes a summary of testing activities performed, test results, deviations from the plan, and an evaluation of the test object's quality. The option about source code is a development artifact. The option about contractual obligations is a commercial/legal artifact. The option about personal opinions is subjective and not appropriate for a formal report. Only the option about the summary of testing activities performed, results, and deviations from the plan describes content that is typically found in a test summary report."
         }
       }
     },
@@ -8197,7 +8211,7 @@
             "Permite que os testadores pulem totalmente as atividades de planejamento de teste e a definição de critérios, sem afetar a cobertura dos testes",
             "Elimina completamente a necessidade de execução manual de teste, automatizando as validações de regressão em cada ciclo de testes planejado"
           ],
-          "exp": "O gerenciamento de configuração (CM) fornece o valor de identificar de forma única, controlar por versão e rastrear itens de teste (e outros produtos de trabalho) ao longo do processo de teste. Isso garante que a versão correta de um objeto de teste esteja sendo testada e que os resultados de teste possam ser associados à configuração correta. A opção A está incorreta porque CM não garante correção de defeitos — isso é uma decisão de desenvolvimento/gerenciamento. A opção C está incorreta porque CM não substitui o planejamento. A opção D está incorreta porque CM não elimina a necessidade de execução. Apenas a opção B descreve um valor genuíno do CM."
+          "exp": "O gerenciamento de configuração (CM) fornece o valor de identificar de forma única, controlar por versão e rastrear itens de teste (e outros produtos de trabalho) ao longo do processo de teste. Isso garante que a versão correta de um objeto de teste esteja sendo testada e que os resultados de teste possam ser associados à configuração correta. A opção sobre garantir correção de defeitos sem regressões está incorreta porque CM não garante correção de defeitos — isso é uma decisão de desenvolvimento/gerenciamento. A opção sobre pular o planejamento de teste está incorreta porque CM não substitui o planejamento. A opção sobre eliminar a execução manual está incorreta porque CM não elimina a necessidade de execução. Apenas a opção sobre identificar, versionar e rastrear itens de teste descreve um valor genuíno do CM."
         },
         "en": {
           "q": "What is a key value of configuration management in a testing project?",
@@ -8207,7 +8221,7 @@
             "Allows testers to skip detailed test planning activities and criteria definition entirely, without affecting test coverage achieved",
             "Eliminates the need for manual test execution entirely by automating regression validations in each planned test cycle"
           ],
-          "exp": "Configuration management (CM) provides the value of uniquely identifying, version-controlling, and tracing test items (and other work products) throughout the test process. This ensures that the right version of a test object is being tested and that test results can be associated with the correct configuration. Option A is incorrect because CM does not guarantee defect correction — that is a development/management decision. Option C is incorrect because CM does not replace planning. Option D is incorrect because CM does not eliminate the need for execution. Only Option B describes a genuine value of CM."
+          "exp": "Configuration management (CM) provides the value of uniquely identifying, version-controlling, and tracing test items (and other work products) throughout the test process. This ensures that the right version of a test object is being tested and that test results can be associated with the correct configuration. The option about guaranteeing defect correction without regressions is incorrect because CM does not guarantee defect correction — that is a development/management decision. The option about skipping test planning is incorrect because CM does not replace planning. The option about eliminating manual execution is incorrect because CM does not eliminate the need for execution. Only the option about uniquely identifying, version-controlling, and tracing test items describes a genuine value of CM."
         }
       }
     },
@@ -8226,7 +8240,7 @@
             "Planejar e supervisionar o projeto de teste, incluindo alocação de recursos e comunicação com stakeholders",
             "Aprovar o release final diretamente, sem consultar os stakeholders envolvidos no projeto ou a equipe de desenvolvimento"
           ],
-          "exp": "Um gerente de teste é responsável por planejar e supervisionar o projeto de teste — incluindo planejamento de teste, alocação de recursos, comunicação com stakeholders, monitoramento de progresso e relatórios. A opção A (escrever e revisar código-fonte) é responsabilidade do desenvolvedor. A opção B (realizar pessoalmente os testes manuais) é impraticável e é o papel de testadores individuais, não do gerente. A opção D (aprovar release sem consulta) contradiz a boa prática de gerenciamento de teste, que envolve comunicação com stakeholders. A opção C descreve uma responsabilidade típica do gerente de teste."
+          "exp": "Um gerente de teste é responsável por planejar e supervisionar o projeto de teste — incluindo planejamento de teste, alocação de recursos, comunicação com stakeholders, monitoramento de progresso e relatórios. A opção sobre escrever e revisar código-fonte é responsabilidade do desenvolvedor. A opção sobre realizar pessoalmente os testes manuais é impraticável e é o papel de testadores individuais, não do gerente. A opção sobre aprovar release sem consulta contradiz a boa prática de gerenciamento de teste, que envolve comunicação com stakeholders. A opção sobre planejar e supervisionar o projeto de teste descreve uma responsabilidade típica do gerente de teste."
         },
         "en": {
           "q": "Which of the following is a typical responsibility of a test manager?",
@@ -8236,7 +8250,7 @@
             "Planning and overseeing the test project, including resource allocation and stakeholder communication",
             "Approving the final release directly, without consulting the project's stakeholders or the development team involved"
           ],
-          "exp": "A test manager is responsible for planning and overseeing the test project — including test planning, resource allocation, stakeholder communication, progress monitoring, and reporting. Option A (writing and reviewing source code) is a developer responsibility. Option B (performing manual testing personally) is impractical and is the role of individual testers, not the manager. Option D (approving release without stakeholder consultation) contradicts good test management practice, which involves stakeholder communication. Option C describes a typical test manager responsibility."
+          "exp": "A test manager is responsible for planning and overseeing the test project — including test planning, resource allocation, stakeholder communication, progress monitoring, and reporting. The option about writing and reviewing source code is a developer responsibility. The option about performing manual testing personally is impractical and is the role of individual testers, not the manager. The option about approving release without consultation contradicts good test management practice, which involves stakeholder communication. The option about planning and overseeing the test project describes a typical test manager responsibility."
         }
       }
     },
@@ -8255,7 +8269,7 @@
             "Identificar qual linguagem de programação específica deveria ser usada no desenvolvimento do software pelo time",
             "Definir quando as atividades de teste podem começar e quando podem ser consideradas concluídas"
           ],
-          "exp": "Critérios de entrada definem as condições que devem ser atendidas antes que as atividades de teste possam começar (ex.: ambiente de teste pronto, casos de teste escritos). Critérios de saída definem as condições que devem ser atendidas para que o teste seja considerado concluído (ex.: todos os testes planejados executados, taxa de defeitos abaixo do limite). A opção A (salário) não está relacionada a critérios de entrada/saída. A opção B está incorreta porque critérios de entrada/saída não substituem a estratégia de teste. A opção C (linguagem de programação) é uma decisão de desenvolvimento. Apenas a opção D descreve o propósito principal dos critérios de entrada/saída."
+          "exp": "Critérios de entrada definem as condições que devem ser atendidas antes que as atividades de teste possam começar (ex.: ambiente de teste pronto, casos de teste escritos). Critérios de saída definem as condições que devem ser atendidas para que o teste seja considerado concluído (ex.: todos os testes planejados executados, taxa de defeitos abaixo do limite). A opção sobre determinar salário dos testadores não está relacionada a critérios de entrada/saída. A opção sobre substituir a estratégia de teste por uma lista de verificação está incorreta porque critérios de entrada/saída não substituem a estratégia de teste. A opção sobre identificar linguagem de programação é uma decisão de desenvolvimento. Apenas a opção sobre definir quando as atividades de teste podem começar e ser consideradas concluídas descreve o propósito principal dos critérios de entrada/saída."
         },
         "en": {
           "q": "Entry and exit criteria in testing are primarily used to:",
@@ -8265,7 +8279,7 @@
             "Identify which specific programming language should be used in the development of the software",
             "Define when testing activities may start and when they may be considered complete"
           ],
-          "exp": "Entry criteria define the conditions that must be met before testing activities can begin (e.g., test environment ready, test cases written). Exit criteria define the conditions that must be met for testing to be considered complete (e.g., all planned tests executed, defect rate below threshold). Option A (salary) is unrelated to entry/exit criteria. Option B is incorrect because entry/exit criteria do not replace the test strategy. Option C (programming language) is a development decision. Only Option D describes the primary purpose of entry/exit criteria."
+          "exp": "Entry criteria define the conditions that must be met before testing activities can begin (e.g., test environment ready, test cases written). Exit criteria define the conditions that must be met for testing to be considered complete (e.g., all planned tests executed, defect rate below threshold). The option about determining tester salary is unrelated to entry/exit criteria. The option about replacing the test strategy with a checklist is incorrect because entry/exit criteria do not replace the test strategy. The option about identifying the programming language is a development decision. Only the option about defining when testing activities may start and be considered complete describes the primary purpose of entry/exit criteria."
         }
       }
     },
@@ -8284,7 +8298,7 @@
             "Estratégia baseada em modelo, porque deriva testes de um modelo comportamental do sistema",
             "Estratégia reativa, porque reage aos defeitos encontrados durante o teste"
           ],
-          "exp": "Uma estratégia de teste metódica depende de um conjunto predefinido e ordenado de condições de teste ou checklists que os testadores seguem de forma consistente. O cenário descreve testadores seguindo uma ordem prescrita (itens de menu de cima para baixo, depois formulários da esquerda para a direita), o que é característico de uma estratégia metódica. A opção B (analítica) está incorreta porque estratégias analíticas são baseadas em análise de fatores como requisitos ou risco. A opção C (baseada em modelo) está incorreta porque estratégias baseadas em modelo derivam testes de um modelo do sistema. A opção D (reativa) está incorreta porque estratégias reativas reagem a defeitos observados durante o teste. Apenas a opção A caracteriza corretamente esta abordagem."
+          "exp": "Uma estratégia de teste metódica depende de um conjunto predefinido e ordenado de condições de teste ou checklists que os testadores seguem de forma consistente. O cenário descreve testadores seguindo uma ordem prescrita (itens de menu de cima para baixo, depois formulários da esquerda para a direita), o que é característico de uma estratégia metódica. A opção sobre estratégia analítica está incorreta porque estratégias analíticas são baseadas em análise de fatores como requisitos ou risco. A opção sobre estratégia baseada em modelo está incorreta porque estratégias baseadas em modelo derivam testes de um modelo do sistema. A opção sobre estratégia reativa está incorreta porque estratégias reativas reagem a defeitos observados durante o teste. Apenas a opção sobre estratégia metódica caracteriza corretamente esta abordagem."
         },
         "en": {
           "q": "A test approach where testers follow a consistent set of test conditions in a prescribed order (such as \"test all menu items top-to-bottom, then all forms left-to-right\") is best characterized as:",
@@ -8294,7 +8308,7 @@
             "Model-based strategy, because it derives tests from a behavioral model of the system",
             "Reactive strategy, because it reacts to defects found during testing"
           ],
-          "exp": "A methodical test strategy relies on a predefined, ordered set of test conditions or checklists that testers follow consistently. The scenario describes testers following a prescribed order (menu items top-to-bottom, then forms left-to-right), which is characteristic of a methodical strategy. Option B (analytical) is incorrect because analytical strategies are based on analysis of factors such as requirements or risk. Option C (model-based) is incorrect because model-based strategies derive tests from a model of the system. Option D (reactive) is incorrect because reactive strategies react to defects observed during testing. Only Option A correctly characterizes this approach."
+          "exp": "A methodical test strategy relies on a predefined, ordered set of test conditions or checklists that testers follow consistently. The scenario describes testers following a prescribed order (menu items top-to-bottom, then forms left-to-right), which is characteristic of a methodical strategy. The option about analytical strategy is incorrect because analytical strategies are based on analysis of factors such as requirements or risk. The option about model-based strategy is incorrect because model-based strategies derive tests from a model of the system. The option about reactive strategy is incorrect because reactive strategies react to defects observed during testing. Only the option about methodical strategy correctly characterizes this approach."
         }
       }
     },
@@ -8313,7 +8327,7 @@
             "Nível de risco = 5; este é um risco de baixa prioridade que pode ser aceito sem mitigação adicional ou monitoramento contínuo",
             "Nível de risco = 5; este é um risco moderado que merece atenção apesar da baixa probabilidade, devido ao impacto catastrófico"
           ],
-          "exp": "O nível de risco é calculado como probabilidade × impacto: 1 × 5 = 5. A observação-chave é que mesmo com probabilidade baixa, o impacto catastrófico (5) significa que o risco merece atenção — o produto é moderado (5 em uma escala onde 25 é o máximo). A opção A está incorreta porque confunde nível de risco com probabilidade (1 × 5 = 5, não 1). A opção B está incorreta porque 1 × 5 = 5, não 6. A opção C está incorreta porque um risco com impacto catastrófico não deve ser aceito sem consideração, mesmo se a probabilidade for baixa. A opção D declara corretamente tanto o cálculo (5) quanto a interpretação (moderado, merece atenção devido ao impacto catastrófico)."
+          "exp": "O nível de risco é calculado como probabilidade × impacto: 1 × 5 = 5. A observação-chave é que mesmo com probabilidade baixa, o impacto catastrófico (5) significa que o risco merece atenção — o produto é moderado (5 em uma escala onde 25 é o máximo). A opção sobre nível de risco = 1 está incorreta porque confunde nível de risco com probabilidade (1 × 5 = 5, não 1). A opção sobre nível de risco = 6 está incorreta porque 1 × 5 = 5, não 6. A opção sobre nível de risco = 5 classificado como baixa prioridade está incorreta porque um risco com impacto catastrófico não deve ser aceito sem consideração, mesmo se a probabilidade for baixa. A opção sobre nível de risco = 5 classificado como risco moderado declara corretamente tanto o cálculo (5) quanto a interpretação (moderado, merece atenção devido ao impacto catastrófico)."
         },
         "en": {
           "q": "A risk is assigned a likelihood of \"low\" (rated 1 on a 1-5 scale) and an impact of \"catastrophic\" (rated 5). What is the risk level using the standard likelihood × impact calculation, and what does this indicate?",
@@ -8323,7 +8337,7 @@
             "Risk level = 5; this is a low-priority risk that may be accepted without additional mitigation or continuous monitoring",
             "Risk level = 5; this is a moderate risk that warrants attention despite low likelihood, due to catastrophic impact"
           ],
-          "exp": "Risk level is calculated as likelihood × impact: 1 × 5 = 5. The key insight is that even though the likelihood is low, the catastrophic impact (5) means the risk warrants attention — the product is moderate (5 on a scale where 25 is maximum). Option A is incorrect because it confuses risk level with likelihood (1 × 5 = 5, not 1). Option B is incorrect because 1 × 5 = 5, not 6. Option C is incorrect because a risk with catastrophic impact should not be accepted without consideration, even if likelihood is low. Option D correctly states both the calculation (5) and the interpretation (moderate, warrants attention due to catastrophic impact)."
+          "exp": "Risk level is calculated as likelihood × impact: 1 × 5 = 5. The key insight is that even though the likelihood is low, the catastrophic impact (5) means the risk warrants attention — the product is moderate (5 on a scale where 25 is maximum). The option about risk level = 1 is incorrect because it confuses risk level with likelihood (1 × 5 = 5, not 1). The option about risk level = 6 is incorrect because 1 × 5 = 5, not 6. The option about risk level = 5 classified as low priority is incorrect because a risk with catastrophic impact should not be accepted without consideration, even if likelihood is low. The option about risk level = 5 classified as moderate risk correctly states both the calculation (5) and the interpretation (moderate, warrants attention due to catastrophic impact)."
         }
       }
     },
@@ -8342,7 +8356,7 @@
             "Medir a densidade de defeitos de cada módulo do sistema após a conclusão de cada ciclo de teste planejado",
             "Acompanhar continuamente a porcentagem de testes planejados que já foram executados até o momento"
           ],
-          "exp": "Monitoramento de teste é a observação e medição contínua das atividades de teste (ex.: gerar relatórios, medir densidade de defeitos, acompanhar progresso). Controle de teste, em contraste, envolve tomar ação com base nos dados de monitoramento para guiar e ajustar os testes — como repriorizar testes, mudar o cronograma ou realocar recursos. As opções A (relatório semanal), C (medir densidade de defeitos) e D (acompanhar porcentagem executada) são todas atividades de monitoramento — observam e medem. A opção B (repriorizar casos de teste) é uma ação de controle porque ajusta o plano de teste com base em informação observada. Apenas a opção B é um exemplo de controle de teste."
+          "exp": "Monitoramento de teste é a observação e medição contínua das atividades de teste (ex.: gerar relatórios, medir densidade de defeitos, acompanhar progresso). Controle de teste, em contraste, envolve tomar ação com base nos dados de monitoramento para guiar e ajustar os testes — como repriorizar testes, mudar o cronograma ou realocar recursos. As opções sobre relatório semanal, medir densidade de defeitos e acompanhar porcentagem executada são todas atividades de monitoramento — observam e medem. A opção sobre repriorizar casos de teste é uma ação de controle porque ajusta o plano de teste com base em informação observada. Apenas a opção sobre repriorizar casos de teste é um exemplo de controle de teste."
         },
         "en": {
           "q": "Which of the following is an example of test control rather than test monitoring?",
@@ -8352,7 +8366,7 @@
             "Measuring the defect density of each system module after the completion of each planned test cycle",
             "Continuously tracking the percentage of planned tests that have already been executed so far"
           ],
-          "exp": "Test monitoring is the ongoing observation and measurement of test activities (e.g., generating reports, measuring defect density, tracking progress). Test control, in contrast, involves taking action based on monitoring data to guide and adjust the testing — such as re-prioritizing tests, changing the schedule, or reallocating resources. Options A (weekly report), C (measuring defect density), and D (tracking percentage executed) are all monitoring activities — they observe and measure. Option B (re-prioritizing test cases) is a control action because it adjusts the test plan based on observed information. Only Option B is an example of test control."
+          "exp": "Test monitoring is the ongoing observation and measurement of test activities (e.g., generating reports, measuring defect density, tracking progress). Test control, in contrast, involves taking action based on monitoring data to guide and adjust the testing — such as re-prioritizing tests, changing the schedule, or reallocating resources. The options about weekly report, measuring defect density, and tracking percentage executed are all monitoring activities — they observe and measure. The option about re-prioritizing test cases is a control action because it adjusts the test plan based on observed information. Only the option about re-prioritizing test cases is an example of test control."
         }
       }
     },
@@ -8371,7 +8385,7 @@
             "Status indica o estágio do fluxo de trabalho (ex.: novo, aberto, corrigido, fechado), enquanto prioridade indica quando o defeito deve ser corrigido (ex.: urgente, alta, média, baixa)",
             "Status é definido exclusivamente por desenvolvedores, enquanto prioridade é definida exclusivamente por testadores — ambos os atributos significam a mesma coisa ao longo de todo o processo de teste"
           ],
-          "exp": "Status do defeito e prioridade do defeito são atributos distintos. Status acompanha o estágio do fluxo de trabalho do defeito (ex.: novo, aberto, em progresso, corrigido, retestado, fechado, adiado). Prioridade indica a ordem em que o defeito deve ser tratado (ex.: urgente, alta, média, baixa), tipicamente determinada pela urgência de negócio. A opção A está incorreta porque status e prioridade são atributos diferentes. A opção B está incorreta porque confunde status com severidade — severidade é um atributo separado que mede impacto. A opção D está incorreta porque afirma que os dois significam a mesma coisa e caracteriza erroneamente quem define cada um. Apenas a opção C distingue corretamente os dois atributos."
+          "exp": "Status do defeito e prioridade do defeito são atributos distintos. Status acompanha o estágio do fluxo de trabalho do defeito (ex.: novo, aberto, em progresso, corrigido, retestado, fechado, adiado). Prioridade indica a ordem em que o defeito deve ser tratado (ex.: urgente, alta, média, baixa), tipicamente determinada pela urgência de negócio. A opção sobre status e prioridade como sinônimos está incorreta porque status e prioridade são atributos diferentes. A opção sobre status como severidade e prioridade como estágio de workflow está incorreta porque confunde status com severidade — severidade é um atributo separado que mede impacto. A opção sobre status por desenvolvedores e prioridade por testadores está incorreta porque afirma que os dois significam a mesma coisa e caracteriza erroneamente quem define cada um. Apenas a opção sobre status como estágio de workflow e prioridade como quando corrigir distingue corretamente os dois atributos."
         },
         "en": {
           "q": "Which of the following correctly distinguishes defect status from defect priority?",
@@ -8381,7 +8395,7 @@
             "Status indicates the workflow stage (e.g., new, open, fixed, closed), while priority indicates when the defect should be fixed (e.g., urgent, high, medium, low)",
             "Status is set exclusively by developers, while priority is set exclusively by testers — both attributes mean the same thing throughout the entire software testing process"
           ],
-          "exp": "Defect status and defect priority are distinct attributes. Status tracks the workflow stage of the defect (e.g., new, open, in-progress, fixed, retested, closed, deferred). Priority indicates the order in which the defect should be addressed (e.g., urgent, high, medium, low), typically determined by business urgency. Option A is incorrect because status and priority are different attributes. Option B is incorrect because it confuses status with severity — severity is a separate attribute measuring impact. Option D is incorrect because it claims the two mean the same thing and mischaracterizes who sets each. Only Option C correctly distinguishes the two attributes."
+          "exp": "Defect status and defect priority are distinct attributes. Status tracks the workflow stage of the defect (e.g., new, open, in-progress, fixed, retested, closed, deferred). Priority indicates the order in which the defect should be addressed (e.g., urgent, high, medium, low), typically determined by business urgency. The option about status and priority as synonyms is incorrect because status and priority are different attributes. The option about status as severity and priority as workflow stage is incorrect because it confuses status with severity — severity is a separate attribute measuring impact. The option about status set by developers and priority by testers is incorrect because it claims the two mean the same thing and mischaracterizes who sets each. Only the option about status as workflow stage and priority as when to fix correctly distinguishes the two attributes."
         }
       }
     },
@@ -8400,7 +8414,7 @@
             "Não há diferença conceitual — os termos são totalmente intercambiáveis e descrevem a mesma medida quantitativa dentro do processo de teste",
             "Uma métrica é uma medida quantitativa; um KPI é uma métrica selecionada para indicar progresso em direção a uma meta ou objetivo específico"
           ],
-          "exp": "Uma métrica é uma medida quantitativa de algum atributo do processo ou produto de teste. Um KPI (Indicador-Chave de Performance) é uma métrica específica escolhida porque indica progresso em direção a uma meta ou objetivo definido — nem todas as métricas são KPIs, mas todos os KPIs são métricas. A opção A está incorreta porque métricas não precisam ser financeiras, e KPIs não precisam ser sobre execução. A opção B está incorreta porque métricas são quantitativas, não qualitativas. A opção C está incorreta porque os termos não são intercambiáveis — um KPI é um subconjunto selecionado de métricas. Apenas a opção D descreve corretamente a diferença."
+          "exp": "Uma métrica é uma medida quantitativa de algum atributo do processo ou produto de teste. Um KPI (Indicador-Chave de Performance) é uma métrica específica escolhida porque indica progresso em direção a uma meta ou objetivo definido — nem todas as métricas são KPIs, mas todos os KPIs são métricas. A opção sobre métrica financeira e KPI sobre execução está incorreta porque métricas não precisam ser financeiras, e KPIs não precisam ser sobre execução. A opção sobre métrica qualitativa e KPI quantitativo está incorreta porque métricas são quantitativas, não qualitativas. A opção sobre termos intercambiáveis está incorreta porque os termos não são intercambiáveis — um KPI é um subconjunto selecionado de métricas. Apenas a opção sobre métrica quantitativa e KPI como subconjunto selecionado descreve corretamente a diferença."
         },
         "en": {
           "q": "Which of the following best describes the difference between a test metric and a test KPI?",
@@ -8410,7 +8424,7 @@
             "There is no conceptual difference — the terms are entirely interchangeable and describe the same quantitative measure within the testing process",
             "A metric is a quantitative measure; a KPI is a metric selected to indicate progress toward a specific goal or target"
           ],
-          "exp": "A metric is a quantitative measure of some attribute of the test process or product. A KPI (Key Performance Indicator) is a specific metric chosen because it indicates progress toward a defined goal or target — not all metrics are KPIs, but all KPIs are metrics. Option A is incorrect because metrics need not be financial, and KPIs need not be about execution. Option B is incorrect because metrics are quantitative, not qualitative. Option C is incorrect because the terms are not interchangeable — a KPI is a selected subset of metrics. Only Option D correctly describes the difference."
+          "exp": "A metric is a quantitative measure of some attribute of the test process or product. A KPI (Key Performance Indicator) is a specific metric chosen because it indicates progress toward a defined goal or target — not all metrics are KPIs, but all KPIs are metrics. The option about metric as financial and KPI as about execution is incorrect because metrics need not be financial, and KPIs need not be about execution. The option about metric as qualitative and KPI as quantitative is incorrect because metrics are quantitative, not qualitative. The option about interchangeable terms is incorrect because the terms are not interchangeable — a KPI is a selected subset of metrics. Only the option about metric as quantitative and KPI as selected subset correctly describes the difference."
         }
       }
     },
@@ -8429,7 +8443,7 @@
             "Eles permitem que os testadores pulem integralmente os critérios de entrada e saída definidos no plano de teste mestre, sem necessidade de justificativa adicional",
             "Eles são necessários quando o projeto adota um ciclo de vida de desenvolvimento estritamente em cascata, sem iteração ou incremento entre as fases"
           ],
-          "exp": "Planos de teste específicos por fase (um por nível de teste) abordam as preocupações únicas de cada nível — como ambiente de teste, dados de teste, ferramentas, técnicas e critérios de entrada/saída adaptados aos objetivos daquele nível. O plano de teste mestre fornece coordenação geral; os planos de fase o complementam com detalhe específico do nível. A opção B está incorreta porque planos de fase não substituem o plano mestre — ambos são necessários. A opção C está incorreta porque planos de fase não permitem pular critérios do plano mestre; eles os refinam. A opção D está incorreta porque planos de fase podem ser usados em diferentes ciclos de vida e não são uma exigência exclusiva de projetos em cascata. Apenas a opção A descreve corretamente o valor dos planos específicos por fase."
+          "exp": "Planos de teste específicos por fase (um por nível de teste) abordam as preocupações únicas de cada nível — como ambiente de teste, dados de teste, ferramentas, técnicas e critérios de entrada/saída adaptados aos objetivos daquele nível. O plano de teste mestre fornece coordenação geral; os planos de fase o complementam com detalhe específico do nível. A opção sobre substituir o plano mestre está incorreta porque planos de fase não substituem o plano mestre — ambos são necessários. A opção sobre pular critérios do plano mestre está incorreta porque planos de fase não permitem pular critérios do plano mestre; eles os refinam. A opção sobre exclusividade de cascata está incorreta porque planos de fase podem ser usados em diferentes ciclos de vida e não são uma exigência exclusiva de projetos em cascata. Apenas a opção sobre planos de fase que abordam preocupações específicas do nível descreve corretamente o valor dos planos específicos por fase."
         },
         "en": {
           "q": "A project has separate test plans for component testing, integration testing, and system testing. Compared to a single master test plan, what is the main value of having these phase-specific test plans?",
@@ -8439,7 +8453,7 @@
             "They allow testers to fully skip the entry and exit criteria defined in the master test plan, without need for additional justification whatsoever",
             "They are required when the project adopts a strictly waterfall development lifecycle, without iteration or increment between the phases"
           ],
-          "exp": "Phase-specific test plans (one per test level) address the unique concerns of each level — such as test environment, test data, tools, techniques, and entry/exit criteria that are tailored to that level's objectives. The master test plan provides overall coordination; phase plans complement it with level-specific detail. Option B is incorrect because phase plans do not replace the master plan — both are needed. Option C is incorrect because phase plans do not allow skipping master plan criteria; they refine them. Option D is incorrect because phase plans can be used in different lifecycles and are not an exclusive requirement of waterfall projects. Only Option A correctly describes the value of phase-specific plans."
+          "exp": "Phase-specific test plans (one per test level) address the unique concerns of each level — such as test environment, test data, tools, techniques, and entry/exit criteria that are tailored to that level's objectives. The master test plan provides overall coordination; phase plans complement it with level-specific detail. The option about replacing the master plan is incorrect because phase plans do not replace the master plan — both are needed. The option about skipping master plan criteria is incorrect because phase plans do not allow skipping master plan criteria; they refine them. The option about waterfall exclusivity is incorrect because phase plans can be used in different lifecycles and are not an exclusive requirement of waterfall projects. Only the option about phase plans addressing level-specific concerns correctly describes the value of phase-specific plans."
         }
       }
     },
@@ -8458,7 +8472,7 @@
             "Uma lista completa de defeitos já encontrados na aplicação desde o início do projeto, ordenados por data de descoberta e por severidade",
             "A data planejada de lançamento de marketing pela equipe comercial para a nova versão do produto de software, sem relação com os testes"
           ],
-          "exp": "Para um defeito de regressão, a informação mais importante é o build/versão onde a funcionalidade funcionou corretamente pela última vez (a baseline \"conhecida como boa\"), o build onde ela agora falha (a versão \"conhecida como ruim\"), e os passos para reproduzir a falha. Isso permite que os desenvolvedores comparem os dois builds, identifiquem as mudanças de código entre eles e isolem a causa da regressão. A opção A (opinião sobre cancelar release) é subjetiva e não acionável para investigação. A opção C (lista de defeitos já encontrados) é ruído irrelevante. A opção D (data de release de marketing) é uma preocupação comercial, não técnica. Apenas a opção B fornece a informação necessária para confirmar e localizar a regressão."
+          "exp": "Para um defeito de regressão, a informação mais importante é o build/versão onde a funcionalidade funcionou corretamente pela última vez (a baseline 'conhecida como boa'), o build onde ela agora falha (a versão 'conhecida como ruim'), e os passos para reproduzir a falha. Isso permite que os desenvolvedores comparem os dois builds, identifiquem as mudanças de código entre eles e isolem a causa da regressão. A opção sobre opinião de cancelar release é subjetiva e não acionável para investigação. A opção sobre lista de defeitos já encontrados é ruído irrelevante. A opção sobre data de release de marketing é uma preocupação comercial, não técnica. Apenas a opção sobre builds conhecidos como bom/ruim e passos para reproduzir fornece a informação necessária para confirmar e localizar a regressão."
         },
         "en": {
           "q": "A tester is writing a defect report for a regression defect: a feature that worked correctly in the previous release now fails after a code change. Which information is MOST important to include to help developers confirm this is a regression and locate the cause?",
@@ -8468,7 +8482,7 @@
             "A complete list of defects ever found in the application since the beginning of the project, sorted by date of discovery and by severity",
             "The marketing launch date planned by the commercial team for the new version of the software product, without relation to testing"
           ],
-          "exp": "For a regression defect, the most important information is the build/version where the feature last worked correctly (the \"known-good\" baseline), the build where it now fails (the \"known-bad\" version), and the steps to reproduce the failure. This allows developers to compare the two builds, identify the code changes between them, and isolate the cause of the regression. Option A (opinion on cancelling release) is subjective and not actionable for investigation. Option C (list of defects ever found) is irrelevant noise. Option D (marketing release date) is a commercial concern, not a technical one. Only Option B provides the information needed to confirm and locate the regression."
+          "exp": "For a regression defect, the most important information is the build/version where the feature last worked correctly (the 'known-good' baseline), the build where it now fails (the 'known-bad' version), and the steps to reproduce the failure. This allows developers to compare the two builds, identify the code changes between them, and isolate the cause of the regression. The option about opinion on cancelling release is subjective and not actionable for investigation. The option about list of defects ever found is irrelevant noise. The option about marketing release date is a commercial concern, not a technical one. Only the option about known-good/known-bad builds and steps to reproduce provides the information needed to confirm and locate the regression."
         }
       }
     },
@@ -8487,7 +8501,7 @@
             "As especificações do ambiente de teste, perfil de carga, tempo de resposta medido e o requisito relevante",
             "Os nomes completos dos usuários que serão afetados se o defeito de performance não for corrigido a tempo"
           ],
-          "exp": "Para um defeito de performance, a informação mais crítica é aquela que permite aos desenvolvedores reproduzir e diagnosticar: as especificações do ambiente de teste (hardware, software, rede), o perfil de carga (número de usuários concorrentes, padrão de requisições), o tempo de resposta medido, e o requisito de performance relevante que foi violado. Esses dados objetivos permitem que os desenvolvedores reproduzam as condições e investiguem a causa. A opção A (opinião sobre arquitetura) é subjetiva. A opção B (índice de banco de dados sugerido) é uma decisão de desenvolvimento — a sugestão do testador pode estar incorreta e não é sua responsabilidade. A opção D (nomes de usuários) é irrelevante para o diagnóstico. Apenas a opção C fornece os dados técnicos necessários para investigar um defeito de performance."
+          "exp": "Para um defeito de performance, a informação mais crítica é aquela que permite aos desenvolvedores reproduzir e diagnosticar: as especificações do ambiente de teste (hardware, software, rede), o perfil de carga (número de usuários concorrentes, padrão de requisições), o tempo de resposta medido, e o requisito de performance relevante que foi violado. Esses dados objetivos permitem que os desenvolvedores reproduzam as condições e investiguem a causa. A opção sobre opinião de arquitetura é subjetiva. A opção sobre índice de banco de dados sugerido é uma decisão de desenvolvimento — a sugestão do testador pode estar incorreta e não é sua responsabilidade. A opção sobre nomes de usuários é irrelevante para o diagnóstico. Apenas a opção sobre especificações de ambiente, perfil de carga, tempo de resposta e requisito fornece os dados técnicos necessários para investigar um defeito de performance."
         },
         "en": {
           "q": "A tester observes that a web page takes 18 seconds to load under normal user load, exceeding the 3-second requirement. When reporting this performance defect, which information is MOST critical to include?",
@@ -8497,7 +8511,7 @@
             "The test environment specifications, load profile, measured response time, and the relevant requirement",
             "The full names of users who will be affected if the performance defect is not fixed in time before the software release"
           ],
-          "exp": "For a performance defect, the most critical information is what allows developers to reproduce and diagnose: the test environment specifications (hardware, software, network), the load profile (number of concurrent users, request pattern), the measured response time, and the relevant performance requirement that was violated. This objective data enables developers to reproduce the conditions and investigate the cause. Option A (architecture opinion) is subjective. Option B (suggested database index) is a development decision — the tester's suggestion may be incorrect and is not the tester's responsibility. Option D (user names) is irrelevant to diagnosis. Only Option C provides the technical data needed to investigate a performance defect."
+          "exp": "For a performance defect, the most critical information is what allows developers to reproduce and diagnose: the test environment specifications (hardware, software, network), the load profile (number of concurrent users, request pattern), the measured response time, and the relevant performance requirement that was violated. This objective data enables developers to reproduce the conditions and investigate the cause. The option about architecture opinion is subjective. The option about suggested database index is a development decision — the tester's suggestion may be incorrect and is not the tester's responsibility. The option about user names is irrelevant to diagnosis. Only the option about environment specifications, load profile, measured response time, and requirement provides the technical data needed to investigate a performance defect."
         }
       }
     },
@@ -8516,7 +8530,7 @@
             "Uma reescrita completa de todo o módulo de autenticação em pseudocódigo, proposta pelo testador como solução definitiva para a falha",
             "Uma lista detalhada dos clientes que podem ser afetados, incluindo seus dados pessoais completos e credenciais de acesso"
           ],
-          "exp": "Para um defeito de segurança como injeção de SQL, o relatório de defeito deve incluir a string exata de entrada maliciosa usada (para que a equipe possa reproduzir), o comportamento esperado (entrada deve ser rejeitada ou sanitizada), o comportamento observado (dados do banco foram retornados), e o impacto potencial (vazamento de dados, acesso não autorizado). Essa informação objetiva permite que a equipe de segurança confirme, investigue e corrija. A opção B (recomendação para demitir o desenvolvedor) é anti-profissional e não faz parte de um relatório de defeito. A opção C (reescrita do módulo em pseudocódigo) é responsabilidade do desenvolvedor, não do testador. A opção D (lista de clientes com dados pessoais) seria em si uma violação de privacidade e não é apropriada em um relatório de defeito. Apenas a opção A fornece a informação apropriada para investigação."
+          "exp": "Para um defeito de segurança como injeção de SQL, o relatório de defeito deve incluir a string exata de entrada maliciosa usada (para que a equipe possa reproduzir), o comportamento esperado (entrada deve ser rejeitada ou sanitizada), o comportamento observado (dados do banco foram retornados), e o impacto potencial (vazamento de dados, acesso não autorizado). Essa informação objetiva permite que a equipe de segurança confirme, investigue e corrija. A opção sobre recomendação para demitir o desenvolvedor é anti-profissional e não faz parte de um relatório de defeito. A opção sobre reescrita do módulo em pseudocódigo é responsabilidade do desenvolvedor, não do testador. A opção sobre lista de clientes com dados pessoais seria em si uma violação de privacidade e não é apropriada em um relatório de defeito. Apenas a opção sobre string maliciosa, comportamentos esperado/observado e impacto potencial fornece a informação apropriada para investigação."
         },
         "en": {
           "q": "A tester discovers that a login page accepts SQL injection in the username field, returning data from the user table. When writing the defect report, which information should be included to enable the security team to investigate effectively?",
@@ -8526,7 +8540,7 @@
             "A complete rewrite of the entire authentication module in pseudocode, proposed by the tester as the definitive solution to the flaw",
             "A detailed list of customers who might be affected, including their complete personal data and access credentials"
           ],
-          "exp": "For a security defect such as SQL injection, the defect report should include the exact malicious input string used (so the team can reproduce), the expected behavior (input should be rejected or sanitized), the observed behavior (database data was returned), and the potential impact (data breach, unauthorized access). This objective information allows the security team to confirm, investigate, and remediate. Option B (recommendation to fire the developer) is unprofessional and not part of a defect report. Option C (rewriting the module in pseudocode) is the developer's responsibility, not the tester's. Option D (list of customers with personal data) would itself be a privacy violation and is not appropriate in a defect report. Only Option A provides the appropriate investigation information."
+          "exp": "For a security defect such as SQL injection, the defect report should include the exact malicious input string used (so the team can reproduce), the expected behavior (input should be rejected or sanitized), the observed behavior (database data was returned), and the potential impact (data breach, unauthorized access). This objective information allows the security team to confirm, investigate, and remediate. The option about recommendation to fire the developer is unprofessional and not part of a defect report. The option about rewriting the module in pseudocode is the developer's responsibility, not the tester's. The option about list of customers with personal data would itself be a privacy violation and is not appropriate in a defect report. Only the option about malicious input string, expected/observed behaviors, and potential impact provides the appropriate investigation information."
         }
       }
     },
@@ -8574,7 +8588,7 @@
             "O resultado esperado, o resultado real, o ambiente e os passos para reproduzir",
             "A data e a hora exatas em que o defeito foi reportado pela primeira vez à equipe de desenvolvimento"
           ],
-          "exp": "O relatório enviado carece da informação técnica necessária para investigação: o resultado esperado (o que deve acontecer quando se clica em login), o resultado real (precisamente o que aconteceu — mensagem de erro, página em branco, travamento, etc.), o ambiente (navegador, sistema operacional, versão) e passos detalhados para reproduzir. Sem estes, os desenvolvedores não podem reproduzir ou diagnosticar o problema. A opção A (ID e título do defeito) é tipicamente adicionada pela ferramenta de rastreamento de defeitos e não é o elemento crítico mais importante que falta. A opção B (nome do desenvolvedor) é uma decisão de atribuição, não conteúdo de investigação. A opção D (data do relatório) é tipicamente auto-estampada pela ferramenta. Apenas a opção C identifica o conteúdo técnico que está genuinamente faltando e torna o relatório inadequado."
+          "exp": "O relatório enviado carece da informação técnica necessária para investigação: o resultado esperado (o que deve acontecer quando se clica em login), o resultado real (precisamente o que aconteceu — mensagem de erro, página em branco, travamento, etc.), o ambiente (navegador, sistema operacional, versão) e passos detalhados para reproduzir. Sem estes, os desenvolvedores não podem reproduzir ou diagnosticar o problema. A opção sobre ID e título do defeito é tipicamente adicionada pela ferramenta de rastreamento de defeitos e não é o elemento crítico mais importante que falta. A opção sobre nome do desenvolvedor é uma decisão de atribuição, não conteúdo de investigação. A opção sobre data do relatório é tipicamente auto-estampada pela ferramenta. Apenas a opção sobre resultado esperado, real, ambiente e passos para reproduzir identifica o conteúdo técnico que está genuinamente faltando e torna o relatório inadequado."
         },
         "en": {
           "q": "A tester submits the following defect report: \"Login is broken. I clicked login and nothing happened. Please fix.\" Which critical element is MISSING that makes this defect report inadequate for developers to investigate?",
@@ -8584,7 +8598,7 @@
             "The expected result, actual result, environment, and steps to reproduce",
             "The exact date and time the defect was first reported to the development team"
           ],
-          "exp": "The submitted report lacks the technical information needed to investigate: the expected result (what should happen when login is clicked), the actual result (precisely what happened — error message, blank page, hang, etc.), the environment (browser, OS, version), and detailed steps to reproduce. Without these, developers cannot reproduce or diagnose the issue. Option A (defect ID and title) is typically added by the defect tracking tool and is not the most critical missing element. Option B (developer name) is an assignment decision, not investigation content. Option D (report date) is typically auto-stamped by the tool. Only Option C identifies the technical content that is genuinely missing and makes the report inadequate."
+          "exp": "The submitted report lacks the technical information needed to investigate: the expected result (what should happen when login is clicked), the actual result (precisely what happened — error message, blank page, hang, etc.), the environment (browser, OS, version), and detailed steps to reproduce. Without these, developers cannot reproduce or diagnose the issue. The option about defect ID and title is typically added by the defect tracking tool and is not the most critical missing element. The option about developer name is an assignment decision, not investigation content. The option about report date is typically auto-stamped by the tool. Only the option about expected result, actual result, environment, and steps to reproduce identifies the technical content that is genuinely missing and makes the report inadequate."
         }
       }
     },
@@ -8603,7 +8617,7 @@
             "Uma ferramenta que mede continuamente a porcentagem de instruções de código-fonte exercitadas durante a execução do teste",
             "Uma ferramenta que simula muitos usuários concorrentes simultaneamente para medir a resposta do sistema sob carga crescente"
           ],
-          "exp": "Uma ferramenta de gerenciamento de teste apoia o planejamento, acompanhamento e gerenciamento das atividades de teste, incluindo gerenciar casos de teste, agendar a execução de teste e manter a rastreabilidade entre requisitos e testes. A opção B descreve uma ferramenta de execução de teste. A opção C descreve uma ferramenta de análise de cobertura (white-box). A opção D descreve uma ferramenta de teste de performance/carga. Apenas a opção A descreve as funções principais do gerenciamento de teste."
+          "exp": "Uma ferramenta de gerenciamento de teste apoia o planejamento, acompanhamento e gerenciamento das atividades de teste, incluindo gerenciar casos de teste, agendar a execução de teste e manter a rastreabilidade entre requisitos e testes. A opção sobre execução de scripts automatizados descreve uma ferramenta de execução de teste. A opção sobre análise de cobertura (white-box) descreve uma ferramenta de análise de cobertura. A opção sobre simulação de usuários concorrentes descreve uma ferramenta de teste de performance/carga. Apenas a opção sobre gerenciamento de casos de teste, cronogramas e rastreabilidade descreve as funções principais do gerenciamento de teste."
         },
         "en": {
           "q": "Which of the following describes a test management tool?",
@@ -8613,7 +8627,7 @@
             "A tool that continuously measures the percentage of source code statements exercised during the entire test execution",
             "A tool that simulates many concurrent users simultaneously in order to measure the system response under increasing load"
           ],
-          "exp": "A test management tool supports the planning, tracking, and management of testing activities, including managing test cases, scheduling test execution, and maintaining traceability between requirements and tests. Option B describes a test execution tool. Option C describes a coverage analysis tool (white-box). Option D describes a performance/load testing tool. Only Option A describes the core functions of test management."
+          "exp": "A test management tool supports the planning, tracking, and management of testing activities, including managing test cases, scheduling test execution, and maintaining traceability between requirements and tests. The option about executing automated scripts describes a test execution tool. The option about coverage analysis (white-box) describes a coverage analysis tool. The option about simulating concurrent users describes a performance/load testing tool. Only the option about managing test cases, schedules, and traceability describes the core functions of test management."
         }
       }
     },
@@ -8719,7 +8733,7 @@
             "Compreensão da tecnologia usada pela ferramenta",
             "Avaliação do fornecedor"
           ],
-          "exp": "O time já confirmou que ambas as ferramentas atendem aos seus requisitos funcionais e técnicos, então não está mais executando a opção A. Não está analisando os custos financeiros em relação aos benefícios de cada ferramenta (opção B), nem está investigando os detalhes técnicos internos das ferramentas (opção C). O foco do time em atributos específicos do fornecedor — estabilidade financeira, qualidade do suporte ao cliente, reputação e histórico de investimento — é a definição clássica de avaliação do fornecedor, que é um dos fatores de seleção de ferramenta identificados no syllabus do CTFL."
+          "exp": "O time já confirmou que ambas as ferramentas atendem aos seus requisitos funcionais e técnicos, então já não está mais executando a opção sobre avaliação da ferramenta contra requisitos. Também não está executando a opção sobre análise de custo-benefício nem a opção sobre compreensão da tecnologia usada pela ferramenta. O foco do time em atributos específicos do fornecedor — estabilidade financeira, qualidade do suporte ao cliente, reputação e histórico de investimento — é a definição clássica de avaliação do fornecedor, que é um dos fatores de seleção de ferramenta identificados no syllabus do CTFL."
         },
         "en": {
           "q": "A test team has narrowed their choice of a test execution tool to two candidates, both of which meet all of the team's functional and technical requirements. To make the final selection, the team investigates each vendor's financial stability, the quality and availability of customer support, the vendor's reputation in the testing community, and the vendor's history of continued investment in the product line. Which tool selection factor is the team primarily applying?",
@@ -8729,7 +8743,7 @@
             "Understanding of the technology used by the tool",
             "Vendor evaluation"
           ],
-          "exp": "The team has already confirmed that both tools meet their functional and technical requirements, so they are no longer performing option A. They are not analyzing the financial costs versus the benefits of each tool (option B), nor are they investigating the technical internals of the tools (option C). The team's focus on vendor-specific attributes — financial stability, customer support quality, reputation, and the vendor's investment history — is the textbook definition of vendor evaluation, which is one of the tool selection factors identified in the CTFL syllabus."
+          "exp": "The team has already confirmed that both tools meet their functional and technical requirements, so they are no longer performing the option about evaluation of the tool against requirements. They are also not performing the option about cost-benefit analysis nor the option about understanding of the technology used by the tool. The team's focus on vendor-specific attributes — financial stability, customer support quality, reputation, and the vendor's investment history — is the textbook definition of vendor evaluation, which is one of the tool selection factors identified in the CTFL syllabus."
         }
       }
     }
