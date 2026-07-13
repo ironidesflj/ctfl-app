@@ -6,8 +6,8 @@
 
 Prontidão baseada em blueprint oficial de exame (Spec 2), hierarquia do
 Stats e gamificação (Spec 1), fix de rótulos do radar, sync do banco de
-questões embutido no app e hardening de acessibilidade/i18n/persistência
-(Fase 3). 12 commits desde v3.9.0.
+questões embutido no app, hardening de acessibilidade/i18n/persistência
+(Fase 3) e reabertura contextual do Onboarding. 13 commits desde v3.9.0.
 
 - feat(readiness): **prontidão agora usa o blueprint oficial do exame**
   (`getReadinessV2`) em vez de fórmula estatística pura — exige cobertura
@@ -62,6 +62,15 @@ questões embutido no app e hardening de acessibilidade/i18n/persistência
   `localStorage` deixam de falhar silenciosamente, validação de import de
   progresso mais estrita, banco de questões (2,5MB) separado em chunk
   próprio no build.
+- feat(ux): **reabertura contextual do Onboarding** — botão "Como
+  funciona?" (Stats) abre uma versão reduzida (só "Entendendo suas
+  métricas" + FAQ, sem hero/features/social-proof) como overlay por cima
+  da tela atual, em vez de recarregar a página e substituir as rotas.
+  Fechar (X no topo ou botão "Voltar") sempre retorna pra onde o usuário
+  estava — a rota nunca desmonta, não tem lógica de "lembrar e navegar
+  de volta". Header/footer ficam ocultos e o scroll de fundo é travado
+  enquanto o overlay está aberto (evita dupla barra de rolagem). Onboarding
+  de 1ª visita não muda em nada.
 
 ### v3.9.0
 
