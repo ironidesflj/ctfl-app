@@ -14,7 +14,7 @@
 7. Acesso institucional permanente e feedback global por Issue Form, publicados
    em `origin/main` no commit `172a2db`.
 
-## Implementado localmente — v3.12.0
+## Fechado e publicado — v3.12.0
 
 1. Pools exclusivos para estudo e simulado nas certificações live.
 2. Pontuação oficial ponderada do CTAL-TA e tempos nativos BSTQB.
@@ -22,11 +22,19 @@
    de estudo; simulados oficiais e personalizados restritos ao pool de prova.
 4. Comunicação da release 3.12 e renovação do cache PWA.
 
+## Implementado localmente — v3.13.0
+
+1. Conteúdo completo de Flashcards, Syllabus e Glossário para CTAL-TA em PT/EN.
+2. Escopo explícito de conteúdo por certificação e capítulo, incluindo SRS.
+3. Heatmap de 12 semanas com calendário real, detalhe interativo e alvos de
+   toque acessíveis.
+4. Comunicação da release 3.13 e renovação do cache PWA.
+
 ## Pendentes solicitados pelo Iron
 
 Nenhum dos dois itens registrados em 2026-10-14 permanece pendente de
 implementação: foram tratados separadamente em `spec-institutional-access.md`
-e `spec-global-feedback.md` e já estão publicados. A v3.12 permanece local até
+e `spec-global-feedback.md` e já estão publicados. A v3.13 permanece local até
 validação final e autorização posterior para commit/push.
 
 ## Adiado por decisão do Iron
@@ -37,7 +45,6 @@ validação final e autorização posterior para commit/push.
 ## Dívidas conhecidas, não bloqueantes
 
 - Chunk lazy do CTAL-TA com aproximadamente 669 KB e warning acima de 500 KB.
-- Conteúdo de Flashcards/Syllabus/Glossário disponível apenas para CTFL.
 - CT-AI, CTAL-TM e CTFL-AT com dívida psicométrica latente.
 - `ctalta-106` e `ctalta-120` continuam inconclusivos e visíveis até decisão de
   conteúdo específica.

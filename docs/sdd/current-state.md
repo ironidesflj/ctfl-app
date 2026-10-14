@@ -1,12 +1,12 @@
-# Estado atual verificado — 2026-10-14 (v3.12.0 local)
+# Estado atual verificado — 2026-10-15 (v3.13.0 local)
 
 ## Repositórios de referência
 
-- App v3.11.0 + acesso institucional/feedback confirmado em `origin/main`: `172a2db`.
-- Banco E2E round 2 confirmado em `origin/main`: `5f8a9f7`.
+- App v3.12.0 confirmado em `origin/main`: `498397d`.
+- Banco v1.5.0-pools confirmado em `origin/main`: `32e6e7e`.
 - Os dois JSONs embutidos no app tinham SHA-256 idêntico às fontes do banco no
   fechamento da integração v3.11.0.
-- A integração v3.12.0 está aplicada localmente e ainda não foi commitada nem enviada.
+- A integração v3.13.0 está aplicada localmente e ainda não foi commitada nem enviada.
 
 ## Specs fechadas
 
@@ -100,3 +100,16 @@
 - CT-AI, CTAL-TM e CTFL-AT permanecem latentes e não devem ser promovidas sem
   saneamento de conteúdo e metadados de exame.
 - Estudo e simulado usam pools mutuamente exclusivos nas duas certificações live.
+
+## Aplicação v3.13.0 — estado local
+
+- CTAL-TA recebe conteúdo real em PT/EN: 21 flashcards, 18 itens de syllabus e
+  37 termos de glossário, escopados por certificação e capítulo.
+- Heatmap redesenhado com 12 semanas alinhadas ao calendário, rótulos de
+  mês/dia, dias futuros ocultos e inspeção acessível por toque/clique/teclado.
+- Recursos institucionais, feedback, release notes, E2E e CI estrito foram
+  preservados apesar de estarem ausentes ou regressivos no pacote de origem.
+- Versão 3.13.0 e cache PWA `r15-v1`; lint e Prettier verdes, 340/340
+  testes unitários/de componente, build verde e 3/3 smokes Playwright.
+- Contagens verificadas por assert: 21 flashcards, 18 itens de syllabus e 37
+  termos de glossário CTAL-TA, todos bilíngues e cobrindo os cinco capítulos.

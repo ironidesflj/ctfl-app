@@ -1,7 +1,7 @@
 import { useState, useMemo } from "react";
 import { useParams } from "react-router-dom";
 import { getBank } from "../lib/bank.js";
-import { SYLLABUS_ITEMS, syllabusInLang } from "../data/study.js";
+import { SYLLABUS_ITEMS, syllabusForCert } from "../data/study.js";
 import { t } from "../lib/ui-strings.js";
 
 const hasEN = (id) => !!SYLLABUS_ITEMS.find((i) => i.id === id)?.locales?.en;
@@ -18,29 +18,23 @@ export default function Syllabus({ onStudy, lang = "pt", progress }) {
 
   const [domain, setDomain] = useState("all"); // conceptually chapterId now
 
-  // ponytail: SYLLABUS_ITEMS only exists for CTFL domains today; scope to
-  // the current cert's domain set so other certs never see CTFL content.
-  const certDomains = useMemo(() => new Set(chapters.map((c) => c.domain)), [chapters]);
-  const allItems = useMemo(
-    () => syllabusInLang(lang).filter((i) => certDomains.has(i.d)),
-    [lang, certDomains]
-  );
+  // r14: itens escopados pelo campo explícito `cert` (domínio não distingue
+  // capítulos dentro do CTAL-TA).
+  const allItems = useMemo(() => syllabusForCert(lang, certId), [lang, certId]);
   const hasContent = allItems.length > 0;
   const items = useMemo(
-    () =>
-      domain === "all"
-        ? allItems
-        : allItems.filter(
-            (i) => i.d === chapters.find((c) => String(c.chapter) === String(domain))?.domain
-          ),
-    [domain, allItems, chapters]
+    () => (domain === "all" ? allItems : allItems.filter((i) => String(i.ch) === String(domain))),
+    [domain, allItems]
   );
   const dom = chapters.find((c) => String(c.chapter) === String(domain));
 
   const coverage = coverageByChapter(progress?.seen || {});
   const itemsByDomain =
     domain === "all"
-      ? chapters.map((c) => ({ c, list: allItems.filter((i) => i.d === c.domain) }))
+      ? chapters.map((c) => ({
+          c,
+          list: allItems.filter((i) => String(i.ch) === String(c.chapter)),
+        }))
       : null;
 
   if (!hasContent) {

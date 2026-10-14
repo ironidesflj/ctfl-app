@@ -19,12 +19,19 @@ export function heatmapLevel(total) {
   return 4;
 }
 
-/** Janela de `days` dias (default 35 = 5 semanas) terminando em todayStr
- *  (YYYY-MM-DD; use storage.todayLocal() no caller). Retorna array
- *  ordenado do mais antigo pro mais novo, último elemento = hoje:
- *  [{date, total, correct, pct, level}]. Datas em local-time — sem
- *  risco de deslocamento UTC/DST (erro clássico com toISOString). */
-export function buildHeatmap(history, todayStr, days = 35) {
+/** Janela de `weeks` semanas (default 12) terminando hoje, ALINHADA à semana:
+ *  colunas = semanas reais começando na SEGUNDA (ISO-8601, padrão BR); a
+ *  última coluna é a semana atual (dias futuros = placeholder invisível).
+ *  Retorna:
+ *  {
+ *    grid:       [[cell|null × 7] × weeks]  // linhas = seg..dom
+ *    monthMarks: [string|null × weeks]      // label quando a semana contém o dia 1º (âncora na 1ª)
+ *    todayCell:  cell | null               // célula de hoje (ou null se fora da janela)
+ *    flat:       [cell]                     // células reais (sem futuras), p/ summary
+ *  }
+ *  Célula: {date, total, correct, pct, level, future: false}.
+ *  Datas em local-time — mesmo mecanismo anti-DST do buildHeatmap original. */
+export function heatmapWeeks(history, todayStr, weeks = 12, lang = "pt") {
   const byDate = new Map();
   (history || []).forEach((h) => {
     if (typeof h?.date !== "string") return;
@@ -36,21 +43,70 @@ export function buildHeatmap(history, todayStr, days = 35) {
 
   // meio-dia local: imune a bordas de DST ao subtrair dias
   const end = new Date(`${todayStr}T12:00:00`);
-  const out = [];
-  for (let i = days - 1; i >= 0; i--) {
-    const dt = new Date(end);
-    dt.setDate(end.getDate() - i);
-    const iso = toLocalISO(dt);
-    const d = byDate.get(iso) || { total: 0, correct: 0 };
-    out.push({
-      date: iso,
-      total: d.total,
-      correct: d.correct,
-      pct: d.total > 0 ? Math.round((d.correct / d.total) * 100) : null,
-      level: heatmapLevel(d.total),
-    });
+  // segunda-feira da semana atual (getDay: dom=0 → recua 6; seg=0 → recua 0)
+  const monday = new Date(end);
+  monday.setDate(end.getDate() - ((end.getDay() + 6) % 7));
+  const first = new Date(monday);
+  first.setDate(monday.getDate() - (weeks - 1) * 7);
+
+  const MONTHS =
+    lang === "en"
+      ? ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+      : ["jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez"];
+  const monthName = (d) => MONTHS[d.getMonth()];
+
+  const grid = [];
+  const flat = [];
+  let todayCell = null;
+  const todayISO = toLocalISO(end);
+  for (let w = 0; w < weeks; w++) {
+    const col = [];
+    for (let r = 0; r < 7; r++) {
+      const dt = new Date(first);
+      dt.setDate(first.getDate() + w * 7 + r);
+      const iso = toLocalISO(dt);
+      const future = dt > end;
+      if (future) {
+        col.push(null); // placeholder de dia futuro (a semana atual é parcial)
+        continue;
+      }
+      const d = byDate.get(iso) || { total: 0, correct: 0 };
+      const cell = {
+        date: iso,
+        total: d.total,
+        correct: d.correct,
+        pct: d.total > 0 ? Math.round((d.correct / d.total) * 100) : null,
+        level: heatmapLevel(d.total),
+        future: false,
+      };
+      col.push(cell);
+      flat.push(cell);
+      if (iso === todayISO) todayCell = cell;
+    }
+    grid.push(col);
   }
-  return out;
+
+  // rótulos de mês: semana que contém o dia 1º ganha o nome do mês
+  const monthMarks = grid.map((col) => {
+    for (const c of col) {
+      if (!c) continue;
+      const dt = new Date(`${c.date}T12:00:00`);
+      if (dt.getDate() === 1) {
+        return monthName(dt);
+      }
+    }
+    return null;
+  });
+  // âncora: 1ª semana sempre rotulada (senão o usuário se perde no tempo)
+  if (!monthMarks[0] && grid[0]) {
+    const c = grid[0].find(Boolean);
+    if (c) {
+      const dt = new Date(`${c.date}T12:00:00`);
+      monthMarks[0] = monthName(dt);
+    }
+  }
+
+  return { grid, monthMarks, todayCell, flat };
 }
 
 /** Resumo textual do heatmap (para aria-label/sr-only e legendas). */
@@ -71,7 +127,12 @@ export function weakChapters(byDomain, chapters, minAnswers = 3) {
     .map((c) => {
       const bd = (byDomain || {})[String(c.chapter)];
       return bd && bd.t >= minAnswers
-        ? { ch: String(c.chapter), t: bd.t, c: bd.c, pct: Math.round((bd.c / bd.t) * 100) }
+        ? {
+            ch: String(c.chapter),
+            t: bd.t,
+            c: bd.c,
+            pct: Math.round((bd.c / bd.t) * 100),
+          }
         : null;
     })
     .filter(Boolean)
@@ -202,7 +263,12 @@ export function kLevelBreakdown(bank, attempts) {
   };
   for (const q of qs) {
     const k = keyFor(q);
-    const b = buckets.get(k) || { inBank: 0, attempted: 0, answers: 0, correct: 0 };
+    const b = buckets.get(k) || {
+      inBank: 0,
+      attempted: 0,
+      answers: 0,
+      correct: 0,
+    };
     b.inBank += 1;
     buckets.set(k, b);
   }

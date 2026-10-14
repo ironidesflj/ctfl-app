@@ -2,6 +2,24 @@
 
 ---
 
+Task ID: 14
+Agent: Codex — aplicação local auditada da v3.13.0
+Task: Integrar o conteúdo completo do CTAL-TA e o redesign do heatmap sem regredir os guardrails canônicos.
+
+Work Log:
+
+- Conteúdo CTAL-TA integrado com escopo explícito por certificação/capítulo:
+  21 flashcards, 18 itens de syllabus e 37 termos de glossário em PT/EN.
+- SRS restringido aos cards da certificação corrente; CTFL e CTAL-TA não
+  compartilham conteúdo de estudo por coincidência de domínio.
+- Heatmap corrigido e ampliado para 12 semanas reais (segunda→domingo), com
+  meses/dias, dias futuros ocultos, detalhe por toque/clique e alvo WCAG 2.5.8.
+- Recursos posteriores ao pacote preservados: SDD, CI estrito, E2E, release
+  notes, página institucional e feedback global.
+- Versão do app 3.13.0; cache PWA `r15-v1` para acionar atualização gentil.
+
+---
+
 Task ID: 1
 Agent: Main agent (Z.ai Code)
 Task: Análise E2E completa do app (ctfl-app / Synapse) e do banco de questões (ctfl-question-bank-ptbr), ambos enviados como ZIP em /home/z/my-project/upload/.

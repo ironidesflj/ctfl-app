@@ -10,7 +10,7 @@ describe("release notes significativas", () => {
   it("mostra a release atual em PT e grava o aceite", () => {
     render(<ReleaseNotesModal lang="pt" />);
     expect(screen.getByRole("dialog", { name: "O Synapse evoluiu" })).toBeInTheDocument();
-    expect(screen.getByText(/pools exclusivos/)).toBeInTheDocument();
+    expect(screen.getByText(/CTAL-TA agora tem flashcards/)).toBeInTheDocument();
 
     fireEvent.click(screen.getByRole("button", { name: "Entendi" }));
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument();

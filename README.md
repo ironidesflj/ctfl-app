@@ -29,11 +29,13 @@ React + Vite, instalável como PWA, funciona offline.
   estratificadas pelo blueprint oficial de capítulo e K-level (CTFL: 40q/60min;
   CTAL-TA: 45q/120min e pontuação K2=1, K3=2, K4=3; corte 51/78), personalização,
   grade de navegação, rascunho persistido, retomada e revisão no fim.
-- **Flashcards:** marcação Sei/Não sei, filtro "Revisar (N)" para cards pendentes.
-- **Syllabus** por capítulo.
+- **Flashcards:** conteúdo PT/EN para CTFL e CTAL-TA, marcação Sei/Não sei e
+  filtro "Revisar (N)" para cards pendentes.
+- **Syllabus e Glossário:** conteúdo por certificação e capítulo, incluindo os
+  cinco capítulos e objetivos K4 do CTAL-TA.
 - **Syllabus acionável:** botão "Estudar este capítulo" abre o Quiz pré-filtrado.
 - **Progresso:** prontidão por blueprint, radar por domínio, desempenho por
-  K-level, streak/heatmap, seis conquistas, meta diária, histórico de
+  K-level, heatmap interativo de 12 semanas, seis conquistas, meta diária, histórico de
   simulados, data da prova, exportação CSV e backup/restauração JSON.
 - **PWA:** instalável, shell e rotas offline, splash iOS claro/escuro, atalhos
   e atualização gentil sem interromper a sessão.
@@ -47,8 +49,8 @@ React + Vite, instalável como PWA, funciona offline.
 - **Banco:** multi-certificação (`getBank(certId)`), CTFL (300q) e CTAL-TA
   (200q) no ar, com pools de estudo/simulado mutuamente exclusivos e
   distribuição proporcional ao blueprint oficial de cada uma.
-- **Toggle PT/EN no header:** alterna o idioma das questões no Quiz e Simulado
-  (Flashcards e Syllabus permanecem em PT, com aviso "coming soon" em EN).
+- **Toggle PT/EN no header:** alterna o idioma das questões, Flashcards,
+  Syllabus e Glossário nas duas certificações disponíveis.
 
 ## Acesso institucional e feedback
 
@@ -122,7 +124,7 @@ npx playwright install chromium # apenas na primeira execução local
 npm run test:e2e
 ```
 
-O CI executa todos esses gates. A suíte unitária/de componentes tem 329 testes;
+O CI executa todos esses gates. A suíte unitária/de componentes tem 340 testes;
 os três smokes E2E em Chromium cobrem seleção, estudo, persistência, idioma,
 onboarding, conclusão/persistência de simulado e novidades por versão.
 

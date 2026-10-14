@@ -4,6 +4,7 @@
 // um progresso fixture controlado.
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { render, screen, cleanup, fireEvent } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { MemoryRouter, Routes, Route } from "react-router-dom";
 import Stats from "./Stats.jsx";
 import { todayLocal } from "../lib/storage.js";
@@ -60,7 +61,10 @@ describe("r6: Stats — meta diária", () => {
     renderStats(
       PROGRESS({
         total: 12,
-        history: Array.from({ length: 7 }, (_, i) => ({ date: today, correct: i % 2 === 0 })),
+        history: Array.from({ length: 7 }, (_, i) => ({
+          date: today,
+          correct: i % 2 === 0,
+        })),
       })
     );
     expect(screen.getByText("Meta diária")).toBeInTheDocument();
@@ -86,7 +90,10 @@ describe("r6: Stats — meta diária", () => {
     renderStats(
       PROGRESS({
         total: 7,
-        history: Array.from({ length: 7 }, () => ({ date: today, correct: true })),
+        history: Array.from({ length: 7 }, () => ({
+          date: today,
+          correct: true,
+        })),
       })
     );
     // default 10; muda pra 5 pra atingir
@@ -150,9 +157,69 @@ describe("r6: Stats — export CSV do histórico", () => {
 describe("r6: Stats — aria do heatmap com plural correto", () => {
   it("1 dia e 1 resposta ficam no singular no aria-label", () => {
     renderStats(PROGRESS({ total: 1, history: [{ date: todayLocal(), correct: true }] }));
-    const heat = screen.getByRole("img", { name: /Mapa de atividade/ });
+    const heat = screen.getByRole("group", { name: /Mapa de atividade/ });
     expect(heat.getAttribute("aria-label")).toContain("1 dia com estudo");
     expect(heat.getAttribute("aria-label")).toContain("1 resposta");
+  });
+});
+
+describe("r14: Stats — heatmap redesenhado (semanas alinhadas + inspeção por toque)", () => {
+  it("renderiza 12 colunas × 7 linhas com rótulos de mês e dia", () => {
+    renderStats(
+      PROGRESS({
+        total: 3,
+        history: [
+          { date: todayLocal(), correct: true },
+          { date: todayLocal(), correct: false },
+          { date: todayLocal(), correct: true },
+        ],
+      })
+    );
+    const heat = screen.getByRole("group", { name: /Mapa de atividade/ });
+    const cells = heat.querySelectorAll(".hm-cell:not(.future)");
+    const futures = heat.querySelectorAll(".hm-cell.future");
+    // 12 semanas × 7 dias = 84 células (contando futuros) + 5 da legenda
+    expect(cells.length + futures.length).toBe(84);
+    // rótulo do mês presente (âncora da 1ª semana)
+    expect(heat.querySelectorAll(".hm-month").length).toBe(12);
+    expect(heat.querySelector(".hm-month").textContent).toBeTruthy();
+    // rótulos de dia: segunda/quarta/sexta visíveis
+    const days = [...heat.querySelectorAll(".hm-day")].map((d) => d.textContent).join("");
+    ["S", "Q"].forEach((d) => expect(days).toContain(d));
+  });
+
+  it("células são botões (toque/clique seleciona o dia no detalhe)", async () => {
+    const user = userEvent.setup();
+    renderStats(
+      PROGRESS({
+        total: 3,
+        history: [
+          { date: todayLocal(), correct: true },
+          { date: todayLocal(), correct: false },
+          { date: todayLocal(), correct: true },
+        ],
+      })
+    );
+    const todayBtn = screen.getByTitle(new RegExp(todayLocal()));
+    await user.click(todayBtn);
+    const detail = document.querySelector(".hm-detail");
+    expect(detail.textContent).toContain(todayLocal());
+    expect(detail.textContent).toContain("3 resposta");
+  });
+
+  it("hoje aparece no detalhe por default (sem seleção prévia)", () => {
+    renderStats(
+      PROGRESS({
+        total: 2,
+        history: [
+          { date: todayLocal(), correct: true },
+          { date: todayLocal(), correct: false },
+        ],
+      })
+    );
+    const detail = document.querySelector(".hm-detail");
+    expect(detail.textContent).toContain(todayLocal());
+    expect(detail.textContent).toContain("50%"); // 1 de 2
   });
 });
 
@@ -284,7 +351,10 @@ describe("r10: Stats — lembrete diário", () => {
       permission,
       requestPermission: vi.fn().mockResolvedValue(permission),
     });
-    Object.defineProperty(window.navigator, "serviceWorker", { value: {}, configurable: true });
+    Object.defineProperty(window.navigator, "serviceWorker", {
+      value: {},
+      configurable: true,
+    });
   }
   function uninstallNotification() {
     global.Notification = RealNotification;
@@ -329,7 +399,9 @@ describe("r10: Stats — lembrete diário", () => {
     installNotification("granted");
     renderStats(PROGRESS());
     fireEvent.click(screen.getByRole("checkbox"));
-    fireEvent.change(screen.getByLabelText(/horário do lembrete/i), { target: { value: "07:30" } });
+    fireEvent.change(screen.getByLabelText(/horário do lembrete/i), {
+      target: { value: "07:30" },
+    });
     expect(localStorage.getItem("synapse.reminderTime")).toBe("07:30");
     expect(listenerCalls).toBe(2);
   });
@@ -338,7 +410,9 @@ describe("r10: Stats — lembrete diário", () => {
     installNotification("granted");
     renderStats(PROGRESS());
     fireEvent.click(screen.getByRole("checkbox"));
-    fireEvent.change(screen.getByLabelText(/horário do lembrete/i), { target: { value: "" } });
+    fireEvent.change(screen.getByLabelText(/horário do lembrete/i), {
+      target: { value: "" },
+    });
     expect(localStorage.getItem("synapse.reminderTime")).toBe(null); // default não polui
   });
 

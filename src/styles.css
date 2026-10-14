@@ -2461,22 +2461,59 @@ mark {
   letter-spacing: 0.02em;
 }
 
-/* ══════════════ r5: heatmap de atividade (Stats) ══════════════ */
+/* ══════════════ r14: heatmap de atividade (Stats) — redesign ══════════════
+   As células agora são quadradas pelos tracks fixos do grid, sem conflito
+   entre width:100%, aspect-ratio e linhas fixas. */
 .heatmap {
+  --hm: 14px;
   display: grid;
-  grid-auto-flow: column; /* preenche coluna a coluna = semana a semana */
-  grid-template-rows: repeat(7, 13px);
-  grid-template-columns: repeat(5, 1fr);
+  grid-auto-flow: row;
+  grid-template-columns: 1.1em repeat(12, var(--hm));
+  grid-template-rows: 12px repeat(7, var(--hm));
   gap: 3px;
   justify-content: center;
   margin-top: 0.5rem;
 }
+.hm-corner {
+  grid-column: 1;
+  grid-row: 1;
+}
+.hm-month {
+  font-size: 10px;
+  line-height: 12px;
+  color: var(--text-3);
+  white-space: nowrap;
+  overflow: visible;
+}
+.hm-day {
+  font-size: 10px;
+  line-height: var(--hm);
+  color: var(--text-3);
+  text-align: right;
+  padding-right: 4px;
+}
 .hm-cell {
-  width: 100%;
-  aspect-ratio: 1 / 1;
   border-radius: 3px;
-  background: var(--line); /* nível 0 (sem atividade) */
+  background: var(--line);
   transition: transform 0.12s;
+  font: inherit;
+}
+button.hm-cell {
+  padding: 0;
+  border: 0;
+  cursor: pointer;
+  min-width: 0;
+  min-height: 0;
+  position: relative;
+}
+button.hm-cell::after {
+  content: "";
+  position: absolute;
+  inset: -5px;
+}
+button.hm-cell:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
 }
 .hm-cell[data-level="1"] {
   background: color-mix(in srgb, var(--ok) 30%, var(--bg));
@@ -2494,8 +2531,25 @@ mark {
   outline: 2px solid var(--accent);
   outline-offset: 1px;
 }
+.hm-cell.sel {
+  outline: 2px solid var(--text);
+  outline-offset: 1px;
+}
+.hm-cell.future {
+  visibility: hidden;
+}
 .heatmap .hm-cell:hover {
   transform: scale(1.25);
+}
+.hm-detail {
+  margin: 0.45rem 0 0;
+  font-size: var(--fs-12);
+  color: var(--text-2);
+  text-align: center;
+  min-height: 1.2em;
+}
+.hm-hint {
+  color: var(--text-3);
 }
 .heatmap-foot {
   display: flex;
@@ -2514,7 +2568,7 @@ mark {
 }
 .hm-legend .hm-cell {
   width: 10px;
-  aspect-ratio: 1 / 1;
+  height: 10px;
   flex: none;
 }
 .hm-today-on {

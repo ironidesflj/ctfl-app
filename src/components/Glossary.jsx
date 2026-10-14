@@ -2,7 +2,7 @@ import { useState, useMemo, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { getBank } from "../lib/bank.js";
 import { getWrongIds } from "../lib/storage.js";
-import { localizedGlossary, findGlossaryTermsInText } from "../data/glossary.js";
+import { glossaryForCert, findGlossaryTermsInText } from "../data/glossary.js";
 import { t } from "../lib/ui-strings.js";
 
 const ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
@@ -18,10 +18,8 @@ const EMPTY_STATE_TEXT = {
   en: "Content coming soon for this certification.",
 };
 
-// ponytail: glossary entries have no cert/domain field, only ids like
-// "gl-fund-01" that encode the CTFL domain code. Derive it from the id so
-// this stays dynamic when content for other certs is added later.
-const domainFromId = (id) => id.split("-")[1];
+// r14: o campo explícito `cert` das entradas faz o escopo (antes o domínio era
+// derivado do id — o que não funcionaria p/ CTAL-TA, cujo domínio é "analyst").
 
 function escapeRegex(s) {
   return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
@@ -44,11 +42,7 @@ export default function Glossary({ lang = "pt", progress }) {
   const [wrongOnly, setWrongOnly] = useState(false);
   const headingRefs = useRef({});
 
-  const certDomains = useMemo(() => new Set(chapters.map((c) => c.domain)), [chapters]);
-  const allTerms = useMemo(
-    () => localizedGlossary(lang).filter((term) => certDomains.has(domainFromId(term.id))),
-    [lang, certDomains]
-  );
+  const allTerms = useMemo(() => glossaryForCert(lang, certId), [lang, certId]);
   const hasContent = allTerms.length > 0;
   const dom = chapters.find((c) => String(c.chapter) === String(domain));
 

@@ -1,4 +1,4 @@
-import { useRef, useState, useMemo } from "react";
+import { useRef, useState, useMemo, Fragment } from "react";
 import { useParams } from "react-router-dom";
 import { getBank } from "../lib/bank.js";
 import {
@@ -13,7 +13,7 @@ import {
   achievementProgress,
 } from "../lib/storage.js";
 import {
-  buildHeatmap,
+  heatmapWeeks,
   heatmapSummary,
   examHistoryToCsv,
   examTrend,
@@ -27,6 +27,10 @@ import { t } from "../lib/ui-strings.js";
 import { getNotificationPermission, requestNotificationPermission } from "../lib/notifications.js";
 import { parseTimeHHMM } from "../lib/reminder.js";
 import RadarChart from "./RadarChart.jsx";
+
+// r14: iniciais dos dias da semana p/ o eixo do heatmap (segunda→domingo;
+// só seg/qua/sex recebem rótulo — padrão GitHub, evita poluição)
+const HM_DAYS = ["S", "", "Q", "", "S", "", ""];
 
 // r8: sparkline da tendência das notas dos simulados — função pura
 // examTrend (activity.js, testada) + desenho. Tracejado = nota de corte;
@@ -304,20 +308,23 @@ export default function Stats({
 
   const coverage = coverageByChapter(progress.seen || {});
 
-  // r5: heatmap de atividade — 35 dias terminando hoje, agrupado do
-  // history (cada entrada = 1 resposta com data local YYYY-MM-DD).
-  const heatCells = useMemo(
-    () => buildHeatmap(progress.history || [], todayLocal(), 35),
-    [progress.history]
+  // r14: heatmap de atividade — 12 SEMANAS alinhadas à semana real (colunas
+  // começam na segunda; a última é a semana atual, dias futuros invisíveis).
+  // Cada entrada do history = 1 resposta com data local YYYY-MM-DD.
+  const heat = useMemo(
+    () => heatmapWeeks(progress.history || [], todayLocal(), 12, lang),
+    [progress.history, lang]
   );
-  const heatSummary = useMemo(() => heatmapSummary(heatCells), [heatCells]);
-  const heatToday = heatCells[heatCells.length - 1];
-  // r6: plural correto no aria do heatmap ("1 dia" vs "2 dias") — antes o
-  // template interpolava "1 dias com estudo e 1 respostas".
+  const heatSummary = useMemo(() => heatmapSummary(heat.flat), [heat]);
+  const heatToday = heat.todayCell;
+  // dia selecionado para o detalhe por toque (default = hoje)
+  const [heatSel, setHeatSel] = useState(null);
+  const selCell = heatSel || heatToday;
+  // r6: plural correto no aria do heatmap ("1 dia" vs "2 dias").
   const heatAria = t(lang, "stats.heatmapAria", {
     days: `${heatSummary.activeDays} ${heatSummary.activeDays === 1 ? t(lang, "stats.dayOne") : t(lang, "stats.dayMany")}`,
     answers: `${heatSummary.answers} ${heatSummary.answers === 1 ? t(lang, "stats.answerOne") : t(lang, "stats.answerMany")}`,
-    weeks: 5,
+    weeks: 12,
   });
   // r6: capítulo mais fraco por aproveitamento (byDomain) — mesma função
   // compartilhada do card 🎯 do Quiz (weakChapters em activity.js),
@@ -405,7 +412,11 @@ export default function Stats({
   // substituição de {word} com vars={} por padrão, então .replace() depois
   // não encontraria mais o placeholder, que já teria virado "").
   const readinessSuffix = t(lang, "stats.readinessSuffix", { cert: certLabel });
-  const metaText = t(lang, "stats.metaText", { examQuestions, passMark, passPct });
+  const metaText = t(lang, "stats.metaText", {
+    examQuestions,
+    passMark,
+    passPct,
+  });
   const metaTitle = t(lang, "stats.metaTitle", { cert: certLabel });
 
   return (
@@ -461,7 +472,14 @@ export default function Stats({
       {/* Fase 2: Achievements com nomes (se houver algum) */}
       {progress.total > 0 && achievements.length > 0 && (
         <div className="card" style={{ padding: "0.75rem" }}>
-          <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap", alignItems: "center" }}>
+          <div
+            style={{
+              display: "flex",
+              gap: "0.75rem",
+              flexWrap: "wrap",
+              alignItems: "center",
+            }}
+          >
             {achievements.map((aid) => {
               const a = ACHIEVEMENTS[aid];
               if (!a) return null;
@@ -508,8 +526,14 @@ export default function Stats({
               const desc = lang === "pt" ? a.ptDesc : a.enDesc;
               const label =
                 row.unit === "pct"
-                  ? t(lang, "stats.roadmapPct", { current: row.current, target: row.target })
-                  : t(lang, "stats.roadmapCount", { current: row.current, target: row.target });
+                  ? t(lang, "stats.roadmapPct", {
+                      current: row.current,
+                      target: row.target,
+                    })
+                  : t(lang, "stats.roadmapCount", {
+                      current: row.current,
+                      target: row.target,
+                    });
               return (
                 <li key={row.id} className={"ach-row" + (i === 0 && row.pct > 0 ? " closest" : "")}>
                   <span className="ach-icon" aria-hidden="true">
@@ -535,7 +559,9 @@ export default function Stats({
                     >
                       <div
                         className="ach-fill"
-                        style={{ width: Math.max(row.current > 0 ? 2 : 0, row.pct) + "%" }}
+                        style={{
+                          width: Math.max(row.current > 0 ? 2 : 0, row.pct) + "%",
+                        }}
                       />
                     </div>
                     <span className="ach-desc muted">{desc}</span>
@@ -585,26 +611,69 @@ export default function Stats({
         </div>
       )}
 
-      {/* r5: heatmap de atividade — 5 semanas terminando hoje */}
+      {/* r14: heatmap de atividade — 12 semanas alinhadas (segunda→domingo),
+          rótulos de mês/dia, toque-para-inspecionar (tooltips não existem em
+          touch), células quadradas por TRACKS fixos (o bug do aspect-r see
+          styles.css) */}
       {progress.total > 0 && (
         <div className="card heatmap-card">
           <h3>{t(lang, "stats.heatmapTitle")}</h3>
-          <div className="heatmap" role="img" aria-label={heatAria}>
-            {heatCells.map((c, i) => (
-              <span
-                key={c.date}
-                className={"hm-cell" + (i === heatCells.length - 1 ? " today" : "")}
-                data-level={c.level}
-                title={t(lang, "stats.heatmapCell", {
-                  date: c.date,
-                  total: c.total,
-                  pct: c.pct === null ? "—" : c.pct,
+          <div className="heatmap" role="group" aria-label={heatAria}>
+            <span className="hm-corner" aria-hidden="true" />
+            {heat.monthMarks.map((m, i) => (
+              <span key={"m" + i} className="hm-month" aria-hidden="true">
+                {m || ""}
+              </span>
+            ))}
+            {HM_DAYS.map((d, r) => (
+              <Fragment key={"d" + r}>
+                <span className="hm-day" aria-hidden="true">
+                  {d || ""}
+                </span>
+                {heat.grid.map((col, w) => {
+                  const c = col[r];
+                  if (!c)
+                    return (
+                      <span key={"f" + w + "-" + r} className="hm-cell future" aria-hidden="true" />
+                    );
+                  const isToday = heatToday && c.date === heatToday.date;
+                  const isSel = selCell && c.date === selCell.date;
+                  return (
+                    <button
+                      key={c.date}
+                      type="button"
+                      className={"hm-cell" + (isToday ? " today" : "") + (isSel ? " sel" : "")}
+                      data-level={c.level}
+                      onClick={() => setHeatSel(c)}
+                      title={t(lang, "stats.heatmapCell", {
+                        date: c.date,
+                        total: c.total,
+                        pct: c.pct === null ? "—" : c.pct,
+                      })}
+                      aria-label={t(lang, "stats.heatmapCell", {
+                        date: c.date,
+                        total: c.total,
+                        pct: c.pct === null ? "—" : c.pct,
+                      })}
+                    />
+                  );
                 })}
-              />
+              </Fragment>
             ))}
           </div>
+          <p className="hm-detail" aria-live="polite">
+            {selCell
+              ? selCell.total > 0
+                ? t(lang, "stats.heatmapDay", {
+                    date: selCell.date,
+                    total: selCell.total,
+                    pct: selCell.pct === null ? "—" : selCell.pct,
+                  })
+                : t(lang, "stats.heatmapDayEmpty", { date: selCell.date })
+              : ""}
+          </p>
           <div className="heatmap-foot">
-            <span className="muted">{heatCells[0].date.slice(5)}</span>
+            <span className="muted hm-hint">{t(lang, "stats.heatmapTapHint")}</span>
             <span className="hm-legend" aria-hidden="true">
               {t(lang, "stats.heatmapLess")}
               <span className="hm-cell" data-level="0" />
@@ -614,8 +683,8 @@ export default function Stats({
               <span className="hm-cell" data-level="4" />
               {t(lang, "stats.heatmapMore")}
             </span>
-            <span className={"muted" + (heatToday.total > 0 ? " hm-today-on" : "")}>
-              {t(lang, "stats.heatmapToday", { n: heatToday.total })}
+            <span className={"muted" + (heatToday && heatToday.total > 0 ? " hm-today-on" : "")}>
+              {heatToday ? t(lang, "stats.heatmapToday", { n: heatToday.total }) : ""}
             </span>
           </div>
         </div>
@@ -684,7 +753,9 @@ export default function Stats({
                 <p style={{ fontWeight: 600 }}>
                   {readiness.gatesPassed === false
                     ? missingItems
-                      ? t(lang, "stats.readinessGateBlockedSpecific", { items: missingItems })
+                      ? t(lang, "stats.readinessGateBlockedSpecific", {
+                          items: missingItems,
+                        })
                       : t(lang, "stats.readinessGateBlocked")
                     : readiness.point >= passPct
                       ? t(lang, "stats.readinessReady")
@@ -693,7 +764,11 @@ export default function Stats({
               )}
               <details style={{ marginTop: "0.25rem" }}>
                 <summary
-                  style={{ fontSize: "var(--fs-13)", cursor: "pointer", color: "var(--text-3)" }}
+                  style={{
+                    fontSize: "var(--fs-13)",
+                    cursor: "pointer",
+                    color: "var(--text-3)",
+                  }}
                 >
                   {t(lang, "stats.readinessSeeDetails")}
                 </summary>
@@ -702,7 +777,10 @@ export default function Stats({
                   {readinessSuffix}
                 </p>
                 <p className="muted" style={{ marginTop: "0.15rem", fontSize: "var(--fs-13)" }}>
-                  {t(lang, "stats.readinessCI", { low: readiness.ciLow, high: readiness.ciHigh })}
+                  {t(lang, "stats.readinessCI", {
+                    low: readiness.ciLow,
+                    high: readiness.ciHigh,
+                  })}
                 </p>
                 <p className="muted" style={{ marginTop: "0.15rem", fontSize: "var(--fs-13)" }}>
                   {t(lang, "stats.readinessCoverage", {
@@ -712,7 +790,11 @@ export default function Stats({
                   })}
                   <span className="pool-split-note">
                     {" "}
-                    · {t(lang, "stats.poolSplit", { study: studyCount, exam: examCount })}
+                    ·{" "}
+                    {t(lang, "stats.poolSplit", {
+                      study: studyCount,
+                      exam: examCount,
+                    })}
                   </span>
                 </p>
               </details>
@@ -721,7 +803,11 @@ export default function Stats({
           {pace !== null && (
             <p
               className="muted"
-              style={{ marginTop: "0.25rem", fontSize: "var(--fs-13)", width: "100%" }}
+              style={{
+                marginTop: "0.25rem",
+                fontSize: "var(--fs-13)",
+                width: "100%",
+              }}
             >
               {t(lang, "stats.pacePrefix")}
               {pace}
@@ -738,7 +824,10 @@ export default function Stats({
                 onClick={() => onGoToQuiz(weakest.ch)}
                 title={t(lang, "stats.trainWeakHint")}
               >
-                🎯 {t(lang, "stats.trainWeak", { chapter: chapterName(weakest.ch, lang) })}
+                🎯{" "}
+                {t(lang, "stats.trainWeak", {
+                  chapter: chapterName(weakest.ch, lang),
+                })}
               </button>
             </div>
           )}
@@ -852,7 +941,12 @@ export default function Stats({
       {progress.total > 0 && (
         <div
           className="card"
-          style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.75rem" }}
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: "0.75rem",
+          }}
         >
           <RadarChart
             domains={radarDomains}
@@ -990,7 +1084,9 @@ export default function Stats({
               </div>
               {reminderOn && (
                 <p className="reminder-when" role="status">
-                  {t(lang, "notifications.reminderWhen", { time: reminderTime })}
+                  {t(lang, "notifications.reminderWhen", {
+                    time: reminderTime,
+                  })}
                 </p>
               )}
             </>

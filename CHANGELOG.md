@@ -1,5 +1,20 @@
 # Changelog
 
+## v3.13.0 — 2026-10-15 — CTAL-TA completo e heatmap redesenhado
+
+- feat(study): CTAL-TA recebe 21 flashcards, 18 itens de syllabus e 37 termos
+  de glossário em PT/EN, cobrindo os cinco capítulos e os três objetivos K4.
+- refactor(study): conteúdo de Flashcards, Syllabus e Glossário passa a usar
+  escopo explícito por certificação e capítulo; SRS usa somente os cards do
+  certificado atual.
+- fix(stats): heatmap deixa de sobrepor linhas, passa a mostrar 12 semanas
+  alinhadas de segunda a domingo, rótulos de mês/dia e detalhes acessíveis por
+  toque, clique ou teclado.
+- feat(release): modal bilíngue atualizado para 3.13.0 e cache PWA renovado
+  para `r15-v1`.
+- test: testes ampliados para conteúdo CTAL-TA, isolamento entre certificações,
+  alinhamento calendário/DST e interação do heatmap.
+
 ## v3.12.0 — 2026-10-14 — pools exclusivos e pontuação oficial
 
 - feat(bank): CTFL separado em 220 questões de estudo + 80 exclusivas de

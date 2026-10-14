@@ -1,7 +1,7 @@
 import { useState, useMemo, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { getBank } from "../lib/bank.js";
-import { FLASHCARDS, flashcardsInLang } from "../data/study.js";
+import { FLASHCARDS, flashcardsForCert } from "../data/study.js";
 import { t } from "../lib/ui-strings.js";
 import { getSRSCard, updateSRSCard, getDueItems } from "../lib/storage.js";
 import { initSM2, sm2, QUALITY } from "../lib/spacedRepetition.js";
@@ -32,23 +32,19 @@ export default function Flashcards({ lang = "pt", progress, setProgress }) {
   const isDraggingRef = useRef(false);
   const SWIPE_THRESHOLD = 80;
 
-  // ponytail: content (FLASHCARDS) only exists for CTFL domains today; scope
-  // to the current cert's domain set so other certs never see CTFL cards.
-  const certDomains = useMemo(() => new Set(chapters.map((c) => c.domain)), [chapters]);
-  const allCards = useMemo(
-    () => flashcardsInLang(lang).filter((c) => certDomains.has(c.d)),
-    [lang, certDomains]
-  );
+  // r14: conteúdo escopado pelo campo explícito `cert` (o domínio sozinho
+  // não distingue capítulos dentro do CTAL-TA — todos compartilham "analyst").
+  const allCards = useMemo(() => flashcardsForCert(lang, certId), [lang, certId]);
   const hasContent = allCards.length > 0;
   const dueIds = useMemo(
     () =>
       progress
         ? getDueItems(
             progress,
-            FLASHCARDS.map((c) => c.id)
+            allCards.map((c) => c.id)
           )
         : [],
-    [progress]
+    [progress, allCards]
   );
   const cards = useMemo(
     () =>
@@ -56,11 +52,8 @@ export default function Flashcards({ lang = "pt", progress, setProgress }) {
         ? allCards.filter((c) => dueIds.includes(c.id))
         : domain === "all"
           ? allCards
-          : allCards.filter(
-              (c) =>
-                String(c.d) === chapters.find((ch) => String(ch.chapter) === String(domain))?.domain
-            ),
-    [domain, allCards, dueIds, chapters]
+          : allCards.filter((c) => String(c.ch) === String(domain)),
+    [domain, allCards, dueIds]
   );
 
   const card = cards[idx] || cards[0] || null;

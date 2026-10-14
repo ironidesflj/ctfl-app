@@ -1,7 +1,7 @@
-// r5 — Heatmap de atividade (lib/activity.js).
+// r5 — Heatmap de atividade · r14 — heatmapWeeks (semanas alinhadas).
 import { describe, it, expect } from "vitest";
 import {
-  buildHeatmap,
+  heatmapWeeks,
   heatmapLevel,
   heatmapSummary,
   weakChapters,
@@ -34,13 +34,31 @@ describe("r5: heatmapLevel — degraus de volume", () => {
   });
 });
 
-describe("r5: buildHeatmap", () => {
-  it("devolve exatamente N células terminando hoje (última = hoje)", () => {
-    const cells = buildHeatmap([], iso(0), 35);
-    expect(cells).toHaveLength(35);
-    expect(cells[34].date).toBe(iso(0));
-    expect(cells[34].total).toBe(0);
-    expect(cells[34].level).toBe(0);
+describe("r14: heatmapWeeks — semanas alinhadas à semana real", () => {
+  it("colunas de 7 dias começando na SEGUNDA; hoje está na última coluna", () => {
+    const { grid, flat } = heatmapWeeks([], iso(0), 4);
+    expect(grid).toHaveLength(4);
+    grid.forEach((col) => expect(col).toHaveLength(7));
+    // primeira célula da janela = segunda-feira
+    const first = new Date(`${grid[0][0].date}T12:00:00`);
+    expect(first.getDay()).toBe(1); // 1 = monday
+    // a última célula real é hoje OU um dia anterior a hoje na última coluna
+    const lastReal = flat[flat.length - 1];
+    expect(new Date(`${lastReal.date}T12:00:00`) <= new Date(`${iso(0)}T12:00:00`)).toBe(true);
+    // células futuras (após hoje) são null na última coluna
+    const lastCol = grid[3];
+    const todayIdx = lastCol.findIndex((c) => c && c.date === iso(0));
+    if (todayIdx >= 0 && todayIdx < 6) {
+      expect(lastCol.slice(todayIdx + 1).every((c) => c === null)).toBe(true);
+    }
+  });
+
+  it("todayCell é exatamente a célula de hoje", () => {
+    const today = iso(0);
+    const { todayCell } = heatmapWeeks([{ date: today, correct: true }], today, 4);
+    expect(todayCell.date).toBe(today);
+    expect(todayCell.total).toBe(1);
+    expect(todayCell.level).toBe(1);
   });
 
   it("agrupa contagens por data e calcula pct de acerto", () => {
@@ -52,13 +70,12 @@ describe("r5: buildHeatmap", () => {
       { date: today, correct: true },
       { date: yesterday, correct: false },
     ];
-    const cells = buildHeatmap(history, today, 3);
-    const t = cells[2];
-    const y = cells[1];
-    expect(t.total).toBe(3);
-    expect(t.correct).toBe(2);
-    expect(t.pct).toBe(67);
-    expect(t.level).toBe(1);
+    const { flat, todayCell } = heatmapWeeks(history, today, 4);
+    expect(todayCell.total).toBe(3);
+    expect(todayCell.correct).toBe(2);
+    expect(todayCell.pct).toBe(67);
+    expect(todayCell.level).toBe(1);
+    const y = flat.find((c) => c.date === yesterday);
     expect(y.total).toBe(1);
     expect(y.pct).toBe(0);
   });
@@ -66,43 +83,48 @@ describe("r5: buildHeatmap", () => {
   it("datas fora da janela são ignoradas (histórico antigo não vaza)", () => {
     const today = iso(0);
     const old = iso(-99);
-    const cells = buildHeatmap(
+    const { flat } = heatmapWeeks(
       [
         { date: old, correct: true },
         { date: today, correct: true },
       ],
       today,
-      35
+      12
     );
-    expect(cells.every((c) => c.date !== old)).toBe(true);
-    expect(cells[34].total).toBe(1);
+    expect(flat.every((c) => c.date !== old)).toBe(true);
+    expect(flat.find((c) => c.date === today).total).toBe(1);
   });
 
-  it("rola a meia-noite local sem deslocamento de dia (UTC-safe)", () => {
-    // janela de 1 dia: sempre deve ser exatamente hoje em local-time
-    const cells = buildHeatmap([], iso(0), 1);
-    expect(cells[0].date).toBe(iso(0));
+  it("monthMarks: semana que contém o dia 1º ganha o nome do mês; 1ª semana âncora", () => {
+    const today = iso(0);
+    const { monthMarks } = heatmapWeeks([], today, 12);
+    expect(monthMarks).toHaveLength(12);
+    expect(typeof monthMarks[0]).toBe("string"); // âncora sempre presente
+    expect(monthMarks[0].length).toBeGreaterThan(0);
+    // em 12 semanas há no máximo 4 viradas de mês → no máx 4 marcas + âncora
+    const marks = monthMarks.filter(Boolean);
+    expect(marks.length).toBeLessThanOrEqual(5);
   });
 
   it("history nulo/undefined não derruba (defensivo)", () => {
-    expect(() => buildHeatmap(null, iso(0), 7)).not.toThrow();
-    expect(buildHeatmap(undefined, iso(0), 7)).toHaveLength(7);
+    expect(() => heatmapWeeks(null, iso(0), 7)).not.toThrow();
+    expect(heatmapWeeks(undefined, iso(0), 7).grid).toHaveLength(7);
   });
 });
 
 describe("r5: heatmapSummary", () => {
   it("resume dias ativos, total de respostas e melhor dia", () => {
     const today = iso(0);
-    const cells = buildHeatmap(
+    const { flat } = heatmapWeeks(
       [
         { date: today, correct: true },
         { date: today, correct: false },
         { date: iso(-1), correct: true },
       ],
       today,
-      7
+      2
     );
-    const s = heatmapSummary(cells);
+    const s = heatmapSummary(flat);
     expect(s.activeDays).toBe(2);
     expect(s.answers).toBe(3);
     expect(s.bestDay).toBe(2);
@@ -206,7 +228,11 @@ describe("r8: examTrend — sparkline de tendência dos simulados", () => {
   });
 
   it("passMark 65 mapeia para a linha de corte (65% da altura útil)", () => {
-    const t = examTrend([{ pct: 0 }, { pct: 100 }], { height: 36, pad: 3, passMark: 65 });
+    const t = examTrend([{ pct: 0 }, { pct: 100 }], {
+      height: 36,
+      pad: 3,
+      passMark: 65,
+    });
     // y(65) = 3 + (1-.65)*30 = 13.5
     expect(Number(t.passY.toFixed(1))).toBe(13.5);
   });
