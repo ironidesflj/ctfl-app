@@ -6,15 +6,18 @@ React + Vite, instalável como PWA, funciona offline.
 ## Estado atual (1.100 questões)
 
 **Conteúdo no Ar (Lançado):**
+
 - **CTFL v4.0:** 300 questões
 - **CTAL-TA v4.0:** 200 itens
 
 **Roadmap de Lançamentos Futuros (Em Breve):**
+
 - **CTAL-TM v3.0:** 200 itens (em breve)
 - **CT-AI v2.0:** 200 itens (em breve)
 - **CTAL-AT v2.0:** 200 itens (em breve - syllabus totalmente novo do zero, a ser gerado)
 
 **Conteúdo Legado:**
+
 - **CTFL-AT (Agile Tester v2014):** 200 itens (adormecido/sunset pela ISTQB, substituído pelo CTAL-AT v2.0. O conteúdo é mantido no repositório por razões de arquivo, mas não entrará no roadmap de lançamentos).
 
 ## Funcionalidades
@@ -71,17 +74,29 @@ src/
 
 ## Atualizar o banco de questões
 
-O banco é gerado pelo script `build_all.py` (no repositório do banco), que encadeia
-`build_bank.py` → `add_en.py` → `check_alignment.py` num único comando — cobre só
-`ctfl-questions-ptbr.json` (bloco legado CTFL). Ao dar push desse arquivo atualizado
-na branch `main` do repositório do banco, uma GitHub Action (`sync-app.yml`) abre
-automaticamente um Pull Request neste repositório atualizando
-`src/data/ctfl-questions-ptbr.json` — não precisa copiar manualmente.
+O banco é mantido no repositório `ctfl-question-bank-ptbr`. Push de
+`ctfl-questions-ptbr.json` ou `synapse-question-bank.json` na branch `main` dispara
+`sync-app.yml`, que abre um Pull Request neste repositório com somente os arquivos
+alterados e valida os checksums da origem e do destino. O merge continua manual.
 
-`src/data/synapse-question-bank.json` (multi-cert, 1100q, é o que o app de fato usa
-via `getBank()`) **não tem sync automático** — atualizações nesse arquivo no
-repositório do banco precisam ser copiadas manualmente pra cá até que o padrão de
-edição justifique estender o workflow de sync.
+O pipeline legado `build_all.py` encadeia `build_bank.py` → `add_en.py` →
+`check_alignment.py`, mas cobre apenas `ctfl-questions-ptbr.json`. O banco multi-cert
+de 1.100 questões é versionado diretamente no repositório do banco.
+
+## Qualidade
+
+```bash
+npm ci
+npm run lint
+npm run format:check
+npm run test
+npm run build
+npx playwright install chromium # apenas na primeira execução local
+npm run test:e2e
+```
+
+O CI executa todos esses gates, incluindo dois smokes E2E em Chromium: fluxo de
+estudo/persistência/idioma/onboarding e conclusão/persistência de simulado.
 
 ## Aviso
 

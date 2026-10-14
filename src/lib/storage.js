@@ -5,8 +5,11 @@ const keyFor = (certId) => `synapse.progress.v1.${certId}`;
 
 // Fase 0: timezone dinâmico (antes hardcoded America/Sao_Paulo).
 const TZ = (() => {
-  try { return Intl.DateTimeFormat().resolvedOptions().timeZone || "America/Sao_Paulo"; }
-  catch { return "America/Sao_Paulo"; }
+  try {
+    return Intl.DateTimeFormat().resolvedOptions().timeZone || "America/Sao_Paulo";
+  } catch {
+    return "America/Sao_Paulo";
+  }
 })();
 
 // Fase 2: constante do quality gate do streak (mínimo de respostas/dia).
@@ -24,10 +27,17 @@ export function setActiveCertForStorage(certId) {
 // Fase 3: callback para erros de storage (catches silenciosos agora notificam).
 // App.jsx registra um callback que mostra toast ao usuário.
 let _onStorageError = null;
-export function setStorageErrorHandler(fn) { _onStorageError = fn; }
+export function setStorageErrorHandler(fn) {
+  _onStorageError = fn;
+}
 function reportStorageError(context, err) {
   console.warn(`[storage] ${context}:`, err?.message || err);
-  if (_onStorageError) try { _onStorageError(context, err); } catch { /* prevent callback errors from propagating */ }
+  if (_onStorageError)
+    try {
+      _onStorageError(context, err);
+    } catch {
+      /* prevent callback errors from propagating */
+    }
 }
 
 // Migração única: usuários existentes eram só-CTFL, então a chave legada
@@ -50,10 +60,18 @@ export function todayLocal() {
 
 const EMPTY = {
   schemaVersion: 2,
-  total: 0, correct: 0, byDomain: {},
-  seen: {}, attempts: {},
-  flashcards: {}, saved: [], history: [], srs: {},
-  lastStudyDate: null, achievements: [], examHistory: []
+  total: 0,
+  correct: 0,
+  byDomain: {},
+  seen: {},
+  attempts: {},
+  flashcards: {},
+  saved: [],
+  history: [],
+  srs: {},
+  lastStudyDate: null,
+  achievements: [],
+  examHistory: [],
 };
 
 // Fase 2: migration v1 → v2. Converte seen[id] em attempts[id] mantendo
@@ -121,7 +139,7 @@ export function recordAnswer(state, domain, correct, questionId, bank) {
     seen: { ...(state.seen || {}) },
     attempts: { ...(state.attempts || {}) },
     history: [...(state.history || []), { date: todayLocal(), correct }].slice(-90),
-    lastStudyDate: todayLocal()
+    lastStudyDate: todayLocal(),
   };
   const d = next.byDomain[domain] || { t: 0, c: 0 };
   next.byDomain[domain] = { t: d.t + 1, c: d.c + (correct ? 1 : 0) };
@@ -130,7 +148,11 @@ export function recordAnswer(state, domain, correct, questionId, bank) {
     next.seen[questionId] = correct ? "correct" : "wrong";
     // attempts: NOVO — acumula histórico de tentativas por questão
     const prev = (state.attempts || {})[questionId] || {
-      count: 0, correct: 0, lastCorrect: false, lastAt: null, firstAt: null
+      count: 0,
+      correct: 0,
+      lastCorrect: false,
+      lastAt: null,
+      firstAt: null,
     };
     next.attempts[questionId] = {
       count: prev.count + 1,
@@ -155,9 +177,7 @@ export function toggleSaved(state, questionId) {
   const exists = saved.includes(questionId);
   return {
     ...state,
-    saved: exists
-      ? saved.filter((id) => id !== questionId)
-      : [...saved, questionId]
+    saved: exists ? saved.filter((id) => id !== questionId) : [...saved, questionId],
   };
 }
 
@@ -374,7 +394,8 @@ export function checkAchievements(progress, bank) {
     const chapterCoverage = bank.coverageByChapter(seenMap);
     const entries = Object.values(chapterCoverage).filter((v) => v.total > 0);
     if (entries.some((v) => v.seen === v.total)) existing.add("chapter-complete");
-    if (entries.length > 0 && entries.every((v) => v.seen === v.total)) existing.add("bank-complete");
+    if (entries.length > 0 && entries.every((v) => v.seen === v.total))
+      existing.add("bank-complete");
   }
   return [...existing];
 }
@@ -402,7 +423,12 @@ export function clearProgress(certId = activeCert) {
 
 // "Sincronização manual": exporta o progresso do cert ativo para um arquivo.
 export function exportProgress(state, certId = activeCert) {
-  const payload = { app: "synapse", cert: certId, exportedAt: new Date().toISOString(), progress: state };
+  const payload = {
+    app: "synapse",
+    cert: certId,
+    exportedAt: new Date().toISOString(),
+    progress: state,
+  };
   const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
@@ -427,9 +453,11 @@ export function importProgress(file, certId = activeCert) {
         const p = data.progress || data;
         // Fase 3: validação de schema mais estrita
         if (typeof p.total !== "number" || p.total < 0) throw new Error("Campo 'total' inválido");
-        if (typeof p.correct !== "number" || p.correct < 0 || p.correct > p.total) throw new Error("Campo 'correct' inválido");
+        if (typeof p.correct !== "number" || p.correct < 0 || p.correct > p.total)
+          throw new Error("Campo 'correct' inválido");
         if (p.seen && typeof p.seen !== "object") throw new Error("Campo 'seen' deve ser objeto");
-        if (p.history && !Array.isArray(p.history)) throw new Error("Campo 'history' deve ser array");
+        if (p.history && !Array.isArray(p.history))
+          throw new Error("Campo 'history' deve ser array");
         if (p.saved && !Array.isArray(p.saved)) throw new Error("Campo 'saved' deve ser array");
         // Fase 2: migrar se necessário
         const migrated = migrateV1toV2(p);

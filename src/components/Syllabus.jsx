@@ -27,15 +27,21 @@ export default function Syllabus({ onStudy, lang = "pt", progress }) {
   );
   const hasContent = allItems.length > 0;
   const items = useMemo(
-    () => (domain === "all" ? allItems : allItems.filter((i) => i.d === chapters.find(c => String(c.chapter) === String(domain))?.domain)),
+    () =>
+      domain === "all"
+        ? allItems
+        : allItems.filter(
+            (i) => i.d === chapters.find((c) => String(c.chapter) === String(domain))?.domain
+          ),
     [domain, allItems, chapters]
   );
   const dom = chapters.find((c) => String(c.chapter) === String(domain));
 
   const coverage = coverageByChapter(progress?.seen || {});
-  const itemsByDomain = domain === "all"
-    ? chapters.map((c) => ({ c, list: allItems.filter((i) => i.d === c.domain) }))
-    : null;
+  const itemsByDomain =
+    domain === "all"
+      ? chapters.map((c) => ({ c, list: allItems.filter((i) => i.d === c.domain) }))
+      : null;
 
   if (!hasContent) {
     return (
@@ -50,9 +56,20 @@ export default function Syllabus({ onStudy, lang = "pt", progress }) {
   return (
     <div className="study">
       <div className="filter-bar">
-        <button className={"chip" + (domain === "all" ? " on" : "")} onClick={() => setDomain("all")}>{t(lang, "domainAll")}</button>
+        <button
+          className={"chip" + (domain === "all" ? " on" : "")}
+          onClick={() => setDomain("all")}
+        >
+          {t(lang, "domainAll")}
+        </button>
         {chapters.map((c) => (
-          <button key={c.chapter} className={"chip" + (domain === String(c.chapter) ? " on" : "")} onClick={() => setDomain(String(c.chapter))}>{chapterName(c.chapter, lang)}</button>
+          <button
+            key={c.chapter}
+            className={"chip" + (domain === String(c.chapter) ? " on" : "")}
+            onClick={() => setDomain(String(c.chapter))}
+          >
+            {chapterName(c.chapter, lang)}
+          </button>
         ))}
       </div>
 
@@ -66,7 +83,9 @@ export default function Syllabus({ onStudy, lang = "pt", progress }) {
                 <summary className="syl-chapter-summary">
                   <span>{chapterName(c.chapter, lang)}</span>
                   <span className="syl-chapter-progress">
-                    <span className="bar"><span className="bar-fill" style={{ width: pct + "%" }} /></span>
+                    <span className="bar">
+                      <span className="bar-fill" style={{ width: pct + "%" }} />
+                    </span>
                     <span className="muted">{pct}%</span>
                   </span>
                 </summary>
@@ -75,7 +94,9 @@ export default function Syllabus({ onStudy, lang = "pt", progress }) {
                     <div className="syl-kw">{i.kw}</div>
                     <div className="syl-desc">{i.desc}</div>
                     {lang === "en" && !hasEN(i.id) && (
-                      <span style={{fontSize:'11px', color:'var(--text-3)'}}>EN coming soon · showing PT</span>
+                      <span style={{ fontSize: "11px", color: "var(--text-3)" }}>
+                        EN coming soon · showing PT
+                      </span>
                     )}
                   </div>
                 ))}
@@ -84,13 +105,20 @@ export default function Syllabus({ onStudy, lang = "pt", progress }) {
           })
         ) : (
           <>
-            {dom && <p className="syl-head">{chapterWeight(dom.chapter)} {t(lang, "syllabus.ofQuestions", { total: ALL.length })}</p>}
+            {dom && (
+              <p className="syl-head">
+                {chapterWeight(dom.chapter)}{" "}
+                {t(lang, "syllabus.ofQuestions", { total: ALL.length })}
+              </p>
+            )}
             {items.map((i) => (
               <div className="syl-item" key={i.id}>
                 <div className="syl-kw">{i.kw}</div>
                 <div className="syl-desc">{i.desc}</div>
                 {lang === "en" && !hasEN(i.id) && (
-                  <span style={{fontSize:'11px', color:'var(--text-3)'}}>EN coming soon · showing PT</span>
+                  <span style={{ fontSize: "11px", color: "var(--text-3)" }}>
+                    EN coming soon · showing PT
+                  </span>
                 )}
               </div>
             ))}

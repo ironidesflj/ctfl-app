@@ -8,8 +8,15 @@ import Glossary from "./Glossary.jsx";
 afterEach(cleanup);
 
 const EMPTY_PROGRESS = {
-  total: 0, correct: 0, byDomain: {}, seen: {}, flashcards: {},
-  saved: [], history: [], srs: {}, lastStudyDate: null,
+  total: 0,
+  correct: 0,
+  byDomain: {},
+  seen: {},
+  flashcards: {},
+  saved: [],
+  history: [],
+  srs: {},
+  lastStudyDate: null,
 };
 
 const EMPTY_STATE_PT = "Conteúdo em breve para esta certificação.";
@@ -20,7 +27,15 @@ function renderAt(path, routePath, Component, props = {}) {
       <Routes>
         <Route
           path={routePath}
-          element={<Component lang="pt" progress={EMPTY_PROGRESS} setProgress={vi.fn()} onStudy={vi.fn()} {...props} />}
+          element={
+            <Component
+              lang="pt"
+              progress={EMPTY_PROGRESS}
+              setProgress={vi.fn()}
+              onStudy={vi.fn()}
+              {...props}
+            />
+          }
         />
       </Routes>
     </MemoryRouter>

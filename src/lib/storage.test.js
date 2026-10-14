@@ -1,14 +1,25 @@
 import { describe, it, expect } from "vitest";
 import {
-  recordAnswer, clearProgress, toggleSaved, isSaved,
-  getSRSCard, updateSRSCard, getDueItems,
-  getStreak, getReadiness, getReadinessV2, checkAchievements, logExamResult,
+  recordAnswer,
+  clearProgress,
+  toggleSaved,
+  isSaved,
+  getSRSCard,
+  updateSRSCard,
+  getDueItems,
+  getStreak,
+  getReadiness,
+  getReadinessV2,
+  logExamResult,
 } from "./storage.js";
 
 // Helper: gera data no mesmo timezone que todayLocal() usa
 const TZ = (() => {
-  try { return Intl.DateTimeFormat().resolvedOptions().timeZone || "America/Sao_Paulo"; }
-  catch { return "America/Sao_Paulo"; }
+  try {
+    return Intl.DateTimeFormat().resolvedOptions().timeZone || "America/Sao_Paulo";
+  } catch {
+    return "America/Sao_Paulo";
+  }
 })();
 function dayOffset(offset) {
   const d = new Date();
@@ -18,7 +29,9 @@ function dayOffset(offset) {
 // Helper: gera N entradas de history para um dia (para satisfazer quality gate ≥5)
 function dayEntries(offset, n = 5, correct = true) {
   const d = dayOffset(offset);
-  return Array(n).fill(null).map(() => ({ date: d, correct }));
+  return Array(n)
+    .fill(null)
+    .map(() => ({ date: d, correct }));
 }
 
 describe("storage - progress tracking", () => {
@@ -50,17 +63,13 @@ describe("storage - progress tracking", () => {
 describe("storage - streak (Fase 2: quality gate ≥5/day)", () => {
   it("returns streak of 3 for 3 consecutive days with ≥5 answers each", () => {
     const state = clearProgress();
-    state.history = [
-      ...dayEntries(2), ...dayEntries(1), ...dayEntries(0),
-    ];
+    state.history = [...dayEntries(2), ...dayEntries(1), ...dayEntries(0)];
     expect(getStreak(state)).toBe(3);
   });
 
   it("returns 0 when there is a gap of 2+ days", () => {
     const state = clearProgress();
-    state.history = [
-      ...dayEntries(5), ...dayEntries(4),
-    ];
+    state.history = [...dayEntries(5), ...dayEntries(4)];
     expect(getStreak(state)).toBe(0);
   });
 
@@ -77,9 +86,7 @@ describe("storage - streak (Fase 2: quality gate ≥5/day)", () => {
 
   it("counts a day with exactly 5 answers as qualifying", () => {
     const state = clearProgress();
-    state.history = [
-      ...dayEntries(1, 5), ...dayEntries(0, 5),
-    ];
+    state.history = [...dayEntries(1, 5), ...dayEntries(0, 5)];
     expect(getStreak(state)).toBe(2);
   });
 });
@@ -88,7 +95,11 @@ describe("storage - readiness (Fase 2: object with Wilson CI)", () => {
   it("returns point ~60% for 5/5 correct with total=200 (k=20)", () => {
     const state = clearProgress();
     state.seen = {
-      "q1": "correct", "q2": "correct", "q3": "correct", "q4": "correct", "q5": "correct",
+      q1: "correct",
+      q2: "correct",
+      q3: "correct",
+      q4: "correct",
+      q5: "correct",
     };
     // k = max(10, round(200*0.1)) = 20; (5 + 20*0.5) / (5 + 20) * 100 = 15/25*100 = 60
     const r = getReadiness(state, 200);
@@ -180,23 +191,23 @@ describe("storage - achievements", () => {
 describe("storage - getReadinessV2 (Spec 2 passo 2: blueprint gates)", () => {
   // Mock bank mínimo — replica apenas o que getReadinessV2 usa
   function makeMockBank({ certId = "ctfl", questions = [], blueprint } = {}) {
-    const chapterNums = [...new Set(questions.map(q => String(q.chapter)))];
+    const chapterNums = [...new Set(questions.map((q) => String(q.chapter)))];
     return {
       cert: { id: certId },
       ALL: questions,
       META: blueprint !== undefined ? { examBlueprint: { [certId]: blueprint } } : {},
       coverageByChapter: (seenMap) => {
         const result = {};
-        chapterNums.forEach(ch => {
-          const total = questions.filter(q => String(q.chapter) === ch).length;
-          const seen = questions.filter(q => String(q.chapter) === ch && seenMap[q.id]).length;
+        chapterNums.forEach((ch) => {
+          const total = questions.filter((q) => String(q.chapter) === ch).length;
+          const seen = questions.filter((q) => String(q.chapter) === ch && seenMap[q.id]).length;
           result[ch] = { seen, total };
         });
         return result;
       },
       coverageByKLevel: (seenMap) => {
         const result = {};
-        questions.forEach(q => {
+        questions.forEach((q) => {
           const k = "K" + q.kLevel;
           if (!result[k]) result[k] = { seen: 0, total: 0 };
           result[k].total += 1;
@@ -212,7 +223,13 @@ describe("storage - getReadinessV2 (Spec 2 passo 2: blueprint gates)", () => {
     const attempts = {};
     const seen = {};
     Object.entries(attempted).forEach(([id, correct]) => {
-      attempts[id] = { count: 1, correct: correct ? 1 : 0, lastCorrect: correct, lastAt: "2026-01-01", firstAt: "2026-01-01" };
+      attempts[id] = {
+        count: 1,
+        correct: correct ? 1 : 0,
+        lastCorrect: correct,
+        lastAt: "2026-01-01",
+        firstAt: "2026-01-01",
+      };
       seen[id] = correct ? "correct" : "wrong";
     });
     return { ...clearProgress(), attempts, seen };
@@ -242,18 +259,22 @@ describe("storage - getReadinessV2 (Spec 2 passo 2: blueprint gates)", () => {
 
   it("3. capítulo com < 40% cobertura → gatesPassed:false, capítulo em missingChapters", () => {
     const qs = [
-      { id: "q1", chapter: 1, kLevel: 1 }, { id: "q2", chapter: 1, kLevel: 1 },
-      { id: "q3", chapter: 1, kLevel: 1 }, { id: "q4", chapter: 1, kLevel: 1 },
+      { id: "q1", chapter: 1, kLevel: 1 },
+      { id: "q2", chapter: 1, kLevel: 1 },
+      { id: "q3", chapter: 1, kLevel: 1 },
+      { id: "q4", chapter: 1, kLevel: 1 },
       { id: "q5", chapter: 1, kLevel: 1 },
-      { id: "q6", chapter: 2, kLevel: 2 }, { id: "q7", chapter: 2, kLevel: 2 },
-      { id: "q8", chapter: 2, kLevel: 2 }, { id: "q9", chapter: 2, kLevel: 2 },
+      { id: "q6", chapter: 2, kLevel: 2 },
+      { id: "q7", chapter: 2, kLevel: 2 },
+      { id: "q8", chapter: 2, kLevel: 2 },
+      { id: "q9", chapter: 2, kLevel: 2 },
       { id: "q10", chapter: 2, kLevel: 2 },
     ];
     const blueprint = {
       totalQuestions: 10,
       chapters: {
-        "1": { questions: 5, kLevels: { K1: 5 } },
-        "2": { questions: 5, kLevels: { K2: 5 } },
+        1: { questions: 5, kLevels: { K1: 5 } },
+        2: { questions: 5, kLevels: { K2: 5 } },
       },
     };
     const bank = makeMockBank({ questions: qs, blueprint });
@@ -269,7 +290,7 @@ describe("storage - getReadinessV2 (Spec 2 passo 2: blueprint gates)", () => {
     const qs = Array.from({ length: 10 }, (_, i) => ({ id: `q${i}`, chapter: 1, kLevel: 1 }));
     const blueprint = {
       totalQuestions: 10,
-      chapters: { "1": { questions: 10, kLevels: { K1: 10 } } },
+      chapters: { 1: { questions: 10, kLevels: { K1: 10 } } },
     };
     const bank = makeMockBank({ questions: qs, blueprint });
     // piso K1 = max(1, round(0.5*10)) = 5; vemos apenas 3 → abaixo do piso
@@ -285,24 +306,36 @@ describe("storage - getReadinessV2 (Spec 2 passo 2: blueprint gates)", () => {
     // ch1: 4/5 corretas (80%), ch2: 3/5 corretas (60%)
     // point = round((0.5*0.8 + 0.5*0.6) / 1.0 * 100) = 70
     const qs = [
-      { id: "c1q1", chapter: 1, kLevel: 1 }, { id: "c1q2", chapter: 1, kLevel: 1 },
-      { id: "c1q3", chapter: 1, kLevel: 1 }, { id: "c1q4", chapter: 1, kLevel: 1 },
+      { id: "c1q1", chapter: 1, kLevel: 1 },
+      { id: "c1q2", chapter: 1, kLevel: 1 },
+      { id: "c1q3", chapter: 1, kLevel: 1 },
+      { id: "c1q4", chapter: 1, kLevel: 1 },
       { id: "c1q5", chapter: 1, kLevel: 1 },
-      { id: "c2q1", chapter: 2, kLevel: 2 }, { id: "c2q2", chapter: 2, kLevel: 2 },
-      { id: "c2q3", chapter: 2, kLevel: 2 }, { id: "c2q4", chapter: 2, kLevel: 2 },
+      { id: "c2q1", chapter: 2, kLevel: 2 },
+      { id: "c2q2", chapter: 2, kLevel: 2 },
+      { id: "c2q3", chapter: 2, kLevel: 2 },
+      { id: "c2q4", chapter: 2, kLevel: 2 },
       { id: "c2q5", chapter: 2, kLevel: 2 },
     ];
     const blueprint = {
       totalQuestions: 10,
       chapters: {
-        "1": { questions: 5, kLevels: { K1: 5 } },
-        "2": { questions: 5, kLevels: { K2: 5 } },
+        1: { questions: 5, kLevels: { K1: 5 } },
+        2: { questions: 5, kLevels: { K2: 5 } },
       },
     };
     const bank = makeMockBank({ questions: qs, blueprint });
     const progress = makeProgress({
-      c1q1: true, c1q2: true, c1q3: true, c1q4: true, c1q5: false, // ch1: 4/5
-      c2q1: true, c2q2: true, c2q3: true, c2q4: false, c2q5: false, // ch2: 3/5
+      c1q1: true,
+      c1q2: true,
+      c1q3: true,
+      c1q4: true,
+      c1q5: false, // ch1: 4/5
+      c2q1: true,
+      c2q2: true,
+      c2q3: true,
+      c2q4: false,
+      c2q5: false, // ch2: 3/5
     });
     const r = getReadinessV2(progress, bank);
     // ch1: 5/5 vistas >= 40% → OK; ch2: 5/5 vistas >= 40% → OK
@@ -317,18 +350,22 @@ describe("storage - getReadinessV2 (Spec 2 passo 2: blueprint gates)", () => {
     // banco: 5q por capítulo; ch1 todas corretas, ch2 não tentado
     // point = round((2/40*1.0 + 38/40*0.0)/1.0 * 100) = 5
     const qs = [
-      { id: "s1q1", chapter: 1, kLevel: 1 }, { id: "s1q2", chapter: 1, kLevel: 1 },
-      { id: "s1q3", chapter: 1, kLevel: 1 }, { id: "s1q4", chapter: 1, kLevel: 1 },
+      { id: "s1q1", chapter: 1, kLevel: 1 },
+      { id: "s1q2", chapter: 1, kLevel: 1 },
+      { id: "s1q3", chapter: 1, kLevel: 1 },
+      { id: "s1q4", chapter: 1, kLevel: 1 },
       { id: "s1q5", chapter: 1, kLevel: 1 },
-      { id: "s2q1", chapter: 2, kLevel: 2 }, { id: "s2q2", chapter: 2, kLevel: 2 },
-      { id: "s2q3", chapter: 2, kLevel: 2 }, { id: "s2q4", chapter: 2, kLevel: 2 },
+      { id: "s2q1", chapter: 2, kLevel: 2 },
+      { id: "s2q2", chapter: 2, kLevel: 2 },
+      { id: "s2q3", chapter: 2, kLevel: 2 },
+      { id: "s2q4", chapter: 2, kLevel: 2 },
       { id: "s2q5", chapter: 2, kLevel: 2 },
     ];
     const blueprint = {
       totalQuestions: 40,
       chapters: {
-        "1": { questions: 2, kLevels: { K1: 2 } },
-        "2": { questions: 38, kLevels: { K2: 38 } },
+        1: { questions: 2, kLevels: { K1: 2 } },
+        2: { questions: 38, kLevels: { K2: 38 } },
       },
     };
     const bank = makeMockBank({ questions: qs, blueprint });
@@ -346,7 +383,7 @@ describe("storage - getReadinessV2 (Spec 2 passo 2: blueprint gates)", () => {
     ];
     const bank = makeMockBank({ questions: qs });
     const keys = Object.keys(bank.coverageByKLevel({}));
-    expect(keys.every(k => /^K\d$/.test(k))).toBe(true);
+    expect(keys.every((k) => /^K\d$/.test(k))).toBe(true);
     expect(keys).toContain("K1");
     expect(keys).toContain("K2");
     expect(keys).toContain("K3");
@@ -371,8 +408,18 @@ describe("storage - SRS integration", () => {
 
   it("getDueItems only returns items that exist in srs AND are due", () => {
     let state = clearProgress();
-    state = updateSRSCard(state, "ch1-01", { easeFactor: 2.5, interval: 1, repetitions: 1, dueDate: "2020-01-01" });
-    state = updateSRSCard(state, "ch1-02", { easeFactor: 2.5, interval: 30, repetitions: 1, dueDate: "2099-01-01" });
+    state = updateSRSCard(state, "ch1-01", {
+      easeFactor: 2.5,
+      interval: 1,
+      repetitions: 1,
+      dueDate: "2020-01-01",
+    });
+    state = updateSRSCard(state, "ch1-02", {
+      easeFactor: 2.5,
+      interval: 30,
+      repetitions: 1,
+      dueDate: "2099-01-01",
+    });
     const due = getDueItems(state, ["ch1-01", "ch1-02", "ch1-03"]);
     expect(due).toEqual(["ch1-01"]); // só o due; ch1-02 não due; ch1-03 nunca visto (não força entrada)
   });

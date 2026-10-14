@@ -1,7 +1,11 @@
 import { describe, it, expect, beforeEach } from "vitest";
 import {
-  recordAnswer, loadProgress, saveProgress, clearProgress,
-  toggleSaved, setActiveCertForStorage,
+  recordAnswer,
+  loadProgress,
+  saveProgress,
+  clearProgress,
+  toggleSaved,
+  setActiveCertForStorage,
 } from "./storage.js";
 
 describe("storage - per-cert isolation", () => {
@@ -51,7 +55,16 @@ describe("storage - per-cert isolation", () => {
   });
 
   it("migrates legacy global key into the ctfl namespace once", () => {
-    const legacy = { total: 5, correct: 4, byDomain: { "1": { t: 5, c: 4 } }, seen: {}, saved: [], history: [], srs: {}, lastStudyDate: null };
+    const legacy = {
+      total: 5,
+      correct: 4,
+      byDomain: { 1: { t: 5, c: 4 } },
+      seen: {},
+      saved: [],
+      history: [],
+      srs: {},
+      lastStudyDate: null,
+    };
     localStorage.setItem("ctfl_progress_v1", JSON.stringify(legacy));
 
     const migrated = loadProgress("ctfl");

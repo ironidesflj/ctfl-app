@@ -6,12 +6,36 @@ export default function Onboarding({ onDismiss, lang = "pt", variant = "full" })
   const [demoAnswer, setDemoAnswer] = useState(null);
 
   const features = [
-    { icon: "📚", title: t(lang, "onboarding.featureStudyTitle"), desc: t(lang, "onboarding.featureStudyDesc") },
-    { icon: "⏱", title: t(lang, "onboarding.featureExamTitle"), desc: t(lang, "onboarding.examCardDesc") },
-    { icon: "🔁", title: t(lang, "onboarding.featureSRSTitle"), desc: t(lang, "onboarding.featureSRSDesc") },
-    { icon: "📖", title: t(lang, "onboarding.featureGlossaryTitle"), desc: t(lang, "onboarding.featureGlossaryDesc") },
-    { icon: "📊", title: t(lang, "onboarding.featureProgressTitle"), desc: t(lang, "onboarding.featureProgressDesc") },
-    { icon: "🌐", title: t(lang, "onboarding.featureBilingualTitle"), desc: t(lang, "onboarding.featureBilingualDesc") },
+    {
+      icon: "📚",
+      title: t(lang, "onboarding.featureStudyTitle"),
+      desc: t(lang, "onboarding.featureStudyDesc"),
+    },
+    {
+      icon: "⏱",
+      title: t(lang, "onboarding.featureExamTitle"),
+      desc: t(lang, "onboarding.examCardDesc"),
+    },
+    {
+      icon: "🔁",
+      title: t(lang, "onboarding.featureSRSTitle"),
+      desc: t(lang, "onboarding.featureSRSDesc"),
+    },
+    {
+      icon: "📖",
+      title: t(lang, "onboarding.featureGlossaryTitle"),
+      desc: t(lang, "onboarding.featureGlossaryDesc"),
+    },
+    {
+      icon: "📊",
+      title: t(lang, "onboarding.featureProgressTitle"),
+      desc: t(lang, "onboarding.featureProgressDesc"),
+    },
+    {
+      icon: "🌐",
+      title: t(lang, "onboarding.featureBilingualTitle"),
+      desc: t(lang, "onboarding.featureBilingualDesc"),
+    },
   ];
 
   const faqItems = [1, 2, 3, 4, 5].map((n) => ({
@@ -33,93 +57,102 @@ export default function Onboarding({ onDismiss, lang = "pt", variant = "full" })
   return (
     <div className="onboarding">
       {variant === "reentry" && (
-        <button className="btn ghost ob-close" onClick={onDismiss} aria-label={t(lang, "onboarding.close")}>✕</button>
+        <button
+          className="btn ghost ob-close"
+          onClick={onDismiss}
+          aria-label={t(lang, "onboarding.close")}
+        >
+          ✕
+        </button>
       )}
 
       {variant === "full" && (
         <>
-      {/* 1. Hero */}
-      <span className="ob-badge">{t(lang, "onboarding.badge")}</span>
+          {/* 1. Hero */}
+          <span className="ob-badge">{t(lang, "onboarding.badge")}</span>
 
-      <span className="ob-name-tag">Synapse</span>
-      <div className="ob-hero">
-        {t(lang, "onboarding.heroValueProp")}
-      </div>
-      <p className="ob-subtitle">{t(lang, "onboarding.heroSubtitle")}</p>
+          <span className="ob-name-tag">Synapse</span>
+          <div className="ob-hero">{t(lang, "onboarding.heroValueProp")}</div>
+          <p className="ob-subtitle">{t(lang, "onboarding.heroSubtitle")}</p>
 
-      <div className="ob-stats">
-        <span>{t(lang, "onboarding.statsQuestions")}</span>
-        <span>·</span>
-        <span>{t(lang, "onboarding.statCerts")}</span>
-        <span>·</span>
-        <span>{t(lang, "onboarding.statLang")}</span>
-        <span>·</span>
-        <span>{t(lang, "onboarding.statFree")}</span>
-      </div>
-
-      {/* 2. Features detalhadas */}
-      <div className="ob-section">
-        <h2 className="ob-section-title">{t(lang, "onboarding.featuresTitle")}</h2>
-        <div className="ob-features">
-          {features.map((f, i) => (
-            <div className="ob-card" key={i}>
-              <span className="ob-icon">{f.icon}</span>
-              <div className="ob-card-title">{f.title}</div>
-              <div className="ob-card-desc">{f.desc}</div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* 3. Mini-demo interativo / como funciona */}
-      <div className="ob-section">
-        <h2 className="ob-section-title">{t(lang, "onboarding.mockupTitle")}</h2>
-        <p className="muted" style={{textAlign: "center", marginBottom: "0.5rem"}}>
-          {t(lang, "onboarding.mockupHint")}
-        </p>
-        <div className="ob-mockup-wrap">
-          <div className="card">
-            <div className="q-meta">
-              <span className="q-domain">{t(lang, "onboarding.mockupDomain")}</span>
-              <span className="klvl k1">K1</span>
-            </div>
-            <p className="q-text">{t(lang, "onboarding.mockupQuestion")}</p>
-            <div className="options">
-              {demoOptions.map((opt, i) => {
-                let cls = "opt";
-                if (demoAnswer !== null) {
-                  cls += " locked";
-                  if (opt.correct) cls += demoAnswer === i ? " correct" : " reveal";
-                  else if (demoAnswer === i) cls += " wrong";
-                }
-                return (
-                  <button key={i} className={cls} onClick={() => handleDemoClick(i)} disabled={demoAnswer !== null}>
-                    <span className="opt-letter">{opt.letter}</span>
-                    <span>{opt.text}</span>
-                  </button>
-                );
-              })}
-            </div>
-            {demoAnswer !== null && (
-              <div className="explanation">{t(lang, "onboarding.mockupExp")}</div>
-            )}
+          <div className="ob-stats">
+            <span>{t(lang, "onboarding.statsQuestions")}</span>
+            <span>·</span>
+            <span>{t(lang, "onboarding.statCerts")}</span>
+            <span>·</span>
+            <span>{t(lang, "onboarding.statLang")}</span>
+            <span>·</span>
+            <span>{t(lang, "onboarding.statFree")}</span>
           </div>
-        </div>
-      </div>
 
-      {/* 4. Prova social */}
-      <div className="ob-social">
-        <span>{t(lang, "onboarding.socialFreeText")}</span>
-        <a
-          className="ob-social-link"
-          href="https://github.com/ironidesflj/ctfl-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          {t(lang, "onboarding.socialOpenSourceText")} ↗
-        </a>
-        <span className="ob-future-note">{t(lang, "onboarding.socialFutureNote")}</span>
-      </div>
+          {/* 2. Features detalhadas */}
+          <div className="ob-section">
+            <h2 className="ob-section-title">{t(lang, "onboarding.featuresTitle")}</h2>
+            <div className="ob-features">
+              {features.map((f, i) => (
+                <div className="ob-card" key={i}>
+                  <span className="ob-icon">{f.icon}</span>
+                  <div className="ob-card-title">{f.title}</div>
+                  <div className="ob-card-desc">{f.desc}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* 3. Mini-demo interativo / como funciona */}
+          <div className="ob-section">
+            <h2 className="ob-section-title">{t(lang, "onboarding.mockupTitle")}</h2>
+            <p className="muted" style={{ textAlign: "center", marginBottom: "0.5rem" }}>
+              {t(lang, "onboarding.mockupHint")}
+            </p>
+            <div className="ob-mockup-wrap">
+              <div className="card">
+                <div className="q-meta">
+                  <span className="q-domain">{t(lang, "onboarding.mockupDomain")}</span>
+                  <span className="klvl k1">K1</span>
+                </div>
+                <p className="q-text">{t(lang, "onboarding.mockupQuestion")}</p>
+                <div className="options">
+                  {demoOptions.map((opt, i) => {
+                    let cls = "opt";
+                    if (demoAnswer !== null) {
+                      cls += " locked";
+                      if (opt.correct) cls += demoAnswer === i ? " correct" : " reveal";
+                      else if (demoAnswer === i) cls += " wrong";
+                    }
+                    return (
+                      <button
+                        key={i}
+                        className={cls}
+                        onClick={() => handleDemoClick(i)}
+                        disabled={demoAnswer !== null}
+                      >
+                        <span className="opt-letter">{opt.letter}</span>
+                        <span>{opt.text}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+                {demoAnswer !== null && (
+                  <div className="explanation">{t(lang, "onboarding.mockupExp")}</div>
+                )}
+              </div>
+            </div>
+          </div>
+
+          {/* 4. Prova social */}
+          <div className="ob-social">
+            <span>{t(lang, "onboarding.socialFreeText")}</span>
+            <a
+              className="ob-social-link"
+              href="https://github.com/ironidesflj/ctfl-app"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {t(lang, "onboarding.socialOpenSourceText")} ↗
+            </a>
+            <span className="ob-future-note">{t(lang, "onboarding.socialFutureNote")}</span>
+          </div>
         </>
       )}
 
@@ -129,27 +162,19 @@ export default function Onboarding({ onDismiss, lang = "pt", variant = "full" })
         <div className="ob-features" style={{ gridTemplateColumns: "1fr" }}>
           <div className="ob-card">
             <div className="ob-card-title">{t(lang, "metrics.readinessTitle")}</div>
-            <div className="ob-card-desc">
-              {t(lang, "metrics.readinessDesc")}
-            </div>
+            <div className="ob-card-desc">{t(lang, "metrics.readinessDesc")}</div>
           </div>
           <div className="ob-card">
             <div className="ob-card-title">{t(lang, "metrics.performanceTitle")}</div>
-            <div className="ob-card-desc">
-              {t(lang, "metrics.performanceDesc")}
-            </div>
+            <div className="ob-card-desc">{t(lang, "metrics.performanceDesc")}</div>
           </div>
           <div className="ob-card">
             <div className="ob-card-title">{t(lang, "metrics.streakTitle")}</div>
-            <div className="ob-card-desc">
-              {t(lang, "metrics.streakDesc")}
-            </div>
+            <div className="ob-card-desc">{t(lang, "metrics.streakDesc")}</div>
           </div>
           <div className="ob-card">
             <div className="ob-card-title">{t(lang, "metrics.levelTitle")}</div>
-            <div className="ob-card-desc">
-              {t(lang, "metrics.levelDesc")}
-            </div>
+            <div className="ob-card-desc">{t(lang, "metrics.levelDesc")}</div>
           </div>
         </div>
       </div>
@@ -200,9 +225,7 @@ export default function Onboarding({ onDismiss, lang = "pt", variant = "full" })
         {variant === "reentry" ? t(lang, "onboarding.back") : t(lang, "onboarding.ctaStartFinal")}
       </button>
 
-      <p className="ob-disclaimer">
-        {t(lang, "footer")}
-      </p>
+      <p className="ob-disclaimer">{t(lang, "footer")}</p>
     </div>
   );
 }

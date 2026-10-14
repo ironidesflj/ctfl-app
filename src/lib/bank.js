@@ -1,4 +1,4 @@
-import monolith from "../data/synapse-question-bank.json" with { type: "json" };
+import monolith from "../data/synapse-question-bank.json";
 import { CERTS } from "./certs.config.js";
 
 export function getBank(certId) {
@@ -11,13 +11,20 @@ export function getBank(certId) {
 
   const matchesChapter = (a, b) => String(a) === String(b);
 
-  const rawQuestions = monolith.questions.filter(q =>
-    chapters.some(c => matchesChapter(c.chapter, q.chapter) && c.domain === q.domain)
+  const rawQuestions = monolith.questions.filter((q) =>
+    chapters.some((c) => matchesChapter(c.chapter, q.chapter) && c.domain === q.domain)
   );
 
   function localized(q, lang = "pt") {
     const loc = q.locales[lang] || q.locales["pt"];
-    return { id: q.id, domain: q.domain, chapter: q.chapter, kLevel: q.kLevel, answer: q.answer, ...loc };
+    return {
+      id: q.id,
+      domain: q.domain,
+      chapter: q.chapter,
+      kLevel: q.kLevel,
+      answer: q.answer,
+      ...loc,
+    };
   }
 
   const ALL = rawQuestions.map((q) => localized(q, "pt"));
@@ -38,13 +45,15 @@ export function getBank(certId) {
 
   function chapterName(chapterNum, lang = "pt") {
     const c = chapters.find((x) => matchesChapter(x.chapter, chapterNum));
-    return c ? (c[lang]?.name || c.pt.name) : String(chapterNum);
+    return c ? c[lang]?.name || c.pt.name : String(chapterNum);
   }
 
   function chapterWeight(chapterNum) {
-    return META.chapterWeights?.[cert.id]?.[String(chapterNum)]
-      ?? META.chapterWeights?.[String(chapterNum)]
-      ?? 0;
+    return (
+      META.chapterWeights?.[cert.id]?.[String(chapterNum)] ??
+      META.chapterWeights?.[String(chapterNum)] ??
+      0
+    );
   }
 
   function shuffle(arr) {
@@ -62,7 +71,10 @@ export function getBank(certId) {
 
   function buildExamInLang(lang = "pt") {
     const allQ = allInLang(lang);
-    const weightsTotal = Object.values(META.chapterWeights[cert.id]).reduce((s, w) => s + Number(w), 0);
+    const weightsTotal = Object.values(META.chapterWeights[cert.id]).reduce(
+      (s, w) => s + Number(w),
+      0
+    );
     const examQuestions = META.examFormat[cert.id].questions;
     const picked = [];
     chapters.forEach((c) => {
@@ -106,9 +118,20 @@ export function getBank(certId) {
   }
 
   return {
-    cert, chapters, META, ALL,
-    localized, byIds, allInLang, byChapterInLang,
-    chapterName, chapterWeight, shuffle, shuffleOptions,
-    buildExamInLang, coverageByChapter, coverageByKLevel
+    cert,
+    chapters,
+    META,
+    ALL,
+    localized,
+    byIds,
+    allInLang,
+    byChapterInLang,
+    chapterName,
+    chapterWeight,
+    shuffle,
+    shuffleOptions,
+    buildExamInLang,
+    coverageByChapter,
+    coverageByKLevel,
   };
 }

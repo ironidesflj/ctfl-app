@@ -7,8 +7,15 @@ import Quiz from "./Quiz.jsx";
 afterEach(cleanup);
 
 const EMPTY_PROGRESS = {
-  total: 0, correct: 0, byDomain: {}, seen: {}, flashcards: {},
-  saved: [], history: [], srs: {}, lastStudyDate: null,
+  total: 0,
+  correct: 0,
+  byDomain: {},
+  seen: {},
+  flashcards: {},
+  saved: [],
+  history: [],
+  srs: {},
+  lastStudyDate: null,
 };
 
 function renderQuiz(props = {}) {

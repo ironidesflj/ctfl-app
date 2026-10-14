@@ -4,10 +4,10 @@ Como a estrutura do repositório afeta o deploy, e o passo a passo para publicar
 
 ## Estrutura do repositório
 
-| Cenário | Onde fica o app | Ajuste no deploy |
-|---------|-----------------|------------------|
+| Cenário                           | Onde fica o app     | Ajuste no deploy                        |
+| --------------------------------- | ------------------- | --------------------------------------- |
 | **Repos separados** (recomendado) | raiz do repo do app | nenhum — tudo detectado automaticamente |
-| **Monorepo** | subpasta `app/` | apontar o _root directory_ para `app/` |
+| **Monorepo**                      | subpasta `app/`     | apontar o _root directory_ para `app/`  |
 
 Fonte da verdade das questões: o repo do **banco** (onde roda o `build_bank.py`).
 Ao atualizar, regenere o `ctfl-questions-ptbr.json` e copie para `src/data/` do app.

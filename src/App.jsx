@@ -1,5 +1,13 @@
 import { useState, useEffect, useMemo, useRef } from "react";
-import { Routes, Route, Navigate, Link, useParams, useNavigate, useLocation } from "react-router-dom";
+import {
+  Routes,
+  Route,
+  Navigate,
+  Link,
+  useParams,
+  useNavigate,
+  useLocation,
+} from "react-router-dom";
 import Quiz from "./components/Quiz.jsx";
 import Flashcards from "./components/Flashcards.jsx";
 import Syllabus from "./components/Syllabus.jsx";
@@ -8,10 +16,20 @@ import Stats from "./components/Stats.jsx";
 import Onboarding from "./components/Onboarding.jsx";
 import CertSelector from "./components/CertSelector.jsx";
 import BrandMark from "./components/BrandMark.jsx";
-import { loadProgress, saveProgress, recordAnswer, getDueItems, setActiveCertForStorage } from "./lib/storage.js";
+import {
+  loadProgress,
+  saveProgress,
+  recordAnswer,
+  getDueItems,
+  setActiveCertForStorage,
+} from "./lib/storage.js";
 import { getBank } from "./lib/bank.js";
 import { t } from "./lib/ui-strings.js";
-import { isNotificationSupported, showLocalNotification, daysSinceLastStudy } from "./lib/notifications.js";
+import {
+  isNotificationSupported,
+  showLocalNotification,
+  daysSinceLastStudy,
+} from "./lib/notifications.js";
 import { VALID_CERTS, DEFAULT_SECTION, LAST_CERT_KEY } from "./certs.js";
 import { CATALOG_BY_ID } from "./certs-catalog.js";
 
@@ -30,7 +48,11 @@ function CertGuard({ children }) {
 /* ─── Root: volta pro último cert salvo, ou cai na tela de seleção ─── */
 function RootRedirect({ lang }) {
   let last;
-  try { last = localStorage.getItem(LAST_CERT_KEY); } catch { /* ignore */ }
+  try {
+    last = localStorage.getItem(LAST_CERT_KEY);
+  } catch {
+    /* ignore */
+  }
   if (last && VALID_CERTS.includes(last)) {
     return <Navigate to={`/${last}/${DEFAULT_SECTION}`} replace />;
   }
@@ -50,11 +72,14 @@ function TabNav({ lang }) {
     { id: "syllabus", label: t(lang, "tabs.syllabus") },
     { id: "flash", label: t(lang, "tabs.flashcards") },
     { id: "glossary", label: t(lang, "tabs.glossary") },
-    { id: "stats", label: t(lang, "tabs.progress") }
+    { id: "stats", label: t(lang, "tabs.progress") },
   ];
 
   const activeTabId = location.pathname.split("/")[2] || "quiz";
-  const activeIndex = Math.max(0, TABS.findIndex((tb) => tb.id === activeTabId));
+  const activeIndex = Math.max(
+    0,
+    TABS.findIndex((tb) => tb.id === activeTabId)
+  );
 
   function handleKeyDown(e) {
     let nextIndex = activeIndex;
@@ -87,7 +112,9 @@ function TabNav({ lang }) {
             className={"tab" + (isActive ? " active" : "")}
             onClick={() => navigate(`/${cert}/${tb.id}`)}
             onKeyDown={handleKeyDown}
-            ref={(el) => { tabRefs.current[tb.id] = el; }}
+            ref={(el) => {
+              tabRefs.current[tb.id] = el;
+            }}
           >
             {tb.label}
           </button>
@@ -107,39 +134,51 @@ export default function App() {
   const activeCert = VALID_CERTS.includes(certSeg) ? certSeg : null;
   const certId = activeCert || "ctfl";
 
+  // O estado de progresso pertence à certificação. A chave remonta somente a
+  // camada stateful quando a rota troca de cert, evitando sincronizar estado
+  // derivado dentro de um effect e impedindo vazamento entre certificações.
+  return <AppState key={activeCert || "neutral"} activeCert={activeCert} certId={certId} />;
+}
+
+function AppState({ activeCert, certId }) {
   const bank = useMemo(() => {
-    try { return getBank(certId); }
-    catch { return getBank("ctfl"); }
+    try {
+      return getBank(certId);
+    } catch {
+      return getBank("ctfl");
+    }
   }, [certId]);
   const { ALL } = bank;
   const catalogCert = activeCert ? CATALOG_BY_ID[activeCert] : null;
-  // Progresso é por cert (namespaced em storage.js por certId). Recarrega
-  // sempre que activeCert muda; em rotas neutras (/, /select) não há cert
-  // ativo pra persistir, então mantém o último progresso carregado só em
-  // memória (o effect de save abaixo pula quando !activeCert).
+  // Progresso é por cert (namespaced em storage.js por certId). AppState é
+  // remontado pela key do wrapper quando a certificação muda.
   const [progress, setProgress] = useState(() => {
     setActiveCertForStorage(certId);
     return loadProgress(certId);
   });
 
-  useEffect(() => {
-    if (!activeCert) return;
-    setActiveCertForStorage(activeCert);
-    setProgress(loadProgress(activeCert));
-  }, [activeCert]);
   const [quizFilter, setQuizFilter] = useState(null);
   const [showOnboarding, setShowOnboarding] = useState(() => {
-    try { return !localStorage.getItem("ctfl_onboarding_done"); }
-    catch { return false; }
+    try {
+      return !localStorage.getItem("ctfl_onboarding_done");
+    } catch {
+      return false;
+    }
   });
   const [reentryOnboarding, setReentryOnboarding] = useState(false);
   const [lang, setLang] = useState(() => {
-    try { return localStorage.getItem("ctfl_lang") || "pt"; }
-    catch { return "pt"; }
+    try {
+      return localStorage.getItem("ctfl_lang") || "pt";
+    } catch {
+      return "pt";
+    }
   });
   const [theme, setTheme] = useState(() => {
-    try { return localStorage.getItem("ctfl_theme") || "auto"; }
-    catch { return "auto"; }
+    try {
+      return localStorage.getItem("ctfl_theme") || "auto";
+    } catch {
+      return "auto";
+    }
   });
 
   useEffect(() => {
@@ -154,7 +193,9 @@ export default function App() {
   useEffect(() => {
     if (!reentryOnboarding) return;
     document.body.style.overflow = "hidden";
-    return () => { document.body.style.overflow = ""; };
+    return () => {
+      document.body.style.overflow = "";
+    };
   }, [reentryOnboarding]);
 
   useEffect(() => {
@@ -166,19 +207,16 @@ export default function App() {
 
     const checkAndNotify = () => {
       const days = daysSinceLastStudy(progress.lastStudyDate);
-      const dueCount = getDueItems(progress, ALL.map((q) => q.id)).length;
+      const dueCount = getDueItems(
+        progress,
+        ALL.map((q) => q.id)
+      ).length;
 
       if (Notification.permission === "granted") {
         if (dueCount > 0) {
-          showLocalNotification(
-            "Synapse",
-            t(lang, "notifications.dueBody", { count: dueCount })
-          );
+          showLocalNotification("Synapse", t(lang, "notifications.dueBody", { count: dueCount }));
         } else if (days !== null && days >= 3) {
-          showLocalNotification(
-            "Synapse",
-            t(lang, "notifications.staleBody", { days })
-          );
+          showLocalNotification("Synapse", t(lang, "notifications.staleBody", { days }));
         }
       }
     };
@@ -186,13 +224,18 @@ export default function App() {
     // roda 1x ao abrir o app (não em loop) — checagem simples, sem agendamento
     // em background real (isso exigiria push server, fora do escopo "local")
     checkAndNotify();
-  }, []); // só na montagem inicial
+    // Intencionalmente só na montagem desta certificação: não repetir
+    // notificações a cada resposta, troca de idioma ou atualização do banco.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const onAnswer = (domain, correct, questionId) =>
     setProgress((p) => recordAnswer(p, domain, correct, questionId, bank));
 
   function dismissOnboarding() {
-    try { localStorage.setItem("ctfl_onboarding_done", "1"); } catch {}
+    try {
+      localStorage.setItem("ctfl_onboarding_done", "1");
+    } catch {}
     setShowOnboarding(false);
   }
 
@@ -202,13 +245,17 @@ export default function App() {
 
   function toggleLang() {
     const next = lang === "pt" ? "en" : "pt";
-    try { localStorage.setItem("ctfl_lang", next); } catch {}
+    try {
+      localStorage.setItem("ctfl_lang", next);
+    } catch {}
     setLang(next);
   }
 
   function cycleTheme() {
     const next = theme === "auto" ? "light" : theme === "light" ? "dark" : "auto";
-    try { localStorage.setItem("ctfl_theme", next); } catch {}
+    try {
+      localStorage.setItem("ctfl_theme", next);
+    } catch {}
     setTheme(next);
   }
 
@@ -216,12 +263,21 @@ export default function App() {
     <div className="app" {...(activeCert ? { "data-cert": activeCert } : {})}>
       {!reentryOnboarding && (
         <header className="masthead">
-          <div className="mast-mark" role="img" aria-label={catalogCert ? t(lang, "aria.mastMark", { cert: catalogCert.label }) : "Synapse"}><BrandMark size={26} /></div>
+          <div
+            className="mast-mark"
+            role="img"
+            aria-label={
+              catalogCert ? t(lang, "aria.mastMark", { cert: catalogCert.label }) : "Synapse"
+            }
+          >
+            <BrandMark size={26} />
+          </div>
           <div>
             <h1>{catalogCert ? catalogCert.fullName : "Synapse"}</h1>
             {catalogCert && (
               <p className="mast-sub">
-                ISTQB {catalogCert.label} {catalogCert.version} · {ALL.length} {t(lang, "questionsCount")}
+                ISTQB {catalogCert.label} {catalogCert.version} · {ALL.length}{" "}
+                {t(lang, "questionsCount")}
               </p>
             )}
           </div>
@@ -240,7 +296,10 @@ export default function App() {
           <button
             className="btn ghost theme-toggle"
             onClick={cycleTheme}
-            aria-label={t(lang, theme === "auto" ? "themeAuto" : theme === "light" ? "themeLight" : "themeDark")}
+            aria-label={t(
+              lang,
+              theme === "auto" ? "themeAuto" : theme === "light" ? "themeLight" : "themeDark"
+            )}
           >
             {theme === "auto" ? "🌗" : theme === "light" ? "☀️" : "🌙"}
           </button>
@@ -257,36 +316,97 @@ export default function App() {
           {/* key={certId}: força remount na troca de cert (mesmo padrão de
               rota /:cert/*), senão estado local (useReducer do Quiz etc.)
               vaza do cert antigo pro novo. */}
-          <Route path="/:cert/quiz" element={
-            <CertGuard key={certId}>
-              <TabNav lang={lang} />
-              <main role="tabpanel" id={`tabpanel-${certId}`} aria-labelledby={`tab-${certId}-quiz`}><CertRouteQuiz quizFilter={quizFilter} setQuizFilter={setQuizFilter} onAnswer={onAnswer} progress={progress} setProgress={setProgress} lang={lang} /></main>
-            </CertGuard>
-          } />
-          <Route path="/:cert/syllabus" element={
-            <CertGuard key={certId}>
-              <TabNav lang={lang} />
-              <main role="tabpanel" id={`tabpanel-${certId}`} aria-labelledby={`tab-${certId}-syllabus`}><CertRouteSyllabus setQuizFilter={setQuizFilter} lang={lang} progress={progress} /></main>
-            </CertGuard>
-          } />
-          <Route path="/:cert/flash" element={
-            <CertGuard key={certId}>
-              <TabNav lang={lang} />
-              <main role="tabpanel" id={`tabpanel-${certId}`} aria-labelledby={`tab-${certId}-flash`}><Flashcards lang={lang} progress={progress} setProgress={setProgress} /></main>
-            </CertGuard>
-          } />
-          <Route path="/:cert/glossary" element={
-            <CertGuard key={certId}>
-              <TabNav lang={lang} />
-              <main role="tabpanel" id={`tabpanel-${certId}`} aria-labelledby={`tab-${certId}-glossary`}><Glossary lang={lang} progress={progress} /></main>
-            </CertGuard>
-          } />
-          <Route path="/:cert/stats" element={
-            <CertGuard key={certId}>
-              <TabNav lang={lang} />
-              <main role="tabpanel" id={`tabpanel-${certId}`} aria-labelledby={`tab-${certId}-stats`}><CertRouteStats progress={progress} setProgress={setProgress} lang={lang} onReopenOnboarding={() => setReentryOnboarding(true)} /></main>
-            </CertGuard>
-          } />
+          <Route
+            path="/:cert/quiz"
+            element={
+              <CertGuard key={certId}>
+                <TabNav lang={lang} />
+                <main
+                  role="tabpanel"
+                  id={`tabpanel-${certId}`}
+                  aria-labelledby={`tab-${certId}-quiz`}
+                >
+                  <CertRouteQuiz
+                    quizFilter={quizFilter}
+                    setQuizFilter={setQuizFilter}
+                    onAnswer={onAnswer}
+                    progress={progress}
+                    setProgress={setProgress}
+                    lang={lang}
+                  />
+                </main>
+              </CertGuard>
+            }
+          />
+          <Route
+            path="/:cert/syllabus"
+            element={
+              <CertGuard key={certId}>
+                <TabNav lang={lang} />
+                <main
+                  role="tabpanel"
+                  id={`tabpanel-${certId}`}
+                  aria-labelledby={`tab-${certId}-syllabus`}
+                >
+                  <CertRouteSyllabus
+                    setQuizFilter={setQuizFilter}
+                    lang={lang}
+                    progress={progress}
+                  />
+                </main>
+              </CertGuard>
+            }
+          />
+          <Route
+            path="/:cert/flash"
+            element={
+              <CertGuard key={certId}>
+                <TabNav lang={lang} />
+                <main
+                  role="tabpanel"
+                  id={`tabpanel-${certId}`}
+                  aria-labelledby={`tab-${certId}-flash`}
+                >
+                  <Flashcards lang={lang} progress={progress} setProgress={setProgress} />
+                </main>
+              </CertGuard>
+            }
+          />
+          <Route
+            path="/:cert/glossary"
+            element={
+              <CertGuard key={certId}>
+                <TabNav lang={lang} />
+                <main
+                  role="tabpanel"
+                  id={`tabpanel-${certId}`}
+                  aria-labelledby={`tab-${certId}-glossary`}
+                >
+                  <Glossary lang={lang} progress={progress} />
+                </main>
+              </CertGuard>
+            }
+          />
+          <Route
+            path="/:cert/stats"
+            element={
+              <CertGuard key={certId}>
+                <TabNav lang={lang} />
+                <main
+                  role="tabpanel"
+                  id={`tabpanel-${certId}`}
+                  aria-labelledby={`tab-${certId}-stats`}
+                >
+                  <CertRouteStats
+                    progress={progress}
+                    setProgress={setProgress}
+                    lang={lang}
+                    onReopenOnboarding={() => setReentryOnboarding(true)}
+                  />
+                </main>
+              </CertGuard>
+            }
+          />
 
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
@@ -301,7 +421,7 @@ export default function App() {
       {!reentryOnboarding && (
         <footer className="foot">
           {t(lang, "footer")}
-          <span style={{marginLeft: '1rem', opacity: 0.5}}>v{__APP_VERSION__}</span>
+          <span style={{ marginLeft: "1rem", opacity: 0.5 }}>v{__APP_VERSION__}</span>
         </footer>
       )}
     </div>
@@ -333,7 +453,10 @@ function CertRouteSyllabus({ setQuizFilter, lang, progress }) {
   const navigate = useNavigate();
   return (
     <Syllabus
-      onStudy={(domain) => { setQuizFilter({ domain }); navigate(`/${cert}/${DEFAULT_SECTION}`); }}
+      onStudy={(domain) => {
+        setQuizFilter({ domain });
+        navigate(`/${cert}/${DEFAULT_SECTION}`);
+      }}
       lang={lang}
       progress={progress}
     />

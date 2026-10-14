@@ -7,12 +7,13 @@ import { VitePWA } from "vite-plugin-pwa";
 export default defineConfig({
   base: "/",
   define: {
-    __APP_VERSION__: JSON.stringify(process.env.npm_package_version)
+    __APP_VERSION__: JSON.stringify(process.env.npm_package_version),
   },
   test: {
     environment: "jsdom",
     globals: true,
     setupFiles: "./src/test-setup.js",
+    exclude: ["e2e/**", "node_modules/**", "dist/**"],
   },
   build: {
     // Fase 3: separar o banco de questões (2.5MB) em chunk próprio para que
@@ -34,7 +35,7 @@ export default defineConfig({
       includeAssets: ["favicon.svg"],
       workbox: {
         // banco multi-cert (1100q) passou do limite default de 2MiB
-        maximumFileSizeToCacheInBytes: 3 * 1024 * 1024
+        maximumFileSizeToCacheInBytes: 3 * 1024 * 1024,
       },
       manifest: {
         name: "Synapse — Preparação ISTQB",
@@ -47,9 +48,9 @@ export default defineConfig({
         icons: [
           { src: "icon-192.png", sizes: "192x192", type: "image/png" },
           { src: "icon-512.png", sizes: "512x512", type: "image/png" },
-          { src: "icon-512.png", sizes: "512x512", type: "image/png", purpose: "maskable" }
-        ]
-      }
-    })
-  ]
+          { src: "icon-512.png", sizes: "512x512", type: "image/png", purpose: "maskable" },
+        ],
+      },
+    }),
+  ],
 });

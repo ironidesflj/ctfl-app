@@ -36,9 +36,26 @@ export default function Flashcards({ lang = "pt", progress, setProgress }) {
     [lang, certDomains]
   );
   const hasContent = allCards.length > 0;
-  const dueIds = progress ? getDueItems(progress, FLASHCARDS.map((c) => c.id)) : [];
+  const dueIds = useMemo(
+    () =>
+      progress
+        ? getDueItems(
+            progress,
+            FLASHCARDS.map((c) => c.id)
+          )
+        : [],
+    [progress]
+  );
   const cards = useMemo(
-    () => (domain === "due" ? allCards.filter((c) => dueIds.includes(c.id)) : domain === "all" ? allCards : allCards.filter((c) => String(c.d) === chapters.find(ch => String(ch.chapter) === String(domain))?.domain)),
+    () =>
+      domain === "due"
+        ? allCards.filter((c) => dueIds.includes(c.id))
+        : domain === "all"
+          ? allCards
+          : allCards.filter(
+              (c) =>
+                String(c.d) === chapters.find((ch) => String(ch.chapter) === String(domain))?.domain
+            ),
     [domain, allCards, dueIds, chapters]
   );
 
@@ -101,14 +118,28 @@ export default function Flashcards({ lang = "pt", progress, setProgress }) {
   return (
     <div className="study">
       <div className="filter-bar">
-        <button className={"chip" + (domain === "all" ? " on" : "")} onClick={() => pickDomain("all")}>{t(lang, "domainAll")}</button>
+        <button
+          className={"chip" + (domain === "all" ? " on" : "")}
+          onClick={() => pickDomain("all")}
+        >
+          {t(lang, "domainAll")}
+        </button>
         {dueIds.length > 0 && (
-          <button className={"chip" + (domain === "due" ? " on" : "")} onClick={() => pickDomain("due")}>
+          <button
+            className={"chip" + (domain === "due" ? " on" : "")}
+            onClick={() => pickDomain("due")}
+          >
             {t(lang, "flashcards.dueToday")} ({dueIds.length})
           </button>
         )}
         {chapters.map((c) => (
-          <button key={c.chapter} className={"chip" + (domain === String(c.chapter) ? " on" : "")} onClick={() => pickDomain(String(c.chapter))}>{chapterName(c.chapter, lang)}</button>
+          <button
+            key={c.chapter}
+            className={"chip" + (domain === String(c.chapter) ? " on" : "")}
+            onClick={() => pickDomain(String(c.chapter))}
+          >
+            {chapterName(c.chapter, lang)}
+          </button>
         ))}
       </div>
 
@@ -119,48 +150,80 @@ export default function Flashcards({ lang = "pt", progress, setProgress }) {
             : t(lang, "flashcards.emptyDomain")}
         </p>
       ) : (
-      <>
-      <div className="flash-stack">
-        {cards.length > 2 && <div className="flash-stack-peek depth-2" aria-hidden="true" />}
-        {cards.length > 1 && <div className="flash-stack-peek depth-1" aria-hidden="true" />}
-        <button
-          className="card flash"
-          onClick={() => setFlipped((f) => !f)}
-          onTouchStart={handleTouchStart}
-          onTouchMove={handleTouchMove}
-          onTouchEnd={handleTouchEnd}
-          style={isDraggingRef.current ? { transform: `translateX(${dragX}px) rotate(${dragX / 20}deg)`, transition: "none" } : undefined}
-        >
-          {lang === "en" && !hasEN(card.id) && (
-            <span style={{position:'absolute', top:8, left:8, zIndex:2, fontSize:'11px', color:'var(--text-3)'}}>EN coming soon · showing PT</span>
-          )}
-          <div className={"flash-card-inner" + (flipped ? " flipped" : "")}>
-            <div className="flash-card-front">
-              <span className="flash-front">{card.front}</span>
-              <span className="flash-hint">{t(lang, "flashcards.flip")}</span>
-            </div>
-            <div className="flash-card-back">
-              <span className="flash-back">{card.back}</span>
-            </div>
+        <>
+          <div className="flash-stack">
+            {cards.length > 2 && <div className="flash-stack-peek depth-2" aria-hidden="true" />}
+            {cards.length > 1 && <div className="flash-stack-peek depth-1" aria-hidden="true" />}
+            <button
+              className="card flash"
+              onClick={() => setFlipped((f) => !f)}
+              onTouchStart={handleTouchStart}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={handleTouchEnd}
+              style={
+                dragX !== 0
+                  ? {
+                      transform: `translateX(${dragX}px) rotate(${dragX / 20}deg)`,
+                      transition: "none",
+                    }
+                  : undefined
+              }
+            >
+              {lang === "en" && !hasEN(card.id) && (
+                <span
+                  style={{
+                    position: "absolute",
+                    top: 8,
+                    left: 8,
+                    zIndex: 2,
+                    fontSize: "11px",
+                    color: "var(--text-3)",
+                  }}
+                >
+                  EN coming soon · showing PT
+                </span>
+              )}
+              <div className={"flash-card-inner" + (flipped ? " flipped" : "")}>
+                <div className="flash-card-front">
+                  <span className="flash-front">{card.front}</span>
+                  <span className="flash-hint">{t(lang, "flashcards.flip")}</span>
+                </div>
+                <div className="flash-card-back">
+                  <span className="flash-back">{card.back}</span>
+                </div>
+              </div>
+            </button>
           </div>
-        </button>
-      </div>
 
-      {flipped && (
-        <div className="srs-quality">
-          <button className="btn srs-again" onClick={() => rate("again")}>{t(lang, "flashcards.again")}</button>
-          <button className="btn srs-hard" onClick={() => rate("hard")}>{t(lang, "flashcards.hard")}</button>
-          <button className="btn srs-good" onClick={() => rate("good")}>{t(lang, "flashcards.good")}</button>
-          <button className="btn srs-easy" onClick={() => rate("easy")}>{t(lang, "flashcards.easy")}</button>
-        </div>
-      )}
+          {flipped && (
+            <div className="srs-quality">
+              <button className="btn srs-again" onClick={() => rate("again")}>
+                {t(lang, "flashcards.again")}
+              </button>
+              <button className="btn srs-hard" onClick={() => rate("hard")}>
+                {t(lang, "flashcards.hard")}
+              </button>
+              <button className="btn srs-good" onClick={() => rate("good")}>
+                {t(lang, "flashcards.good")}
+              </button>
+              <button className="btn srs-easy" onClick={() => rate("easy")}>
+                {t(lang, "flashcards.easy")}
+              </button>
+            </div>
+          )}
 
-      <div className="actions">
-        <button className="btn" onClick={() => go(-1)}>{t(lang, "flashcards.prev")}</button>
-        <span className="muted center-num">{idx + 1} / {cards.length}</span>
-        <button className="btn" onClick={() => go(1)}>{t(lang, "flashcards.next")}</button>
-      </div>
-      </>
+          <div className="actions">
+            <button className="btn" onClick={() => go(-1)}>
+              {t(lang, "flashcards.prev")}
+            </button>
+            <span className="muted center-num">
+              {idx + 1} / {cards.length}
+            </span>
+            <button className="btn" onClick={() => go(1)}>
+              {t(lang, "flashcards.next")}
+            </button>
+          </div>
+        </>
       )}
     </div>
   );

@@ -1,7 +1,14 @@
 import { useRef, useState, useMemo } from "react";
 import { useParams } from "react-router-dom";
 import { getBank } from "../lib/bank.js";
-import { exportProgress, importProgress, clearProgress, getStreak, getReadinessV2, todayLocal } from "../lib/storage.js";
+import {
+  exportProgress,
+  importProgress,
+  clearProgress,
+  getStreak,
+  getReadinessV2,
+  todayLocal,
+} from "../lib/storage.js";
 import { t } from "../lib/ui-strings.js";
 import { getNotificationPermission, requestNotificationPermission } from "../lib/notifications.js";
 import RadarChart from "./RadarChart.jsx";
@@ -38,7 +45,7 @@ function calcPace(history, readinessPoint) {
     });
     const vals = Object.values(byDay);
     if (vals.length === 0) return 0;
-    return vals.reduce((sum, d) => sum + d.c / d.t, 0) / vals.length * 100;
+    return (vals.reduce((sum, d) => sum + d.c / d.t, 0) / vals.length) * 100;
   }
 
   const recentPct = avgPct(recent7);
@@ -50,15 +57,57 @@ function calcPace(history, readinessPoint) {
 
 // Fase 2: achievement metadata (nomes + descrições para tooltip)
 const ACHIEVEMENTS = {
-  "first-step": { icon: "🎯", pt: "Primeiro passo", en: "First step", ptDesc: "Respondeu sua primeira questão", enDesc: "Answered your first question" },
-  "streak-7": { icon: "🔥", pt: "7 dias", en: "7 days", ptDesc: "Estudou 7 dias seguidos (≥5 questões/dia)", enDesc: "Studied 7 consecutive days (≥5 questions/day)" },
-  "streak-30": { icon: "💎", pt: "30 dias", en: "30 days", ptDesc: "Estudou 30 dias seguidos (≥5 questões/dia)", enDesc: "Studied 30 consecutive days (≥5 questions/day)" },
-  "passed-exam": { icon: "✅", pt: "Aprovado", en: "Passed", ptDesc: "Passou em um simulado", enDesc: "Passed an exam simulation" },
-  "chapter-complete": { icon: "📚", pt: "Capítulo completo", en: "Chapter complete", ptDesc: "Completou a cobertura de um capítulo inteiro", enDesc: "Completed coverage of an entire chapter" },
-  "bank-complete": { icon: "🏆", pt: "Banco completo", en: "Bank complete", ptDesc: "Completou a cobertura de todo o banco de questões do cert", enDesc: "Completed coverage of the entire cert's question bank" },
+  "first-step": {
+    icon: "🎯",
+    pt: "Primeiro passo",
+    en: "First step",
+    ptDesc: "Respondeu sua primeira questão",
+    enDesc: "Answered your first question",
+  },
+  "streak-7": {
+    icon: "🔥",
+    pt: "7 dias",
+    en: "7 days",
+    ptDesc: "Estudou 7 dias seguidos (≥5 questões/dia)",
+    enDesc: "Studied 7 consecutive days (≥5 questions/day)",
+  },
+  "streak-30": {
+    icon: "💎",
+    pt: "30 dias",
+    en: "30 days",
+    ptDesc: "Estudou 30 dias seguidos (≥5 questões/dia)",
+    enDesc: "Studied 30 consecutive days (≥5 questions/day)",
+  },
+  "passed-exam": {
+    icon: "✅",
+    pt: "Aprovado",
+    en: "Passed",
+    ptDesc: "Passou em um simulado",
+    enDesc: "Passed an exam simulation",
+  },
+  "chapter-complete": {
+    icon: "📚",
+    pt: "Capítulo completo",
+    en: "Chapter complete",
+    ptDesc: "Completou a cobertura de um capítulo inteiro",
+    enDesc: "Completed coverage of an entire chapter",
+  },
+  "bank-complete": {
+    icon: "🏆",
+    pt: "Banco completo",
+    en: "Bank complete",
+    ptDesc: "Completou a cobertura de todo o banco de questões do cert",
+    enDesc: "Completed coverage of the entire cert's question bank",
+  },
 };
 
-export default function Stats({ progress, setProgress, lang = "pt", onGoToQuiz, onReopenOnboarding = () => {} }) {
+export default function Stats({
+  progress,
+  setProgress,
+  lang = "pt",
+  onGoToQuiz,
+  onReopenOnboarding = () => {},
+}) {
   const { cert: certId } = useParams();
   const bank = useMemo(() => getBank(certId), [certId]);
   const { cert, chapters, chapterName, coverageByChapter, META } = bank;
@@ -89,7 +138,7 @@ export default function Stats({ progress, setProgress, lang = "pt", onGoToQuiz, 
   const missingItems = [...missingChapterNames, ...missingKLevelLabels].join(", ");
 
   // Fase 2: level baseado em questões únicas corretas (não total bruto)
-  const uniqueCorrect = Object.values(progress.attempts || {}).filter(a => a.lastCorrect).length;
+  const uniqueCorrect = Object.values(progress.attempts || {}).filter((a) => a.lastCorrect).length;
   const level = Math.floor(uniqueCorrect / 20) + 1;
 
   // Fase 2: cobertura real (questões únicas vistas / total do banco)
@@ -142,7 +191,9 @@ export default function Stats({ progress, setProgress, lang = "pt", onGoToQuiz, 
       {progress.total === 0 && (
         <div className="card" style={{ textAlign: "center" }}>
           <p>{t(lang, "stats.emptyWelcome")}</p>
-          <button className="btn primary" onClick={onGoToQuiz}>{t(lang, "stats.emptyCta")}</button>
+          <button className="btn primary" onClick={onGoToQuiz}>
+            {t(lang, "stats.emptyCta")}
+          </button>
         </div>
       )}
 
@@ -162,13 +213,23 @@ export default function Stats({ progress, setProgress, lang = "pt", onGoToQuiz, 
         <div className="gamification-strip">
           {streak >= 2 && (
             <>
-              <span title={t(lang, "stats.streakDesc")}>🔥 {streak} {lang === "pt" ? "dias" : "days"}</span>
-              <span className="gam-sep" aria-hidden="true">·</span>
+              <span title={t(lang, "stats.streakDesc")}>
+                🔥 {streak} {lang === "pt" ? "dias" : "days"}
+              </span>
+              <span className="gam-sep" aria-hidden="true">
+                ·
+              </span>
             </>
           )}
-          <span title={t(lang, "stats.levelDesc")}>{t(lang, "stats.level")} {level}</span>
-          <span className="gam-sep" aria-hidden="true">·</span>
-          <span>{achievements.length}/6 {t(lang, "stats.achievementsLabel")}</span>
+          <span title={t(lang, "stats.levelDesc")}>
+            {t(lang, "stats.level")} {level}
+          </span>
+          <span className="gam-sep" aria-hidden="true">
+            ·
+          </span>
+          <span>
+            {achievements.length}/6 {t(lang, "stats.achievementsLabel")}
+          </span>
         </div>
       )}
 
@@ -176,18 +237,26 @@ export default function Stats({ progress, setProgress, lang = "pt", onGoToQuiz, 
       {progress.total > 0 && achievements.length > 0 && (
         <div className="card" style={{ padding: "0.75rem" }}>
           <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap", alignItems: "center" }}>
-            {achievements.map(aid => {
+            {achievements.map((aid) => {
               const a = ACHIEVEMENTS[aid];
               if (!a) return null;
               const name = lang === "pt" ? a.pt : a.en;
               const desc = lang === "pt" ? a.ptDesc : a.enDesc;
               return (
-                <span key={aid} title={desc} style={{
-                  display: "inline-flex", alignItems: "center", gap: "4px",
-                  fontSize: "var(--fs-13)", padding: "2px 8px",
-                  borderRadius: "var(--radius-sm)", background: "var(--accent-soft)",
-                  color: "var(--accent-text)"
-                }}>
+                <span
+                  key={aid}
+                  title={desc}
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: "4px",
+                    fontSize: "var(--fs-13)",
+                    padding: "2px 8px",
+                    borderRadius: "var(--radius-sm)",
+                    background: "var(--accent-soft)",
+                    color: "var(--accent-text)",
+                  }}
+                >
                   <span aria-hidden="true">{a.icon}</span>
                   <span>{name}</span>
                 </span>
@@ -201,41 +270,48 @@ export default function Stats({ progress, setProgress, lang = "pt", onGoToQuiz, 
       {progress.total > 0 && (
         <div className="card readiness-card" aria-live="polite">
           {readiness.confidence === "low" ? (
-            <p className="muted">
-              {t(lang, "stats.readinessPreliminary")}
-            </p>
+            <p className="muted">{t(lang, "stats.readinessPreliminary")}</p>
           ) : (
             <>
               {readiness.confidence === "high" && (
                 <p style={{ fontWeight: 600 }}>
                   {readiness.gatesPassed === false
-                    ? (missingItems
-                        ? t(lang, "stats.readinessGateBlockedSpecific", { items: missingItems })
-                        : t(lang, "stats.readinessGateBlocked"))
+                    ? missingItems
+                      ? t(lang, "stats.readinessGateBlockedSpecific", { items: missingItems })
+                      : t(lang, "stats.readinessGateBlocked")
                     : readiness.point >= passPct
                       ? t(lang, "stats.readinessReady")
                       : t(lang, "stats.readinessNotReady")}
                 </p>
               )}
               <details style={{ marginTop: "0.25rem" }}>
-                <summary style={{ fontSize: "var(--fs-13)", cursor: "pointer", color: "var(--text-3)" }}>
+                <summary
+                  style={{ fontSize: "var(--fs-13)", cursor: "pointer", color: "var(--text-3)" }}
+                >
                   {t(lang, "stats.readinessSeeDetails")}
                 </summary>
                 <p className="muted" style={{ marginTop: "0.25rem", fontSize: "var(--fs-13)" }}>
-                  {t(lang, "stats.readinessPrefix")} <strong>{readiness.point}%</strong> {readinessSuffix}
+                  {t(lang, "stats.readinessPrefix")} <strong>{readiness.point}%</strong>{" "}
+                  {readinessSuffix}
                 </p>
                 <p className="muted" style={{ marginTop: "0.15rem", fontSize: "var(--fs-13)" }}>
                   {t(lang, "stats.readinessCI", { low: readiness.ciLow, high: readiness.ciHigh })}
                 </p>
                 <p className="muted" style={{ marginTop: "0.15rem", fontSize: "var(--fs-13)" }}>
-                  {t(lang, "stats.readinessCoverage", { pct: coveragePct, seen: seenCount, total: totalBank })}
+                  {t(lang, "stats.readinessCoverage", {
+                    pct: coveragePct,
+                    seen: seenCount,
+                    total: totalBank,
+                  })}
                 </p>
               </details>
             </>
           )}
           {pace !== null && (
             <p className="muted" style={{ marginTop: "0.25rem", fontSize: "var(--fs-13)" }}>
-              {t(lang, "stats.pacePrefix")}{pace}{t(lang, "stats.paceSuffix")}
+              {t(lang, "stats.pacePrefix")}
+              {pace}
+              {t(lang, "stats.paceSuffix")}
             </p>
           )}
         </div>
@@ -246,7 +322,13 @@ export default function Stats({ progress, setProgress, lang = "pt", onGoToQuiz, 
           <div className="stat-val">{progress.total}</div>
           <div className="stat-lbl">
             {t(lang, "stats.answered")}
-            <span style={{ marginLeft: "4px", cursor: "help" }} title={t(lang, "stats.infoAproveitamento")} aria-label={t(lang, "stats.infoAproveitamento")}>ℹ️</span>
+            <span
+              style={{ marginLeft: "4px", cursor: "help" }}
+              title={t(lang, "stats.infoAproveitamento")}
+              aria-label={t(lang, "stats.infoAproveitamento")}
+            >
+              ℹ️
+            </span>
           </div>
         </div>
         <div className="stat">
@@ -257,7 +339,13 @@ export default function Stats({ progress, setProgress, lang = "pt", onGoToQuiz, 
           <div className="stat-val">{pct}%</div>
           <div className="stat-lbl">
             {t(lang, "stats.performance")}
-            <span style={{ marginLeft: "4px", cursor: "help" }} title={t(lang, "stats.infoProntidao")} aria-label={t(lang, "stats.infoProntidao")}>ℹ️</span>
+            <span
+              style={{ marginLeft: "4px", cursor: "help" }}
+              title={t(lang, "stats.infoProntidao")}
+              aria-label={t(lang, "stats.infoProntidao")}
+            >
+              ℹ️
+            </span>
           </div>
         </div>
       </div>
@@ -274,9 +362,13 @@ export default function Stats({ progress, setProgress, lang = "pt", onGoToQuiz, 
               <div className="bar-row" key={date}>
                 <div className="bar-head">
                   <span>{date}</span>
-                  <span className={"bar-val " + tone}>{dpct}% ({d.correct}/{d.total})</span>
+                  <span className={"bar-val " + tone}>
+                    {dpct}% ({d.correct}/{d.total})
+                  </span>
                 </div>
-                <div className="bar"><div className={"bar-fill " + tone} style={{ width: dpct + "%" }} /></div>
+                <div className="bar">
+                  <div className={"bar-fill " + tone} style={{ width: dpct + "%" }} />
+                </div>
               </div>
             );
           })
@@ -285,7 +377,10 @@ export default function Stats({ progress, setProgress, lang = "pt", onGoToQuiz, 
 
       {/* Radar — substitui os 2 cards de domínio + cobertura */}
       {progress.total > 0 && (
-        <div className="card" style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.75rem" }}>
+        <div
+          className="card"
+          style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.75rem" }}
+        >
           <RadarChart
             domains={radarDomains}
             precision={radarPrecision}
@@ -294,16 +389,39 @@ export default function Stats({ progress, setProgress, lang = "pt", onGoToQuiz, 
           />
           <ul className="sr-only">
             {chapters.map((c, i) => (
-              <li key={c.chapter}>{radarDomains[i]}: {radarPrecision[i]}% {t(lang, "stats.precisionLabel").toLowerCase()}, {radarCoverage[i]}% {t(lang, "stats.coverageLabel").toLowerCase()}</li>
+              <li key={c.chapter}>
+                {radarDomains[i]}: {radarPrecision[i]}%{" "}
+                {t(lang, "stats.precisionLabel").toLowerCase()}, {radarCoverage[i]}%{" "}
+                {t(lang, "stats.coverageLabel").toLowerCase()}
+              </li>
             ))}
           </ul>
-          <div style={{ display: "flex", gap: "1.25rem", fontSize: "var(--fs-12)", color: "var(--text-3)" }}>
+          <div
+            style={{
+              display: "flex",
+              gap: "1.25rem",
+              fontSize: "var(--fs-12)",
+              color: "var(--text-3)",
+            }}
+          >
             <span style={{ display: "flex", alignItems: "center", gap: "4px" }}>
-              <svg width="16" height="4"><line x1="0" y1="2" x2="16" y2="2" stroke="var(--accent)" strokeWidth="2" /></svg>
+              <svg width="16" height="4">
+                <line x1="0" y1="2" x2="16" y2="2" stroke="var(--accent)" strokeWidth="2" />
+              </svg>
               {t(lang, "stats.precisionLabel")}
             </span>
             <span style={{ display: "flex", alignItems: "center", gap: "4px" }}>
-              <svg width="16" height="4"><line x1="0" y1="2" x2="16" y2="2" stroke="var(--text-3)" strokeWidth="1.5" strokeDasharray="4 3" /></svg>
+              <svg width="16" height="4">
+                <line
+                  x1="0"
+                  y1="2"
+                  x2="16"
+                  y2="2"
+                  stroke="var(--text-3)"
+                  strokeWidth="1.5"
+                  strokeDasharray="4 3"
+                />
+              </svg>
               {t(lang, "stats.coverageLabel")}
             </span>
           </div>
@@ -328,10 +446,21 @@ export default function Stats({ progress, setProgress, lang = "pt", onGoToQuiz, 
       )}
 
       <div className="actions">
-        <button className="btn" onClick={() => exportProgress(progress)}>{t(lang, "stats.exportBtn")}</button>
-        <button className="btn" onClick={() => fileRef.current?.click()}>{t(lang, "stats.importBtn")}</button>
+        <button className="btn" onClick={() => exportProgress(progress)}>
+          {t(lang, "stats.exportBtn")}
+        </button>
+        <button className="btn" onClick={() => fileRef.current?.click()}>
+          {t(lang, "stats.importBtn")}
+        </button>
         <input ref={fileRef} type="file" accept="application/json" hidden onChange={handleImport} />
-        <button className="btn ghost" onClick={() => { if (confirm(t(lang, "stats.resetConfirm"))) setProgress(clearProgress()); }}>{t(lang, "stats.resetBtn")}</button>
+        <button
+          className="btn ghost"
+          onClick={() => {
+            if (confirm(t(lang, "stats.resetConfirm"))) setProgress(clearProgress());
+          }}
+        >
+          {t(lang, "stats.resetBtn")}
+        </button>
       </div>
       {msg && <p className="muted">{msg}</p>}
     </div>

@@ -3,5 +3,7 @@ dist
 dist-ssr
 *.local
 .DS_Store
+test-results/
+playwright-report/
 .vscode/*
 !.vscode/extensions.json

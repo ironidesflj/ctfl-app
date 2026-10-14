@@ -25,19 +25,18 @@ function highlightText(text, query, regex) {
   if (!text || !regex) return text;
   const parts = text.split(regex);
   const q = query.trim().toLowerCase();
-  return parts.map((part, i) =>
-    part.toLowerCase() === q ? <mark key={i}>{part}</mark> : part
-  );
+  return parts.map((part, i) => (part.toLowerCase() === q ? <mark key={i}>{part}</mark> : part));
 }
 
 export default function Glossary({ lang = "pt", progress }) {
   const { cert: certId } = useParams();
   const bank = useMemo(() => getBank(certId), [certId]);
   const { chapters, chapterName, allInLang } = bank;
-  
+
   const [domain, setDomain] = useState("all");
   const [query, setQuery] = useState("");
   const [wrongOnly, setWrongOnly] = useState(false);
+  const [today] = useState(() => new Date());
   const headingRefs = useRef({});
 
   const certDomains = useMemo(() => new Set(chapters.map((c) => c.domain)), [chapters]);
@@ -59,15 +58,15 @@ export default function Glossary({ lang = "pt", progress }) {
       findGlossaryTermsInText(q.exp, lang).forEach((m) => idSet.add(m.id));
     });
     return idSet;
-  }, [progress, lang]);
+  }, [progress, lang, allInLang]);
 
   const termOfDay = useMemo(() => {
     if (allTerms.length === 0) return null;
-    const start = new Date(new Date().getFullYear(), 0, 0);
-    const diff = Date.now() - start.getTime();
+    const start = new Date(today.getFullYear(), 0, 0);
+    const diff = today.getTime() - start.getTime();
     const dayOfYear = Math.floor(diff / 86400000);
     return allTerms[dayOfYear % allTerms.length];
-  }, [allTerms]);
+  }, [allTerms, today]);
 
   const searchRegex = useMemo(() => {
     const q = query.trim();
@@ -104,11 +103,10 @@ export default function Glossary({ lang = "pt", progress }) {
   // Agrupamento por letra calculado uma vez aqui, fora do JSX
   // (antes mutava uma variável `lastLetter` durante o .map de render).
   const termsWithLetterFlag = useMemo(() => {
-    let last = null;
-    return sortedTerms.map((term) => {
+    return sortedTerms.map((term, index) => {
       const firstLetter = term.term[0].toUpperCase();
-      const isNewLetter = showAZIndex && firstLetter !== last;
-      if (isNewLetter) last = firstLetter;
+      const previousLetter = index > 0 ? sortedTerms[index - 1].term[0].toUpperCase() : null;
+      const isNewLetter = showAZIndex && firstLetter !== previousLetter;
       return { term, firstLetter, isNewLetter };
     });
   }, [sortedTerms, showAZIndex]);
@@ -150,11 +148,18 @@ export default function Glossary({ lang = "pt", progress }) {
       />
 
       <div className="filter-bar">
-        <button className={"chip" + (domain === "all" ? " on" : "")} onClick={() => setDomain("all")}>
+        <button
+          className={"chip" + (domain === "all" ? " on" : "")}
+          onClick={() => setDomain("all")}
+        >
           {t(lang, "domainAll")}
         </button>
         {chapters.map((c) => (
-          <button key={c.chapter} className={"chip" + (domain === String(c.chapter) ? " on" : "")} onClick={() => setDomain(String(c.chapter))}>
+          <button
+            key={c.chapter}
+            className={"chip" + (domain === String(c.chapter) ? " on" : "")}
+            onClick={() => setDomain(String(c.chapter))}
+          >
             {chapterName(c.chapter, lang)}
           </button>
         ))}
@@ -188,7 +193,9 @@ export default function Glossary({ lang = "pt", progress }) {
       <div className="card">
         {termsWithLetterFlag.length === 0 ? (
           <div>
-            <p className="muted">{lang === "pt" ? "Nenhum termo encontrado." : "No terms found."}</p>
+            <p className="muted">
+              {lang === "pt" ? "Nenhum termo encontrado." : "No terms found."}
+            </p>
             {query.trim() !== "" && (
               <button className="btn" onClick={() => setQuery("")}>
                 {t(lang, "glossary.clearSearch")}
@@ -200,7 +207,9 @@ export default function Glossary({ lang = "pt", progress }) {
             <div key={term.id}>
               {isNewLetter && (
                 <div
-                  ref={(el) => { headingRefs.current[firstLetter] = el; }}
+                  ref={(el) => {
+                    headingRefs.current[firstLetter] = el;
+                  }}
                   tabIndex={-1}
                   className="glossary-letter-heading"
                 >

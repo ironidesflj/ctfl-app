@@ -2,3 +2,8 @@ dist
 dev-dist
 node_modules
 coverage
+.claude
+src/data/*.json
+public/*.png
+test-results
+playwright-report

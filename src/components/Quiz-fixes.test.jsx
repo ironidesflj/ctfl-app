@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, afterEach } from "vitest";
-import { render, screen, cleanup, act, fireEvent } from "@testing-library/react";
+import { render, screen, cleanup } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter, Routes, Route } from "react-router-dom";
 import Quiz from "./Quiz.jsx";
@@ -9,8 +9,15 @@ import { logExamResult } from "../lib/storage.js";
 afterEach(cleanup);
 
 const EMPTY_PROGRESS = {
-  total: 0, correct: 0, byDomain: {}, seen: {}, flashcards: {},
-  saved: [], history: [], srs: {}, lastStudyDate: null,
+  total: 0,
+  correct: 0,
+  byDomain: {},
+  seen: {},
+  flashcards: {},
+  saved: [],
+  history: [],
+  srs: {},
+  lastStudyDate: null,
 };
 
 function renderQuiz(cert, props = {}) {
@@ -90,7 +97,18 @@ describe("Quiz fixes — logExamResult persiste o veredito por cert, não 65% fi
     const pct = Math.round((passMark / total) * 100);
     expect(pct).toBe(64);
 
-    const before = { total: 0, correct: 0, byDomain: {}, seen: {}, saved: [], history: [], srs: {}, lastStudyDate: null, achievements: [], examHistory: [] };
+    const before = {
+      total: 0,
+      correct: 0,
+      byDomain: {},
+      seen: {},
+      saved: [],
+      history: [],
+      srs: {},
+      lastStudyDate: null,
+      achievements: [],
+      examHistory: [],
+    };
     const after = logExamResult(before, pct, true); // Quiz.jsx passa o passed já calculado
     expect(after.examHistory.at(-1)).toMatchObject({ pct: 64, passed: true });
     expect(after.achievements).toContain("passed-exam");
@@ -110,7 +128,10 @@ describe("Quiz fixes — chapter card denominator", () => {
     );
     expect(weightEls.length).toBeGreaterThan(0);
     weightEls.forEach((el) => {
-      const [num, den] = el.textContent.trim().split("/").map((s) => Number(s.trim()));
+      const [num, den] = el.textContent
+        .trim()
+        .split("/")
+        .map((s) => Number(s.trim()));
       expect(den).toBeGreaterThan(0);
       expect(num).toBeGreaterThan(0);
     });

@@ -12,10 +12,21 @@ export default function CertSelector({ lang = "pt" }) {
   const listed = CERT_CATALOG.filter((c) => c.status !== "legacy");
   const legacy = CERT_CATALOG.filter((c) => c.status === "legacy");
 
-  const tx = {
-    pt: { title: "Escolha sua certificação", sub: "Selecione qual exame ISTQB você está estudando.", soon: "em breve", legacy: "Conteúdo legado (sunset ISTQB) — mantido, sem destaque:" },
-    en: { title: "Choose your certification", sub: "Pick which ISTQB exam you're studying.", soon: "coming soon", legacy: "Legacy content (ISTQB sunset) — kept, not featured:" },
-  }[lang] || {};
+  const tx =
+    {
+      pt: {
+        title: "Escolha sua certificação",
+        sub: "Selecione qual exame ISTQB você está estudando.",
+        soon: "em breve",
+        legacy: "Conteúdo legado (sunset ISTQB) — mantido, sem destaque:",
+      },
+      en: {
+        title: "Choose your certification",
+        sub: "Pick which ISTQB exam you're studying.",
+        soon: "coming soon",
+        legacy: "Legacy content (ISTQB sunset) — kept, not featured:",
+      },
+    }[lang] || {};
 
   return (
     <div className="cert-select">
@@ -34,10 +45,14 @@ export default function CertSelector({ lang = "pt" }) {
               aria-disabled={!isLive}
               onClick={isLive ? () => navigate(`/${c.id}/${DEFAULT_SECTION}`) : undefined}
             >
-              <span className="cc-mark" aria-hidden="true"><BrandMarkOutline size={26} /></span>
+              <span className="cc-mark" aria-hidden="true">
+                <BrandMarkOutline size={26} />
+              </span>
               <span className="cc-body">
                 <span className="cc-title">{c.label}</span>
-                <span className="cc-sub">ISTQB {c.fullName} {c.version}</span>
+                <span className="cc-sub">
+                  ISTQB {c.fullName} {c.version}
+                </span>
               </span>
               {!isLive && <span className="cc-soon">{tx.soon}</span>}
             </button>

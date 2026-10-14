@@ -17,9 +17,7 @@ export default function RadarChart({ domains, precision, coverage, size = 200 })
   }
 
   function polygonPoints(values) {
-    return values
-      .map((v, i) => polar(angle(i), Math.max(0, Math.min(v, 100))).join(","))
-      .join(" ");
+    return values.map((v, i) => polar(angle(i), Math.max(0, Math.min(v, 100))).join(",")).join(" ");
   }
 
   const ringPoints = rings.map((r) =>
@@ -37,29 +35,13 @@ export default function RadarChart({ domains, precision, coverage, size = 200 })
       <title>Precisão e cobertura por domínio</title>
       {/* Grid rings */}
       {ringPoints.map((pts, ri) => (
-        <polygon
-          key={ri}
-          points={pts}
-          fill="none"
-          stroke="var(--line)"
-          strokeWidth="1"
-        />
+        <polygon key={ri} points={pts} fill="none" stroke="var(--line)" strokeWidth="1" />
       ))}
 
       {/* Axes */}
       {domains.map((_, i) => {
         const [x, y] = polar(angle(i), 100);
-        return (
-          <line
-            key={i}
-            x1={cx}
-            y1={cy}
-            x2={x}
-            y2={y}
-            stroke="var(--line)"
-            strokeWidth="1"
-          />
-        );
+        return <line key={i} x1={cx} y1={cy} x2={x} y2={y} stroke="var(--line)" strokeWidth="1" />;
       })}
 
       {/* Precision polygon (filled accent) — desenhado primeiro, cobertura
@@ -84,17 +66,12 @@ export default function RadarChart({ domains, precision, coverage, size = 200 })
       {/* Labels */}
       {domains.map((label, i) => {
         const a = angle(i);
-        const [x, y] = polar(a, 100);
         const labelR = maxR + 16;
         const rad = (a * Math.PI) / 180;
         const lx = cx + labelR * Math.cos(rad);
         const ly = cy + labelR * Math.sin(rad);
         const anchor =
-          Math.abs(Math.cos(rad)) < 0.15
-            ? "middle"
-            : Math.cos(rad) > 0
-            ? "start"
-            : "end";
+          Math.abs(Math.cos(rad)) < 0.15 ? "middle" : Math.cos(rad) > 0 ? "start" : "end";
         return (
           <text
             key={i}

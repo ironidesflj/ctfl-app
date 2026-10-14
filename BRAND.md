@@ -9,44 +9,44 @@ referência e evitar inconsistência em futuras mudanças.
 
 ## Cor de marca
 
-| Token | Light | Dark | Uso |
-|---|---|---|---|
-| `--accent` | `#5a4be7` | `#8b7dff` | Cor primária — botões, links, destaque |
+| Token           | Light     | Dark      | Uso                                      |
+| --------------- | --------- | --------- | ---------------------------------------- |
+| `--accent`      | `#5a4be7` | `#8b7dff` | Cor primária — botões, links, destaque   |
 | `--accent-soft` | `#ece9fc` | `#241f3d` | Fundo suave (cards selecionados, badges) |
-| `--accent-text` | `#3b2fb0` | `#b9aeff` | Texto sobre fundo suave |
+| `--accent-text` | `#3b2fb0` | `#b9aeff` | Texto sobre fundo suave                  |
 
 Roxo/violeta é a cor de marca em todos os contextos (claro e escuro) — não varia
 o hue, só a luminosidade entre os temas.
 
 ## Cores de feedback
 
-| Token | Light | Dark | Significado |
-|---|---|---|---|
-| `--ok` | `#0f8a5f` | `#45c98e` | Sucesso, aprovado, K1 |
-| `--no` | `#c5362f` | `#f0726a` | Erro, reprovado |
+| Token    | Light     | Dark      | Significado                     |
+| -------- | --------- | --------- | ------------------------------- |
+| `--ok`   | `#0f8a5f` | `#45c98e` | Sucesso, aprovado, K1           |
+| `--no`   | `#c5362f` | `#f0726a` | Erro, reprovado                 |
 | `--warn` | `#b5730a` | `#e0a04a` | Atenção, K3 (questões difíceis) |
 
 ## Neutros
 
-| Token | Light | Dark |
-|---|---|---|
-| `--bg` | `#f6f5f9` | `#0f0e16` |
-| `--surface` | `#ffffff` | `#1a1825` |
+| Token         | Light     | Dark      |
+| ------------- | --------- | --------- |
+| `--bg`        | `#f6f5f9` | `#0f0e16` |
+| `--surface`   | `#ffffff` | `#1a1825` |
 | `--surface-2` | `#f0eef6` | `#221f30` |
-| `--text` | `#1b1830` | `#ecebf5` |
-| `--text-2` | `#5c5775` | `#a8a3c2` |
-| `--text-3` | `#8a85a3` | `#76728f` |
+| `--text`      | `#1b1830` | `#ecebf5` |
+| `--text-2`    | `#5c5775` | `#a8a3c2` |
+| `--text-3`    | `#8a85a3` | `#76728f` |
 
 Tema segue `prefers-color-scheme` por padrão, com override manual via
 `data-theme="light"` / `data-theme="dark"` (implementado em v2.5.0).
 
 ## Tipografia
 
-| Papel | Fonte | Onde aparece |
-|---|---|---|
-| Display (títulos, números grandes) | **Space Grotesk** (peso 700/500) | h1, h2, scores, stat-val |
-| Corpo (texto geral) | **Inter** (peso 400/500) | parágrafos, botões, labels |
-| Mono (dados técnicos) | **JetBrains Mono** (peso 500) | tags K1/K2/K3, timer, logo "CT", contadores de domínio |
+| Papel                              | Fonte                            | Onde aparece                                           |
+| ---------------------------------- | -------------------------------- | ------------------------------------------------------ |
+| Display (títulos, números grandes) | **Space Grotesk** (peso 700/500) | h1, h2, scores, stat-val                               |
+| Corpo (texto geral)                | **Inter** (peso 400/500)         | parágrafos, botões, labels                             |
+| Mono (dados técnicos)              | **JetBrains Mono** (peso 500)    | tags K1/K2/K3, timer, logo "CT", contadores de domínio |
 
 Carregadas via Google Fonts no `index.html`.
 
@@ -55,11 +55,11 @@ Carregadas via Google Fonts no `index.html`.
 - **Mark**: grafo de 4 nós conectados (`polyline points="9,36 18,17 29,26 39,11"`,
   viewBox 48×48) — não é mais texto/iniciais. Duas variantes, cores propositalmente
   invertidas entre si:
-  - `BrandMark` (`src/components/BrandMark.jsx`, export default) — pra uso *dentro*
+  - `BrandMark` (`src/components/BrandMark.jsx`, export default) — pra uso _dentro_
     de uma caixa `background: var(--cert-accent)` (masthead, badge). Traço branco,
     nó final branco, 3 nós intermediários com `fill: var(--cert-accent)` (mesma cor
     do fundo, criam o efeito de "furo" com anel branco).
-  - `BrandMarkOutline` (mesmo arquivo, named export) — pra uso *solto*, sem caixa de
+  - `BrandMarkOutline` (mesmo arquivo, named export) — pra uso _solto_, sem caixa de
     fundo (grid do seletor de certificação). `currentColor` no traço e no nó final;
     3 nós intermediários com `fill: var(--surface-2)` (cor de fundo do card, mesmo
     princípio de "furo", invertido porque aqui o fundo é claro/escuro neutro, não
@@ -75,11 +75,11 @@ Carregadas via Google Fonts no `index.html`.
 
 ## Raio de borda
 
-| Token | Valor | Uso |
-|---|---|---|
-| `--radius` | 14px | Cards, botões grandes |
-| `--radius-sm` | 10px | Chips, botões menores, inputs |
-| Pills/badges | 999px (full) | Tags, chips de filtro, badges de domínio |
+| Token         | Valor        | Uso                                      |
+| ------------- | ------------ | ---------------------------------------- |
+| `--radius`    | 14px         | Cards, botões grandes                    |
+| `--radius-sm` | 10px         | Chips, botões menores, inputs            |
+| Pills/badges  | 999px (full) | Tags, chips de filtro, badges de domínio |
 
 ## Tom de voz (aplicado no copy do app)
 

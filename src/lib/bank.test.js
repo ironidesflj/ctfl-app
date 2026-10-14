@@ -4,13 +4,21 @@ import { getBank } from "./bank.js";
 describe.each(["ctfl", "ctal-ta"])("bank(%s) - distribuição do simulado", (certId) => {
   it("buildExamInLang segue os pesos oficiais por capítulo, sem filler aleatório", () => {
     const { chapters, META, buildExamInLang } = getBank(certId);
-    const WEIGHTS_TOTAL = Object.values(META.chapterWeights[certId]).reduce((s, w) => s + Number(w), 0);
+    const WEIGHTS_TOTAL = Object.values(META.chapterWeights[certId]).reduce(
+      (s, w) => s + Number(w),
+      0
+    );
     const exam = buildExamInLang("pt");
     expect(exam.length).toBe(META.examFormat[certId].questions);
     const counts = {};
-    exam.forEach((q) => { counts[q.chapter] = (counts[q.chapter] || 0) + 1; });
+    exam.forEach((q) => {
+      counts[q.chapter] = (counts[q.chapter] || 0) + 1;
+    });
     chapters.forEach((c) => {
-      const want = Math.round((META.chapterWeights[certId][String(c.chapter)] / WEIGHTS_TOTAL) * META.examFormat[certId].questions);
+      const want = Math.round(
+        (META.chapterWeights[certId][String(c.chapter)] / WEIGHTS_TOTAL) *
+          META.examFormat[certId].questions
+      );
       expect(counts[c.chapter] || 0).toBe(want);
     });
   });
