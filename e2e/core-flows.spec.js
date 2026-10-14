@@ -5,6 +5,7 @@ test.beforeEach(async ({ page }) => {
     if (!sessionStorage.getItem("synapse-e2e-initialized")) {
       localStorage.clear();
       localStorage.setItem("ctfl_onboarding_done", "1");
+      localStorage.setItem("synapse.releaseNotes.seen.3.11.0", "1");
       sessionStorage.setItem("synapse-e2e-initialized", "1");
     }
   });
@@ -56,4 +57,15 @@ test("simulado pode ser concluído e persistido", async ({ page }) => {
     () => JSON.parse(localStorage.getItem("synapse.progress.v1.ctfl")).examHistory
   );
   expect(examHistory).toHaveLength(1);
+});
+
+test("novidades de release aparecem uma vez por versão", async ({ page }) => {
+  await page.goto("/select");
+  await page.evaluate(() => localStorage.removeItem("synapse.releaseNotes.seen.3.11.0"));
+  await page.reload();
+
+  await expect(page.getByRole("dialog", { name: "O Synapse evoluiu" })).toBeVisible();
+  await page.getByRole("button", { name: "Entendi" }).click();
+  await page.reload();
+  await expect(page.getByRole("dialog", { name: "O Synapse evoluiu" })).toHaveCount(0);
 });

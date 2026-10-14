@@ -9,6 +9,8 @@ repositórios `ctfl-app` e `ctfl-question-bank-ptbr`.
 - `current-state.md`: estado verificado dos dois repositórios.
 - `plan.md`: próximos itens autorizados, adiados e fora de escopo.
 - `spec-onboarding-reentry.md`: spec histórica reconstruída e fechada.
+- `spec-release-communication.md`: toast técnico + modal de novidades para
+  releases significativas.
 
 As specs 1 (Stats/gamificação), 2 (prontidão por blueprint) e 3
 (desalinhamento de letra) estão fechadas. O snapshot histórico detalhado que

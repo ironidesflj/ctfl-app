@@ -20,7 +20,9 @@ export function getNotificationPermission() {
 
 // Mostra notificação local via Service Worker (mais confiável que `new Notification()`
 // direto, especialmente em Android/Chrome)
-export async function showLocalNotification(title, body) {
+// r10: `opts.data` viaja no notificationclick do sw.js — ex: { go: "quiz" }
+// faz o clique navegar pra rota neutra /go/quiz (último cert usado).
+export async function showLocalNotification(title, body, opts = {}) {
   if (Notification.permission !== "granted") return false;
   const reg = await navigator.serviceWorker.ready;
   reg.showNotification(title, {
@@ -28,6 +30,7 @@ export async function showLocalNotification(title, body) {
     icon: "./icon-192.png",
     badge: "./icon-192.png",
     tag: "ctfl-reminder", // evita acumular notificações duplicadas
+    ...(opts.data ? { data: opts.data } : {}),
   });
   return true;
 }

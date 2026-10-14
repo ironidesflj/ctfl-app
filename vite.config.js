@@ -1,9 +1,22 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
-import { VitePWA } from "vite-plugin-pwa";
 
 // base: "/" é necessário para BrowserRouter — caminhos absolutos garantem que
 // assets carregam corretamente em qualquer rota (ex: /ctfl/quiz).
+//
+// Para hospedar em um subpath (ex: https://site.com/synapse/):
+//   npm run build -- --base=/synapse/
+// O service worker autoral (public/sw.js) e o manifest (public/) usam
+// caminhos relativos, então funcionam em qualquer subpasta sem ajuste.
+//
+// Nota (r12): vite-plugin-pwa foi REMOVIDO — desde a r7 o PWA é autoral
+// (public/sw.js + public/manifest.webmanifest, registro em src/lib/pwa.js).
+// O devDependency ainda lista o pacote por compatibilidade de lockfile;
+// pode ser removido com `npm uninstall vite-plugin-pwa`.
+// O banco de questões é carregado lazy por cert (src/data/banks/ via
+// import.meta.glob em bank.js) — não há manualChunks; o monolito em
+// src/data/synapse-question-bank.json fica retido apenas como fonte de
+// verdade do teste de integridade do split (bank-split.test.js).
 export default defineConfig({
   base: "/",
   define: {
@@ -15,42 +28,5 @@ export default defineConfig({
     setupFiles: "./src/test-setup.js",
     exclude: ["e2e/**", "node_modules/**", "dist/**"],
   },
-  build: {
-    // Fase 3: separar o banco de questões (2.5MB) em chunk próprio para que
-    // o bundle principal (app code) carregue mais rápido. Code-splitting real
-    // (lazy import por cert) fica como follow-up — requer mudar getBank para
-    // async e atualizar 6 componentes.
-    rollupOptions: {
-      output: {
-        manualChunks: {
-          "question-bank": ["./src/data/synapse-question-bank.json"],
-        },
-      },
-    },
-  },
-  plugins: [
-    react(),
-    VitePWA({
-      registerType: "autoUpdate",
-      includeAssets: ["favicon.svg"],
-      workbox: {
-        // banco multi-cert (1100q) passou do limite default de 2MiB
-        maximumFileSizeToCacheInBytes: 3 * 1024 * 1024,
-      },
-      manifest: {
-        name: "Synapse — Preparação ISTQB",
-        short_name: "Synapse",
-        description: "Preparação para certificações ISTQB (CTFL, CTAL e mais)",
-        theme_color: "#5a4be7",
-        background_color: "#14141c",
-        display: "standalone",
-        lang: "pt-BR",
-        icons: [
-          { src: "icon-192.png", sizes: "192x192", type: "image/png" },
-          { src: "icon-512.png", sizes: "512x512", type: "image/png" },
-          { src: "icon-512.png", sizes: "512x512", type: "image/png", purpose: "maskable" },
-        ],
-      },
-    }),
-  ],
+  plugins: [react()],
 });

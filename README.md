@@ -22,18 +22,38 @@ React + Vite, instalável como PWA, funciona offline.
 
 ## Funcionalidades
 
-- **Quiz — modo Estudo:** feedback por questão, filtra domínio/quantidade, modo **"Errei antes"**
-  (aparece quando há histórico de erros).
-- **Quiz — modo Simulado:** questões proporcionais ao blueprint oficial de cada certificação (CTFL: 40q/75min; CTAL-TA: 45q/150min), revisão no fim.
+- **Quiz — modo Estudo:** feedback por questão, filtra domínio/quantidade,
+  marca questões, oferece modo **"Errei antes"** e treino dirigido por
+  capítulo/K-level.
+- **Quiz — modo Simulado:** questões estratificadas pelo blueprint oficial de
+  capítulo e K-level (CTFL: 40q/75min; CTAL-TA: 45q/150min), personalização,
+  grade de navegação, rascunho persistido, retomada e revisão no fim.
 - **Flashcards:** marcação Sei/Não sei, filtro "Revisar (N)" para cards pendentes.
 - **Syllabus** por capítulo.
 - **Syllabus acionável:** botão "Estudar este capítulo" abre o Quiz pré-filtrado.
-- **Progresso** por domínio com exportar/importar JSON (sincronização manual entre aparelhos).
-- **PWA:** instalável no celular, funciona offline.
+- **Progresso:** prontidão por blueprint, radar por domínio, desempenho por
+  K-level, streak/heatmap, seis conquistas, meta diária, histórico de
+  simulados, data da prova, exportação CSV e backup/restauração JSON.
+- **PWA:** instalável, shell e rotas offline, splash iOS claro/escuro, atalhos
+  e atualização gentil sem interromper a sessão.
+- **Novidades de versão:** toast avisa quando a atualização está pronta; após
+  releases significativas, um resumo bilíngue aparece uma única vez por versão.
 - **Banco:** multi-certificação (`getBank(certId)`), CTFL (300q) e CTAL-TA
   (200q) no ar, distribuição proporcional ao blueprint oficial de cada uma.
 - **Toggle PT/EN no header:** alterna o idioma das questões no Quiz e Simulado
   (Flashcards e Syllabus permanecem em PT, com aviso "coming soon" em EN).
+
+## Pendências de produto
+
+1. Criar um caminho sempre visível para voltar à página inicial institucional
+   do app, com explicação de como ele funciona e uma seção “Sobre mim” com
+   redes e dados de contato do autor.
+2. Criar uma seção de feedback dos usuários, fácil de encontrar em todas as
+   áreas principais do app.
+
+Esses itens estão registrados como backlog e ainda não foram implementados;
+qualquer solução deve ganhar spec própria antes de alterar navegação, conteúdo
+institucional ou coleta/armazenamento de dados.
 
 ## Rodar localmente
 
@@ -57,17 +77,22 @@ npm run preview    # serve o build localmente para conferência
 ## Deploy
 
 - **Vercel/Netlify:** importe o repositório; build `npm run build`, diretório de saída `dist`.
-- **GitHub Pages:** publique o conteúdo de `dist/`. O `base: "./"` no `vite.config.js` já trata caminhos relativos.
+- **GitHub Pages:** o workflow é manual; para subpath, gere a build com o
+  `--base` correspondente e valide roteamento/deep links antes de publicar.
 
 ## Estrutura
 
 ```
 src/
-  data/synapse-question-bank.json banco multi-cert (schema i18n, 1100q, 5 certs)
+  data/banks/                    chunks lazy das certificações live
+  data/synapse-question-bank.json fonte de verdade do teste de integridade
   data/study.js                    flashcards + tópicos do syllabus
   lib/certs.config.js              config por certificação (capítulos, domínios)
   lib/bank.js                      getBank(certId) — factory: filtros, amostra do simulado
-  lib/storage.js                   persistência local, memória por questão (seen) + export/import
+  lib/activity.js                  métricas, metas, datas e recortes de atividade
+  lib/pwa.js                       registro e atualização gentil do service worker
+  lib/settings.js                  preferências e migração das chaves legadas
+  lib/storage.js                   persistência por cert, rascunho e backup
   components/                      Quiz, Flashcards, Syllabus, Stats
   App.jsx, main.jsx, styles.css
 ```
@@ -95,8 +120,9 @@ npx playwright install chromium # apenas na primeira execução local
 npm run test:e2e
 ```
 
-O CI executa todos esses gates, incluindo dois smokes E2E em Chromium: fluxo de
-estudo/persistência/idioma/onboarding e conclusão/persistência de simulado.
+O CI executa todos esses gates. A suíte unitária/de componentes tem 289 testes;
+os três smokes E2E em Chromium cobrem seleção, estudo, persistência, idioma,
+onboarding, conclusão/persistência de simulado e novidades por versão.
 
 ## Aviso
 

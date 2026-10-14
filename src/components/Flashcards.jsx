@@ -22,6 +22,10 @@ export default function Flashcards({ lang = "pt", progress, setProgress }) {
   const [idx, setIdx] = useState(0);
   const [flipped, setFlipped] = useState(false);
   const [dragX, setDragX] = useState(0);
+  // P3/lint: espelho em estado do "está arrastando" — ler ref durante render
+  // (react-hooks/refs) não é permitido; handlers continuam usando o ref pra
+  // lógica, o render usa o estado.
+  const [isDragging, setIsDragging] = useState(false);
 
   const touchStartX = useRef(null);
   const dragXRef = useRef(0);
@@ -83,6 +87,7 @@ export default function Flashcards({ lang = "pt", progress, setProgress }) {
     if (!flipped) return;
     touchStartX.current = e.touches[0].clientX;
     isDraggingRef.current = true;
+    setIsDragging(true);
   }
   function handleTouchMove(e) {
     if (!isDraggingRef.current || touchStartX.current === null) return;
@@ -102,6 +107,7 @@ export default function Flashcards({ lang = "pt", progress, setProgress }) {
     isDraggingRef.current = false;
     dragXRef.current = 0;
     setDragX(0);
+    setIsDragging(false);
     touchStartX.current = null;
   }
 
@@ -161,7 +167,7 @@ export default function Flashcards({ lang = "pt", progress, setProgress }) {
               onTouchMove={handleTouchMove}
               onTouchEnd={handleTouchEnd}
               style={
-                dragX !== 0
+                isDragging
                   ? {
                       transform: `translateX(${dragX}px) rotate(${dragX / 20}deg)`,
                       transition: "none",

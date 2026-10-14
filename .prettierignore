@@ -4,6 +4,8 @@ node_modules
 coverage
 .claude
 src/data/*.json
+src/data/**/*.json
 public/*.png
+index.html
 test-results
 playwright-report

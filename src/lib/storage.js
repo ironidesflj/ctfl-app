@@ -3,6 +3,10 @@ import { isDue } from "./spacedRepetition.js";
 const LEGACY_KEY = "ctfl_progress_v1";
 const keyFor = (certId) => `synapse.progress.v1.${certId}`;
 
+// P0: rascunho de simulado — o exame em andamento sobrevive à troca de
+// aba/rota/recarregamento. Chave própria por cert, separada do progresso.
+const draftKeyFor = (certId) => `synapse.examDraft.v1.${certId}`;
+
 // Fase 0: timezone dinâmico (antes hardcoded America/Sao_Paulo).
 const TZ = (() => {
   try {
@@ -138,7 +142,7 @@ export function recordAnswer(state, domain, correct, questionId, bank) {
     byDomain: { ...state.byDomain },
     seen: { ...(state.seen || {}) },
     attempts: { ...(state.attempts || {}) },
-    history: [...(state.history || []), { date: todayLocal(), correct }].slice(-90),
+    history: [...(state.history || []), { date: todayLocal(), correct }].slice(-400),
     lastStudyDate: todayLocal(),
   };
   const d = next.byDomain[domain] || { t: 0, c: 0 };
@@ -210,6 +214,9 @@ export function getDueItems(state, allIds) {
 // Fase 2: streak com quality gate. Um dia só conta se houve ≥5 respostas
 // (STREAK_MIN_ANSWERS_PER_DAY). Antes, qualquer resposta (1/dia) preservava
 // streak — métrica enganosa que recompensava presença, não prática.
+// Nota: o cap do history acima precisa acomodar streak-30 (30 dias × 5
+// respostas/dia = 150 entradas) — por isso é 400, com folga para o gráfico
+// de evolução de 14 dias e o cálculo de ritmo do Stats.
 export function getStreak(progress) {
   const history = progress.history || [];
   if (history.length === 0) return 0;
@@ -386,7 +393,10 @@ export function checkAchievements(progress, bank) {
   if (progress.total >= 1) existing.add("first-step");
   if (streak >= 7) existing.add("streak-7");
   if (streak >= 30) existing.add("streak-30");
-  if ((progress.examHistory || []).some((e) => e.passed)) existing.add("passed-exam");
+  const examHistory = progress.examHistory || [];
+  if (examHistory.some((e) => e.passed)) existing.add("passed-exam");
+  // r4: completou um simulado personalizado (capítulos/níveis escolhidos)
+  if (examHistory.some((e) => e.custom)) existing.add("custom-exam");
   if (bank) {
     const attempts = progress.attempts || {};
     const seen = progress.seen || {};
@@ -400,16 +410,78 @@ export function checkAchievements(progress, bank) {
   return [...existing];
 }
 
+// r9: roadmap de conquistas — progresso rumo a CADA conquista. Motivação:
+// as travadas eram invisíveis (a tira de gamificação só lista as obtidas);
+// agora o Stats mostra "o quão perto" o usuário está de cada uma. Mesma
+// fonte de verdade de checkAchievements — os critérios são espelhados 1:1
+// (testado: unlocked ⇒ current >= target).
+// examFormat (opcional): { passMark, questions } do cert — usado só como
+// alvo percentual do "passed-exam" (ex.: 26/40 = 65% no CTFL).
+export function achievementProgress(progress, bank, examFormat = null) {
+  const streak = getStreak(progress);
+  const examHistory = progress.examHistory || [];
+  const bestPct = examHistory.reduce((m, e) => Math.max(m, e.pct || 0), 0);
+  const passPct =
+    examFormat && examFormat.questions > 0
+      ? Math.round((examFormat.passMark / examFormat.questions) * 100)
+      : 65;
+
+  let chapter = { current: 0, target: 0, pct: 0 };
+  let bankSeen = 0;
+  let bankTotal = 0;
+  if (bank) {
+    const attempts = progress.attempts || {};
+    const seen = progress.seen || {};
+    const seenMap = Object.keys(attempts).length > 0 ? attempts : seen;
+    const coverage = bank.coverageByChapter(seenMap);
+    const entries = Object.entries(coverage).filter(([, v]) => v.total > 0);
+    // capítulo mais próximo de 100% (o alvo natural do "chapter-complete")
+    entries.forEach(([, v]) => {
+      const pct = v.seen / v.total;
+      if (pct > chapter.pct) chapter = { current: v.seen, target: v.total, pct };
+    });
+    bankSeen = entries.reduce((acc, [, v]) => acc + v.seen, 0);
+    bankTotal = entries.reduce((acc, [, v]) => acc + v.total, 0);
+  }
+
+  return {
+    "first-step": { current: Math.min(progress.total || 0, 1), target: 1 },
+    "streak-7": { current: Math.min(streak, 7), target: 7 },
+    "streak-30": { current: Math.min(streak, 30), target: 30 },
+    "passed-exam": { current: Math.min(bestPct, passPct), target: passPct, unit: "pct" },
+    "custom-exam": { current: examHistory.some((e) => e.custom) ? 1 : 0, target: 1 },
+    "chapter-complete": { current: chapter.current, target: chapter.target || 1 },
+    "bank-complete": { current: bankSeen, target: bankTotal || 1 },
+  };
+}
+
 // `passed` opcional: caller pode informar o veredito já calculado com o
 // passMark correto do cert (Quiz.jsx faz isso). Sem isso, cai no default
 // de 65% — só correto pro CTFL, mantido pra não quebrar chamadas antigas
 // sem cert (ex: testes existentes).
-export function logExamResult(progress, pct, passed = pct >= 65, bank) {
-  const entry = { date: todayLocal(), pct, passed };
+// r4: `meta` opcional — campos extras persistidos na entrada (ex: custom:true
+// e n:<questões> para simulados personalizados; exibidos no histórico do Stats).
+export function logExamResult(progress, pct, passed = pct >= 65, bank, meta) {
+  const entry = { date: todayLocal(), pct, passed, ...(meta || {}) };
   const examHistory = [...(progress.examHistory || []), entry].slice(-20);
   const next = { ...progress, examHistory };
   next.achievements = checkAchievements(next, bank);
   return next;
+}
+
+// r10: ids das questões erradas/em branco do simulado mais recente que
+// registrou wrongIds (provas anteriores à r10 não têm o campo → null;
+// prova 100% correta → []). Alimenta o "🔁 Repetir erros" do setup.
+// Filtra ids que saíram do banco (invariante de sanidade do byIds).
+export function lastExamWrongIds(progress) {
+  const hist = progress?.examHistory || [];
+  for (let i = hist.length - 1; i >= 0; i--) {
+    const e = hist[i];
+    if (Array.isArray(e.wrongIds)) {
+      return e.wrongIds.filter((id) => typeof id === "string");
+    }
+  }
+  return null;
 }
 
 export function clearProgress(certId = activeCert) {
@@ -419,6 +491,66 @@ export function clearProgress(certId = activeCert) {
     reportStorageError("clearProgress", e);
   }
   return { ...EMPTY };
+}
+
+// ─── P0: rascunho de simulado (exam draft) ───
+// Shape: { questionIds: string[], optOrder: number[][], answers: (number|null)[],
+//          idx: number, timeLeft: number, savedAt: number }
+// optOrder[i] = sequência de origIndex (ordem embaralhada das opções da
+// questão i) — permite reconstruir exatamente o embaralhamento original na
+// retomada, mantendo a resposta já marcada apontando pra mesma opção.
+export function saveExamDraft(certId, draft) {
+  try {
+    localStorage.setItem(draftKeyFor(certId), JSON.stringify(draft));
+    return true;
+  } catch (e) {
+    reportStorageError("saveExamDraft", e);
+    return false;
+  }
+}
+
+export function loadExamDraft(certId) {
+  try {
+    const raw = localStorage.getItem(draftKeyFor(certId));
+    if (!raw) return null;
+    const d = JSON.parse(raw);
+    if (
+      !d ||
+      !Array.isArray(d.questionIds) ||
+      d.questionIds.length === 0 ||
+      !Array.isArray(d.answers) ||
+      d.answers.length !== d.questionIds.length ||
+      typeof d.idx !== "number" ||
+      typeof d.timeLeft !== "number" ||
+      d.timeLeft <= 0
+    ) {
+      return null;
+    }
+    // r3: flags de "marcar para revisão" (opcional — rascunhos salvos antes
+    // desta versão não têm). Normaliza comprimento/valores para o reducer.
+    const flags = Array.isArray(d.flags) ? d.flags.slice(0, d.questionIds.length) : [];
+    while (flags.length < d.questionIds.length) flags.push(false);
+    // r9: tempo por questão em segundos (opcional — mesmo esquema das flags:
+    // rascunhos antigos não têm, e valores inválidos viram 0).
+    const durations = Array.isArray(d.durations)
+      ? d.durations
+          .slice(0, d.questionIds.length)
+          .map((x) => (Number.isFinite(x) && x >= 0 ? x : 0))
+      : [];
+    while (durations.length < d.questionIds.length) durations.push(0);
+    return { ...d, flags: flags.map((f) => f === true), durations };
+  } catch (e) {
+    reportStorageError("loadExamDraft", e);
+    return null;
+  }
+}
+
+export function clearExamDraft(certId) {
+  try {
+    localStorage.removeItem(draftKeyFor(certId));
+  } catch (e) {
+    reportStorageError("clearExamDraft", e);
+  }
 }
 
 // "Sincronização manual": exporta o progresso do cert ativo para um arquivo.
@@ -436,6 +568,121 @@ export function exportProgress(state, certId = activeCert) {
   a.download = `synapse-progresso-${certId}-${new Date().toISOString().slice(0, 10)}.json`;
   a.click();
   URL.revokeObjectURL(url);
+}
+
+// r3: BACKUP COMPLETO — exporta progresso de TODAS as certs, rascunhos de
+// simulado em andamento e preferências (idioma/tema/última cert) num único
+// arquivo. O export por cert (acima) continua existindo para compartilhar
+// progresso de uma cert só; este é o " Não perca nada" ao trocar de
+// dispositivo/navegador.
+// r4: preferências migradas para o prefixo synapse.* (settings.js); as chaves
+// ctfl_* legadas permanecem na whitelist para que BACKUPS ANTIGOS continuem
+// importáveis — o import grava o que veio no arquivo e a migração do settings
+// converte no próximo boot.
+const BACKUP_SETTINGS_KEYS = [
+  "synapse.lang",
+  "synapse.theme",
+  "synapse.onboardingDone",
+  "synapse.goal",
+  "synapse.installDismissed",
+  // r10: lembrete diário viaja no backup (quem restaura quer a rotina junto)
+  "synapse.reminderEnabled",
+  "synapse.reminderTime",
+  // r11: data da prova viaja no backup (o planejamento de estudo junto)
+  "synapse.examDate",
+  "ctfl_lang",
+  "ctfl_theme",
+  "ctfl_onboarding_done",
+];
+const BACKUP_KEY_PATTERN = /^synapse\.(progress|examDraft)\.v1\.[a-z0-9-]+$/;
+
+export function collectFullBackup() {
+  const data = {};
+  const keys = new Set();
+  try {
+    for (let i = 0; i < localStorage.length; i++) {
+      const k = localStorage.key(i);
+      if (BACKUP_KEY_PATTERN.test(k) || k === "synapse.lastCert") keys.add(k);
+    }
+  } catch (e) {
+    reportStorageError("collectFullBackup", e);
+  }
+  BACKUP_SETTINGS_KEYS.forEach((k) => {
+    try {
+      const v = localStorage.getItem(k);
+      if (v !== null) {
+        keys.add(k);
+        data[k] = v;
+      }
+    } catch {
+      /* ignore */
+    }
+  });
+  keys.forEach((k) => {
+    if (data[k] !== undefined) return; // settings já capturados como string crua
+    try {
+      const raw = localStorage.getItem(k);
+      if (raw !== null) data[k] = JSON.parse(raw);
+    } catch {
+      try {
+        data[k] = localStorage.getItem(k);
+      } catch {
+        /* ignore */
+      }
+    }
+  });
+  return {
+    app: "synapse-backup",
+    version: 1,
+    exportedAt: new Date().toISOString(),
+    data,
+  };
+}
+
+export function exportFullBackup() {
+  const payload = collectFullBackup();
+  const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `synapse-backup-completo-${new Date().toISOString().slice(0, 10)}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+// Importa o backup completo: só aceita o formato deste app e só escreve em
+// chaves da whitelist (nunca chaves arbitrárias do localStorage — evita que
+// um arquivo malicioso injete estado estranho). Retorna o número de chaves
+// importadas para feedback ao usuário.
+export function importFullBackup(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      try {
+        const data = JSON.parse(reader.result);
+        if (data.app !== "synapse-backup" || !data.data || typeof data.data !== "object") {
+          throw new Error("Arquivo não é um backup do Synapse");
+        }
+        let written = 0;
+        Object.entries(data.data).forEach(([k, v]) => {
+          const allowed =
+            BACKUP_KEY_PATTERN.test(k) ||
+            k === "synapse.lastCert" ||
+            BACKUP_SETTINGS_KEYS.includes(k);
+          if (!allowed) return;
+          const value = typeof v === "string" ? v : JSON.stringify(v);
+          localStorage.setItem(k, value);
+          written++;
+        });
+        if (written === 0) throw new Error("Backup não contém dados reconhecíveis");
+        resolve(written);
+      } catch (e) {
+        reject(e);
+      }
+    };
+    reader.onerror = () => reject(new Error("Não foi possível ler o arquivo"));
+    reader.readAsText(file);
+  });
 }
 
 // Importa o progresso a partir de um arquivo escolhido pelo usuário. O

@@ -5,18 +5,88 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="theme-color" content="#5a4be7" />
+    <!-- r7: PWA — manifest + metas iOS (Safari não usa manifest p/ instalar;
+         apple-touch-icon e apple-mobile-web-app-* cobrem o "Adicionar à
+         Tela de Início" no iOS). Vite reescreve hrefs de public/ p/ o base
+         no build (--base=/synapse/). -->
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="./icon-192.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Synapse" />
+    <!-- r8: splash screens iOS (backlog r7 #1) — o manifest não cobre o
+         iOS; cada aparelho usa a image cuja media query casa (CSS px do
+         device × pixel ratio). Geradas por scripts/gen-splash.mjs.
+         r9: pares claro+escuro — a variante -dark casa quando o sistema
+         está em dark mode (fim do flash branco na abertura standalone). -->
+    <link rel="apple-touch-startup-image" media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2)" href="./splash-750x1334.png" />
+    <link rel="apple-touch-startup-image" media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (prefers-color-scheme: dark)" href="./splash-750x1334-dark.png" />
+    <link rel="apple-touch-startup-image" media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3)" href="./splash-1125x2436.png" />
+    <link rel="apple-touch-startup-image" media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (prefers-color-scheme: dark)" href="./splash-1125x2436-dark.png" />
+    <link rel="apple-touch-startup-image" media="(device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3)" href="./splash-1170x2532.png" />
+    <link rel="apple-touch-startup-image" media="(device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) and (prefers-color-scheme: dark)" href="./splash-1170x2532-dark.png" />
+    <link rel="apple-touch-startup-image" media="(device-width: 393px) and (device-height: 852px) and (-webkit-device-pixel-ratio: 3)" href="./splash-1179x2556.png" />
+    <link rel="apple-touch-startup-image" media="(device-width: 393px) and (device-height: 852px) and (-webkit-device-pixel-ratio: 3) and (prefers-color-scheme: dark)" href="./splash-1179x2556-dark.png" />
+    <link rel="apple-touch-startup-image" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2)" href="./splash-828x1792.png" />
+    <link rel="apple-touch-startup-image" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (prefers-color-scheme: dark)" href="./splash-828x1792-dark.png" />
+    <link rel="apple-touch-startup-image" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3)" href="./splash-1242x2688.png" />
+    <link rel="apple-touch-startup-image" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (prefers-color-scheme: dark)" href="./splash-1242x2688-dark.png" />
+    <link rel="apple-touch-startup-image" media="(device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3)" href="./splash-1284x2778.png" />
+    <link rel="apple-touch-startup-image" media="(device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3) and (prefers-color-scheme: dark)" href="./splash-1284x2778-dark.png" />
+    <link rel="apple-touch-startup-image" media="(device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3)" href="./splash-1290x2796.png" />
+    <link rel="apple-touch-startup-image" media="(device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3) and (prefers-color-scheme: dark)" href="./splash-1290x2796-dark.png" />
+    <!-- r11: iPads (todos @2x). Em landscape o device-width vira o lado MAIOR —
+         cada tamanho tem 2 queries (portrait W×H / landscape H×W) apontando pro
+         MESMO PNG: a composição é centralizada, então uma imagem serve as duas
+         orientações; a query é que distingue. Par claro/escuro como nos phones. -->
+    <link rel="apple-touch-startup-image" media="(device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="./splash-1536x2048.png" />
+    <link rel="apple-touch-startup-image" media="(device-width: 1024px) and (device-height: 768px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="./splash-1536x2048.png" />
+    <link rel="apple-touch-startup-image" media="(device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait) and (prefers-color-scheme: dark)" href="./splash-1536x2048-dark.png" />
+    <link rel="apple-touch-startup-image" media="(device-width: 1024px) and (device-height: 768px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape) and (prefers-color-scheme: dark)" href="./splash-1536x2048-dark.png" />
+    <link rel="apple-touch-startup-image" media="(device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="./splash-1668x2224.png" />
+    <link rel="apple-touch-startup-image" media="(device-width: 1112px) and (device-height: 834px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="./splash-1668x2224.png" />
+    <link rel="apple-touch-startup-image" media="(device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait) and (prefers-color-scheme: dark)" href="./splash-1668x2224-dark.png" />
+    <link rel="apple-touch-startup-image" media="(device-width: 1112px) and (device-height: 834px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape) and (prefers-color-scheme: dark)" href="./splash-1668x2224-dark.png" />
+    <link rel="apple-touch-startup-image" media="(device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="./splash-1668x2388.png" />
+    <link rel="apple-touch-startup-image" media="(device-width: 1194px) and (device-height: 834px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="./splash-1668x2388.png" />
+    <link rel="apple-touch-startup-image" media="(device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait) and (prefers-color-scheme: dark)" href="./splash-1668x2388-dark.png" />
+    <link rel="apple-touch-startup-image" media="(device-width: 1194px) and (device-height: 834px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape) and (prefers-color-scheme: dark)" href="./splash-1668x2388-dark.png" />
+    <link rel="apple-touch-startup-image" media="(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="./splash-2048x2732.png" />
+    <link rel="apple-touch-startup-image" media="(device-width: 1366px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="./splash-2048x2732.png" />
+    <link rel="apple-touch-startup-image" media="(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait) and (prefers-color-scheme: dark)" href="./splash-2048x2732-dark.png" />
+    <link rel="apple-touch-startup-image" media="(device-width: 1366px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape) and (prefers-color-scheme: dark)" href="./splash-2048x2732-dark.png" />
+    <link rel="apple-touch-startup-image" media="(device-width: 1032px) and (device-height: 1376px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="./splash-2064x2752.png" />
+    <link rel="apple-touch-startup-image" media="(device-width: 1376px) and (device-height: 1032px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="./splash-2064x2752.png" />
+    <link rel="apple-touch-startup-image" media="(device-width: 1032px) and (device-height: 1376px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait) and (prefers-color-scheme: dark)" href="./splash-2064x2752-dark.png" />
+    <link rel="apple-touch-startup-image" media="(device-width: 1376px) and (device-height: 1032px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape) and (prefers-color-scheme: dark)" href="./splash-2064x2752-dark.png" />
+    <script>
+      /* r8: hrefs de PWA absolutos ANTES de qualquer fetch do browser.
+         Deep links servidas pelo shell do SW (ex: /synapse/ctfl/quiz)
+         resolvem hrefs relativos CONTRA A ROTA (404) antes do main.jsx
+         rodar; este script síncrono reescreve primeiro. %BASE_URL% é
+         substituído pelo Vite (dev: "/" · build --base: "/synapse/").
+         O absolutizePwaLinks() do boot segue como defesa pós-pushState. */
+      (function () {
+        var base = "%BASE_URL%";
+        var fix = function (rel, file) {
+          var el = document.querySelector('link[rel="' + rel + '"]');
+          if (el) el.setAttribute("href", base + file);
+        };
+        fix("manifest", "manifest.webmanifest");
+        fix("apple-touch-icon", "icon-192.png");
+        var splashes = document.querySelectorAll('link[rel="apple-touch-startup-image"]');
+        for (var i = 0; i < splashes.length; i++) {
+          var f = (splashes[i].getAttribute("href") || "").split("/").pop();
+          if (f) splashes[i].setAttribute("href", base + f);
+        }
+      })();
+    </script>
 
     <!-- Primary Meta Tags -->
     <title>Synapse — Preparação gratuita para certificações ISTQB</title>
     <meta name="title" content="Synapse — Preparação gratuita para certificações ISTQB" />
-    <meta
-      name="description"
-      content="Questões PT/EN, simulados cronometrados, flashcards e glossário para múltiplas certificações ISTQB (CTFL, CTAL e mais). Gratuito, sem cadastro."
-    />
-    <meta
-      name="keywords"
-      content="ISTQB, CTFL, CTAL, certificação software testing, foundation level, test analyst, simulado ISTQB, quiz ISTQB, teste de software"
-    />
+    <meta name="description" content="Questões PT/EN, simulados cronometrados, flashcards e glossário para múltiplas certificações ISTQB (CTFL, CTAL e mais). Gratuito, sem cadastro." />
+    <meta name="keywords" content="ISTQB, CTFL, CTAL, certificação software testing, foundation level, test analyst, simulado ISTQB, quiz ISTQB, teste de software" />
     <meta name="author" content="Ironides Francisco" />
 
     <!-- ATENÇÃO: estas URLs são absolutas. Se o domínio mudar, atualize aqui. -->
@@ -25,10 +95,7 @@
     <meta property="og:site_name" content="Synapse" />
     <meta property="og:url" content="https://ctfl-app.vercel.app/" />
     <meta property="og:title" content="Synapse — Preparação gratuita para certificações ISTQB" />
-    <meta
-      property="og:description"
-      content="Questões PT/EN, simulados cronometrados, flashcards e glossário para múltiplas certificações ISTQB (CTFL, CTAL e mais). Gratuito, sem cadastro."
-    />
+    <meta property="og:description" content="Questões PT/EN, simulados cronometrados, flashcards e glossário para múltiplas certificações ISTQB (CTFL, CTAL e mais). Gratuito, sem cadastro." />
     <meta property="og:image" content="https://ctfl-app.vercel.app/og-image.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
@@ -38,22 +105,13 @@
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content="https://ctfl-app.vercel.app/" />
-    <meta
-      property="twitter:title"
-      content="Synapse — Preparação gratuita para certificações ISTQB"
-    />
-    <meta
-      property="twitter:description"
-      content="Questões PT/EN, simulados cronometrados, flashcards e glossário para múltiplas certificações ISTQB (CTFL, CTAL e mais). Gratuito, sem cadastro."
-    />
+    <meta property="twitter:title" content="Synapse — Preparação gratuita para certificações ISTQB" />
+    <meta property="twitter:description" content="Questões PT/EN, simulados cronometrados, flashcards e glossário para múltiplas certificações ISTQB (CTFL, CTAL e mais). Gratuito, sem cadastro." />
     <meta property="twitter:image" content="https://ctfl-app.vercel.app/og-image.png" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500&family=JetBrains+Mono:wght@500&display=swap"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet" />
   </head>
   <body>
     <div id="root"></div>

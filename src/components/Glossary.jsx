@@ -7,6 +7,12 @@ import { t } from "../lib/ui-strings.js";
 
 const ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
+// P3/lint: semente do dia calculada UMA vez por carregamento do módulo — não
+// durante render (react-hooks/purity) nem via setState em effect
+// (react-hooks/set-state-in-effect). "Termo do dia" é por sessão de app, o
+// que coincide com o comportamento anterior por montagem de componente.
+const DAY_SEED = Date.now();
+
 const EMPTY_STATE_TEXT = {
   pt: "Conteúdo em breve para esta certificação.",
   en: "Content coming soon for this certification.",
@@ -36,7 +42,6 @@ export default function Glossary({ lang = "pt", progress }) {
   const [domain, setDomain] = useState("all");
   const [query, setQuery] = useState("");
   const [wrongOnly, setWrongOnly] = useState(false);
-  const [today] = useState(() => new Date());
   const headingRefs = useRef({});
 
   const certDomains = useMemo(() => new Set(chapters.map((c) => c.domain)), [chapters]);
@@ -62,11 +67,11 @@ export default function Glossary({ lang = "pt", progress }) {
 
   const termOfDay = useMemo(() => {
     if (allTerms.length === 0) return null;
-    const start = new Date(today.getFullYear(), 0, 0);
-    const diff = today.getTime() - start.getTime();
+    const start = new Date(new Date(DAY_SEED).getFullYear(), 0, 0);
+    const diff = DAY_SEED - start.getTime();
     const dayOfYear = Math.floor(diff / 86400000);
     return allTerms[dayOfYear % allTerms.length];
-  }, [allTerms, today]);
+  }, [allTerms]);
 
   const searchRegex = useMemo(() => {
     const q = query.trim();
@@ -102,11 +107,13 @@ export default function Glossary({ lang = "pt", progress }) {
 
   // Agrupamento por letra calculado uma vez aqui, fora do JSX
   // (antes mutava uma variável `lastLetter` durante o .map de render).
+  // P3/lint (react-hooks/immutability): sem reatribuição — a primeira
+  // ocorrência de cada letra é detectada por indexOf.
   const termsWithLetterFlag = useMemo(() => {
-    return sortedTerms.map((term, index) => {
-      const firstLetter = term.term[0].toUpperCase();
-      const previousLetter = index > 0 ? sortedTerms[index - 1].term[0].toUpperCase() : null;
-      const isNewLetter = showAZIndex && firstLetter !== previousLetter;
+    const letters = sortedTerms.map((t) => t.term[0].toUpperCase());
+    return sortedTerms.map((term, i) => {
+      const firstLetter = letters[i];
+      const isNewLetter = showAZIndex && letters.indexOf(firstLetter) === i;
       return { term, firstLetter, isNewLetter };
     });
   }, [sortedTerms, showAZIndex]);

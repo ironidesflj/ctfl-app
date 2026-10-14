@@ -117,7 +117,7 @@ describe("Quiz — modo Simulado (exam) — regressão do bug seen/5c93296", () 
 
     // abrir grade de navegação e ir para a última questão
     await user.click(screen.getByRole("button", { name: /ver todas/i }));
-    const gridButtons = screen.getAllByRole("button", { name: /^\d+$/ });
+    const gridButtons = screen.getAllByRole("button", { name: /^Questão \d+/ });
     await user.click(gridButtons[gridButtons.length - 1]); // questão 40
 
     // finalizar — só aparece na última questão em modo exam
@@ -150,6 +150,13 @@ describe("Quiz — exam timeout (cobre a mudança de mecanismo do timer no refac
     await act(async () => {
       vi.advanceTimersByTime(75 * 60 * 1000 + 1000);
     });
+    // r5: o finish() do timeout agora é agendado via setTimeout(0) num
+    // efeito (em vez de chamado síncrono no updater do timer). Com fake
+    // timers o efeito só roda no flush do act acima — DEPOIS do avanço —
+    // então o timeout ainda não disparou; um avanço extra o executa.
+    await act(async () => {
+      vi.advanceTimersByTime(100);
+    });
 
     expect(onAnswer).toHaveBeenCalledTimes(40);
     onAnswer.mock.calls.forEach(([, , questionId]) => {
@@ -166,7 +173,7 @@ describe("Quiz — tela de resultado", () => {
     await user.click(screen.getByRole("button", { name: /^simulado/i }));
     await user.click(screen.getByRole("button", { name: /iniciar/i }));
     await user.click(screen.getByRole("button", { name: /ver todas/i }));
-    const gridButtons = screen.getAllByRole("button", { name: /^\d+$/ });
+    const gridButtons = screen.getAllByRole("button", { name: /^Questão \d+/ });
     await user.click(gridButtons[gridButtons.length - 1]);
     await user.click(screen.getByRole("button", { name: /finalizar/i }));
 

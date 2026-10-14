@@ -11,6 +11,12 @@ import {
   getReadiness,
   getReadinessV2,
   logExamResult,
+  checkAchievements,
+  achievementProgress,
+  saveExamDraft,
+  loadExamDraft,
+  clearExamDraft,
+  lastExamWrongIds,
 } from "./storage.js";
 
 // Helper: gera data no mesmo timezone que todayLocal() usa
@@ -422,5 +428,219 @@ describe("storage - SRS integration", () => {
     });
     const due = getDueItems(state, ["ch1-01", "ch1-02", "ch1-03"]);
     expect(due).toEqual(["ch1-01"]); // só o due; ch1-02 não due; ch1-03 nunca visto (não força entrada)
+  });
+});
+
+// ─── r4: logExamResult meta + conquista custom-exam ───
+describe("storage - logExamResult meta + custom-exam (r4)", () => {
+  it("meta é persistido na entrada do histórico (custom + n)", () => {
+    let state = clearProgress();
+    state = logExamResult(state, 70, true, undefined, { custom: true, n: 10 });
+    expect(state.examHistory[0]).toMatchObject({ pct: 70, passed: true, custom: true, n: 10 });
+  });
+
+  it("sem meta, a entrada não ganha campo custom (backwards-compat)", () => {
+    let state = clearProgress();
+    state = logExamResult(state, 70, true);
+    expect(state.examHistory[0].custom).toBeUndefined();
+  });
+
+  it("simulado personalizado completado desbloqueia a conquista custom-exam", () => {
+    let state = clearProgress();
+    state = logExamResult(state, 70, true, undefined, { custom: true, n: 10 });
+    expect(state.achievements).toContain("custom-exam");
+    expect(state.achievements).toContain("passed-exam");
+  });
+
+  it("simulado oficial NÃO desbloqueia custom-exam", () => {
+    let state = clearProgress();
+    state = logExamResult(state, 90, true, undefined, { n: 40 });
+    expect(state.achievements).not.toContain("custom-exam");
+    expect(state.achievements).toContain("passed-exam");
+  });
+});
+
+// ─── r10: lastExamWrongIds (repetir erros do último simulado) ───
+describe("storage - lastExamWrongIds (r10)", () => {
+  it("prova sem o campo (pré-r10) → null (feature escondida)", () => {
+    let state = clearProgress();
+    state = logExamResult(state, 70, true);
+    expect(lastExamWrongIds(state)).toBeNull();
+  });
+
+  it("prova com erradas → ids persistidos e lidos de volta", () => {
+    let state = clearProgress();
+    state = logExamResult(state, 50, false, undefined, { wrongIds: ["q1", "q2", "q3"] });
+    expect(lastExamWrongIds(state)).toEqual(["q1", "q2", "q3"]);
+  });
+
+  it("prova 100% correta → array vazio (nada pra repetir)", () => {
+    let state = clearProgress();
+    state = logExamResult(state, 100, true, undefined, { wrongIds: [] });
+    expect(lastExamWrongIds(state)).toEqual([]);
+  });
+
+  it("a prova MAIS RECENTE com o campo vence (ordem do histórico)", () => {
+    let state = clearProgress();
+    state = logExamResult(state, 50, false, undefined, { wrongIds: ["antiga1"] });
+    state = logExamResult(state, 60, false, undefined, { wrongIds: ["nova1", "nova2"] });
+    expect(lastExamWrongIds(state)).toEqual(["nova1", "nova2"]);
+  });
+
+  it("prova nova SEM o campo não apaga a anterior com o campo (fallback)", () => {
+    let state = clearProgress();
+    state = logExamResult(state, 50, false, undefined, { wrongIds: ["antiga1"] });
+    state = logExamResult(state, 60, false); // entrada legada (ex: import antigo)
+    expect(lastExamWrongIds(state)).toEqual(["antiga1"]);
+  });
+
+  it("ids não-string são filtrados (sanidade do byIds)", () => {
+    let state = clearProgress();
+    state = logExamResult(state, 50, false, undefined, { wrongIds: ["q1", 42, null, "q2"] });
+    expect(lastExamWrongIds(state)).toEqual(["q1", "q2"]);
+  });
+
+  it("progress ausente → null (não crasha)", () => {
+    expect(lastExamWrongIds(null)).toBeNull();
+  });
+});
+
+// ─── r9: achievementProgress (roadmap de conquistas) ───
+describe("storage - achievementProgress (r9 roadmap)", () => {
+  function makeMockBank(questions) {
+    const chapterNums = [...new Set(questions.map((q) => String(q.chapter)))];
+    return {
+      ALL: questions,
+      coverageByChapter: (seenMap) => {
+        const result = {};
+        chapterNums.forEach((ch) => {
+          const total = questions.filter((q) => String(q.chapter) === ch).length;
+          const seen = questions.filter((q) => String(q.chapter) === ch && seenMap[q.id]).length;
+          result[ch] = { seen, total };
+        });
+        return result;
+      },
+    };
+  }
+
+  it("espelha checkAchievements: streak 4 → streak-7 em 4/7, streak-30 em 4/30", () => {
+    const state = clearProgress();
+    state.history = [...dayEntries(3), ...dayEntries(2), ...dayEntries(1), ...dayEntries(0)];
+    const p = achievementProgress(state, null);
+    expect(p["streak-7"]).toEqual({ current: 4, target: 7 });
+    expect(p["streak-30"]).toEqual({ current: 4, target: 30 });
+  });
+
+  it("passed-exam usa o melhor resultado contra o corte do cert (26/40 = 65%)", () => {
+    let state = clearProgress();
+    state = logExamResult(state, 50, false);
+    state = logExamResult(state, 58, false);
+    const p = achievementProgress(state, null, { passMark: 26, questions: 40 });
+    expect(p["passed-exam"]).toEqual({ current: 58, target: 65, unit: "pct" });
+  });
+
+  it("passed-exam sem examFormat usa corte default 65", () => {
+    let state = clearProgress();
+    state = logExamResult(state, 70, true);
+    const p = achievementProgress(state, null);
+    expect(p["passed-exam"].target).toBe(65);
+    expect(p["passed-exam"].current).toBe(65); // clamp no alvo
+  });
+
+  it("chapter-complete aponta o capítulo com MAIOR cobertura (3/4 > 1/2)", () => {
+    const bank = makeMockBank([
+      { id: "a1", chapter: 1 },
+      { id: "a2", chapter: 1 },
+      { id: "a3", chapter: 1 },
+      { id: "a4", chapter: 1 },
+      { id: "b1", chapter: 2 },
+      { id: "b2", chapter: 2 },
+    ]);
+    const state = {
+      ...clearProgress(),
+      seen: { a1: "correct", a2: "wrong", a3: "correct", b1: "correct" },
+    };
+    const p = achievementProgress(state, bank);
+    expect(p["chapter-complete"]).toEqual({ current: 3, target: 4 });
+    expect(p["bank-complete"]).toEqual({ current: 4, target: 6 });
+  });
+
+  it("consistência: conquista obtida ⇒ current >= target (nunca 100% na barra com badge travado)", () => {
+    const bank = makeMockBank([
+      { id: "a1", chapter: 1 },
+      { id: "a2", chapter: 1 },
+    ]);
+    const state = { ...clearProgress(), total: 10, seen: { a1: "correct", a2: "correct" } };
+    const unlocked = checkAchievements(state, bank); // first-step + chapter-complete + bank-complete
+    const p = achievementProgress(state, bank);
+    unlocked.forEach((id) => {
+      expect(p[id].current).toBeGreaterThanOrEqual(p[id].target);
+    });
+    expect(unlocked).toContain("chapter-complete");
+    expect(unlocked).toContain("bank-complete");
+  });
+
+  it("custom-exam é binário no histórico", () => {
+    let state = clearProgress();
+    let p = achievementProgress(state, null);
+    expect(p["custom-exam"]).toEqual({ current: 0, target: 1 });
+    state = logExamResult(state, 70, true, undefined, { custom: true, n: 10 });
+    p = achievementProgress(state, null);
+    expect(p["custom-exam"]).toEqual({ current: 1, target: 1 });
+  });
+});
+
+// ─── r9: draft com durations (tempo por questão) ───
+describe("storage - exam draft durations (r9)", () => {
+  it("saveExamDraft/loadExamDraft roundtrip preserva durations", () => {
+    saveExamDraft("ctfl", {
+      questionIds: ["q1", "q2", "q3"],
+      optOrder: [
+        [0, 1, 2, 3],
+        [0, 1, 2, 3],
+        [0, 1, 2, 3],
+      ],
+      answers: [2, null, 0],
+      flags: [false, true, false],
+      durations: [42, 7, 0],
+      idx: 1,
+      timeLeft: 3000,
+      savedAt: Date.now(),
+    });
+    const d = loadExamDraft("ctfl");
+    expect(d.durations).toEqual([42, 7, 0]);
+    clearExamDraft("ctfl");
+  });
+
+  it("rascunho sem durations (legado) normaliza para zeros", () => {
+    saveExamDraft("ctfl", {
+      questionIds: ["q1", "q2"],
+      optOrder: [
+        [0, 1],
+        [1, 0],
+      ],
+      answers: [null, null],
+      idx: 0,
+      timeLeft: 3000,
+      savedAt: Date.now(),
+    });
+    const d = loadExamDraft("ctfl");
+    expect(d.durations).toEqual([0, 0]);
+    clearExamDraft("ctfl");
+  });
+
+  it("durations com valores inválidos/negativos viram 0 e comprimento é ajustado", () => {
+    saveExamDraft("ctfl", {
+      questionIds: ["q1", "q2", "q3"],
+      optOrder: [[0], [0], [0]],
+      answers: [null, null, null],
+      durations: [10, -5, "x"],
+      idx: 0,
+      timeLeft: 3000,
+      savedAt: Date.now(),
+    });
+    const d = loadExamDraft("ctfl");
+    expect(d.durations).toEqual([10, 0, 0]);
+    clearExamDraft("ctfl");
   });
 });

@@ -9,8 +9,10 @@ Como a estrutura do repositório afeta o deploy, e o passo a passo para publicar
 | **Repos separados** (recomendado) | raiz do repo do app | nenhum — tudo detectado automaticamente |
 | **Monorepo**                      | subpasta `app/`     | apontar o _root directory_ para `app/`  |
 
-Fonte da verdade das questões: o repo do **banco** (onde roda o `build_bank.py`).
-Ao atualizar, regenere o `ctfl-questions-ptbr.json` e copie para `src/data/` do app.
+Fonte da verdade das questões: o repo do **banco**. Push de
+`ctfl-questions-ptbr.json` ou `synapse-question-bank.json` na `main` dispara o
+workflow de sync, que copia os arquivos correspondentes, valida checksums e abre
+um PR no app para merge manual.
 
 ---
 
@@ -42,16 +44,19 @@ Não precisa do GitHub Actions neste caso — a Vercel faz o build do lado dela.
 
 ---
 
-## Opção C — GitHub Pages (via Actions)
+## Opção C — GitHub Pages (manual, via Actions)
 
 Use o arquivo `.github/workflows/deploy.yml` já incluído.
 
 1. No repositório: **Settings → Pages → Build and deployment → Source: GitHub Actions**.
-2. Faça push na branch `main`. O workflow builda e publica em `https://<usuario>.github.io/<repo>/`.
-3. **Monorepo:** ajuste `working-directory` e o `path` do artefato conforme os comentários no `deploy.yml`.
+2. Dispare manualmente o workflow **Deploy to GitHub Pages**.
+3. Em subpath (`https://<usuario>.github.io/<repo>/`), ajuste o comando de
+   build para `npm run build -- --base=/<repo>/` e valide as rotas/deep links.
+4. **Monorepo:** ajuste `working-directory` e o `path` do artefato conforme os comentários no `deploy.yml`.
 
-> **Caminhos:** o `vite.config.js` usa `base: "./"` (relativo), então funciona tanto na raiz
-> (Vercel/Netlify) quanto em subdiretório (Pages) sem mudança.
+> **Caminhos:** o `vite.config.js` usa `base: "/"` porque o app usa
+> `BrowserRouter`. Deploy em subdiretório exige `--base` e validação adicional
+> do fallback de SPA; a produção oficial em domínio raiz não precisa de ajuste.
 >
 > **PWA no Pages:** a instalação como app é mais confiável em domínio raiz (Vercel/Netlify).
 > Em subdiretório do Pages costuma funcionar, mas é o ambiente menos garantido para o service worker.

@@ -4,12 +4,14 @@ import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";
 import App from "./App.jsx";
 import { CERT_CATALOG } from "./certs-catalog.js";
+import { releaseSeenKey } from "./lib/releases.js";
 
 afterEach(cleanup);
 beforeEach(() => {
   localStorage.clear();
   // pula o onboarding pra chegar no masthead/rotas direto
   localStorage.setItem("ctfl_onboarding_done", "1");
+  localStorage.setItem(releaseSeenKey(), "1");
 });
 
 function renderApp(path) {
@@ -27,6 +29,17 @@ describe("catálogo de vitrine (certs-catalog)", () => {
     expect(by("live")).toBe(2);
     expect(by("coming-soon")).toBe(3);
     expect(by("legacy")).toBe(1);
+  });
+});
+
+describe("primeira visita", () => {
+  it("não empilha novidades depois de concluir o onboarding", async () => {
+    const user = userEvent.setup();
+    localStorage.clear();
+    renderApp("/");
+    await user.click(screen.getByRole("button", { name: /escolher minha certificação/i }));
+    expect(screen.queryByRole("dialog", { name: /synapse evoluiu/i })).not.toBeInTheDocument();
+    expect(localStorage.getItem(releaseSeenKey())).toBe("1");
   });
 });
 
@@ -84,5 +97,29 @@ describe("reset de estado na troca de cert (key remount)", () => {
     await user.click(screen.getByText("CTAL-TA").closest("button"));
     // se o key remontou, voltamos pro setup do quiz (botão Iniciar de novo)
     expect(screen.getByRole("button", { name: /iniciar/i })).toBeInTheDocument();
+  });
+});
+
+// r10: rotas neutras /go/:tab — alvo dos atalhos do PWA (manifest
+// shortcuts). Resolvem pro ÚLTIMO cert usado; sem cert, caem na seleção.
+describe("r10 — rota neutra /go/:tab (atalhos do PWA)", () => {
+  it("com lastCert salvo, redireciona pro cert + tab pedidos", async () => {
+    localStorage.setItem("synapse.lastCert", "ctal-ta");
+    renderApp("/go/stats");
+    // masthead do CTAL-TA prova o redirect (rota /ctal-ta/stats)
+    expect(await screen.findByRole("heading", { level: 1 })).toHaveTextContent("Test Analyst");
+  });
+
+  it("tab inválida cai no default (quiz), não em 404 do router", async () => {
+    localStorage.setItem("synapse.lastCert", "ctfl");
+    renderApp("/go/blabla");
+    // caiu no quiz do CTFL (setup com botão Iniciar) — sem redirect loop
+    expect(await screen.findByRole("button", { name: /iniciar/i })).toBeInTheDocument();
+  });
+
+  it("sem lastCert, /go/* leva pra tela de seleção de cert", async () => {
+    renderApp("/go/quiz");
+    expect(await screen.findByText("CTAL-TA")).toBeInTheDocument();
+    expect(screen.getByText("CTFL")).toBeInTheDocument();
   });
 });

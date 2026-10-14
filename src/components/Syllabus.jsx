@@ -14,7 +14,7 @@ const EMPTY_STATE_TEXT = {
 export default function Syllabus({ onStudy, lang = "pt", progress }) {
   const { cert: certId } = useParams();
   const bank = useMemo(() => getBank(certId), [certId]);
-  const { chapters, chapterName, chapterWeight, ALL, coverageByChapter } = bank;
+  const { chapters, chapterName, ALL, coverageByChapter } = bank;
 
   const [domain, setDomain] = useState("all"); // conceptually chapterId now
 
@@ -105,12 +105,20 @@ export default function Syllabus({ onStudy, lang = "pt", progress }) {
           })
         ) : (
           <>
-            {dom && (
-              <p className="syl-head">
-                {chapterWeight(dom.chapter)}{" "}
-                {t(lang, "syllabus.ofQuestions", { total: ALL.length })}
-              </p>
-            )}
+            {dom &&
+              (() => {
+                // P1: contagem REAL de questões do banco neste capítulo (o peso do
+                // blueprint — antes exibido aqui — é outra métrica: ch1 CTFL tem
+                // peso 40/200 mas 60 questões reais no banco de 300).
+                const chapterCount = ALL.filter(
+                  (q) => String(q.chapter) === String(dom.chapter)
+                ).length;
+                return (
+                  <p className="syl-head">
+                    {chapterCount} {t(lang, "syllabus.ofQuestions", { total: ALL.length })}
+                  </p>
+                );
+              })()}
             {items.map((i) => (
               <div className="syl-item" key={i.id}>
                 <div className="syl-kw">{i.kw}</div>

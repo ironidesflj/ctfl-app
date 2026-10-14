@@ -8,10 +8,82 @@ import {
   getStreak,
   getReadinessV2,
   todayLocal,
+  exportFullBackup,
+  importFullBackup,
+  achievementProgress,
 } from "../lib/storage.js";
+import {
+  buildHeatmap,
+  heatmapSummary,
+  examHistoryToCsv,
+  examTrend,
+  weakChapters,
+  examCountdown,
+  coverPace,
+  kLevelBreakdown,
+} from "../lib/activity.js";
+import { getSetting, setSetting } from "../lib/settings.js";
 import { t } from "../lib/ui-strings.js";
 import { getNotificationPermission, requestNotificationPermission } from "../lib/notifications.js";
+import { parseTimeHHMM } from "../lib/reminder.js";
 import RadarChart from "./RadarChart.jsx";
+
+// r8: sparkline da tendência das notas dos simulados — função pura
+// examTrend (activity.js, testada) + desenho. Tracejado = nota de corte;
+// ponto final destacado = última prova. aria-label carrega o resumo
+// (mín/média/máx) — leitor de tela não precisa do gráfico.
+function TrendSpark({ history, passMark, lang }) {
+  const trend = examTrend(history, { passMark });
+  if (!trend) return null;
+  const aria = t(lang, "stats.trendAria", {
+    n: trend.values.length,
+    min: trend.min,
+    avg: trend.avg,
+    max: trend.max,
+  });
+  return (
+    <span
+      className={"trend-spark" + (trend.values[trend.values.length - 1] >= passMark ? " pass" : "")}
+      role="img"
+      aria-label={aria}
+      title={aria}
+    >
+      <svg viewBox="0 0 120 36" width="120" height="36" aria-hidden="true">
+        <line className="spark-pass" x1="3" y1={trend.passY} x2="117" y2={trend.passY} />
+        <polyline className="spark-line" points={trend.points} />
+        <circle className="spark-dot" cx={trend.lastX} cy={trend.lastY} r="2.6" />
+      </svg>
+    </span>
+  );
+}
+
+// r6: anel de progresso da meta diária — mesmo padrão visual do ScoreRing
+// do resultado do simulado (r4), em escala menor. pct nunca passa de 100
+// (responder além da meta mantém o anel cheio, sem overflow visual).
+function GoalRing({ done, goal, ariaLabel }) {
+  const pct = goal > 0 ? Math.min(100, Math.round((done / goal) * 100)) : 0;
+  const r = 26;
+  const c = 2 * Math.PI * r;
+  return (
+    <div className={"goal-ring" + (pct >= 100 ? " done" : "")} role="img" aria-label={ariaLabel}>
+      <svg width="64" height="64" viewBox="0 0 64 64" aria-hidden="true">
+        <circle className="ring-track" cx="32" cy="32" r={r} />
+        <circle
+          className="ring-fill"
+          cx="32"
+          cy="32"
+          r={r}
+          strokeDasharray={c}
+          strokeDashoffset={c - (c * pct) / 100}
+        />
+      </svg>
+      <span className="goal-ring-num" aria-hidden="true">
+        {done}
+        <em>/{goal}</em>
+      </span>
+    </div>
+  );
+}
 
 function groupByDay(history) {
   const byDay = {};
@@ -85,6 +157,14 @@ const ACHIEVEMENTS = {
     ptDesc: "Passou em um simulado",
     enDesc: "Passed an exam simulation",
   },
+  // r4: completou um simulado personalizado (capítulos/níveis escolhidos)
+  "custom-exam": {
+    icon: "🧩",
+    pt: "Sob medida",
+    en: "Custom-made",
+    ptDesc: "Completou um simulado personalizado",
+    enDesc: "Completed a custom exam",
+  },
   "chapter-complete": {
     icon: "📚",
     pt: "Capítulo completo",
@@ -116,9 +196,56 @@ export default function Stats({
   const [msg, setMsg] = useState("");
   const [notifStatus, setNotifStatus] = useState(getNotificationPermission());
 
+  // r6: meta diária — persistida em synapse.goal (settings.js), default 10.
+  // Chips 5/10/20/30 trocam o valor na hora (sem botão salvar).
+  const GOAL_OPTIONS = [5, 10, 20, 30];
+  const [goal, setGoal] = useState(() => {
+    const g = parseInt(getSetting("goal"), 10);
+    return Number.isFinite(g) && g > 0 ? g : 10;
+  });
+  function changeGoal(n) {
+    setGoal(n);
+    setSetting("goal", String(n));
+  }
+
   async function enableNotifications() {
     const result = await requestNotificationPermission();
     setNotifStatus(result);
+  }
+
+  // r10: lembrete diário — toggle + horário. Persiste em settings.js e emite
+  // o evento que o App ouve pra (re)agendar o disparo sem recarregar.
+  const [reminderOn, setReminderOn] = useState(() => getSetting("reminderEnabled") === "1");
+  const [reminderTime, setReminderTime] = useState(() => {
+    const t0 = getSetting("reminderTime");
+    return parseTimeHHMM(t0) ? t0 : "19:00";
+  });
+  function changeReminderTime(next) {
+    if (!parseTimeHHMM(next)) return; // input vazia/inválida não grava
+    setReminderTime(next);
+    setSetting("reminderTime", next);
+    window.dispatchEvent(new CustomEvent("synapse:reminder-changed"));
+  }
+  function toggleReminder(on) {
+    setReminderOn(on);
+    setSetting("reminderEnabled", on ? "1" : "0");
+    window.dispatchEvent(new CustomEvent("synapse:reminder-changed"));
+  }
+
+  // r11: data da prova — setting GLOBAL (não por cert; uma prova por vez).
+  // "" = não definida. O input type=date devolve "YYYY-MM-DD" ou "" quando
+  // limpa; o countdown (activity.js, pura) valida o formato e devolve null
+  // para qualquer coisa que não seja data — a UI degrada pro estado convite.
+  const [examDate, setExamDate] = useState(() => getSetting("examDate") || "");
+  function changeExamDate(v) {
+    setExamDate(v);
+    setSetting("examDate", v || "");
+  }
+  function clearExamDate() {
+    if (!window.confirm(t(lang, "stats.examDateClearConfirm"))) return;
+    setExamDate("");
+    setSetting("examDate", "");
+    setMsg(t(lang, "stats.examDateCleared"));
   }
 
   const pct = progress.total > 0 ? Math.round((progress.correct / progress.total) * 100) : 0;
@@ -133,6 +260,24 @@ export default function Stats({
   const readiness = getReadinessV2(progress, bank);
   const pace = calcPace(progress.history || [], readiness.point);
   const achievements = progress.achievements || [];
+  // r9: roadmap de conquistas — o que ainda falta, ordenado pelo quão perto
+  // está. achievementProgress (storage.js, testada) espelha 1:1 os critérios
+  // de checkAchievements; aqui só filtramos as travadas e ordenamos.
+  // (examFormat do sparkline é declarado mais abaixo; este é o mesmo valor
+  // puxado antes pro useMemo não depender de expressão membro.)
+  const roadmapFormat = META.examFormat[certId];
+  const roadmap = useMemo(() => {
+    const unlocked = progress.achievements || [];
+    const all = achievementProgress(progress, bank, roadmapFormat);
+    return Object.entries(all)
+      .filter(([id]) => !unlocked.includes(id))
+      .map(([id, p]) => ({
+        id,
+        ...p,
+        pct: p.target > 0 ? Math.min(100, Math.round((p.current / p.target) * 100)) : 0,
+      }))
+      .sort((a, b) => b.pct - a.pct);
+  }, [progress, bank, roadmapFormat]);
   const missingChapterNames = (readiness.missingChapters || []).map((ch) => chapterName(ch, lang));
   const missingKLevelLabels = readiness.missingKLevels || [];
   const missingItems = [...missingChapterNames, ...missingKLevelLabels].join(", ");
@@ -152,6 +297,46 @@ export default function Stats({
   const passPct = examQuestions > 0 ? Math.round((passMark / examQuestions) * 100) : 65;
 
   const coverage = coverageByChapter(progress.seen || {});
+
+  // r5: heatmap de atividade — 35 dias terminando hoje, agrupado do
+  // history (cada entrada = 1 resposta com data local YYYY-MM-DD).
+  const heatCells = useMemo(
+    () => buildHeatmap(progress.history || [], todayLocal(), 35),
+    [progress.history]
+  );
+  const heatSummary = useMemo(() => heatmapSummary(heatCells), [heatCells]);
+  const heatToday = heatCells[heatCells.length - 1];
+  // r6: plural correto no aria do heatmap ("1 dia" vs "2 dias") — antes o
+  // template interpolava "1 dias com estudo e 1 respostas".
+  const heatAria = t(lang, "stats.heatmapAria", {
+    days: `${heatSummary.activeDays} ${heatSummary.activeDays === 1 ? t(lang, "stats.dayOne") : t(lang, "stats.dayMany")}`,
+    answers: `${heatSummary.answers} ${heatSummary.answers === 1 ? t(lang, "stats.answerOne") : t(lang, "stats.answerMany")}`,
+    weeks: 5,
+  });
+  // r6: capítulo mais fraco por aproveitamento (byDomain) — mesma função
+  // compartilhada do card 🎯 do Quiz (weakChapters em activity.js),
+  // mínimo 3 respostas. Alimenta o CTA "Treinar {chapter}".
+  const weakest = useMemo(() => {
+    const list = weakChapters(progress.byDomain, chapters);
+    return list.length > 0 ? list[0] : null;
+  }, [chapters, progress.byDomain]);
+  // r11: contagem regressiva até a prova + ritmo para cobrir o banco
+  // (funções PURAS em activity.js). seenCount/totalBank já calculados acima;
+  // coverPace devolve null quando o banco já está coberto — nesse caso a UI
+  // recomenda revisão em vez de volume (examPaceCovered).
+  const examCd = useMemo(() => examCountdown(examDate || null, todayLocal()), [examDate]);
+  const examPaceVal = useMemo(() => {
+    if (!examCd || examCd.past || examCd.isToday || examCd.days <= 0) return null;
+    return coverPace(seenCount, totalBank, examCd.days);
+  }, [examCd, seenCount, totalBank]);
+  const examLeft = Math.max(0, totalBank - seenCount);
+  // r11: desempenho por K-level — join attempts (histórico por questão) com
+  // as questões reais do cert (bank.ALL). O radar mostra capítulos; esta é
+  // a dimensão cognitiva (K1 lembrar · K2 entender · K3 aplicar · K4 analisar).
+  const kLevels = useMemo(
+    () => kLevelBreakdown(bank.ALL, progress.attempts || {}),
+    [bank, progress]
+  );
   const radarDomains = chapters.map((c) => c[lang]?.short || chapterName(c.chapter, lang));
   const radarPrecision = chapters.map((c) => {
     const bd = progress.byDomain?.[c.chapter] || { t: 0, c: 0 };
@@ -178,6 +363,37 @@ export default function Stats({
     e.target.value = "";
   }
 
+  // r3: backup completo — importa TODAS as certs + rascunhos + preferências
+  // direto no localStorage e recarrega o app (reidrata estado global: tema,
+  // idioma, cert ativa, progresso). Erros viram mensagem, não crash.
+  const backupFileRef = useRef(null);
+  async function handleFullBackupImport(e) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    try {
+      await importFullBackup(file);
+      setMsg(t(lang, "stats.backupImportSuccess"));
+      setTimeout(() => window.location.reload(), 900);
+    } catch {
+      setMsg(t(lang, "stats.backupImportError"));
+    }
+    e.target.value = "";
+  }
+
+  // r6: baixa o histórico de simulados como CSV. O conteúdo vem da função
+  // pura examHistoryToCsv (testada em activity.test.js); aqui só sobe o
+  // Blob + anchor sintético e revoga a URL (evita leak de memória).
+  function downloadExamCsv() {
+    const csv = examHistoryToCsv(progress.examHistory || [], lang);
+    const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `synapse-simulados-${certId}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
   // Fase 2: interpolar suffix/metaText com dados do cert — usar o parâmetro
   // vars do t() (não .replace() encadeado: t() já roda sua própria
   // substituição de {word} com vars={} por padrão, então .replace() depois
@@ -191,7 +407,9 @@ export default function Stats({
       {progress.total === 0 && (
         <div className="card" style={{ textAlign: "center" }}>
           <p>{t(lang, "stats.emptyWelcome")}</p>
-          <button className="btn primary" onClick={onGoToQuiz}>
+          {/* r6: arrow explícita — onClick={onGoToQuiz} passaria o EVENTO como
+              1º arg, e onGoToQuiz agora aceita domain opcional */}
+          <button className="btn primary" onClick={() => onGoToQuiz()}>
             {t(lang, "stats.emptyCta")}
           </button>
         </div>
@@ -228,7 +446,8 @@ export default function Stats({
             ·
           </span>
           <span>
-            {achievements.length}/6 {t(lang, "stats.achievementsLabel")}
+            {achievements.length}/{Object.keys(ACHIEVEMENTS).length}{" "}
+            {t(lang, "stats.achievementsLabel")}
           </span>
         </div>
       )}
@@ -265,6 +484,188 @@ export default function Stats({
           </div>
         </div>
       )}
+
+      {/* r9: roadmap de conquistas — as travadas ficavam invisíveis; agora
+          cada uma mostra o quanto falta, ordenada pela mais próxima (a 1ª
+          ganha destaque "quase"). Barras + contagem atual/alvo. */}
+      {progress.total > 0 && roadmap.length > 0 && (
+        <div className="card ach-roadmap-card">
+          <h3>
+            {t(lang, "stats.roadmapTitle")}{" "}
+            <span className="roadmap-hint muted">{t(lang, "stats.roadmapHint")}</span>
+          </h3>
+          <ul className="ach-roadmap">
+            {roadmap.map((row, i) => {
+              const a = ACHIEVEMENTS[row.id];
+              if (!a) return null;
+              const name = lang === "pt" ? a.pt : a.en;
+              const desc = lang === "pt" ? a.ptDesc : a.enDesc;
+              const label =
+                row.unit === "pct"
+                  ? t(lang, "stats.roadmapPct", { current: row.current, target: row.target })
+                  : t(lang, "stats.roadmapCount", { current: row.current, target: row.target });
+              return (
+                <li key={row.id} className={"ach-row" + (i === 0 && row.pct > 0 ? " closest" : "")}>
+                  <span className="ach-icon" aria-hidden="true">
+                    {a.icon}
+                  </span>
+                  <div className="ach-body">
+                    <div className="ach-top">
+                      <span className="ach-name">{name}</span>
+                      {i === 0 && row.pct > 0 && (
+                        <span className="ach-almost">{t(lang, "stats.roadmapAlmost")}</span>
+                      )}
+                      <span className="ach-count" aria-hidden="true">
+                        {label}
+                      </span>
+                    </div>
+                    <div
+                      className="ach-bar"
+                      role="progressbar"
+                      aria-label={`${name} — ${label}`}
+                      aria-valuenow={row.current}
+                      aria-valuemin={0}
+                      aria-valuemax={row.target}
+                    >
+                      <div
+                        className="ach-fill"
+                        style={{ width: Math.max(row.current > 0 ? 2 : 0, row.pct) + "%" }}
+                      />
+                    </div>
+                    <span className="ach-desc muted">{desc}</span>
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      )}
+
+      {/* r6: meta diária — anel de progresso do dia (histórico de hoje) com
+          chips para trocar o alvo; conversa com o heatmap logo abaixo */}
+      {progress.total > 0 && (
+        <div className="card goal-card">
+          <div className="goal-main">
+            <GoalRing
+              done={heatToday.total}
+              goal={goal}
+              ariaLabel={t(lang, "stats.goalRingAria", {
+                n: heatToday.total,
+                goal,
+                pct: Math.min(100, goal > 0 ? Math.round((heatToday.total / goal) * 100) : 0),
+              })}
+            />
+            <div className="goal-info">
+              <h3>{t(lang, "stats.goalTitle")}</h3>
+              <p className={heatToday.total >= goal ? "goal-hit" : "muted"}>
+                {heatToday.total >= goal
+                  ? t(lang, "stats.goalDone")
+                  : t(lang, "stats.goalProgress", { n: heatToday.total, goal })}
+              </p>
+              <div className="goal-chips" role="group" aria-label={t(lang, "stats.goalChangeAria")}>
+                {GOAL_OPTIONS.map((n) => (
+                  <button
+                    key={n}
+                    className={"goal-chip" + (n === goal ? " on" : "")}
+                    aria-pressed={n === goal}
+                    onClick={() => changeGoal(n)}
+                  >
+                    {n}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* r5: heatmap de atividade — 5 semanas terminando hoje */}
+      {progress.total > 0 && (
+        <div className="card heatmap-card">
+          <h3>{t(lang, "stats.heatmapTitle")}</h3>
+          <div className="heatmap" role="img" aria-label={heatAria}>
+            {heatCells.map((c, i) => (
+              <span
+                key={c.date}
+                className={"hm-cell" + (i === heatCells.length - 1 ? " today" : "")}
+                data-level={c.level}
+                title={t(lang, "stats.heatmapCell", {
+                  date: c.date,
+                  total: c.total,
+                  pct: c.pct === null ? "—" : c.pct,
+                })}
+              />
+            ))}
+          </div>
+          <div className="heatmap-foot">
+            <span className="muted">{heatCells[0].date.slice(5)}</span>
+            <span className="hm-legend" aria-hidden="true">
+              {t(lang, "stats.heatmapLess")}
+              <span className="hm-cell" data-level="0" />
+              <span className="hm-cell" data-level="1" />
+              <span className="hm-cell" data-level="2" />
+              <span className="hm-cell" data-level="3" />
+              <span className="hm-cell" data-level="4" />
+              {t(lang, "stats.heatmapMore")}
+            </span>
+            <span className={"muted" + (heatToday.total > 0 ? " hm-today-on" : "")}>
+              {t(lang, "stats.heatmapToday", { n: heatToday.total })}
+            </span>
+          </div>
+        </div>
+      )}
+
+      {/* r11: data da prova — contagem regressiva + ritmo para cobrir o
+          banco até lá. Renderiza sempre (como o card de lembretes): o estado
+          vazio é um convite ao planejamento, não um card a mais que some. */}
+      <div className="card exam-date-card">
+        <div className="exam-date-head">
+          <h3>📅 {t(lang, "stats.examDateTitle")}</h3>
+          {examDate && (
+            <button
+              className="btn ghost exam-date-clear"
+              onClick={clearExamDate}
+              title={t(lang, "stats.examDateClear")}
+            >
+              {t(lang, "stats.examDateClear")}
+            </button>
+          )}
+        </div>
+        {examCd === null ? (
+          <p className="muted">{t(lang, "stats.examDateHint")}</p>
+        ) : examCd.isToday ? (
+          <p className="exam-days today" role="status">
+            {t(lang, "stats.examDaysToday")}
+          </p>
+        ) : examCd.past ? (
+          <p className="muted" role="status">
+            {t(lang, "stats.examDaysPast")}
+          </p>
+        ) : (
+          <>
+            <p className={"exam-days" + (examCd.days <= 7 ? " warn" : "")} role="status">
+              {examCd.days === 1
+                ? t(lang, "stats.examDaysOne")
+                : t(lang, "stats.examDays", { n: examCd.days })}
+            </p>
+            <p className="exam-pace">
+              {examPaceVal !== null
+                ? t(lang, "stats.examPace", { n: examPaceVal, left: examLeft })
+                : t(lang, "stats.examPaceCovered")}
+            </p>
+          </>
+        )}
+        <div className="exam-date-row">
+          <label htmlFor="exam-date-input">{t(lang, "stats.examDateLabel")}</label>
+          <input
+            id="exam-date-input"
+            type="date"
+            className="exam-date-input"
+            value={examDate}
+            onChange={(e) => changeExamDate(e.target.value)}
+          />
+        </div>
+      </div>
 
       {/* Card de prontidão — Fase 2 redesign com Wilson CI + cobertura */}
       {progress.total > 0 && (
@@ -308,11 +709,28 @@ export default function Stats({
             </>
           )}
           {pace !== null && (
-            <p className="muted" style={{ marginTop: "0.25rem", fontSize: "var(--fs-13)" }}>
+            <p
+              className="muted"
+              style={{ marginTop: "0.25rem", fontSize: "var(--fs-13)", width: "100%" }}
+            >
               {t(lang, "stats.pacePrefix")}
               {pace}
               {t(lang, "stats.paceSuffix")}
             </p>
+          )}
+          {/* r6: CTA de treino direcionado — capítulo com menor aproveitamento
+              (mín. 3 respostas). onGoToQuiz(domain) pré-seleciona o domínio
+              no setup do Quiz (mesmo mecanismo do deep-link do Syllabus). */}
+          {weakest && (
+            <div className="train-cta">
+              <button
+                className="btn primary train-btn"
+                onClick={() => onGoToQuiz(weakest.ch)}
+                title={t(lang, "stats.trainWeakHint")}
+              >
+                🎯 {t(lang, "stats.trainWeak", { chapter: chapterName(weakest.ch, lang) })}
+              </button>
+            </div>
           )}
         </div>
       )}
@@ -349,6 +767,51 @@ export default function Stats({
           </div>
         </div>
       </div>
+
+      {/* r4: histórico de simulados — o examHistory sempre foi gravado
+          (últimas 20 provas) mas nunca exibido; agora vira uma linha do
+          tempo com veredito, % e badge de simulado personalizado. */}
+      {(progress.examHistory || []).length > 0 && (
+        <div className="card">
+          <div className="exam-hist-head">
+            <h3>{t(lang, "stats.examHistoryTitle")}</h3>
+            {/* r8: sparkline de tendência — desenha só com 2+ provas; a
+                linha tracejada é a nota de corte do cert (passPct) */}
+            <TrendSpark history={progress.examHistory} passMark={passPct} lang={lang} />
+            {/* r6: export CSV — BOM + separador ; para abrir direto no
+                Excel PT-BR com acentos intactos */}
+            <button className="btn ghost csv-btn" onClick={downloadExamCsv} title="CSV">
+              {t(lang, "stats.exportCsv")}
+            </button>
+          </div>
+          <div className="exam-hist" role="list" aria-label={t(lang, "stats.examHistoryTitle")}>
+            {progress.examHistory
+              .slice()
+              .reverse()
+              .map((e, i) => (
+                <div
+                  className={"exam-hist-row" + (e.passed ? " ok" : " no")}
+                  role="listitem"
+                  key={i}
+                >
+                  <span className="exam-hist-date">{e.date}</span>
+                  {e.custom && (
+                    <span className="exam-hist-badge">🧩 {t(lang, "quiz.customTag")}</span>
+                  )}
+                  <span className="exam-hist-pct">
+                    {e.pct}%{e.n ? ` · ${e.n}q` : ""}
+                  </span>
+                  <span
+                    className="exam-hist-verdict"
+                    title={e.passed ? t(lang, "quiz.passed") : t(lang, "quiz.failed")}
+                  >
+                    {e.passed ? "✓" : "✗"}
+                  </span>
+                </div>
+              ))}
+          </div>
+        </div>
+      )}
 
       <div className="card">
         <h3>{t(lang, "stats.evolution")}</h3>
@@ -428,41 +891,160 @@ export default function Stats({
         </div>
       )}
 
+      {/* r11: desempenho por K-level — a dimensão cognitiva que o radar de
+          capítulos não mostra. Barras = cobertura (questões distintas vistas
+          / total do banco no K); % = acerto sobre TODAS as tentativas. */}
+      {progress.total > 0 && kLevels.length > 0 && (
+        <div className="card klevel-card">
+          <h3>📊 {t(lang, "stats.kLevelTitle")}</h3>
+          <p className="muted klevel-hint">{t(lang, "stats.kLevelHint")}</p>
+          <div className="klevel-list" role="table" aria-label={t(lang, "stats.kLevelTitle")}>
+            {kLevels.map((k) => {
+              const coveredPct =
+                k.inBank > 0 ? Math.min(100, Math.round((k.attempted / k.inBank) * 100)) : 0;
+              const tone = k.pct === null ? "" : k.pct >= passPct ? " ok" : " no";
+              return (
+                <div className="klevel-row" role="row" key={k.level}>
+                  <span className="klevel-chip" role="rowheader">
+                    {k.level}
+                  </span>
+                  <span className="klevel-nums" role="cell">
+                    {k.attempted}/{k.inBank}
+                  </span>
+                  <span className={"klevel-pct" + tone} role="cell">
+                    {k.pct === null ? t(lang, "stats.kLevelNone") : `${k.pct}%`}
+                  </span>
+                  <span className="klevel-bar" role="cell" aria-hidden="true">
+                    <span className="klevel-fill" style={{ width: coveredPct + "%" }} />
+                  </span>
+                </div>
+              );
+            })}
+          </div>
+          <ul className="sr-only">
+            {kLevels.map((k) => (
+              <li key={k.level}>
+                {t(lang, "stats.kLevelRow", {
+                  k: k.level,
+                  pct: k.pct === null ? t(lang, "stats.kLevelNone") : String(k.pct),
+                  answered: k.answers,
+                  attempted: k.attempted,
+                  inBank: k.inBank,
+                })}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
       <div className="card note">
         <strong>{metaTitle}</strong> {metaText}
       </div>
 
       {notifStatus !== "unsupported" && (
-        <div className="card">
+        <div className="card reminder-card">
           <h3>{t(lang, "notifications.title")}</h3>
-          {notifStatus === "granted" && <p className="muted">{t(lang, "notifications.enabled")}</p>}
           {notifStatus === "denied" && <p className="muted">{t(lang, "notifications.blocked")}</p>}
           {notifStatus === "default" && (
-            <button className="btn" onClick={enableNotifications}>
-              {t(lang, "notifications.enable")}
-            </button>
+            <>
+              <p className="muted">{t(lang, "notifications.enableHint")}</p>
+              <button className="btn" onClick={enableNotifications}>
+                {t(lang, "notifications.enable")}
+              </button>
+            </>
+          )}
+          {notifStatus === "granted" && (
+            <>
+              <p className="muted">{t(lang, "notifications.enabled")}</p>
+              {/* r10: lembrete diário — só com a permissão concedida */}
+              <div className="reminder-toggle-row">
+                <label className="reminder-switch">
+                  <input
+                    type="checkbox"
+                    checked={reminderOn}
+                    onChange={(e) => toggleReminder(e.target.checked)}
+                  />
+                  <span className="reminder-switch-text">
+                    <strong>⏰ {t(lang, "notifications.reminderToggle")}</strong>
+                    <span className="muted">{t(lang, "notifications.reminderDesc")}</span>
+                  </span>
+                </label>
+                <input
+                  type="time"
+                  className="reminder-time"
+                  value={reminderTime}
+                  onChange={(e) => changeReminderTime(e.target.value)}
+                  aria-label={t(lang, "notifications.reminderTimeLabel")}
+                  disabled={!reminderOn}
+                />
+              </div>
+              {reminderOn && (
+                <p className="reminder-when" role="status">
+                  {t(lang, "notifications.reminderWhen", { time: reminderTime })}
+                </p>
+              )}
+            </>
           )}
         </div>
       )}
 
-      <div className="actions">
-        <button className="btn" onClick={() => exportProgress(progress)}>
-          {t(lang, "stats.exportBtn")}
-        </button>
-        <button className="btn" onClick={() => fileRef.current?.click()}>
-          {t(lang, "stats.importBtn")}
-        </button>
-        <input ref={fileRef} type="file" accept="application/json" hidden onChange={handleImport} />
-        <button
-          className="btn ghost"
-          onClick={() => {
-            if (confirm(t(lang, "stats.resetConfirm"))) setProgress(clearProgress());
-          }}
-        >
-          {t(lang, "stats.resetBtn")}
-        </button>
+      <div className="card backup-card">
+        <h3>{t(lang, "stats.backupTitle")}</h3>
+        <p className="muted">{t(lang, "stats.backupDesc")}</p>
+        <div className="backup-grid">
+          <div className="backup-group">
+            <span className="backup-group-label">{certLabel}</span>
+            <div className="actions" style={{ marginTop: 0 }}>
+              <button className="btn" onClick={() => exportProgress(progress)}>
+                {t(lang, "stats.exportBtn")}
+              </button>
+              <button className="btn" onClick={() => fileRef.current?.click()}>
+                {t(lang, "stats.importBtn")}
+              </button>
+              <input
+                ref={fileRef}
+                type="file"
+                accept="application/json"
+                hidden
+                onChange={handleImport}
+              />
+            </div>
+          </div>
+          <div className="backup-group">
+            <span className="backup-group-label">{t(lang, "stats.backupTitle")}</span>
+            <div className="actions" style={{ marginTop: 0 }}>
+              <button className="btn primary" onClick={exportFullBackup}>
+                {t(lang, "stats.backupExportBtn")}
+              </button>
+              <button className="btn" onClick={() => backupFileRef.current?.click()}>
+                {t(lang, "stats.backupImportBtn")}
+              </button>
+              <input
+                ref={backupFileRef}
+                type="file"
+                accept="application/json"
+                hidden
+                onChange={handleFullBackupImport}
+              />
+            </div>
+          </div>
+        </div>
+        <div className="actions" style={{ marginTop: "0.75rem" }}>
+          <button
+            className="btn ghost"
+            onClick={() => {
+              if (confirm(t(lang, "stats.resetConfirm"))) setProgress(clearProgress());
+            }}
+          >
+            {t(lang, "stats.resetBtn")}
+          </button>
+        </div>
       </div>
-      {msg && <p className="muted">{msg}</p>}
+      {msg && (
+        <p className="muted" role="status">
+          {msg}
+        </p>
+      )}
     </div>
   );
 }

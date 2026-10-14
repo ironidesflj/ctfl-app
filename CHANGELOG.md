@@ -1,15 +1,94 @@
 # Changelog
 
-### Unreleased
+### v3.11.0 — 2026-10-14 — ciclos de QA/evolução r2–r13
 
-- chore(quality): CI passa a usar `npm ci` e bloqueia lint, formatação, testes,
-  build e smoke E2E em Chromium.
-- test(e2e): cobre seleção de certificação, estudo, persistência, idioma,
-  onboarding reentry e conclusão/persistência de simulado.
-- fix: remove violações do lint em estado por certificação, flashcards,
-  glossário e imports JSON; lint e `format:check` agora passam sem pendências.
-- docs: SDD reconciliado com `020982a`; documentação de sync atualizada para os
-  dois bancos e CT-AI corrigido de v1.0 para v2.0 no catálogo.
+Correções de bugs críticos, performance, PWA offline completa e 35+ features.
+Suíte de testes: 75 → 289. ESLint: 6 erros → 0.
+
+**Correções críticas (da análise E2E inicial):**
+
+- fix(quiz): **rascunho do simulado persistido** — trocar de aba no meio da
+  prova não perde mais o exame (antes: perda silenciosa); `beforeunload`
+  guard + aviso de retomada + banner "prova em andamento".
+- fix(bank): cap oculto de 99 questões no filtro "Todos os domínios/Todas"
+  removido (CTAL-TA servia 99 de 200).
+- fix(syllabus): contagem por capítulo usava pesos do blueprint como se
+  fossem contagem do banco ("40 de 300" quando o real era 60).
+- fix(streak): limite de 90 entradas no histórico tornava a conquista
+  `streak-30` matematicamente inalcançável.
+- fix(storage): corrida load/save na troca de certificação eliminada.
+- fix(tooling): ESLint `ecmaVersion` 2022 → `latest` (import attributes).
+- content(bank): viés de gabarito do CTAL-TM normalizado (χ² 146 → ok;
+  73 remapeamentos), 98 fixes de letra + 110 de índice auditados, ~30
+  explicações que citavam letras A–D reescritas por snippet (imunes ao
+  shuffle de opções).
+
+**Performance:**
+
+- perf: **code-split do banco por cert** — entrada JS inicial 2,5 MB →
+  354 KB (−86%; gzip 690 → 114 KB), chunk lazy por certificação com
+  prefetch no boot.
+
+**PWA offline completa:**
+
+- feat(pwa): manifest + service worker (precache do shell, network-first
+  em navegação, cache-first em assets), prompt de instalação.
+- feat(pwa): **splash screens iOS** claro/escuro — iPhone e iPad,
+  portrait+landscape (26 PNGs gerados por script versionado).
+- feat(pwa): **atualização gentil** — toast "nova versão disponível" em
+  vez de `skipWaiting` silencioso; consentimento obrigatório, zero
+  interrupção de sessão (verificado ao vivo com deploy real r9→r10→r11).
+- feat(pwa): atalhos de app (shortcuts do manifest + rotas `/go/` +
+  `notificationclick` no SW).
+- feat(pwa): deep links pelo shell — qualquer rota serve o app offline.
+
+**Simulado e estudo:**
+
+- feat(exam): amostragem estratificada por K-level seguindo o blueprint
+  oficial do exame (não mais aleatória).
+- feat(exam): **simulado personalizado** — escolhe capítulos e K-levels,
+  corte proporcional, retomada fiel ao rascunho.
+- feat(exam): grade de navegação das 40 questões (respondidas/em branco).
+- feat(exam): resultado animado + impressão; histórico de simulados
+  persistido.
+- feat(quiz): filtro por cert, marcar questão (⚑), modo "revisar erradas",
+  ciclo de treino das erradas da última prova, treino direcionado por
+  capítulo/K a partir do Syllabus e do Progresso.
+- feat(quiz): PT/EN trocado no meio da prova re-localiza sem perder
+  respostas (era travado no idioma inicial).
+
+**Motivação com dados (Stats):**
+
+- feat(stats): roadmap de conquistas (6), streak com heatmap, meta diária,
+  sparkline de tendência, tempo médio por questão, delta vs último
+  simulado, cobertura por capítulo, **desempenho por K-level** e
+  **data da prova** com contagem regressiva e ritmo de estudo
+  ("~N questões/dia cobrem o banco até lá").
+- feat(stats): exportação CSV do histórico.
+
+**Infra e UX:**
+
+- feat(storage): unificação `ctfl_*` → `synapse.*` com migração
+  automática; backup completo (progresso + configurações + data da prova).
+- feat(ux): lembrete diário com notificação local clicável (re-agenda
+  enquanto o app está aberto).
+- feat(ux): compartilhamento nativo do resultado (Web Share API).
+- feat(a11y): re-entrada do onboarding como modal acessível
+  (dialog/focus trap/Esc); navegação por abas ARIA completa.
+- feat(i18n): +90 chaves PT/EN nos novos fluxos.
+- feat(release): mantém o toast técnico do service worker e adiciona modal
+  bilíngue “O que mudou” para releases significativas, exibido uma vez por
+  versão; primeira visita recebe apenas o onboarding. Cache PWA em `r13-v1`.
+- fix(home): página institucional reconciliada com o produto live — duas
+  certificações disponíveis, CT-AI v2.0, simulado por blueprint/retomada,
+  prontidão atual e escopo bilíngue sem prometer PT/EN onde ainda não existe.
+- chore(quality): preserva no pacote final os gates canônicos de CI (`npm ci`,
+  lint sem warnings, Prettier, 289 testes, build e smoke E2E em Chromium).
+- fix(security): React Router resolvido em 7.18.4 pelo lockfile; auditoria de
+  dependências de produção volta a zero vulnerabilidades. Advisories restantes
+  são exclusivos do toolchain de desenvolvimento Vite 5/PWA.
+- docs: README, deploy e SDD reconciliados com a v3.11.0; backlog registra o
+  retorno à página institucional/Sobre mim e uma seção global de feedback.
 
 ### v3.10.0 — 2026-07-13
 
