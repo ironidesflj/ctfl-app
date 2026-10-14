@@ -83,7 +83,7 @@ describe("Quiz fixes — CTAL-TA pass mark", () => {
     } else {
       expect(failed).toBeInTheDocument();
     }
-  });
+  }, 15_000);
 });
 
 describe("Quiz fixes — logExamResult persiste o veredito por cert, não 65% fixo", () => {

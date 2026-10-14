@@ -1,11 +1,9 @@
-name: Deploy to GitHub Pages
+name: Deploy to GitHub Pages (manual)
 
-# Publica o app no GitHub Pages a cada push na branch principal.
-# Para Vercel ou Netlify você NÃO precisa deste arquivo — elas fazem o build do lado delas.
+# Publicação opcional no GitHub Pages. A produção automática oficial usa Vercel.
+# Antes de disparar manualmente, habilite Pages em Settings → Pages.
 
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
 
 permissions:
