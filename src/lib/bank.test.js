@@ -104,8 +104,11 @@ describe("bank - simulado personalizado (r4)", () => {
   });
 
   it("count maior que o pool devolve o pool inteiro, sem duplicatas nem filler", () => {
-    const sel = ["6"]; // capítulo pequeno (15 questões)
-    const poolLen = bankCTFL.ALL.filter((q) => String(q.chapter) === "6").length;
+    const sel = ["6"]; // capítulo pequeno
+    // r13: o simulado personalizado sorteia do POOL EXCLUSIVO — o pool de
+    // referência é o EXAM do capítulo (4 questões no CTFL pós-partição),
+    // não o capítulo inteiro (11 de estudo + 4 de exame = 15 no banco).
+    const poolLen = bankCTFL.EXAM.filter((q) => String(q.chapter) === "6").length;
     const exam = bankCTFL.buildCustomExamInLang("pt", { chapters: sel, kLevels: [], count: 999 });
     expect(exam.length).toBe(poolLen);
     const ids = exam.map((q) => q.id);
@@ -168,7 +171,9 @@ describe("bank - treinar pontos fracos (r5)", () => {
   });
 
   it("questões erradas vêm antes das não vistas dentro do capítulo focado", () => {
-    const ch1 = bankCTFL.ALL.filter((q) => String(q.chapter) === "1");
+    // r13: o pool do modo estudo é o STUDY — as erradas de referência vêm
+    // de lá (ch1-02, p.ex., migrou para o pool exclusivo do simulado)
+    const ch1 = bankCTFL.STUDY.filter((q) => String(q.chapter) === "1");
     const wrongIds = [ch1[0].id, ch1[1].id];
     const seen = { [ch1[2].id]: true };
     const out = bankCTFL.buildWeakFocusInLang("pt", { 1: { t: 5, c: 1 } }, { seen, wrongIds });

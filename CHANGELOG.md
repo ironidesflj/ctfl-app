@@ -1,6 +1,20 @@
 # Changelog
 
-## Unreleased
+## v3.12.0 — 2026-10-14 — pools exclusivos e pontuação oficial
+
+- feat(bank): CTFL separado em 220 questões de estudo + 80 exclusivas de
+  simulado; CTAL-TA em 110 de estudo + 90 exclusivas de simulado.
+- feat(exam): nenhum item do pool de prova aparece em estudo, erradas, salvos,
+  SRS, pontos fracos, cobertura ou prontidão.
+- fix(ctal-ta): pontuação oficial ponderada por K-level (K2=1, K3=2, K4=3),
+  total de 78 pontos e corte de 51; histórico e compartilhamento usam o mesmo
+  veredito da tela.
+- fix(timing): tempo nativo BSTQB no cronômetro — 60 minutos para CTFL e 120
+  para CTAL-TA; a extensão de 25% deixa de ser aplicada por padrão.
+- feat(release): modal bilíngue da 3.12 exibido uma vez por versão e cache PWA
+  renovado para `r14-v1`.
+- test: 329 testes unitários/de componente, incluindo exclusividade dos pools
+  e pontuação count/points.
 
 - feat(home): ação “Sobre o Synapse” no footer global reabre a apresentação
   institucional completa, bilíngue e acessível, preservando rota, tela e foco.

@@ -45,7 +45,7 @@ export const UI = {
       modeStudy: "Estudo",
       modeStudyDesc: "Feedback e explicação a cada questão",
       modeExam: "Simulado",
-      modeExamDesc: "{n} questões · {min} min · revisão no fim",
+      modeExamDesc: "{n} questões exclusivas · {min} min",
       modeSaved: "★ Salvos",
       modeSavedDesc: "{n} questão(ões) marcada(s) para revisar",
       chooseDomain: "Escolha o domínio",
@@ -61,7 +61,7 @@ export const UI = {
       start: "Iniciar",
       savedReviewHint: "Revise as {n} questão(ões) que você marcou com ★ durante o estudo.",
       examExplain:
-        "O modo Simulado reproduz a prova: {n} questões na proporção oficial de capítulos E níveis cognitivos (K1–K4, blueprint ISTQB), cronômetro de {min} minutos (tempo estendido para não-nativos), sem feedback até o final. Marque questões com ⚑ para revisar depois.",
+        "O modo Simulado reproduz a prova oficial: {n} questões na proporção exata de capítulos e níveis cognitivos (blueprint ISTQB), cronômetro de {min} minutos (tempo nativo BSTQB — o acréscimo de 25% é apenas para não-nativos, mediante solicitação na inscrição), sem feedback até o final. As questões são exclusivas do simulado e não aparecem nos modos de estudo. Marque com ⚑ para revisar depois.",
       passed: "Aprovado",
       failed: "Abaixo da nota de corte",
       excellentMsg: "Excelente domínio. Pronto para a prova.",
@@ -129,7 +129,8 @@ export const UI = {
       deltaAria: "Diferença de {n} pontos percentuais em relação ao último simulado",
       // r4: simulado personalizado
       customExam: "Personalizar simulado",
-      customDesc: "Monte uma prova focada nos capítulos e níveis cognitivos que você escolher.",
+      customDesc:
+        "Monte uma prova focada nos capítulos e níveis cognitivos que você escolher — também só com questões exclusivas do simulado.",
       customChapters: "Capítulos",
       customAllChapters: "Todos",
       customKLevels: "Níveis cognitivos",
@@ -138,6 +139,7 @@ export const UI = {
       customMinutes: "Tempo (min)",
       customPool: "Pool disponível: {n} questões",
       customPassNote: "nota de corte {n}/{total}",
+      customPassNotePts: "nota de corte ≈{pct}% dos pontos",
       customEmpty: "Nenhuma questão nesta seleção — ajuste os capítulos ou níveis.",
       customTag: "Personalizado",
       printReview: "🖨 Imprimir revisão",
@@ -202,7 +204,8 @@ export const UI = {
       roadmapCount: "{current}/{target}",
       roadmapPct: "{current}% de {target}%",
       readinessCI: "Intervalo real: {low}%–{high}%",
-      readinessCoverage: "Cobertura: {pct}% do banco ({seen}/{total})",
+      readinessCoverage: "Cobertura: {pct}% do material de estudo ({seen}/{total})",
+      poolSplit: "{study} questões de estudo · {exam} exclusivas de simulado",
       readinessPreliminary:
         "Estimativa preliminar — responda mais questões para um veredito confiável.",
       readinessReady: "✓ Pronto para a prova",
@@ -268,12 +271,13 @@ export const UI = {
       wrongOnly: "Termos que errei",
     },
     syllabus: {
-      ofQuestions: "de {total} questões neste banco",
+      ofQuestions: "de {total} questões de estudo",
       studyChapter: "Estudar este capítulo →",
+      studyPoolNote: "· simulado usa pool separado",
     },
     onboarding: {
       examCardDesc:
-        "Blueprint, tempo e corte da certificação escolhida, com rascunho, retomada e revisão no fim.",
+        "Simulados com questões exclusivas que você nunca viu no estudo — blueprint, tempo e nota de corte oficiais. Revisão de erros no fim.",
       statsQuestions: "1.100 questões",
       badge: "Baseado nos syllabus oficiais do ISTQB",
       heroValueProp: "Tudo que você precisa para passar nas certificações ISTQB, de graça.",
@@ -422,7 +426,7 @@ export const UI = {
       modeStudy: "Study",
       modeStudyDesc: "Feedback and explanation for each question",
       modeExam: "Exam Simulation",
-      modeExamDesc: "{n} questions · {min} min · review at the end",
+      modeExamDesc: "{n} exclusive questions · {min} min",
       modeSaved: "★ Saved",
       modeSavedDesc: "{n} question(s) marked for review",
       chooseDomain: "Choose the domain",
@@ -438,7 +442,7 @@ export const UI = {
       start: "Start",
       savedReviewHint: "Review the {n} question(s) you marked with ★ during study.",
       examExplain:
-        "Exam Simulation mode replicates the real exam: {n} questions following the official chapter AND cognitive-level distribution (K1–K4, ISTQB blueprint), {min}-minute timer (extended time for non-native speakers), no feedback until the end. Flag questions with ⚑ to review them later.",
+        "Exam Simulation replicates the official exam: {n} questions following the exact chapter and cognitive-level distribution (ISTQB blueprint), a {min}-minute timer (native BSTQB time — the 25% extension applies only to non-native speakers upon request at registration), and no feedback until the end. Questions are exclusive to the exam and never appear in study modes. Flag questions with ⚑ to review them later.",
       passed: "Passed",
       failed: "Below the passing score",
       excellentMsg: "Excellent mastery. Ready for the exam.",
@@ -506,7 +510,8 @@ export const UI = {
       deltaAria: "Difference of {n} percentage points from the previous exam",
       // r4: custom exam
       customExam: "Customize exam",
-      customDesc: "Build a focused exam with the chapters and cognitive levels you choose.",
+      customDesc:
+        "Build a focused exam with the chapters and cognitive levels you choose — also drawn exclusively from the exam pool.",
       customChapters: "Chapters",
       customAllChapters: "All",
       customKLevels: "Cognitive levels",
@@ -515,6 +520,7 @@ export const UI = {
       customMinutes: "Time (min)",
       customPool: "Available pool: {n} questions",
       customPassNote: "pass mark {n}/{total}",
+      customPassNotePts: "pass mark ≈{pct}% of points",
       customEmpty: "No questions match this selection — adjust chapters or levels.",
       customTag: "Custom",
       printReview: "🖨 Print review",
@@ -581,7 +587,8 @@ export const UI = {
       roadmapCount: "{current}/{target}",
       roadmapPct: "{current}% of {target}%",
       readinessCI: "Real range: {low}%–{high}%",
-      readinessCoverage: "Coverage: {pct}% of bank ({seen}/{total})",
+      readinessCoverage: "Coverage: {pct}% of study material ({seen}/{total})",
+      poolSplit: "{study} study questions · {exam} exam-exclusive",
       readinessPreliminary: "Preliminary estimate — answer more questions for a reliable verdict.",
       readinessReady: "✓ Ready for the exam",
       readinessNotReady: "Not yet — keep practicing",
@@ -646,12 +653,13 @@ export const UI = {
       wrongOnly: "Terms I got wrong",
     },
     syllabus: {
-      ofQuestions: "of {total} questions in this bank",
+      ofQuestions: "of {total} study questions",
       studyChapter: "Study this chapter →",
+      studyPoolNote: "· exam uses a separate pool",
     },
     onboarding: {
       examCardDesc:
-        "Blueprint, timing, and passing score for the selected certification, with drafts, resume, and final review.",
+        "Exams with exclusive questions you've never seen in study mode — official blueprint, timing and pass mark. Mistake review at the end.",
       statsQuestions: "1,100 questions",
       badge: "Based on official ISTQB syllabi",
       heroValueProp: "Everything you need to pass ISTQB certifications, for free.",

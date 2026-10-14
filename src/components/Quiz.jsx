@@ -319,6 +319,52 @@ function quizReducer(state, action) {
   }
 }
 
+// r13: veredito de simulado — modelo de pontuação OFICIAL por cert
+// (meta.examFormat.scoring):
+// - "count"  (CTFL v4.0, istqb.org):    1 ponto por questão · corte 26/40
+// - "points" (CTAL-TA v4.0, istqb.org):  K2=1, K3=2, K4=3 → 78 pontos no
+//   blueprint de 45 questões · corte 51/78 (≈65%)
+// Pura e única fonte do veredito: usada pelo finish() persistido, pela tela
+// de resultado, pelo share/copy e pelos testes (quiz-examscoring.test.jsx).
+// Simulado personalizado escala a nota de corte proporcionalmente ao total
+// de pontos/questões realmente sorteado na seleção.
+export function examVerdict(questions, opts, answers, format, { custom = false } = {}) {
+  const scoring = format.scoring === "points" ? "points" : "count";
+  const pointsByK = format.pointsByK || {};
+  const ptsOf = (q) => (scoring === "points" ? Number(pointsByK[String(q.kLevel)]) || 1 : 1);
+  let score = 0;
+  let points = 0;
+  let pointsTotal = 0;
+  questions.forEach((q, i) => {
+    pointsTotal += ptsOf(q);
+    const a = answers[i];
+    if (a !== null && a !== undefined && opts[i] && opts[i][a].correct) {
+      score++;
+      points += ptsOf(q);
+    }
+  });
+  const total = questions.length;
+  const achieved = scoring === "points" ? points : score;
+  const achievable = scoring === "points" ? pointsTotal : total;
+  const pct = achievable > 0 ? Math.round((achieved / achievable) * 100) : 0;
+  const cutBase =
+    format.passMark /
+    (scoring === "points"
+      ? format.totalPoints || format.passMark
+      : format.questions || format.passMark);
+  const passMarkEff = custom ? Math.max(1, Math.ceil(cutBase * achievable)) : format.passMark;
+  return {
+    scoring,
+    score,
+    total,
+    points,
+    pointsTotal,
+    pct,
+    passMarkEff,
+    passed: achieved >= passMarkEff,
+  };
+}
+
 export default function Quiz({
   onAnswer,
   progress,
@@ -333,7 +379,8 @@ export default function Quiz({
   const {
     cert,
     chapters,
-    ALL,
+    STUDY,
+    EXAM,
     chapterName,
     byChapterInLang,
     byIds,
@@ -345,7 +392,7 @@ export default function Quiz({
     shuffle,
     shuffleOptions,
     META,
-  } = bank;
+  } = bank; // r13: ALL não usado aqui — seletores têm escopo de pool
 
   // r5: card "🎯 treinar pontos fracos" — existe quando há ≥1 capítulo
   // com ≥3 respostas registradas (mesmo limiar do buildWeakFocusInLang).
@@ -420,15 +467,22 @@ export default function Quiz({
 
   // r4: valores oficiais + efetivos do simulado personalizado (null = oficial)
   const officialCount = META.examFormat[certId].questions;
-  const officialMinutes = META.examFormat[certId].timeMinutesNonNative;
+  // r13: tempo oficial NATIVO (BSTQB aplica em português: CTFL 60 min,
+  // CTAL-TA 120 min — o +25% é extensão para não-nativos mediante solicitação
+  // na inscrição; antes o app usava o tempo estendido por padrão, deixando o
+  // simulado mais fácil que a prova real do usuário brasileiro).
+  const officialMinutes = META.examFormat[certId].timeMinutes;
   const officialPassMark = META.examFormat[certId].passMark;
+  const examScoring = META.examFormat[certId];
   const allChapterIds = chapters.map((c) => String(c.chapter));
   const effCustomChapters = customChapters === null ? allChapterIds : customChapters;
   const effCustomCount = customCount || officialCount;
   const effCustomMinutes = customMinutes || officialMinutes;
-  // Pool disponível sob os filtros atuais (chapters × K-levels)
+  // Pool disponível sob os filtros atuais (chapters × K-levels).
+  // r13: o simulado personalizado sorteia do POOL EXCLUSIVO de simulado —
+  // o contador de cada chip e o aviso de pool vazio seguem a mesma fonte.
   const customPoolCount = customMode
-    ? ALL.filter((q) => {
+    ? EXAM.filter((q) => {
         const inCh = effCustomChapters.includes(String(q.chapter));
         const inK = customKLevels.length === 0 || customKLevels.includes(q.kLevel);
         return inCh && inK;
@@ -436,6 +490,15 @@ export default function Quiz({
     : 0;
 
   const wrongIds = progress ? getWrongIds(progress) : [];
+  // r13: ids de estudo — tentações dos modos de estudo cruzam com o pool
+  // exclusivo (ex.: erradas de simulado gravadas em attempts). As sessões
+  // de estudo e as contagens dos cards usam esta interseção com o pool de
+  // estudo; as erradas de simulado têm fluxo próprio (repetir erros).
+  const studyIdSet = useMemo(() => new Set(STUDY.map((q) => q.id)), [STUDY]);
+  const wrongStudyIds = wrongIds.filter((id) => studyIdSet.has(id));
+  // r13: salvos de estudo — ⚑ marcados durante simulado ficam no fluxo da
+  // prova (revisão do resultado / repetir erros), não no modo salvos
+  const savedStudyIds = progress ? getSavedIds(progress).filter((id) => studyIdSet.has(id)) : [];
   // r10: erradas do último simulado (campo wrongIds no examHistory — provas
   // anteriores à r10 não têm → null → card não renderiza). Re-shuffle das
   // opções na hora de treinar, como qualquer sessão de estudo.
@@ -447,7 +510,7 @@ export default function Quiz({
   const dueIds = progress
     ? getDueItems(
         progress,
-        ALL.map((q) => q.id)
+        STUDY.map((q) => q.id)
       )
     : [];
 
@@ -577,7 +640,8 @@ export default function Quiz({
     const limit = count === "all" ? Infinity : count;
     if (mode === "exam") {
       // r4: simulado personalizado usa o pool escolhido; sem customização,
-      // segue o blueprint oficial (capítulo × K-level)
+      // segue o blueprint oficial (capítulo × K-level). r13: ambos sorteiam
+      // SÓ do pool exclusivo — questão de estudo nunca entra em simulado.
       qs = customMode
         ? buildCustomExamInLang(lang, {
             chapters: effCustomChapters,
@@ -586,13 +650,17 @@ export default function Quiz({
           })
         : buildExamInLang(lang);
     } else if (mode === "saved") {
-      const ids = getSavedIds(progress);
-      const pool = byIds(ids);
+      // r13: modo estudo — salvos marcados ⚑ durante simulados ficam de fora
+      // daqui (revisam-se no resultado da prova e no "repetir erros").
+      const pool = byIds(savedStudyIds);
       qs = shuffle(pool).slice(0, Math.min(limit, pool.length));
     } else if (mode === "srs") {
+      // r13: dueIds já nasce filtrado pelo pool de estudo (cartões SRS novos
+      // só são criados em sessões de estudo; cartões legados de questões que
+      // migraram para o pool exclusivo não vencem mais aqui)
       const pool = byIds(dueIds);
       qs = shuffle(pool).slice(0, Math.min(limit, pool.length));
-    } else if (domain === "weak") {
+    } else if (mode === "practice" && domain === "weak") {
       // r5: sessão de pontos fracos — a ordem de buildWeakFocusInLang É a
       // prioridade (erradas → nunca vistas → resto, intercalando capítulos
       // fracos), então o corte no `count` acontece SEM re-embaralhar.
@@ -607,7 +675,9 @@ export default function Quiz({
       const pool = byIds(lastExamWrong);
       qs = shuffle(pool).slice(0, Math.min(limit, pool.length));
     } else {
-      const pool = domain === "wrong" ? byIds(wrongIds) : byChapterInLang(domain, lang);
+      // r13: "erradas" é modo estudo — só erradas do pool de estudo (as de
+      // simulado vão para o "repetir erros do último simulado").
+      const pool = domain === "wrong" ? byIds(wrongStudyIds) : byChapterInLang(domain, lang);
       qs = shuffle(pool).slice(0, Math.min(limit, pool.length));
     }
     // ponytail: shuffleOptions() only returns {text, correct}; we tag each
@@ -641,31 +711,25 @@ export default function Quiz({
     if (mode === "exam") {
       clearExamDraft(certId);
       setExamDraft(null);
-      let examScore = 0;
       questions.forEach((q, i) => {
         const a = answers[i];
         const correct = a !== null && opts[i][a].correct;
-        if (correct) examScore++;
         onAnswer(String(q.chapter), !!correct, q.id);
       });
-      const examTotal = questions.length;
-      const examPct = examTotal > 0 ? Math.round((examScore / examTotal) * 100) : 0;
+      // r13: veredito único (count/points) — mesmo cálculo da tela de
+      // resultado; o histórico persiste pct/veredito/modelo de pontuação.
+      const verdict = examVerdict(questions, opts, answers, examScoring, { custom: customMode });
       // r10: ids das erradas/em branco viajam no histórico — alimentam o
       // "🔁 Repetir erros" do setup e o botão "Treinar erradas" do resultado.
       const wrongIdsToLog = questions
         .filter((_q, i) => !(answers[i] !== null && opts[i][answers[i]].correct))
         .map((q) => q.id);
-      // veredito com o passMark do cert (mesmo cálculo da tela de resultado,
-      // linha ~374) — sem isso o histórico persistido usaria o default de
-      // 65% da storage.js, que reprova errado o CTAL-TA (corte real 64.4%).
-      // r4: simulado personalizado escala a nota de corte proporcionalmente
-      // ao tamanho da prova (26/40 = 65% → 10 questões precisam de 7).
-      const examPassed = customMode
-        ? examScore >= Math.max(1, Math.ceil((officialPassMark / officialCount) * examTotal))
-        : examScore >= officialPassMark;
       setProgress((p) =>
-        logExamResult(p, examPct, examPassed, bank, {
-          ...(customMode ? { custom: true, n: examTotal } : { n: examTotal }),
+        logExamResult(p, verdict.pct, verdict.passed, bank, {
+          ...(customMode ? { custom: true, n: verdict.total } : { n: verdict.total }),
+          ...(verdict.scoring === "points"
+            ? { scoring: verdict.scoring, points: verdict.points, pointsTotal: verdict.pointsTotal }
+            : {}),
           wrongIds: wrongIdsToLog,
         })
       );
@@ -861,18 +925,18 @@ export default function Quiz({
             <span className="mode-desc">
               {t(lang, "quiz.modeExamDesc", {
                 n: META.examFormat[certId].questions,
-                min: META.examFormat[certId].timeMinutesNonNative,
+                min: officialMinutes,
               })}
             </span>
           </button>
-          {getSavedIds(progress).length > 0 && (
+          {savedStudyIds.length > 0 && (
             <button
               className={"mode-btn" + (mode === "saved" ? " active" : "")}
               onClick={() => dispatch({ type: "SET_MODE", mode: "saved" })}
             >
               <span className="mode-title">{t(lang, "quiz.modeSaved")}</span>
               <span className="mode-desc">
-                {t(lang, "quiz.modeSavedDesc", { n: getSavedIds(progress).length })}
+                {t(lang, "quiz.modeSavedDesc", { n: savedStudyIds.length })}
               </span>
             </button>
           )}
@@ -900,14 +964,14 @@ export default function Quiz({
                 <span className="domain-weight">{t(lang, "quiz.allDomains")}</span>
                 <span className="domain-sub">{t(lang, "domainAllDesc")}</span>
               </button>
-              {wrongIds.length > 0 && (
+              {wrongStudyIds.length > 0 && (
                 <button
                   className={"domain-card wide" + (domain === "wrong" ? " selected" : "")}
                   onClick={() => dispatch({ type: "SET_DOMAIN", domain: "wrong" })}
                 >
                   <span className="domain-weight">{t(lang, "quiz.wrongBefore")}</span>
                   <span className="domain-sub">
-                    {t(lang, "quiz.wrongBeforeDesc", { n: wrongIds.length })}
+                    {t(lang, "quiz.wrongBeforeDesc", { n: wrongStudyIds.length })}
                   </span>
                 </button>
               )}
@@ -944,7 +1008,9 @@ export default function Quiz({
               {chapters.map((c) => {
                 // ponytail: real pool size (questions available / total in bank),
                 // not the exam-blueprint weight — that's a different metric.
-                const chapterCount = ALL.filter(
+                // r13: contagens do POOL DE ESTUDO — o quiz treina só estudo;
+                // as exclusivas de simulado não aparecem nos cards.
+                const chapterCount = STUDY.filter(
                   (q) => String(q.chapter) === String(c.chapter)
                 ).length;
                 return (
@@ -954,7 +1020,7 @@ export default function Quiz({
                     onClick={() => dispatch({ type: "SET_DOMAIN", domain: String(c.chapter) })}
                   >
                     <span className="domain-weight">
-                      {chapterCount} / {ALL.length}
+                      {chapterCount} / {STUDY.length}
                     </span>
                     <span className="domain-name">{chapterName(c.chapter, lang)}</span>
                   </button>
@@ -1046,7 +1112,9 @@ export default function Quiz({
                     {chapters.map((c) => {
                       const chId = String(c.chapter);
                       const on = customChapters === null || customChapters.includes(chId);
-                      const chCount = ALL.filter((q) => String(q.chapter) === chId).length;
+                      // r13: contagem do POOL EXCLUSIVO — é dele que o simulado
+                      // personalizado sorteia (o material de estudo não entra)
+                      const chCount = EXAM.filter((q) => String(q.chapter) === chId).length;
                       return (
                         <button
                           key={chId}
@@ -1131,16 +1199,21 @@ export default function Quiz({
                   <p className="custom-pool muted">
                     {t(lang, "quiz.customPool", { n: Math.min(effCustomCount, customPoolCount) })}
                     <span className="custom-pool-sep"> · </span>
-                    {t(lang, "quiz.customPassNote", {
-                      n: Math.max(
-                        1,
-                        Math.ceil(
-                          (officialPassMark / officialCount) *
-                            Math.min(effCustomCount, customPoolCount)
-                        )
-                      ),
-                      total: Math.min(effCustomCount, customPoolCount),
-                    })}
+                    {/* r13: no modelo de pontos (CTAL-TA v4.0) o corte depende do
+                        mix K sorteado — mostramos o percentual oficial; o corte
+                        exato aparece no resultado, calculado sobre a prova real */}
+                    {examScoring.scoring === "points"
+                      ? t(lang, "quiz.customPassNotePts", { pct: examScoring.passMarkPct })
+                      : t(lang, "quiz.customPassNote", {
+                          n: Math.max(
+                            1,
+                            Math.ceil(
+                              (officialPassMark / officialCount) *
+                                Math.min(effCustomCount, customPoolCount)
+                            )
+                          ),
+                          total: Math.min(effCustomCount, customPoolCount),
+                        })}
                   </p>
                 )}
               </div>
@@ -1162,13 +1235,20 @@ export default function Quiz({
   // ---------- RESULT ----------
   if (phase === "result") {
     const total = questions.length;
-    const pct = Math.round((score / total) * 100);
-    // r4: simulado personalizado escala a nota de corte pro tamanho da prova;
-    // prova oficial usa a contagem fixa do cert (26/40 CTFL, 29/45 CTAL-TA).
-    const passMarkEff = customMode
-      ? Math.max(1, Math.ceil((officialPassMark / officialCount) * total))
-      : officialPassMark;
-    const passed = mode === "exam" ? score >= passMarkEff : pct >= 65;
+    // r13: veredito de simulado via examVerdict (count/points) — o mesmo
+    // cálculo persistido pelo finish(). Estudo continua nota simples (0-100,
+    // corte 65% escalado ao tamanho da sessão).
+    const verdict =
+      mode === "exam"
+        ? examVerdict(questions, opts, answers, examScoring, { custom: customMode })
+        : null;
+    const pct = verdict ? verdict.pct : Math.round((score / total) * 100);
+    // CTAL-TA v4.0 é pontuação ponderada (K2=1, K3=2, K4=3; corte 51/78);
+    // CTFL e modo estudo continuam em contagem simples (26/40 · 65%).
+    const displayScore = verdict && verdict.scoring === "points" ? verdict.points : score;
+    const displayTotal = verdict && verdict.scoring === "points" ? verdict.pointsTotal : total;
+    const passMarkEff = verdict ? verdict.passMarkEff : Math.max(1, Math.ceil(0.65 * total));
+    const passed = verdict ? verdict.passed : pct >= 65;
     // r9: tempo por questão — a soma dos durations é o tempo TOTAL usado
     // (cada tick credita exatamente 1s à questão corrente); a média usa as
     // questões respondidas como denominador (em branco não medem leitura).
@@ -1213,7 +1293,8 @@ export default function Quiz({
           {mode === "exam" && passed && !reduceMotion && <Confetti />}
           {mode === "exam" && <ScoreRing pct={pct} passed={passed} />}
           <div className="result-score">
-            {score}/{total} · {pct}%
+            {displayScore}/{displayTotal}
+            {verdict?.scoring === "points" ? " pts" : ""} · {pct}%
           </div>
           <div className={"verdict " + (passed ? "ok" : "no")}>
             {passed ? t(lang, "quiz.passed") : t(lang, "quiz.failed")}
@@ -1249,7 +1330,7 @@ export default function Quiz({
               ? t(lang, "quiz.excellentMsg")
               : passed
                 ? t(lang, "quiz.passedMsg")
-                : t(lang, "quiz.failedMsg", { passMark: passMarkEff, total })}
+                : t(lang, "quiz.failedMsg", { passMark: passMarkEff, total: displayTotal })}
           </p>
           {showRecommendation && (
             <p style={{ marginTop: "0.5rem", fontWeight: 500 }}>
@@ -1282,8 +1363,8 @@ export default function Quiz({
                   shareResult(
                     t(lang, "quiz.copyResultText", {
                       cert: cert.label,
-                      score,
-                      total,
+                      score: displayScore,
+                      total: displayTotal,
                       pct,
                       verdict: passed ? t(lang, "quiz.passed") : t(lang, "quiz.failed"),
                       passMark: passMarkEff,
@@ -1300,8 +1381,8 @@ export default function Quiz({
                 copyText(
                   t(lang, "quiz.copyResultText", {
                     cert: cert.label,
-                    score,
-                    total,
+                    score: displayScore,
+                    total: displayTotal,
                     pct,
                     verdict: passed ? t(lang, "quiz.passed") : t(lang, "quiz.failed"),
                     passMark: passMarkEff,

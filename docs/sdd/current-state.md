@@ -1,13 +1,12 @@
-# Estado atual verificado — 2026-10-14 (v3.11.0)
+# Estado atual verificado — 2026-10-14 (v3.12.0 local)
 
 ## Repositórios de referência
 
-- App v3.11.0 confirmado em `origin/main`: `90cb96c`.
+- App v3.11.0 + acesso institucional/feedback confirmado em `origin/main`: `172a2db`.
 - Banco E2E round 2 confirmado em `origin/main`: `5f8a9f7`.
 - Os dois JSONs embutidos no app tinham SHA-256 idêntico às fontes do banco no
   fechamento da integração v3.11.0.
-- O lote atual de acesso institucional e feedback permanece local, sem
-  commit/push, aguardando autorização do Iron.
+- A integração v3.12.0 está aplicada localmente e ainda não foi commitada nem enviada.
 
 ## Specs fechadas
 
@@ -23,7 +22,7 @@
 - Lint: verde, sem erros ou avisos.
 - Prettier: `format:check` verde; JSONs grandes do banco ficam fora da
   formatação mecânica.
-- Unit/component: 294/294 verdes.
+- Unit/component: 329 testes após a integração v3.12.0.
 - Build/PWA: verde; permanece warning conhecido do chunk CTAL-TA (~669 KB).
 - E2E Chromium: 3/3 verdes, cobrindo seleção, estudo, persistência, idioma,
   onboarding reentry, conclusão/persistência de simulado e release notes.
@@ -66,8 +65,8 @@
 - Certificações latentes continuam fora do produto live: CT-AI, CTAL-TM e
   CTFL-AT ainda apresentam dívida psicométrica e/ou ausência de metadados
   completos. Não promover sem nova fase de conteúdo e guardas verdes.
-- Flashcards ainda não alimentam Stats; separação dos pools estudo/simulado
-  continua como decisão de produto adiada.
+- Flashcards ainda não alimentam Stats; a separação dos pools estudo/simulado
+  foi implementada na v3.12.0.
 
 ## Comunicação, página institucional e feedback
 
@@ -83,14 +82,15 @@
 - A solução não cria Neon, schema, migration, backend, login, tenant, segredo,
   analytics ou nova persistência.
 
-## Evidência do lote local de quick wins
+## Aplicação v3.12.0 — estado local
 
-- Lint sem warnings e `format:check` verde.
-- 294/294 testes unitários/de componente verdes.
-- Build verde; permanece apenas o warning conhecido do chunk CTAL-TA (~669 KB).
-- 3/3 smokes Playwright verdes, incluindo URL/estado/foco do novo acesso.
-- Red Team encontrou e fez corrigir o retorno de foco do footer e a ação
-  redundante durante a primeira visita antes da aprovação final.
+- Banco `1.5.0-pools` gerado deterministicamente e idêntico ao pacote entregue.
+- CTFL: 220 estudo + 80 simulado; CTAL-TA: 110 estudo + 90 simulado.
+- CTAL-TA: K2=1, K3=2, K4=3, total 78, corte 51; tempos nativos 60/120 min.
+- Modal de novidades atualizado para v3.12.0 e cache PWA renovado para `r14-v1`.
+- Gates finais: lint e Prettier verdes, 329/329 testes unitários/de componente,
+  build verde, 3/3 smokes Playwright e guardas 7/7 nos dois bancos com
+  `threshold 0`. Permanece apenas o warning conhecido do chunk CTAL-TA (~672 KB).
 
 ## Produto live
 
@@ -99,5 +99,4 @@
 - Ambas passam nas guardas psicométricas bloqueantes.
 - CT-AI, CTAL-TM e CTFL-AT permanecem latentes e não devem ser promovidas sem
   saneamento de conteúdo e metadados de exame.
-- Estudo e simulado compartilham o mesmo pool; não há questões exclusivas de
-  avaliação nem exclusão automática de questões já vistas.
+- Estudo e simulado usam pools mutuamente exclusivos nas duas certificações live.

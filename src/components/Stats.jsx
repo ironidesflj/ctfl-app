@@ -257,6 +257,10 @@ export default function Stats({
   // ex: "CTFL"/"CTAL-TA" — mais robusto que derivar de certId.toUpperCase(),
   // que quebraria pra certs cujo label não é o certId maiúsculo)
   const totalBank = META.certifications?.[cert.label]?.totalQuestions || 300;
+  // r13: pools exclusivos — estudo alimenta cobertura/prontidão; simulado
+  // tem contagem própria exibida no card de prontidão
+  const studyCount = bank.STUDY ? bank.STUDY.length : totalBank;
+  const examCount = bank.EXAM ? bank.EXAM.length : 0;
   const readiness = getReadinessV2(progress, bank);
   const pace = calcPace(progress.history || [], readiness.point);
   const achievements = progress.achievements || [];
@@ -287,8 +291,10 @@ export default function Stats({
   const level = Math.floor(uniqueCorrect / 20) + 1;
 
   // Fase 2: cobertura real (questões únicas vistas / total do banco)
+  // r13: escopo estudo — visto e total sobre o pool de estudo (as
+  // exclusivas de simulado têm contagem própria no poolSplit)
   const seenCount = readiness.seenCount;
-  const coveragePct = totalBank > 0 ? Math.round((seenCount / totalBank) * 100) : 0;
+  const coveragePct = studyCount > 0 ? Math.round((seenCount / studyCount) * 100) : 0;
 
   // Fase 0/2: pass mark do cert ativo (examFormat usa certId lowercase)
   const examFormat = META.examFormat?.[certId];
@@ -327,14 +333,14 @@ export default function Stats({
   const examCd = useMemo(() => examCountdown(examDate || null, todayLocal()), [examDate]);
   const examPaceVal = useMemo(() => {
     if (!examCd || examCd.past || examCd.isToday || examCd.days <= 0) return null;
-    return coverPace(seenCount, totalBank, examCd.days);
-  }, [examCd, seenCount, totalBank]);
-  const examLeft = Math.max(0, totalBank - seenCount);
+    return coverPace(seenCount, studyCount, examCd.days);
+  }, [examCd, seenCount, studyCount]);
+  const examLeft = Math.max(0, studyCount - seenCount);
   // r11: desempenho por K-level — join attempts (histórico por questão) com
   // as questões reais do cert (bank.ALL). O radar mostra capítulos; esta é
   // a dimensão cognitiva (K1 lembrar · K2 entender · K3 aplicar · K4 analisar).
   const kLevels = useMemo(
-    () => kLevelBreakdown(bank.ALL, progress.attempts || {}),
+    () => kLevelBreakdown(bank.STUDY || bank.ALL, progress.attempts || {}),
     [bank, progress]
   );
   const radarDomains = chapters.map((c) => c[lang]?.short || chapterName(c.chapter, lang));
@@ -702,8 +708,12 @@ export default function Stats({
                   {t(lang, "stats.readinessCoverage", {
                     pct: coveragePct,
                     seen: seenCount,
-                    total: totalBank,
+                    total: studyCount,
                   })}
+                  <span className="pool-split-note">
+                    {" "}
+                    · {t(lang, "stats.poolSplit", { study: studyCount, exam: examCount })}
+                  </span>
                 </p>
               </details>
             </>

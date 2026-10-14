@@ -14,7 +14,7 @@ const EMPTY_STATE_TEXT = {
 export default function Syllabus({ onStudy, lang = "pt", progress }) {
   const { cert: certId } = useParams();
   const bank = useMemo(() => getBank(certId), [certId]);
-  const { chapters, chapterName, ALL, coverageByChapter } = bank;
+  const { chapters, chapterName, STUDY, coverageByChapter } = bank; // r13: STUDY = pool de estudo (ALL não usado aqui)
 
   const [domain, setDomain] = useState("all"); // conceptually chapterId now
 
@@ -110,12 +110,15 @@ export default function Syllabus({ onStudy, lang = "pt", progress }) {
                 // P1: contagem REAL de questões do banco neste capítulo (o peso do
                 // blueprint — antes exibido aqui — é outra métrica: ch1 CTFL tem
                 // peso 40/200 mas 60 questões reais no banco de 300).
-                const chapterCount = ALL.filter(
+                // r13: contagem do POOL DE ESTUDO — é o que o quiz treina; as
+                // exclusivas de simulado (80) não aparecem aqui de propósito.
+                const chapterCount = STUDY.filter(
                   (q) => String(q.chapter) === String(dom.chapter)
                 ).length;
                 return (
                   <p className="syl-head">
-                    {chapterCount} {t(lang, "syllabus.ofQuestions", { total: ALL.length })}
+                    {chapterCount} {t(lang, "syllabus.ofQuestions", { total: STUDY.length })}{" "}
+                    <span className="syl-pool-note">{t(lang, "syllabus.studyPoolNote")}</span>
                   </p>
                 );
               })()}

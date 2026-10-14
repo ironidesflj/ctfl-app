@@ -382,14 +382,16 @@ describe("r11: Stats — card Data da prova", () => {
 
   it("definir data persiste em synapse.examDate e mostra contagem + ritmo", () => {
     renderStats(PROGRESS());
-    // PROGRESS fixture: attempts={} → seenCount 0 → left = 300, pace = 300/10
+    // PROGRESS fixture: attempts={} → seenCount 0 → left = 220 (pool de
+    // estudo r13), pace = 220/10 = 22/dia — o ritmo planeja cobrir o MATERIAL
+    // DE ESTUDO; as 80 exclusivas de simulado não são treináveis
     fireEvent.change(document.getElementById("exam-date-input"), {
       target: { value: isoOffset(10) },
     });
     expect(localStorage.getItem("synapse.examDate")).toBe(isoOffset(10));
     expect(screen.getByText(/faltam 10 dias/i)).toBeInTheDocument();
-    expect(screen.getByText(/~30 questões\/dia/i)).toBeInTheDocument();
-    expect(screen.getByText(/300 restantes/i)).toBeInTheDocument();
+    expect(screen.getByText(/~22 questões\/dia/i)).toBeInTheDocument();
+    expect(screen.getByText(/220 restantes/i)).toBeInTheDocument();
   });
 
   it("1 dia → singular “falta 1 dia” + tom de urgência (warn)", () => {
@@ -472,9 +474,12 @@ describe("r11: Stats — card Desempenho por K-level", () => {
 
   it("join attempts × banco REAL: linhas por K com acerto e cobertura", () => {
     const bank = getBank("ctfl");
-    const k1 = bank.ALL.filter((q) => q.kLevel === 1)
+    // r13: kLevelBreakdown roda sobre o POOL DE ESTUDO — attempts em ids do
+    // pool exclusivo não entram na junção (e o denominador é o study por K)
+    const k1 = bank.STUDY.filter((q) => q.kLevel === 1)
       .slice(0, 5)
       .map((q) => q.id);
+    const k1Total = bank.STUDY.filter((q) => q.kLevel === 1).length;
     const attempts = {};
     // 4 questões 2/2 (8 acertos) + 1 questão 0/2 → 10 answers, 8 correct = 80%
     k1.forEach((id, i) => {
@@ -486,9 +491,10 @@ describe("r11: Stats — card Desempenho por K-level", () => {
     expect(container.querySelector(".klevel-pct.ok")).toBeTruthy();
     // sr-only com o resumo completo por K
     expect(screen.getByText(/K1: 80% de acerto em 10 respostas/i)).toBeInTheDocument();
-    // barra de cobertura: 5 distintas do banco no K1 (78 no banco → 5/78 ≈ 6%)
+    // barra de cobertura: 5 distintas do pool de estudo no K1 (62 de estudo
+    // — as 16 K1 exclusivas de simulado ficam de fora) → 5/62 ≈ 8%
     const fill = container.querySelector(".klevel-fill");
-    expect(fill.style.width).toBe(`${Math.min(100, Math.round((5 / 78) * 100))}%`);
+    expect(fill.style.width).toBe(`${Math.min(100, Math.round((5 / k1Total) * 100))}%`);
   });
 
   it("K sem tentativas mostra “—” (pct null) e sem tom", () => {

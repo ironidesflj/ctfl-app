@@ -203,7 +203,10 @@ export default function App() {
     }
     const first = last && VALID_CERTS.includes(last) ? last : "ctfl";
     loadBankFor(first)
-      .then(() => warmServiceWorkerCache())
+      .then(() => {
+        setBankTick((x) => x + 1);
+        return warmServiceWorkerCache();
+      })
       .catch(() => {});
   }, []);
   useEffect(() => {
@@ -235,7 +238,8 @@ export default function App() {
     // sem ele o cache manteria null depois de o chunk lazy terminar de carregar
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [certId, bankTick]);
-  const ALL = useMemo(() => (bank ? bank.ALL : []), [bank]);
+  const ALL = bank ? bank.ALL : [];
+  const srsScope = useMemo(() => (bank ? bank.STUDY || bank.ALL : []), [bank]);
   const catalogCert = activeCert ? CATALOG_BY_ID[activeCert] : null;
   // Progresso é por cert (namespaced em storage.js por certId). Recarrega
   // sempre que activeCert muda; em rotas neutras (/, /select) não há cert
@@ -366,7 +370,7 @@ export default function App() {
       const days = daysSinceLastStudy(progress.lastStudyDate);
       const dueCount = getDueItems(
         progress,
-        ALL.map((q) => q.id)
+        srsScope.map((q) => q.id)
       ).length;
 
       if (Notification.permission === "granted") {
@@ -379,7 +383,7 @@ export default function App() {
     };
 
     checkAndNotify();
-  }, [bank, ALL, lang, progress]); // ref-guarded: executa 1x por sessão
+  }, [bank, srsScope, lang, progress]); // ref-guarded: executa 1x por sessão
 
   // r10: lembrete diário — agenda o disparo quando ativo (settings +
   // permissão concedida). O Stats muda a config e emite

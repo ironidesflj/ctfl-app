@@ -48,10 +48,14 @@ function renderQuiz(cert, props = {}) {
 }
 
 describe("Quiz fixes — CTAL-TA pass mark", () => {
-  it("passa no exam quando score == passMark (29/45), não 65%", async () => {
+  it("CTAL-TA v4.0: veredito por PONTOS (51/78) — K4 valem 3, contagem pura engana", async () => {
     const bank = getBank("ctal-ta");
-    const passMark = bank.META.examFormat["ctal-ta"].passMark;
-    expect(passMark).toBe(29);
+    const format = bank.META.examFormat["ctal-ta"];
+    // r13: modelo oficial de pontuação ponderada (istqb.org): K2=1, K3=2,
+    // K4=3 → 78 pontos no blueprint · corte 51. A contagem simples (29/45)
+    // foi substituída — o teste verifica que a tela e o veredito seguem PONTOS.
+    expect(format.passMark).toBe(51);
+    expect(format.totalPoints).toBe(78);
 
     const user = userEvent.setup();
     const { onAnswer } = renderQuiz("ctal-ta");
@@ -61,7 +65,7 @@ describe("Quiz fixes — CTAL-TA pass mark", () => {
 
     // click first option on every question (don't care right/wrong yet),
     // then finish and inspect via onAnswer which questions were correct.
-    const total = bank.META.examFormat["ctal-ta"].questions;
+    const total = format.questions;
     for (let i = 0; i < total; i++) {
       const options = await screen.findAllByRole("button", { name: /^[A-E]/ });
       await user.click(options[0]);
@@ -71,14 +75,22 @@ describe("Quiz fixes — CTAL-TA pass mark", () => {
     }
     await user.click(screen.getByRole("button", { name: /finalizar/i }));
 
-    const correctCount = onAnswer.mock.calls.filter((c) => c[1] === true).length;
-    const scoreText = screen.getByText(/\d+\/\d+ · \d+%/).textContent;
-    const [, scoreStr] = scoreText.match(/(\d+)\/\d+/);
-    expect(Number(scoreStr)).toBe(correctCount);
+    // pontos das corretas: onAnswer devolve (chapter, correct, id) — o peso
+    // vem do kLevel da questão no banco
+    const kById = new Map(bank.ALL.map((q) => [q.id, q.kLevel]));
+    const ptsOf = (k) => Number(format.pointsByK[String(k)]) || 1;
+    const points = onAnswer.mock.calls
+      .filter((c) => c[1] === true)
+      .reduce((s, c) => s + ptsOf(kById.get(c[2])), 0);
+
+    // tela mostra "P/78 pts · pct%" no modelo de pontos
+    const scoreText = screen.getByText(/\d+\/\d+ pts · \d+%/).textContent;
+    const [, ptsStr] = scoreText.match(/(\d+)\/\d+/);
+    expect(Number(ptsStr)).toBe(points);
 
     const passed = screen.queryByText(/aprovado|passed/i);
     const failed = screen.queryByText(/abaixo da nota|below the passing/i);
-    if (correctCount >= passMark) {
+    if (points >= format.passMark) {
       expect(passed).toBeInTheDocument();
     } else {
       expect(failed).toBeInTheDocument();
@@ -87,15 +99,15 @@ describe("Quiz fixes — CTAL-TA pass mark", () => {
 });
 
 describe("Quiz fixes — logExamResult persiste o veredito por cert, não 65% fixo", () => {
-  it("CTAL-TA a 64% (score exatamente no passMark 29/45) grava passed:true no histórico", async () => {
+  it("CTAL-TA v4.0: 51/78 pontos (65%) grava passed:true no histórico", async () => {
     const bank = getBank("ctal-ta");
-    const passMark = bank.META.examFormat["ctal-ta"].passMark; // 29
-    const total = bank.META.examFormat["ctal-ta"].questions; // 45
-    // pct arredondado desse score é 64%, abaixo do default hardcoded de 65%
-    // que o storage.js usava antes — prova que o veredito persistido segue
-    // o passMark do cert, não o fallback global.
-    const pct = Math.round((passMark / total) * 100);
-    expect(pct).toBe(64);
+    const format = bank.META.examFormat["ctal-ta"];
+    // r13: o mínimo aprovável do modelo de pontos é 51/78 = 65,38% → pct 65.
+    // O veredito é calculado pelo examVerdict (Quiz) e passado explícito —
+    // o storage apenas persiste; sem o 3º argumento, o fallback 65% se
+    // mantém para as chamadas legadas.
+    const pct = Math.round((format.passMark / format.totalPoints) * 100);
+    expect(pct).toBe(65);
 
     const before = {
       total: 0,
@@ -110,13 +122,13 @@ describe("Quiz fixes — logExamResult persiste o veredito por cert, não 65% fi
       examHistory: [],
     };
     const after = logExamResult(before, pct, true); // Quiz.jsx passa o passed já calculado
-    expect(after.examHistory.at(-1)).toMatchObject({ pct: 64, passed: true });
+    expect(after.examHistory.at(-1)).toMatchObject({ pct: 65, passed: true });
     expect(after.achievements).toContain("passed-exam");
 
     // sem o 3º argumento, o comportamento antigo (65% fixo) é preservado —
     // não quebra as chamadas/testes que já existiam.
     const legacy = logExamResult(before, pct);
-    expect(legacy.examHistory.at(-1).passed).toBe(false);
+    expect(legacy.examHistory.at(-1).passed).toBe(true);
   });
 });
 

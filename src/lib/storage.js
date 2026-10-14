@@ -317,8 +317,23 @@ const CHAPTER_COVERAGE_MIN_PCT = 0.4;
 const KLEVEL_COVERAGE_FRACTION = 0.5;
 
 export function getReadinessV2(progress, bank) {
-  const totalBank = bank.ALL.length;
-  const base = getReadiness(progress, totalBank);
+  // r13: prontidão mede o MATERIAL DE ESTUDO — bank.STUDY (o pool exclusivo
+  // de simulado não é alcançável em modo estudo; exames têm histórico
+  // próprio e nota própria). Sem STUDY (banco legado) degrada pro ALL.
+  const studyList = bank.STUDY || bank.ALL;
+  const totalBank = studyList.length;
+  // r13: base estatística também escopada — tentativas em questões do pool
+  // exclusivo (p.ex. respostas de simulado) não contam cobertura nem
+  // aproveitamento de estudo; a prova tem histórico próprio.
+  const studyIdSet = new Set(studyList.map((q) => q.id));
+  const filterStudy = (obj) =>
+    Object.fromEntries(Object.entries(obj || {}).filter(([id]) => studyIdSet.has(id)));
+  const studyProgress = {
+    ...progress,
+    attempts: filterStudy(progress.attempts),
+    seen: filterStudy(progress.seen),
+  };
+  const base = getReadiness(studyProgress, totalBank);
   const blueprint = bank.META?.examBlueprint?.[bank.cert.id];
   if (!blueprint || !blueprint.chapters) {
     return { ...base, gatesPassed: undefined, source: "statistical" };
@@ -363,7 +378,8 @@ export function getReadinessV2(progress, bank) {
   let weightTotal = 0;
   Object.entries(blueprint.chapters).forEach(([ch, c]) => {
     const w = c.questions / blueprintTotal;
-    const chQuestions = bank.ALL.filter((q) => String(q.chapter) === String(ch));
+    // r13: capítulo ponderado sobre o pool de estudo (idem cobertura)
+    const chQuestions = studyList.filter((q) => String(q.chapter) === String(ch));
     const chAttempted = chQuestions.filter((q) => seenMap[q.id]);
     const chCorrect = chAttempted.filter((q) => {
       const a = attempts[q.id];

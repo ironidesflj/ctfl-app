@@ -103,17 +103,28 @@ function buildBankApi(cert, monolith) {
 
   function localized(q, lang = "pt") {
     const loc = q.locales[lang] || q.locales["pt"];
+    // r13: pool viaja com a questão localizada — estudo/simulado é propriedade
+    // DO DADO, não do componente. Default "study" cobre bancos legados sem
+    // o campo (partição partition_pools.py só marca certs com blueprint).
     return {
       id: q.id,
       domain: q.domain,
       chapter: q.chapter,
       kLevel: q.kLevel,
       answer: q.answer,
+      pool: q.pool === "exam" ? "exam" : "study",
       ...loc,
     };
   }
 
   const ALL = rawQuestions.map((q) => localized(q, "pt"));
+
+  // r13: pools exclusivos por cert. ESTUDO alimenta quiz/erradas/salvas/
+  // SRS/pontos-fracos/cobertura; SIMULADO alimenta buildExamInLang e o
+  // simulado personalizado — intersecção VAZIA por construção (o teste
+  // pools-exclusivos.test.js trava o invariante em ambas as direções).
+  const STUDY = ALL.filter((q) => q.pool === "study");
+  const EXAM = ALL.filter((q) => q.pool === "exam");
 
   function byIds(ids) {
     const set = new Set(ids);
@@ -124,8 +135,21 @@ function buildBankApi(cert, monolith) {
     return lang === "pt" ? ALL : rawQuestions.map((q) => localized(q, lang));
   }
 
+  // r13: seletores com escopo de pool — idioma respeitado como allInLang.
+  function allStudyInLang(lang = "pt") {
+    if (lang === "pt") return STUDY;
+    return rawQuestions.filter((q) => q.pool !== "exam").map((q) => localized(q, lang));
+  }
+
+  function allExamInLang(lang = "pt") {
+    if (lang === "pt") return EXAM;
+    return rawQuestions.filter((q) => q.pool === "exam").map((q) => localized(q, lang));
+  }
+
   function byChapterInLang(chapterId, lang = "pt") {
-    const all = allInLang(lang);
+    // r13: modo estudo — só pool de estudo (as exclusivas de simulado nunca
+    // aparecem no quiz, erradas ou cobertura do material de estudo).
+    const all = allStudyInLang(lang);
     return chapterId === "all" ? all : all.filter((q) => matchesChapter(q.chapter, chapterId));
   }
 
@@ -173,7 +197,9 @@ function buildBankApi(cert, monolith) {
   }
 
   function buildExamInLang(lang = "pt") {
-    const allQ = allInLang(lang);
+    // r13: simulado sorteia EXCLUSIVAMENTE do pool exclusivo — a prova nunca
+    // repete questão que o usuário já treinou nos modos de estudo.
+    const allQ = allExamInLang(lang);
     const examQuestions = META.examFormat[cert.id].questions;
     const blueprintChapters = META.examBlueprint?.[cert.id]?.chapters;
     const picked = [];
@@ -244,7 +270,10 @@ function buildBankApi(cert, monolith) {
   // escolhido — nunca puxa questão de fora dos filtros do usuário).
   // count > pool → devolve o pool inteiro (caller valida pool vazio).
   function buildCustomExamInLang(lang, { chapters: selChapters, kLevels = [], count }) {
-    const allQ = allInLang(lang);
+    // r13: simulado personalizado também é simulado — mesmo pool exclusivo
+    // (o usuário escolhe escopo/níveis, mas nunca estuda o que vai cair na
+    // prova). Seleções estreitas têm pool menor; o caller valida vazio.
+    const allQ = allExamInLang(lang);
     const chapterSet = new Set(
       (selChapters && selChapters.length > 0
         ? selChapters
@@ -310,7 +339,8 @@ function buildBankApi(cert, monolith) {
 
     const wrongSet = new Set(wrongIds);
     const queues = focus.map((s) => {
-      const pool = allInLang(lang).filter((q) => String(q.chapter) === s.ch);
+      // r13: pontos fracos é modo estudo — pool de estudo apenas
+      const pool = allStudyInLang(lang).filter((q) => String(q.chapter) === s.ch);
       const wrong = shuffle(pool.filter((q) => wrongSet.has(q.id)));
       const fresh = shuffle(pool.filter((q) => !wrongSet.has(q.id) && !seen[q.id]));
       const rest = shuffle(pool.filter((q) => !wrongSet.has(q.id) && seen[q.id]));
@@ -333,10 +363,15 @@ function buildBankApi(cert, monolith) {
   }
 
   function coverageByChapter(seenMap) {
+    // r13: cobertura do MATERIAL DE ESTUDO — as exclusivas de simulado não
+    // são alcançáveis em modo estudo, então não entram em numerador nem
+    // denominador da prontidão (exames têm histórico próprio).
     const result = {};
     chapters.forEach((c) => {
-      const total = ALL.filter((q) => matchesChapter(q.chapter, c.chapter)).length;
-      const seen = ALL.filter((q) => matchesChapter(q.chapter, c.chapter) && seenMap[q.id]).length;
+      const total = STUDY.filter((q) => matchesChapter(q.chapter, c.chapter)).length;
+      const seen = STUDY.filter(
+        (q) => matchesChapter(q.chapter, c.chapter) && seenMap[q.id]
+      ).length;
       result[c.chapter] = { seen, total };
     });
     return result;
@@ -347,8 +382,10 @@ function buildBankApi(cert, monolith) {
   // examBlueprint usa chaves "K1".."K4" (verificado no JSON commitado). Sem
   // essa normalização os dois nunca se cruzam e o gate trava pra sempre.
   function coverageByKLevel(seenMap) {
+    // r13: idem coverageByChapter — escopo estudo (r11 continua válido:
+    // normalização "K"+n cruza kLevel numérico com chaves do blueprint)
     const result = {};
-    ALL.forEach((q) => {
+    STUDY.forEach((q) => {
       const k = "K" + q.kLevel;
       if (!result[k]) result[k] = { seen: 0, total: 0 };
       result[k].total += 1;
@@ -362,9 +399,13 @@ function buildBankApi(cert, monolith) {
     chapters,
     META,
     ALL,
+    STUDY,
+    EXAM,
     localized,
     byIds,
     allInLang,
+    allStudyInLang,
+    allExamInLang,
     byChapterInLang,
     relocalize,
     hasEN,

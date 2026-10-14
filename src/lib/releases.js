@@ -1,17 +1,17 @@
 const RELEASE_KEY_PREFIX = "synapse.releaseNotes.seen";
 
 export const CURRENT_RELEASE = {
-  version: "3.11.0",
+  version: "3.12.0",
   significant: true,
   pt: {
     eyebrow: "Novidades da versão",
     title: "O Synapse evoluiu",
-    intro: "Esta atualização melhora estudo, simulados, progresso e uso offline.",
+    intro: "Esta atualização deixa o estudo e os simulados mais fiéis à prova real.",
     items: [
-      "Simulados agora salvam rascunho, permitem retomada e seguem capítulo + K-level.",
-      "Progresso ganhou meta diária, heatmap, desempenho por K-level e data da prova.",
-      "A PWA ficou mais rápida, funciona offline e atualiza sem interromper sua sessão.",
-      "Banco e qualidade receberam novas correções, guardas e 285 testes automatizados.",
+      "Questões de estudo e de simulado agora ficam em pools exclusivos, evitando memorização prévia.",
+      "O CTAL-TA passa a usar pontuação oficial por K-level, com corte de 51 em 78 pontos.",
+      "Os cronômetros agora usam o tempo nativo BSTQB: 60 minutos no CTFL e 120 no CTAL-TA.",
+      "A cobertura e a prontidão consideram apenas o material de estudo, com a divisão dos pools visível.",
     ],
     cta: "Entendi",
     close: "Fechar novidades",
@@ -19,12 +19,12 @@ export const CURRENT_RELEASE = {
   en: {
     eyebrow: "What's new in",
     title: "Synapse has evolved",
-    intro: "This update improves study, exams, progress insights, and offline use.",
+    intro: "This update makes study and exam simulations more faithful to the real exam.",
     items: [
-      "Exam simulations now save drafts, resume safely, and follow chapter + K-level.",
-      "Progress now includes daily goals, a heatmap, K-level results, and exam date.",
-      "The PWA is faster, works offline, and updates without interrupting your session.",
-      "The question bank and quality gates gained fixes plus 285 automated tests.",
+      "Study and exam questions now use exclusive pools, preventing prior memorization.",
+      "CTAL-TA now uses official K-level scoring, with a 51-out-of-78 pass mark.",
+      "Timers now use native BSTQB times: 60 minutes for CTFL and 120 for CTAL-TA.",
+      "Coverage and readiness now consider study material only, with the pool split visible.",
     ],
     cta: "Got it",
     close: "Close release notes",

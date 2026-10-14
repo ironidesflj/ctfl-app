@@ -11,26 +11,28 @@
    features r2–r12 descrito no changelog da v3.11.0.
 6. Comunicação de releases significativas uma vez por versão, preservando o
    toast técnico do PWA; home institucional reconciliada com o estado live.
+7. Acesso institucional permanente e feedback global por Issue Form, publicados
+   em `origin/main` no commit `172a2db`.
 
-## Implementado e validado localmente — aguardando aprovação final
+## Implementado localmente — v3.12.0
 
-1. Acesso institucional permanente pelo shell global, reutilizando o overlay
-   acessível e preservando rota, estado e semântica do onboarding inicial.
-2. Feedback global por Issue Form público dedicado, com aviso de privacidade e
-   sem backend, banco ou transmissão automática de dados locais.
+1. Pools exclusivos para estudo e simulado nas certificações live.
+2. Pontuação oficial ponderada do CTAL-TA e tempos nativos BSTQB.
+3. Cobertura, prontidão, SRS, erradas, salvos e pontos fracos restritos ao pool
+   de estudo; simulados oficiais e personalizados restritos ao pool de prova.
+4. Comunicação da release 3.12 e renovação do cache PWA.
 
 ## Pendentes solicitados pelo Iron
 
 Nenhum dos dois itens registrados em 2026-10-14 permanece pendente de
 implementação: foram tratados separadamente em `spec-institutional-access.md`
-e `spec-global-feedback.md`. Aprovação final, commit e push do lote local
-continuam dependendo do Iron.
+e `spec-global-feedback.md` e já estão publicados. A v3.12 permanece local até
+validação final e autorização posterior para commit/push.
 
 ## Adiado por decisão do Iron
 
 - Integração Flashcards → Stats.
 - Escolha e preparação da próxima certificação live.
-- Eventual separação entre pool de estudo e pool reservado de simulado.
 
 ## Dívidas conhecidas, não bloqueantes
 

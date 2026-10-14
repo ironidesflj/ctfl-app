@@ -22,11 +22,12 @@ React + Vite, instalável como PWA, funciona offline.
 
 ## Funcionalidades
 
-- **Quiz — modo Estudo:** feedback por questão, filtra domínio/quantidade,
+- **Quiz — modo Estudo:** pool exclusivo (CTFL: 220; CTAL-TA: 110), feedback por questão, filtra domínio/quantidade,
   marca questões, oferece modo **"Errei antes"** e treino dirigido por
   capítulo/K-level.
-- **Quiz — modo Simulado:** questões estratificadas pelo blueprint oficial de
-  capítulo e K-level (CTFL: 40q/75min; CTAL-TA: 45q/150min), personalização,
+- **Quiz — modo Simulado:** pool exclusivo (CTFL: 80; CTAL-TA: 90), questões
+  estratificadas pelo blueprint oficial de capítulo e K-level (CTFL: 40q/60min;
+  CTAL-TA: 45q/120min e pontuação K2=1, K3=2, K4=3; corte 51/78), personalização,
   grade de navegação, rascunho persistido, retomada e revisão no fim.
 - **Flashcards:** marcação Sei/Não sei, filtro "Revisar (N)" para cards pendentes.
 - **Syllabus** por capítulo.
@@ -44,7 +45,8 @@ React + Vite, instalável como PWA, funciona offline.
 - **Feedback:** link global e seção institucional abrem um Issue Form público no
   GitHub; o app não envia nem armazena progresso, respostas ou dados pessoais.
 - **Banco:** multi-certificação (`getBank(certId)`), CTFL (300q) e CTAL-TA
-  (200q) no ar, distribuição proporcional ao blueprint oficial de cada uma.
+  (200q) no ar, com pools de estudo/simulado mutuamente exclusivos e
+  distribuição proporcional ao blueprint oficial de cada uma.
 - **Toggle PT/EN no header:** alterna o idioma das questões no Quiz e Simulado
   (Flashcards e Syllabus permanecem em PT, com aviso "coming soon" em EN).
 
@@ -120,7 +122,7 @@ npx playwright install chromium # apenas na primeira execução local
 npm run test:e2e
 ```
 
-O CI executa todos esses gates. A suíte unitária/de componentes tem 294 testes;
+O CI executa todos esses gates. A suíte unitária/de componentes tem 329 testes;
 os três smokes E2E em Chromium cobrem seleção, estudo, persistência, idioma,
 onboarding, conclusão/persistência de simulado e novidades por versão.
 

@@ -3393,3 +3393,17 @@ mark {
     display: none;
   }
 }
+
+/* r13: pools exclusivos — anotações discretas de escopo */
+.syl-pool-note {
+  font-size: var(--fs-12, 12px);
+  color: var(--text-3, #8b93a7);
+  font-weight: 500;
+  margin-left: 0.35rem;
+  white-space: nowrap;
+}
+
+.pool-split-note {
+  color: var(--text-3, #8b93a7);
+  font-size: var(--fs-12, 12px);
+}

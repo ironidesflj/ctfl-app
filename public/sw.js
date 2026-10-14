@@ -24,7 +24,7 @@
  * (ou abre, se estiver fechada) na rota neutra /go/quiz, que resolve pro
  * último cert usado. Notificações sem rota focam e pronto.
  */
-const VERSION = "r13-v1";
+const VERSION = "r14-v1";
 const CACHE = `synapse-${VERSION}`;
 
 const SCOPE = new URL(self.registration.scope);
