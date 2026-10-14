@@ -1,0 +1,53 @@
+name: Feedback do Synapse / Synapse feedback
+description: Relate um problema ou envie uma sugestao / Report an issue or send a suggestion.
+title: "[Feedback] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Obrigado por ajudar a melhorar o Synapse. / Thank you for helping improve Synapse.
+
+        Este formulario e publico e exige uma conta GitHub. Seu perfil e sua
+        mensagem ficarao visiveis. Nao envie nome completo, e-mail, telefone,
+        tokens, arquivos de backup, respostas de simulados, dados pessoais ou
+        informacoes sensiveis. Para possiveis falhas de seguranca, nao use este
+        formulario nem publique detalhes exploraveis; contate o mantenedor pelo
+        LinkedIn exibido em "Sobre o Synapse".
+
+        This form is public and requires a GitHub account. Your profile and
+        message will be visible. Do not send your full name, email, phone,
+        tokens, backup files, exam answers, personal data, or sensitive
+        information. For potential security vulnerabilities, do not use this
+        form or publish exploitable details; contact the maintainer through the
+        LinkedIn profile shown under "About Synapse".
+  - type: dropdown
+    id: type
+    attributes:
+      label: Tipo de feedback / Feedback type
+      options:
+        - Problema de uso ou acessibilidade / Usability or accessibility issue
+        - Sugestao de melhoria / Improvement suggestion
+        - Conteudo ou questao / Content or question
+        - Outro / Other
+    validations:
+      required: true
+  - type: input
+    id: area
+    attributes:
+      label: Area do app ou certificacao (opcional) / App area or certification (optional)
+      placeholder: Ex. Simulado CTFL / CTFL exam, Progresso / Progress
+  - type: textarea
+    id: message
+    attributes:
+      label: Mensagem / Message
+      description: Descreva o ocorrido ou a melhoria, sem dados pessoais. / Describe the issue or improvement without personal data.
+      placeholder: Contexto e passos para reproduzir / Context and steps to reproduce
+    validations:
+      required: true
+  - type: checkboxes
+    id: public_notice
+    attributes:
+      label: Confirmacao de privacidade / Privacy confirmation
+      options:
+        - label: Entendo que esta mensagem e meu perfil ficarao publicos e nao inclui dados pessoais ou sensiveis. / I understand that this message and my profile will be public and contain no personal or sensitive data.
+          required: true

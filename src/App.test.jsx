@@ -1,5 +1,5 @@
 import { describe, it, expect, afterEach, beforeEach } from "vitest";
-import { render, screen, cleanup } from "@testing-library/react";
+import { render, screen, cleanup, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";
 import App from "./App.jsx";
@@ -41,6 +41,14 @@ describe("primeira visita", () => {
     expect(screen.queryByRole("dialog", { name: /synapse evoluiu/i })).not.toBeInTheDocument();
     expect(localStorage.getItem(releaseSeenKey())).toBe("1");
   });
+
+  it("não duplica o acesso institucional enquanto o onboarding inicial já está aberto", () => {
+    localStorage.clear();
+    renderApp("/");
+
+    expect(screen.queryByRole("button", { name: "Sobre o Synapse" })).not.toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Sobre o autor" })).toBeInTheDocument();
+  });
 });
 
 describe("masthead dinâmico + data-cert", () => {
@@ -60,6 +68,40 @@ describe("masthead dinâmico + data-cert", () => {
     expect(container.querySelector(".app")).not.toHaveAttribute("data-cert");
     // não vaza "CTFL Prep" nem subtítulo de cert na tela de escolha
     expect(screen.queryByText("CTFL Prep")).not.toBeInTheDocument();
+  });
+});
+
+describe("acesso institucional e feedback globais", () => {
+  it("expõe as duas ações no shell e usa o formulário público dedicado", () => {
+    renderApp("/ctfl/quiz");
+
+    expect(screen.getByRole("button", { name: "Sobre o Synapse" })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /enviar feedback/i })).toHaveAttribute(
+      "href",
+      "https://github.com/ironidesflj/ctfl-app/issues/new?template=feedback.yml"
+    );
+    expect(screen.getByRole("link", { name: /enviar feedback/i })).toHaveAttribute(
+      "rel",
+      "noopener noreferrer"
+    );
+    expect(screen.getByText(/issue pública no github/i)).toBeInTheDocument();
+  });
+
+  it("abre a apresentação completa e volta para a tela anterior sem perder seu estado", async () => {
+    const user = userEvent.setup();
+    renderApp("/ctfl/quiz");
+    const start = screen.getByRole("button", { name: /iniciar/i });
+
+    await user.click(screen.getByRole("button", { name: "Sobre o Synapse" }));
+    expect(screen.getByRole("dialog", { name: "Sobre o Synapse" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Sobre o autor" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Feedback" })).toBeInTheDocument();
+    await user.click(screen.getByRole("button", { name: "Fechar" }));
+
+    expect(screen.getByRole("button", { name: /iniciar/i })).toBe(start);
+    await waitFor(() =>
+      expect(screen.getByRole("button", { name: "Sobre o Synapse" })).toHaveFocus()
+    );
   });
 });
 

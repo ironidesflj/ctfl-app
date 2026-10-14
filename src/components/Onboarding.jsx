@@ -1,5 +1,11 @@
 import { useState } from "react";
 import { t } from "../lib/ui-strings.js";
+import {
+  AUTHOR_GITHUB_URL,
+  AUTHOR_LINKEDIN_URL,
+  FEEDBACK_URL,
+  PROJECT_REPOSITORY_URL,
+} from "../lib/external-links.js";
 
 export default function Onboarding({ onDismiss, lang = "pt", variant = "full" }) {
   const [openFaq, setOpenFaq] = useState(null);
@@ -54,9 +60,12 @@ export default function Onboarding({ onDismiss, lang = "pt", variant = "full" })
     setDemoAnswer(i);
   }
 
+  const isInstitutional = variant === "full" || variant === "about";
+  const isDialog = variant !== "full";
+
   return (
     <div className="onboarding">
-      {variant === "reentry" && (
+      {isDialog && (
         <button
           className="btn ghost ob-close"
           onClick={onDismiss}
@@ -66,7 +75,7 @@ export default function Onboarding({ onDismiss, lang = "pt", variant = "full" })
         </button>
       )}
 
-      {variant === "full" && (
+      {isInstitutional && (
         <>
           {/* 1. Hero */}
           <span className="ob-badge">{t(lang, "onboarding.badge")}</span>
@@ -145,7 +154,7 @@ export default function Onboarding({ onDismiss, lang = "pt", variant = "full" })
             <span>{t(lang, "onboarding.socialFreeText")}</span>
             <a
               className="ob-social-link"
-              href="https://github.com/ironidesflj/ctfl-app"
+              href={PROJECT_REPOSITORY_URL}
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -195,14 +204,14 @@ export default function Onboarding({ onDismiss, lang = "pt", variant = "full" })
         </div>
       </div>
 
-      {variant === "full" && (
+      {isInstitutional && (
         <div className="ob-author">
           <h2 className="ob-section-title">{t(lang, "onboarding.authorTitle")}</h2>
           <p className="ob-author-bio">{t(lang, "onboarding.authorBio")}</p>
           <div className="ob-author-links">
             <a
               className="ob-author-link"
-              href="https://linkedin.com/in/ironjunior"
+              href={AUTHOR_LINKEDIN_URL}
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -210,7 +219,7 @@ export default function Onboarding({ onDismiss, lang = "pt", variant = "full" })
             </a>
             <a
               className="ob-author-link"
-              href="https://github.com/ironidesflj"
+              href={AUTHOR_GITHUB_URL}
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -220,9 +229,22 @@ export default function Onboarding({ onDismiss, lang = "pt", variant = "full" })
         </div>
       )}
 
+      {isInstitutional && (
+        <section className="ob-feedback" aria-labelledby="ob-feedback-title">
+          <h2 id="ob-feedback-title" className="ob-section-title">
+            {t(lang, "onboarding.feedbackTitle")}
+          </h2>
+          <p>{t(lang, "onboarding.feedbackDesc")}</p>
+          <p className="ob-feedback-privacy">{t(lang, "onboarding.feedbackPrivacy")}</p>
+          <a className="btn" href={FEEDBACK_URL} target="_blank" rel="noopener noreferrer">
+            {t(lang, "sendFeedback")} ↗
+          </a>
+        </section>
+      )}
+
       {/* 7. CTA final */}
       <button className="btn primary ob-cta" onClick={onDismiss}>
-        {variant === "reentry" ? t(lang, "onboarding.back") : t(lang, "onboarding.ctaStartFinal")}
+        {isDialog ? t(lang, "onboarding.back") : t(lang, "onboarding.ctaStartFinal")}
       </button>
 
       <p className="ob-disclaimer">{t(lang, "footer")}</p>

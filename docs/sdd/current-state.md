@@ -2,10 +2,12 @@
 
 ## Repositórios de referência
 
-- Banco antes desta manutenção: `e83ace8097e6955064fedf87acdadd2cc0285927`.
-- App antes desta manutenção: `020982a56eafcf139811d9e0afb8627b05ba7bc2`.
-- Os ZIPs do GitHub e os arquivos funcionais locais eram equivalentes.
-- Os dois JSONs embutidos no app tinham SHA-256 idêntico às fontes do banco.
+- App v3.11.0 confirmado em `origin/main`: `90cb96c`.
+- Banco E2E round 2 confirmado em `origin/main`: `5f8a9f7`.
+- Os dois JSONs embutidos no app tinham SHA-256 idêntico às fontes do banco no
+  fechamento da integração v3.11.0.
+- O lote atual de acesso institucional e feedback permanece local, sem
+  commit/push, aguardando autorização do Iron.
 
 ## Specs fechadas
 
@@ -21,8 +23,8 @@
 - Lint: verde, sem erros ou avisos.
 - Prettier: `format:check` verde; JSONs grandes do banco ficam fora da
   formatação mecânica.
-- Unit/component: 75/75 verdes.
-- Build/PWA: verde; permanece warning conhecido do chunk do banco (~2,16 MB).
+- Unit/component: 294/294 verdes.
+- Build/PWA: verde; permanece warning conhecido do chunk CTAL-TA (~669 KB).
 - E2E Chromium: 3/3 verdes, cobrindo seleção, estudo, persistência, idioma,
   onboarding reentry, conclusão/persistência de simulado e release notes.
 - CI: `npm ci` + lint + format + testes + build + Playwright.
@@ -33,8 +35,8 @@
 
 ## Aplicação auditada v3.11.0
 
-- Bases locais desta aplicação: app `699f8bf`; banco `dcf5d36`. O lote v3.11.0
-  permanece no working tree para revisão/commit pelo Iron.
+- Bases anteriores desta aplicação: app `699f8bf`; banco `dcf5d36`. O lote foi
+  reconciliado, commitado e enviado nos commits `90cb96c` e `5f8a9f7`.
 - O pacote-fonte v3.11.0 foi cruzado com a auditoria E2E consolidada e com o
   relatório independente antes da integração; documentação/CI regressivos do
   pacote não substituíram as regras canônicas deste SDD.
@@ -67,15 +69,28 @@
 - Flashcards ainda não alimentam Stats; separação dos pools estudo/simulado
   continua como decisão de produto adiada.
 
-## Comunicação e página institucional
+## Comunicação, página institucional e feedback
 
 - Toast PWA avisa toda atualização técnica pronta para aplicar; releases
   significativas também exibem um modal bilíngue uma vez por versão após o
   reload. Primeira visita recebe apenas o onboarding.
 - Conteúdo institucional reconciliado: duas certificações live, CT-AI v2.0,
   simulado por blueprint/retomada, prontidão atual e limites reais do PT/EN.
-- A página institucional completa continua restrita à primeira visita; retorno
-  sempre visível e seção global de feedback permanecem no plano.
+- “Sobre o Synapse” no footer global reabre a apresentação completa sem trocar
+  rota nem perder o estado da tela. A reentrada reduzida de métricas permanece.
+- “Enviar feedback” fica no footer e na apresentação institucional. Abre um
+  Issue Form público com aviso de privacidade; nenhum dado local é enviado.
+- A solução não cria Neon, schema, migration, backend, login, tenant, segredo,
+  analytics ou nova persistência.
+
+## Evidência do lote local de quick wins
+
+- Lint sem warnings e `format:check` verde.
+- 294/294 testes unitários/de componente verdes.
+- Build verde; permanece apenas o warning conhecido do chunk CTAL-TA (~669 KB).
+- 3/3 smokes Playwright verdes, incluindo URL/estado/foco do novo acesso.
+- Red Team encontrou e fez corrigir o retorno de foco do footer e a ação
+  redundante durante a primeira visita antes da aprovação final.
 
 ## Produto live
 

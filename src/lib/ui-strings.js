@@ -11,6 +11,11 @@ export const UI = {
       progress: "Progresso",
     },
     footer: "Material de estudo independente, não afiliado ao ISTQB.",
+    footerLinksAria: "Informações e contato",
+    aboutSynapse: "Sobre o Synapse",
+    sendFeedback: "Enviar feedback",
+    feedbackPublicShort:
+      "O feedback exige conta e abre uma Issue pública no GitHub. Não inclua dados pessoais.",
     // r7: prompt de instalação da PWA (pill flutuante)
     install: {
       ariaLabel: "Instalar aplicativo",
@@ -279,6 +284,7 @@ export const UI = {
       ctaStart: "Escolher certificação →",
       ctaStartFinal: "Escolher minha certificação →",
       reentryAria: "Como funciona o Synapse",
+      aboutAria: "Sobre o Synapse",
       close: "Fechar",
       back: "Voltar",
 
@@ -331,6 +337,11 @@ export const UI = {
       authorTitle: "Sobre o autor",
       authorBio:
         "Feito por Ironides Francisco — QA Analyst, construído como projeto pessoal de estudo e portfólio.",
+      feedbackTitle: "Feedback",
+      feedbackDesc:
+        "Encontrou um problema ou tem uma sugestão? Envie uma Issue para falar diretamente com o autor e ajudar a melhorar o Synapse.",
+      feedbackPrivacy:
+        "O GitHub exige uma conta; seu perfil e a mensagem ficarão públicos. Não envie nome completo, e-mail, telefone, resultados de prova ou outros dados pessoais e sensíveis.",
     },
     notifications: {
       title: "Lembretes",
@@ -377,6 +388,11 @@ export const UI = {
       progress: "Progress",
     },
     footer: "Independent study material, not affiliated with ISTQB.",
+    footerLinksAria: "Information and contact",
+    aboutSynapse: "About Synapse",
+    sendFeedback: "Send feedback",
+    feedbackPublicShort:
+      "Feedback requires an account and opens a public GitHub Issue. Do not include personal information.",
     // r7: PWA install prompt (floating pill)
     install: {
       ariaLabel: "Install application",
@@ -646,6 +662,7 @@ export const UI = {
       ctaStart: "Choose your certification →",
       ctaStartFinal: "Choose my certification →",
       reentryAria: "How Synapse works",
+      aboutAria: "About Synapse",
       close: "Close",
       back: "Back",
 
@@ -698,6 +715,11 @@ export const UI = {
       authorTitle: "About the author",
       authorBio:
         "Built by Ironides Francisco — QA Analyst, made as a personal study and portfolio project.",
+      feedbackTitle: "Feedback",
+      feedbackDesc:
+        "Found a problem or have a suggestion? Open an Issue to contact the author directly and help improve Synapse.",
+      feedbackPrivacy:
+        "GitHub requires an account; your profile and message will be public. Do not send your full name, email, phone number, exam results, or other personal or sensitive information.",
     },
     notifications: {
       title: "Reminders",

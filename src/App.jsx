@@ -39,6 +39,7 @@ import { readReminderCfg, scheduleDailyReminder, reminderGoalCount } from "./lib
 import { VALID_CERTS, DEFAULT_SECTION, LAST_CERT_KEY } from "./certs.js";
 import { CATALOG_BY_ID } from "./certs-catalog.js";
 import { markCurrentReleaseSeen } from "./lib/releases.js";
+import { FEEDBACK_URL } from "./lib/external-links.js";
 
 /* ─── Route guard: validates :cert param ─── */
 function CertGuard({ children }) {
@@ -270,7 +271,11 @@ export default function App() {
     migrateSettings();
     return !isOnboardingDone();
   });
-  const [reentryOnboarding, setReentryOnboarding] = useState(false);
+  // `reentry` preserva o resumo de métricas aberto pelo Stats; `about` mostra
+  // a apresentação institucional completa. Os dois usam o mesmo diálogo para
+  // manter foco, rota e progresso sem duplicar navegação ou estado.
+  const [onboardingOverlay, setOnboardingOverlay] = useState(null);
+  const hasOnboardingOverlay = onboardingOverlay !== null;
   // r3: modal de re-entrada acessível — role=dialog + aria-modal, focus trap
   // (Tab cicla dentro do modal), Esc fecha e o foco volta pro elemento que
   // abriu (o botão "Como funciona?" da aba Progresso). Antes o overlay era
@@ -279,7 +284,7 @@ export default function App() {
   const overlayRef = useRef(null);
   const lastFocusedRef = useRef(null);
   useEffect(() => {
-    if (!reentryOnboarding) return;
+    if (!hasOnboardingOverlay) return;
     lastFocusedRef.current = document.activeElement;
     document.body.style.overflow = "hidden";
     const overlay = overlayRef.current;
@@ -293,7 +298,7 @@ export default function App() {
     const onKeyDown = (e) => {
       if (e.key === "Escape") {
         e.preventDefault();
-        setReentryOnboarding(false);
+        setOnboardingOverlay(null);
         return;
       }
       if (e.key !== "Tab") return;
@@ -319,11 +324,17 @@ export default function App() {
     return () => {
       window.removeEventListener("keydown", onKeyDown);
       document.body.style.overflow = "";
-      if (lastFocusedRef.current && typeof lastFocusedRef.current.focus === "function") {
-        lastFocusedRef.current.focus({ preventScroll: true });
-      }
+      const previousFocus = lastFocusedRef.current;
+      requestAnimationFrame(() => {
+        const returnTarget = previousFocus?.isConnected
+          ? previousFocus
+          : document.getElementById("about-synapse-trigger");
+        if (returnTarget && typeof returnTarget.focus === "function") {
+          returnTarget.focus({ preventScroll: true });
+        }
+      });
     };
-  }, [reentryOnboarding]);
+  }, [hasOnboardingOverlay]);
 
   const [lang, setLang] = useState(() => getSetting("lang"));
   const [theme, setTheme] = useState(() => getSetting("theme"));
@@ -407,7 +418,7 @@ export default function App() {
   }
 
   function closeReentryOnboarding() {
-    setReentryOnboarding(false);
+    setOnboardingOverlay(null);
   }
 
   function toggleLang() {
@@ -424,7 +435,7 @@ export default function App() {
 
   return (
     <div className="app" {...(activeCert ? { "data-cert": activeCert } : {})}>
-      {!reentryOnboarding && (
+      {!hasOnboardingOverlay && (
         <header className="masthead">
           <div
             className="mast-mark"
@@ -577,7 +588,7 @@ export default function App() {
                       setProgress={setProgress}
                       lang={lang}
                       setQuizFilter={setQuizFilter}
-                      onReopenOnboarding={() => setReentryOnboarding(true)}
+                      onReopenOnboarding={() => setOnboardingOverlay("reentry")}
                     />
                   </BankGate>
                 </main>
@@ -589,22 +600,41 @@ export default function App() {
         </Routes>
       )}
 
-      {!showOnboarding && reentryOnboarding && (
+      {!showOnboarding && hasOnboardingOverlay && (
         <div
           className="onboarding-overlay"
           ref={overlayRef}
           role="dialog"
           aria-modal="true"
-          aria-label={t(lang, "onboarding.reentryAria")}
+          aria-label={t(
+            lang,
+            onboardingOverlay === "about" ? "onboarding.aboutAria" : "onboarding.reentryAria"
+          )}
         >
-          <Onboarding variant="reentry" onDismiss={closeReentryOnboarding} lang={lang} />
+          <Onboarding variant={onboardingOverlay} onDismiss={closeReentryOnboarding} lang={lang} />
         </div>
       )}
 
-      {!reentryOnboarding && (
-        <footer className="foot">
-          {t(lang, "footer")}
-          <span style={{ marginLeft: "1rem", opacity: 0.5 }}>v{__APP_VERSION__}</span>
+      {!showOnboarding && (
+        <footer className="foot" hidden={hasOnboardingOverlay}>
+          <div>
+            {t(lang, "footer")}
+            <span className="foot-version">v{__APP_VERSION__}</span>
+          </div>
+          <nav className="foot-actions" aria-label={t(lang, "footerLinksAria")}>
+            <button
+              id="about-synapse-trigger"
+              type="button"
+              className="foot-link"
+              onClick={() => setOnboardingOverlay("about")}
+            >
+              {t(lang, "aboutSynapse")}
+            </button>
+            <a className="foot-link" href={FEEDBACK_URL} target="_blank" rel="noopener noreferrer">
+              {t(lang, "sendFeedback")} ↗
+            </a>
+          </nav>
+          <p className="foot-privacy">{t(lang, "feedbackPublicShort")}</p>
         </footer>
       )}
 
@@ -613,7 +643,7 @@ export default function App() {
       <InstallPrompt lang={lang} />
       {/* Release significativa: aparece uma vez por versão depois que a nova
           versão carregou. Primeira visita é suprimida em dismissOnboarding. */}
-      {!showOnboarding && !reentryOnboarding && <ReleaseNotesModal lang={lang} />}
+      {!showOnboarding && !hasOnboardingOverlay && <ReleaseNotesModal lang={lang} />}
       {/* r8: toast de atualização do SW — aparece quando um novo SW está
           esperando; recarrega só quando o usuário aceita. PROD-only. */}
       <UpdateToast lang={lang} />

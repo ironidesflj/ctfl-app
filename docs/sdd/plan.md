@@ -12,15 +12,19 @@
 6. Comunicação de releases significativas uma vez por versão, preservando o
    toast técnico do PWA; home institucional reconciliada com o estado live.
 
+## Implementado e validado localmente — aguardando aprovação final
+
+1. Acesso institucional permanente pelo shell global, reutilizando o overlay
+   acessível e preservando rota, estado e semântica do onboarding inicial.
+2. Feedback global por Issue Form público dedicado, com aviso de privacidade e
+   sem backend, banco ou transmissão automática de dados locais.
+
 ## Pendentes solicitados pelo Iron
 
-1. Especificar e implementar um caminho sempre visível para voltar à página
-   inicial institucional do app. Essa página deve explicar o produto e como ele
-   funciona, além de conter uma seção “Sobre mim” com redes e dados de contato.
-2. Especificar e implementar uma seção de feedback dos usuários, fácil de
-   encontrar em todas as áreas principais do app. A spec deve decidir canal,
-   consentimento, privacidade, armazenamento e tratamento das mensagens antes
-   da implementação.
+Nenhum dos dois itens registrados em 2026-10-14 permanece pendente de
+implementação: foram tratados separadamente em `spec-institutional-access.md`
+e `spec-global-feedback.md`. Aprovação final, commit e push do lote local
+continuam dependendo do Iron.
 
 ## Adiado por decisão do Iron
 

@@ -916,6 +916,35 @@ body {
   font-size: var(--fs-12);
   color: var(--text-3);
 }
+.foot-version {
+  margin-left: 1rem;
+  opacity: 0.5;
+}
+.foot-actions {
+  display: flex;
+  justify-content: center;
+  gap: 0.9rem;
+  margin-top: 0.55rem;
+}
+.foot-link {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--accent-text);
+  font: inherit;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.foot-link:hover {
+  color: var(--text);
+}
+.foot-privacy {
+  max-width: 540px;
+  margin: 0.5rem auto 0;
+  font-size: var(--fs-12);
+  line-height: 1.5;
+}
 .back-btn {
   margin-bottom: 1rem;
   display: block;
@@ -1205,6 +1234,25 @@ body {
 }
 .ob-author-link:hover {
   text-decoration: underline;
+}
+
+.ob-feedback {
+  width: 100%;
+  padding: 1.25rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface-2);
+}
+.ob-feedback p {
+  max-width: 580px;
+  margin: 0 auto 0.75rem;
+  color: var(--text-2);
+  font-size: var(--fs-13);
+  line-height: 1.55;
+}
+.ob-feedback .ob-feedback-privacy {
+  color: var(--text-3);
+  font-size: var(--fs-12);
 }
 
 .lang-toggle {

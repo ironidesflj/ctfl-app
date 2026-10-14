@@ -41,6 +41,17 @@ test("seleção, estudo, persistência, idioma e reabertura do onboarding", asyn
   await expect(page.getByRole("button", { name: "Close" })).toBeVisible();
   await page.getByRole("button", { name: "Close" }).click();
   await expect(page).toHaveURL(statsUrl);
+
+  await page.getByRole("button", { name: "About Synapse" }).click();
+  await expect(page.getByRole("dialog", { name: "About Synapse" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "About the author" })).toBeVisible();
+  await expect(page.getByRole("link", { name: /send feedback/i })).toHaveAttribute(
+    "href",
+    /issues\/new\?template=feedback\.yml$/
+  );
+  await page.getByRole("button", { name: "Close" }).click();
+  await expect(page).toHaveURL(statsUrl);
+  await expect(page.getByRole("button", { name: "About Synapse" })).toBeFocused();
 });
 
 test("simulado pode ser concluído e persistido", async ({ page }) => {

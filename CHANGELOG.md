@@ -1,5 +1,14 @@
 # Changelog
 
+## Unreleased
+
+- feat(home): ação “Sobre o Synapse” no footer global reabre a apresentação
+  institucional completa, bilíngue e acessível, preservando rota, tela e foco.
+- feat(feedback): canal global abre um Issue Form público dedicado, com aviso de
+  privacidade antes do clique e sem transmitir dados locais automaticamente.
+- test(a11y): cobertura de primeira visita, variantes completa/reduzida, URL
+  segura do feedback, preservação de estado e retorno de foco.
+
 ### v3.11.0 — 2026-10-14 — ciclos de QA/evolução r2–r13
 
 Correções de bugs críticos, performance, PWA offline completa e 35+ features.

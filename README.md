@@ -38,22 +38,22 @@ React + Vite, instalável como PWA, funciona offline.
   e atualização gentil sem interromper a sessão.
 - **Novidades de versão:** toast avisa quando a atualização está pronta; após
   releases significativas, um resumo bilíngue aparece uma única vez por versão.
+- **Sobre o Synapse:** acesso permanente no footer reabre a apresentação
+  institucional completa, com funcionamento, FAQ, autor e redes, sem perder a
+  rota ou o estado atual.
+- **Feedback:** link global e seção institucional abrem um Issue Form público no
+  GitHub; o app não envia nem armazena progresso, respostas ou dados pessoais.
 - **Banco:** multi-certificação (`getBank(certId)`), CTFL (300q) e CTAL-TA
   (200q) no ar, distribuição proporcional ao blueprint oficial de cada uma.
 - **Toggle PT/EN no header:** alterna o idioma das questões no Quiz e Simulado
   (Flashcards e Syllabus permanecem em PT, com aviso "coming soon" em EN).
 
-## Pendências de produto
+## Acesso institucional e feedback
 
-1. Criar um caminho sempre visível para voltar à página inicial institucional
-   do app, com explicação de como ele funciona e uma seção “Sobre mim” com
-   redes e dados de contato do autor.
-2. Criar uma seção de feedback dos usuários, fácil de encontrar em todas as
-   áreas principais do app.
-
-Esses itens estão registrados como backlog e ainda não foram implementados;
-qualquer solução deve ganhar spec própria antes de alterar navegação, conteúdo
-institucional ou coleta/armazenamento de dados.
+O footer das áreas principais oferece “Sobre o Synapse” e “Enviar feedback”. A
+apresentação é interna e funciona offline; o feedback abre um formulário público
+do GitHub e exige conexão e conta. Não inclua dados pessoais, arquivos de backup,
+respostas de simulados, tokens ou informações sensíveis.
 
 ## Rodar localmente
 
@@ -120,7 +120,7 @@ npx playwright install chromium # apenas na primeira execução local
 npm run test:e2e
 ```
 
-O CI executa todos esses gates. A suíte unitária/de componentes tem 289 testes;
+O CI executa todos esses gates. A suíte unitária/de componentes tem 294 testes;
 os três smokes E2E em Chromium cobrem seleção, estudo, persistência, idioma,
 onboarding, conclusão/persistência de simulado e novidades por versão.
 
