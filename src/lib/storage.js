@@ -262,6 +262,11 @@ export function rateSRS(state, itemId, label, bank = null) {
 // prevCard = estado ANTERIOR do cartão (null = não tinha entrada — volta a
 // ser "novo"). Desconta também o contador da label pra manter retenção e
 // conquistas honestas (revisões desfeitas não contam como feitas).
+// r16 (QA v3.14.0): conquistas de SRS são DERIVADAS do estado vivo — se o
+// undo derruba o critério, a conquista é revogada (senão o roadmap mostrava
+// "99/100" com srs-100 destravada). Conquistas HISTÓRICAS (passed-exam,
+// streak etc.) continuam aditivas — só srs-100/srs-master revogam, pois
+// seus critérios (reviews/maduros) são recomputáveis a qualquer momento.
 export function undoSRSRating(state, itemId, label, prevCard) {
   const today = todayLocal();
   const s = normalizeSRSStats(state.srsStats);
@@ -276,7 +281,17 @@ export function undoSRSRating(state, itemId, label, prevCard) {
   const srs = { ...(state.srs || {}) };
   if (prevCard == null) delete srs[itemId];
   else srs[itemId] = prevCard;
-  return { ...state, srs, srsStats: nextStats };
+  // r16: revogação dos critérios vivos (espelho 1:1 do checkAchievements)
+  const achievements = new Set(state.achievements || []);
+  if (nextStats.reviews < 100) achievements.delete("srs-100");
+  const matureItems = Object.values(srs).filter((c) => (c.interval || 0) >= 21).length;
+  if (matureItems < 10) achievements.delete("srs-master");
+  return {
+    ...state,
+    srs,
+    srsStats: nextStats,
+    achievements: [...achievements],
+  };
 }
 
 // Fase 2: streak com quality gate. Um dia só conta se houve ≥5 respostas

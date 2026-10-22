@@ -1,14 +1,18 @@
 import { test, expect } from "@playwright/test";
+import { readFileSync } from "node:fs";
+
+const { version } = JSON.parse(readFileSync(new URL("../package.json", import.meta.url), "utf8"));
+const releaseKey = `synapse.releaseNotes.seen.${version}`;
 
 test.beforeEach(async ({ page }) => {
-  await page.addInitScript(() => {
+  await page.addInitScript((releaseKey) => {
     if (!sessionStorage.getItem("synapse-e2e-initialized")) {
       localStorage.clear();
       localStorage.setItem("ctfl_onboarding_done", "1");
-      localStorage.setItem("synapse.releaseNotes.seen.3.13.0", "1");
+      localStorage.setItem(releaseKey, "1");
       sessionStorage.setItem("synapse-e2e-initialized", "1");
     }
-  });
+  }, releaseKey);
 });
 
 test("seleção, estudo, persistência, idioma e reabertura do onboarding", async ({ page }) => {
@@ -72,7 +76,7 @@ test("simulado pode ser concluído e persistido", async ({ page }) => {
 
 test("novidades de release aparecem uma vez por versão", async ({ page }) => {
   await page.goto("/select");
-  await page.evaluate(() => localStorage.removeItem("synapse.releaseNotes.seen.3.13.0"));
+  await page.evaluate((key) => localStorage.removeItem(key), releaseKey);
   await page.reload();
 
   await expect(page.getByRole("dialog", { name: "O Synapse evoluiu" })).toBeVisible();

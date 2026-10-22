@@ -134,6 +134,65 @@ describe("r15: undoSRSRating — desfaz mis-tap", () => {
   });
 });
 
+describe("r16 (QA v3.14.0): undo revoga conquistas de SRS derivadas do estado vivo", () => {
+  it("99 → 100 (destrava) → undo (revoga): srs-100 sai junto com o contador", () => {
+    let big = {
+      ...BASE(),
+      srsStats: { ...normalizeSRSStats(), reviews: 99, good: 99 },
+    };
+    big = rateSRS(big, "q", "good"); // 100ª revisão
+    expect(big.achievements).toContain("srs-100");
+    const undone = undoSRSRating(big, "q", "good", null); // volta a 99
+    expect(undone.srsStats.reviews).toBe(99);
+    expect(undone.achievements).not.toContain("srs-100");
+    // roadmap volta a mostrar progresso honesto (99/100)
+    expect(achievementProgress(undone, null)["srs-100"].current).toBe(99);
+  });
+
+  it("undo acima do corte não revoga (150 → 149 segue destravada)", () => {
+    let s = {
+      ...BASE(),
+      srsStats: { ...normalizeSRSStats(), reviews: 150, good: 150 },
+      achievements: ["srs-100"],
+    };
+    s = rateSRS(s, "q", "good"); // 151
+    const undone = undoSRSRating(s, "q", "good", null); // 150
+    expect(undone.srsStats.reviews).toBe(150);
+    expect(undone.achievements).toContain("srs-100");
+  });
+
+  it("srs-master: avaliação que completa 10 maduros destrava; undo revoga", () => {
+    // 9 maduros + 1 quase (interval 10): um "Bom" → interval 25 → 10º maduro
+    const prev = {
+      easeFactor: 2.5,
+      interval: 10,
+      repetitions: 3,
+      dueDate: "2030-01-01",
+    };
+    const srs = { fc10: prev };
+    for (let i = 0; i < 9; i++)
+      srs[`m${i}`] = {
+        easeFactor: 2.5,
+        interval: 30,
+        repetitions: 5,
+        dueDate: "2030-01-01",
+      };
+    let s = { ...BASE(), srs };
+    s = rateSRS(s, "fc10", "good"); // interval 25 → 10 maduros
+    expect(s.achievements).toContain("srs-master");
+    const undone = undoSRSRating(s, "fc10", "good", prev);
+    expect(undone.achievements).not.toContain("srs-master"); // 9 maduros
+    expect(achievementProgress(undone, null)["srs-master"].current).toBe(9);
+  });
+
+  it("conquistas históricas (first-step) sobrevivem ao undo", () => {
+    let s = { ...BASE(), total: 5, achievements: ["first-step"] };
+    s = rateSRS(s, "q", "good");
+    const undone = undoSRSRating(s, "q", "good", null);
+    expect(undone.achievements).toContain("first-step");
+  });
+});
+
 describe("r15: conquistas srs-100 / srs-master", () => {
   it("srs-100 desbloqueia com 100 revisões (contagem total)", () => {
     const s = {

@@ -1,4 +1,8 @@
-# Estado atual — 2026-10-22 (v3.14.0 local)
+# Estado atual — 2026-10-22 (v3.14.1 local)
+
+Aplicado o pacote corretivo v3.14.1: desfazer na celebração e entre filtros,
+revogação de conquistas SRS no desfazer, CTA direto para pendentes, contador
+da fila e datas locais. Service worker r16-v2. Suíte: 385 testes e lint verdes.
 
 Integração do pacote v3.14.0: painel SRS no Progresso, atalhos e desfazer nos
 Flashcards, contadores de revisão e duas conquistas. Preservados os ajustes

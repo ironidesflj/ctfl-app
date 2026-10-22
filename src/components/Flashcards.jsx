@@ -1,5 +1,5 @@
 import { useState, useMemo, useRef, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import { getBank } from "../lib/bank.js";
 import { FLASHCARDS, flashcardsForCert } from "../data/study.js";
 import { t } from "../lib/ui-strings.js";
@@ -18,8 +18,8 @@ export default function Flashcards({ lang = "pt", progress, setProgress }) {
   const { cert: certId } = useParams();
   const bank = useMemo(() => getBank(certId), [certId]);
   const { chapters, chapterName } = bank;
+  const [searchParams] = useSearchParams();
 
-  const [domain, setDomain] = useState("all"); // conceptually chapterId now
   const [idx, setIdx] = useState(0);
   const [flipped, setFlipped] = useState(false);
   const [dragX, setDragX] = useState(0);
@@ -53,6 +53,17 @@ export default function Flashcards({ lang = "pt", progress, setProgress }) {
         : [],
     [progress, allCards]
   );
+
+  // r16 (QA v3.14.0): o CTA "Revisar N agora" do Stats abre direto na fila
+  // pendente (?due=1). Antes caía no filtro "Todos" e o usuário tinha que
+  // achar o chip da fila — a promessa do botão era a fila, não o baralho.
+  // Inicializador resolve no MOUNT (progresso é síncrono no App): fila
+  // vazia (bookmark antigo / já esvaziou) degrada pro baralho completo —
+  // sem efeito, sem setState-in-effect.
+  const [domain, setDomain] = useState(() =>
+    searchParams.get("due") === "1" && dueIds.length > 0 ? "due" : "all"
+  );
+
   const cards = useMemo(
     () =>
       domain === "due"
@@ -63,7 +74,13 @@ export default function Flashcards({ lang = "pt", progress, setProgress }) {
     [domain, allCards, dueIds]
   );
 
-  const card = cards[idx] || cards[0] || null;
+  // r16 (QA v3.14.0): defesa em profundidade — o avanço pós-avaliação é
+  // calculado com o comprimento PÓS-rating (ver rate()), então idx deve
+  // estar sempre em faixa; o clamp de render garante que qualquer
+  // caminho futuro que esqueça disso mostre cartão e contador "N/M"
+  // coerentes em vez de um "3 / 2".
+  const safeIdx = cards.length ? Math.min(idx, cards.length - 1) : 0;
+  const card = cards[safeIdx] || null;
 
   // r15: due por capítulo — o chip mostra onde há fila esperando (só > 0).
   const dueByChapter = useMemo(() => {
@@ -89,6 +106,7 @@ export default function Flashcards({ lang = "pt", progress, setProgress }) {
   );
 
   function go(delta) {
+    if (!cards.length) return; // celebração/fila vazia: sem navegação a onde ir
     setFlipped(false);
     setIdx((i) => (i + delta + cards.length) % cards.length);
   }
@@ -110,16 +128,35 @@ export default function Flashcards({ lang = "pt", progress, setProgress }) {
     // entrada que rateSRS usa internamente, mesma saída).
     const updated = sm2(prevCard || initSM2(), QUALITY[label]);
     setProgress((p) => rateSRS(p, card.id, label));
-    setLastRating({ id: card.id, idx, label, prevCard });
+    // r16: guarda o índice EXIBIDO (safeIdx) e o DOMÍNIO vigente — o estado
+    // idx pode estar além do fim no instante pós-avaliação (lista encolheu) e
+    // o undo precisa devolver exatamente pro cartão avaliado, no filtro em
+    // que ele foi avaliado (trocar de chip não pode quebrar o "volta pro
+    // cartão certo").
+    setLastRating({ id: card.id, idx: safeIdx, label, prevCard, domain });
     setNote({ label, interval: updated.interval });
-    go(1);
+    // r16 (QA v3.14.0): avanço calculado com o comprimento PÓS-avaliação.
+    // Na fila due o cartão avaliado SEMPRE sai (interval ≥ 1 → dueDate
+    // amanhã ou depois): o próximo da sequência assume a posição atual
+    // (idx não muda); no último, wrap. Fora da fila due, +1 com wrap. Isso
+    // elimina o "3 / 2" do contador (idx além do fim) e o clique preso.
+    setFlipped(false);
+    if (domain === "due") {
+      const after = cards.length - 1;
+      setIdx(after > 0 ? safeIdx % after : 0);
+    } else {
+      setIdx((safeIdx + 1) % cards.length);
+    }
   }
 
   // r15: undo de 1 nível — restaura o estado SM-2 ANTERIOR do cartão (null =
-  // volta a ser novo), desconta o contador da label, volta pro cartão certo.
+  // volta a ser novo), desconta o contador da label, volta pro cartão certo
+  // NO FILTRO em que foi avaliado (r16: domain restaurado junto — trocar de
+  // chip entre avaliar e desfazer não pode descaracterizar o retorno).
   function undo() {
     if (!lastRating) return;
     setProgress((p) => undoSRSRating(p, lastRating.id, lastRating.label, lastRating.prevCard));
+    setDomain(lastRating.domain);
     setIdx(lastRating.idx);
     setFlipped(false);
     setNote(null);
@@ -317,29 +354,12 @@ export default function Flashcards({ lang = "pt", progress, setProgress }) {
             </div>
           )}
 
-          {/* r15: transparência do SM-2 — o que a avaliação acabou de agendar
-              + undo de mis-tap no mesmo lugar. aria-live: quem usa teclado
-              (1-4) ouve a confirmação. */}
-          {note && (
-            <p className="flash-note" aria-live="polite">
-              <span className="flash-note-label">
-                {t(lang, `flashcards.${note.label}`)} →{" "}
-                {t(lang, "flashcards.nextIn", { n: note.interval })}
-              </span>
-              {lastRating && (
-                <button className="flash-undo" onClick={undo}>
-                  ↩ {t(lang, "flashcards.undo")}
-                </button>
-              )}
-            </p>
-          )}
-
           <div className="actions">
             <button className="btn" onClick={() => go(-1)}>
               {t(lang, "flashcards.prev")}
             </button>
             <span className="muted center-num">
-              {idx + 1} / {cards.length}
+              {safeIdx + 1} / {cards.length}
             </span>
             <button className="btn" onClick={() => go(1)}>
               {t(lang, "flashcards.next")}
@@ -350,6 +370,26 @@ export default function Flashcards({ lang = "pt", progress, setProgress }) {
             {t(lang, "flashcards.kbdHint")}
           </p>
         </>
+      )}
+      {/* r15: transparência do SM-2 — o que a avaliação acabou de agendar
+          + undo de mis-tap no mesmo lugar. aria-live: quem usa teclado
+          (1-4) ouve a confirmação.
+          r16 (QA v3.14.0): o undo pertence à AVALIAÇÃO, não à tela —
+          avaliar a última pendência troca para a celebração e o mis-tap
+          precisa continuar reversível lá (antes o bloco vivia só no ramo
+          do cartão e desaparecia junto com ele). */}
+      {note && (
+        <p className="flash-note" aria-live="polite">
+          <span className="flash-note-label">
+            {t(lang, `flashcards.${note.label}`)} →{" "}
+            {t(lang, "flashcards.nextIn", { n: note.interval })}
+          </span>
+          {lastRating && (
+            <button className="flash-undo" onClick={undo}>
+              ↩ {t(lang, "flashcards.undo")}
+            </button>
+          )}
+        </p>
       )}
     </div>
   );

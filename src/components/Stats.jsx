@@ -784,7 +784,7 @@ export default function Stats({
                 )}
               </p>
               {fcs.dueToday > 0 ? (
-                <Link className="btn primary srs-cta" to={`/${certId}/flash`}>
+                <Link className="btn primary srs-cta" to={`/${certId}/flash?due=1`}>
                   ▶ {t(lang, "stats.srsCta", { n: fcs.dueToday })}
                 </Link>
               ) : (

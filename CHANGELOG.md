@@ -1,5 +1,14 @@
 # Changelog
 
+## v3.14.1 — 2026-10-22 — Correções da revisão espaçada
+
+- Desfazer permanece disponível ao concluir a fila e restaura o filtro anterior.
+- Desfazer revoga conquistas SRS quando o critério deixa de ser atendido.
+- O botão de revisão do Progresso abre diretamente a fila pendente (`?due=1`).
+- Contador da fila permanece coerente após avaliações; datas SM-2 usam fuso local.
+- Testes de navegador usam a versão do projeto para controlar o modal de novidades.
+- Preservadas imagem social Synapse, navegação e conteúdo locais.
+
 ## [3.14.0] — 2026-10-22 (Rodada 15 · roadmap R18 — Flashcards → Stats)
 
 ### Adicionado

@@ -319,7 +319,7 @@ describe("r15: Stats — painel de revisão espaçada", () => {
     expect(screen.getByText("80%")).toBeInTheDocument(); // retenção 8/10
     expect(screen.getByRole("link", { name: /Revisar 1 agora/i })).toHaveAttribute(
       "href",
-      "/ctfl/flash"
+      "/ctfl/flash?due=1"
     );
     expect(screen.getByText(/10 revisões espaçadas/)).toBeInTheDocument();
     expect(screen.getByText(/80% de acerto nas revisões/)).toBeInTheDocument();
@@ -375,7 +375,10 @@ describe("r15: Stats — painel de revisão espaçada", () => {
     expect(names).toContain("100 revisões");
     expect(names).toContain("Memória de longo prazo");
     // painel SRS no lugar do emptyWelcome
-    expect(screen.getByRole("link", { name: /Revisar 1 agora/i })).toBeTruthy();
+    expect(screen.getByRole("link", { name: /Revisar 1 agora/i })).toHaveAttribute(
+      "href",
+      "/ctfl/flash?due=1"
+    );
   });
 });
 

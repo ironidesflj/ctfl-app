@@ -43,6 +43,51 @@ describe("SM-2 algorithm", () => {
     expect(diffDays).toBeLessThanOrEqual(card.interval + 1);
   });
 
+  // r16 (QA v3.14.0): dueDate em espaço LOCAL — antes vinha de toISOString()
+  // (UTC) e, em fusos negativos (BR = UTC-3), um cartão avaliado antes das
+  // 21:00 com intervalo 1 voltava à fila ÀS 21:00 DO MESMO DIA.
+  it("dueDate é SEMPRE a data local de hoje + interval (independente do fuso)", () => {
+    const cases = [
+      { start: initSM2(), chain: ["good"], interval: 1 },
+      { start: initSM2(), chain: ["good", "good"], interval: 6 },
+      {
+        start: { ...initSM2(), interval: 10, repetitions: 3 },
+        chain: ["good"],
+        interval: 25,
+      },
+    ];
+    for (const { start, chain, interval } of cases) {
+      let card = start;
+      for (const q of chain) card = sm2(card, QUALITY[q]);
+      const expected = new Date();
+      expected.setDate(expected.getDate() + interval);
+      const local = `${expected.getFullYear()}-${String(expected.getMonth() + 1).padStart(
+        2,
+        "0"
+      )}-${String(expected.getDate()).padStart(2, "0")}`;
+      expect(card.interval).toBe(interval);
+      expect(card.dueDate).toBe(local);
+    }
+  });
+
+  it("isDue compara contra a data LOCAL (cartão 'de amanhã' não vence hoje)", () => {
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    const local = `${tomorrow.getFullYear()}-${String(tomorrow.getMonth() + 1).padStart(
+      2,
+      "0"
+    )}-${String(tomorrow.getDate()).padStart(2, "0")}`;
+    expect(isDue({ ...initSM2(), dueDate: local })).toBe(false);
+    // e um cartão vencido ontem (local) continua due
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    const localY = `${yesterday.getFullYear()}-${String(yesterday.getMonth() + 1).padStart(
+      2,
+      "0"
+    )}-${String(yesterday.getDate()).padStart(2, "0")}`;
+    expect(isDue({ ...initSM2(), dueDate: localY })).toBe(true);
+  });
+
   it("isDue returns true for items never reviewed (dueDate null)", () => {
     const card = initSM2();
     expect(isDue(card)).toBe(true);
