@@ -3461,3 +3461,128 @@ button.hm-cell:focus-visible {
   color: var(--text-3, #8b93a7);
   font-size: var(--fs-12, 12px);
 }
+
+/* ===== r15 (R18): Flashcards → Stats + melhorias de UX dos Flashcards ===== */
+
+/* Painel Flashcards/Revisão espaçada no Progresso */
+.srs-card .srs-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin: 0.65rem 0 0.35rem;
+}
+.srs-metric {
+  background: var(--bg-2, #f4f6fb);
+  border: 1px solid var(--line, #e6e9f2);
+  border-radius: var(--radius-sm, 10px);
+  padding: 8px 6px;
+  text-align: center;
+  min-width: 0;
+}
+.srs-metric b {
+  display: block;
+  font-size: 18px;
+  line-height: 1.2;
+  font-variant-numeric: tabular-nums;
+}
+.srs-metric span {
+  display: block;
+  font-size: var(--fs-12, 12px);
+  color: var(--text-3, #8b93a7);
+  margin-top: 2px;
+  overflow-wrap: break-word;
+}
+.srs-metric.hot b {
+  color: var(--accent, #5a4be7);
+}
+.srs-sub {
+  font-size: var(--fs-13, 13px);
+  margin: 0.35rem 0 0;
+}
+.srs-next {
+  margin-top: 0.45rem;
+}
+.srs-cta {
+  margin-top: 0.6rem;
+  text-decoration: none;
+  display: inline-block;
+}
+@media (max-width: 560px) {
+  .srs-card .srs-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Nota pós-avaliação: o que o SM-2 acabou de agendar + undo */
+.flash-note {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 0.7rem 0 0;
+  font-size: var(--fs-13, 13px);
+  color: var(--text-2, #4b5265);
+}
+.flash-note-label {
+  background: var(--accent-soft, #ece9fc);
+  color: var(--accent-text, #3b2fb0);
+  border-radius: 999px;
+  padding: 4px 12px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+.flash-undo {
+  border: none;
+  background: none;
+  color: var(--text-3, #8b93a7);
+  font-size: var(--fs-12, 12px);
+  cursor: pointer;
+  padding: 6px 8px;
+  border-radius: 8px;
+  text-decoration: underline dotted;
+}
+.flash-undo:hover {
+  color: var(--text-1, #232630);
+  background: var(--bg-2, #f4f6fb);
+}
+
+/* Fila zerada — celebra + próxima revisão + saída */
+.flash-done {
+  text-align: center;
+  padding: 1.6rem 1rem;
+}
+.flash-done-title {
+  font-size: 17px;
+  font-weight: 600;
+  margin: 0 0 0.4rem;
+}
+.flash-done .btn {
+  margin-top: 0.8rem;
+}
+
+/* Dica de teclado (some em telas touch — não faz sentido lá) */
+.flash-kbd {
+  text-align: center;
+  font-size: var(--fs-12, 12px);
+  margin: 0.55rem 0 0;
+  letter-spacing: 0.01em;
+}
+@media (hover: none) {
+  .flash-kbd {
+    display: none;
+  }
+}
+
+/* Contador de fila no chip do capítulo */
+.chip sup.chip-due-n {
+  margin-left: 5px;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--accent-text, #3b2fb0);
+  background: var(--accent-soft, #ece9fc);
+  border-radius: 999px;
+  padding: 1px 6px;
+  vertical-align: super;
+  line-height: 1.4;
+  font-variant-numeric: tabular-nums;
+}

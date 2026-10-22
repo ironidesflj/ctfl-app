@@ -1,4 +1,4 @@
-import { isDue } from "./spacedRepetition.js";
+import { isDue, initSM2, sm2, QUALITY } from "./spacedRepetition.js";
 
 const LEGACY_KEY = "ctfl_progress_v1";
 const keyFor = (certId) => `synapse.progress.v1.${certId}`;
@@ -62,6 +62,17 @@ export function todayLocal() {
   return new Date().toLocaleDateString("en-CA", { timeZone: TZ });
 }
 
+const EMPTY_SRS_STATS = {
+  again: 0,
+  hard: 0,
+  good: 0,
+  easy: 0,
+  reviews: 0,
+  lastReview: null,
+  todayDate: null,
+  todayCount: 0,
+};
+
 const EMPTY = {
   schemaVersion: 2,
   total: 0,
@@ -73,10 +84,17 @@ const EMPTY = {
   saved: [],
   history: [],
   srs: {},
+  srsStats: { ...EMPTY_SRS_STATS },
   lastStudyDate: null,
   achievements: [],
   examHistory: [],
 };
+
+// r15 (roadmap R18): contadores de SRS — sempre normalizados na leitura,
+// então estados antigos (sem o campo) degradam com segurança.
+export function normalizeSRSStats(s) {
+  return { ...EMPTY_SRS_STATS, ...(s || {}) };
+}
 
 // Fase 2: migration v1 → v2. Converte seen[id] em attempts[id] mantendo
 // seen intacto para backwards-compat (getWrongIds, callers existentes).
@@ -113,6 +131,7 @@ export function loadProgress(certId = activeCert) {
       saved: migrated.saved || [],
       history: migrated.history || [],
       srs: migrated.srs || {},
+      srsStats: normalizeSRSStats(migrated.srsStats),
       lastStudyDate: migrated.lastStudyDate || null,
       achievements: migrated.achievements || [],
       examHistory: migrated.examHistory || [],
@@ -211,6 +230,55 @@ export function getDueItems(state, allIds) {
   });
 }
 
+// r15 (roadmap R18): caminho único de avaliação SRS — Quiz (modo revisão) e
+// Flashcards passam a chamar rateSRS em vez do trio getSRSCard+sm2+
+// updateSRSCard espalhado pelos componentes. Além do estado do cartão, mantém
+// os contadores de progress.srsStats (retenção, conquistas, painel do Stats).
+// bank é opcional: sem ele, checkAchievements só re-avalia os critérios que
+// não dependem de cobertura (conquistas já obtidas são preservadas pelo Set).
+export function rateSRS(state, itemId, label, bank = null) {
+  const prev = state.srs?.[itemId] || initSM2();
+  const updated = sm2(prev, QUALITY[label]);
+  const today = todayLocal();
+  const s = normalizeSRSStats(state.srsStats);
+  const nextStats = {
+    ...s,
+    [label]: (s[label] || 0) + 1,
+    reviews: (s.reviews || 0) + 1,
+    lastReview: today,
+    todayDate: today,
+    todayCount: s.todayDate === today ? (s.todayCount || 0) + 1 : 1,
+  };
+  const next = {
+    ...state,
+    srs: { ...(state.srs || {}), [itemId]: updated },
+    srsStats: nextStats,
+  };
+  next.achievements = checkAchievements(next, bank);
+  return next;
+}
+
+// r15: desfaz a última avaliação (mis-tap em mobile é comum com swipe).
+// prevCard = estado ANTERIOR do cartão (null = não tinha entrada — volta a
+// ser "novo"). Desconta também o contador da label pra manter retenção e
+// conquistas honestas (revisões desfeitas não contam como feitas).
+export function undoSRSRating(state, itemId, label, prevCard) {
+  const today = todayLocal();
+  const s = normalizeSRSStats(state.srsStats);
+  const nextStats = {
+    ...s,
+    [label]: Math.max(0, (s[label] || 0) - 1),
+    reviews: Math.max(0, (s.reviews || 0) - 1),
+  };
+  if (s.todayDate === today) {
+    nextStats.todayCount = Math.max(0, (s.todayCount || 0) - 1);
+  }
+  const srs = { ...(state.srs || {}) };
+  if (prevCard == null) delete srs[itemId];
+  else srs[itemId] = prevCard;
+  return { ...state, srs, srsStats: nextStats };
+}
+
 // Fase 2: streak com quality gate. Um dia só conta se houve ≥5 respostas
 // (STREAK_MIN_ANSWERS_PER_DAY). Antes, qualquer resposta (1/dia) preservava
 // streak — métrica enganosa que recompensava presença, não prática.
@@ -277,7 +345,14 @@ export function getReadiness(progress, totalBank) {
   const seenCount = seenIds.length;
 
   if (seenCount === 0) {
-    return { point: 0, ciLow: 0, ciHigh: 0, seenCount: 0, confidence: "low", minMet: false };
+    return {
+      point: 0,
+      ciLow: 0,
+      ciHigh: 0,
+      seenCount: 0,
+      confidence: "low",
+      minMet: false,
+    };
   }
 
   // Last-status correct count: usa attempts.lastCorrect se disponível, senão seen
@@ -413,6 +488,14 @@ export function checkAchievements(progress, bank) {
   if (examHistory.some((e) => e.passed)) existing.add("passed-exam");
   // r4: completou um simulado personalizado (capítulos/níveis escolhidos)
   if (examHistory.some((e) => e.custom)) existing.add("custom-exam");
+  // r15 (R18): revisão espaçada — 100 avaliações totais e 10 itens maduros
+  // (intervalo ≥ 21d). "Item" = questão (modo revisão do Quiz) ou flashcard.
+  const srsStats = normalizeSRSStats(progress.srsStats);
+  if (srsStats.reviews >= 100) existing.add("srs-100");
+  const matureItems = Object.values(progress.srs || {}).filter(
+    (c) => (c.interval || 0) >= 21
+  ).length;
+  if (matureItems >= 10) existing.add("srs-master");
   if (bank) {
     const attempts = progress.attempts || {};
     const seen = progress.seen || {};
@@ -460,14 +543,32 @@ export function achievementProgress(progress, bank, examFormat = null) {
     bankTotal = entries.reduce((acc, [, v]) => acc + v.total, 0);
   }
 
+  // r15: espelho 1:1 dos critérios srs-100/srs-master de checkAchievements
+  const srsStats = normalizeSRSStats(progress.srsStats);
+  const matureItems = Object.values(progress.srs || {}).filter(
+    (c) => (c.interval || 0) >= 21
+  ).length;
+
   return {
     "first-step": { current: Math.min(progress.total || 0, 1), target: 1 },
     "streak-7": { current: Math.min(streak, 7), target: 7 },
     "streak-30": { current: Math.min(streak, 30), target: 30 },
-    "passed-exam": { current: Math.min(bestPct, passPct), target: passPct, unit: "pct" },
-    "custom-exam": { current: examHistory.some((e) => e.custom) ? 1 : 0, target: 1 },
-    "chapter-complete": { current: chapter.current, target: chapter.target || 1 },
+    "passed-exam": {
+      current: Math.min(bestPct, passPct),
+      target: passPct,
+      unit: "pct",
+    },
+    "custom-exam": {
+      current: examHistory.some((e) => e.custom) ? 1 : 0,
+      target: 1,
+    },
+    "chapter-complete": {
+      current: chapter.current,
+      target: chapter.target || 1,
+    },
     "bank-complete": { current: bankSeen, target: bankTotal || 1 },
+    "srs-100": { current: Math.min(srsStats.reviews, 100), target: 100 },
+    "srs-master": { current: Math.min(matureItems, 10), target: 10 },
   };
 }
 
@@ -577,7 +678,9 @@ export function exportProgress(state, certId = activeCert) {
     exportedAt: new Date().toISOString(),
     progress: state,
   };
-  const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+  const blob = new Blob([JSON.stringify(payload, null, 2)], {
+    type: "application/json",
+  });
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;
@@ -657,7 +760,9 @@ export function collectFullBackup() {
 
 export function exportFullBackup() {
   const payload = collectFullBackup();
-  const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+  const blob = new Blob([JSON.stringify(payload, null, 2)], {
+    type: "application/json",
+  });
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;

@@ -7,6 +7,7 @@ import {
   toggleSaved,
   getSavedIds,
   getSRSCard,
+  rateSRS,
   updateSRSCard,
   getDueItems,
   logExamResult,
@@ -158,8 +159,10 @@ function QuestionGrid({ answers, flags = [], currentIndex, onJump, lang }) {
               (flagged ? " flagged" : "")
             }
             aria-label={
-              t(lang, "quiz.gridItemAria", { n: i + 1, status: t(lang, statusKey) }) +
-              (flagged ? " · " + t(lang, "quiz.statusFlagged") : "")
+              t(lang, "quiz.gridItemAria", {
+                n: i + 1,
+                status: t(lang, statusKey),
+              }) + (flagged ? " · " + t(lang, "quiz.statusFlagged") : "")
             }
             aria-pressed={flagged || undefined}
             onClick={() => onJump(i)}
@@ -685,7 +688,10 @@ export default function Quiz({
     // option text without re-shuffling (keeps the user's picked index valid).
     const newOpts = qs.map((q) => {
       const origOrder = q.options.map((text, i) => ({ text, i }));
-      const shuffled = shuffleOptions({ ...q, options: origOrder.map((o) => o.text) });
+      const shuffled = shuffleOptions({
+        ...q,
+        options: origOrder.map((o) => o.text),
+      });
       // shuffleOptions shuffles a copy of q.options in place-equivalent order;
       // recompute origIndex by matching text (options are unique strings in this bank).
       return shuffled.map((opt) => ({
@@ -695,7 +701,12 @@ export default function Quiz({
     });
     const newTimeLeft =
       mode === "exam" ? (customMode ? effCustomMinutes : officialMinutes) * 60 : 0;
-    dispatch({ type: "START_QUIZ", questions: qs, opts: newOpts, timeLeft: newTimeLeft });
+    dispatch({
+      type: "START_QUIZ",
+      questions: qs,
+      opts: newOpts,
+      timeLeft: newTimeLeft,
+    });
     if (mode === "exam") {
       timerRef.current = setInterval(() => {
         dispatch({ type: "TICK_TIMER" });
@@ -718,7 +729,9 @@ export default function Quiz({
       });
       // r13: veredito único (count/points) — mesmo cálculo da tela de
       // resultado; o histórico persiste pct/veredito/modelo de pontuação.
-      const verdict = examVerdict(questions, opts, answers, examScoring, { custom: customMode });
+      const verdict = examVerdict(questions, opts, answers, examScoring, {
+        custom: customMode,
+      });
       // r10: ids das erradas/em branco viajam no histórico — alimentam o
       // "🔁 Repetir erros" do setup e o botão "Treinar erradas" do resultado.
       const wrongIdsToLog = questions
@@ -728,7 +741,11 @@ export default function Quiz({
         logExamResult(p, verdict.pct, verdict.passed, bank, {
           ...(customMode ? { custom: true, n: verdict.total } : { n: verdict.total }),
           ...(verdict.scoring === "points"
-            ? { scoring: verdict.scoring, points: verdict.points, pointsTotal: verdict.pointsTotal }
+            ? {
+                scoring: verdict.scoring,
+                points: verdict.points,
+                pointsTotal: verdict.pointsTotal,
+              }
             : {}),
           wrongIds: wrongIdsToLog,
         })
@@ -770,11 +787,14 @@ export default function Quiz({
     }
   }
 
-  function rateSRS(label) {
+  // r15 (R18): modo revisão do Quiz passou a usar o caminho único rateSRS
+  // (storage) — alimenta os contadores srsStats (retenção, conquistas,
+  // painel do Stats). O auto-seed do modo prática (acima) NÃO conta: é
+  // implícito (primeira vista da questão), não uma avaliação de revisão.
+  // Renomeada de rateSRS p/ rateSrsMode p/ não colidir com o import.
+  function rateSrsMode(label) {
     const question = questions[idx];
-    const card = getSRSCard(progress, question.id) || initSM2();
-    const updated = sm2(card, QUALITY[label]);
-    setProgress((p) => updateSRSCard(p, question.id, updated));
+    setProgress((p) => rateSRS(p, question.id, label));
   }
 
   function selectExam(optIndex) {
@@ -852,11 +872,19 @@ export default function Quiz({
     if (wrongQs.length === 0) return;
     const newOpts = wrongQs.map((q) => {
       const shuffled = shuffleOptions({ ...q, options: q.options });
-      return shuffled.map((opt) => ({ ...opt, origIndex: q.options.indexOf(opt.text) }));
+      return shuffled.map((opt) => ({
+        ...opt,
+        origIndex: q.options.indexOf(opt.text),
+      }));
     });
     clearInterval(timerRef.current);
     dispatch({ type: "SET_MODE", mode: "practice" });
-    dispatch({ type: "START_QUIZ", questions: wrongQs, opts: newOpts, timeLeft: 0 });
+    dispatch({
+      type: "START_QUIZ",
+      questions: wrongQs,
+      opts: newOpts,
+      timeLeft: 0,
+    });
   }
 
   // ponytail: questions/opts get localized once at start() time, so toggling
@@ -971,7 +999,9 @@ export default function Quiz({
                 >
                   <span className="domain-weight">{t(lang, "quiz.wrongBefore")}</span>
                   <span className="domain-sub">
-                    {t(lang, "quiz.wrongBeforeDesc", { n: wrongStudyIds.length })}
+                    {t(lang, "quiz.wrongBeforeDesc", {
+                      n: wrongStudyIds.length,
+                    })}
                   </span>
                 </button>
               )}
@@ -986,7 +1016,9 @@ export default function Quiz({
                 >
                   <span className="domain-weight">🔁 {t(lang, "quiz.lastExamWrong")}</span>
                   <span className="domain-sub">
-                    {t(lang, "quiz.lastExamWrongDesc", { n: lastExamWrong.length })}
+                    {t(lang, "quiz.lastExamWrongDesc", {
+                      n: lastExamWrong.length,
+                    })}
                   </span>
                 </button>
               )}
@@ -1017,7 +1049,12 @@ export default function Quiz({
                   <button
                     key={c.chapter}
                     className={"domain-card" + (domain === String(c.chapter) ? " selected" : "")}
-                    onClick={() => dispatch({ type: "SET_DOMAIN", domain: String(c.chapter) })}
+                    onClick={() =>
+                      dispatch({
+                        type: "SET_DOMAIN",
+                        domain: String(c.chapter),
+                      })
+                    }
                   >
                     <span className="domain-weight">
                       {chapterCount} / {STUDY.length}
@@ -1043,7 +1080,9 @@ export default function Quiz({
         ) : mode === "saved" ? (
           <div className="card">
             <p className="muted">
-              {t(lang, "quiz.savedReviewHint", { n: getSavedIds(progress).length })}
+              {t(lang, "quiz.savedReviewHint", {
+                n: getSavedIds(progress).length,
+              })}
             </p>
             <div className="count-row">
               <span className="muted">{t(lang, "quiz.quantity")}</span>
@@ -1079,7 +1118,10 @@ export default function Quiz({
         ) : (
           <div className="card">
             <p className="muted">
-              {t(lang, "quiz.examExplain", { n: officialCount, min: officialMinutes })}
+              {t(lang, "quiz.examExplain", {
+                n: officialCount,
+                min: officialMinutes,
+              })}
             </p>
             {/* r4: simulado personalizado — capítulos, níveis K, contagem e
                 duração. A nota de corte escala proporcionalmente ao tamanho. */}
@@ -1183,7 +1225,12 @@ export default function Quiz({
                           <button
                             key={m}
                             className={"chip" + (effCustomMinutes === m ? " on" : "")}
-                            onClick={() => dispatch({ type: "SET_CUSTOM_MINUTES", minutes: m })}
+                            onClick={() =>
+                              dispatch({
+                                type: "SET_CUSTOM_MINUTES",
+                                minutes: m,
+                              })
+                            }
                           >
                             {m}
                           </button>
@@ -1197,13 +1244,17 @@ export default function Quiz({
                   </p>
                 ) : (
                   <p className="custom-pool muted">
-                    {t(lang, "quiz.customPool", { n: Math.min(effCustomCount, customPoolCount) })}
+                    {t(lang, "quiz.customPool", {
+                      n: Math.min(effCustomCount, customPoolCount),
+                    })}
                     <span className="custom-pool-sep"> · </span>
                     {/* r13: no modelo de pontos (CTAL-TA v4.0) o corte depende do
                         mix K sorteado — mostramos o percentual oficial; o corte
                         exato aparece no resultado, calculado sobre a prova real */}
                     {examScoring.scoring === "points"
-                      ? t(lang, "quiz.customPassNotePts", { pct: examScoring.passMarkPct })
+                      ? t(lang, "quiz.customPassNotePts", {
+                          pct: examScoring.passMarkPct,
+                        })
                       : t(lang, "quiz.customPassNote", {
                           n: Math.max(
                             1,
@@ -1240,7 +1291,9 @@ export default function Quiz({
     // corte 65% escalado ao tamanho da sessão).
     const verdict =
       mode === "exam"
-        ? examVerdict(questions, opts, answers, examScoring, { custom: customMode })
+        ? examVerdict(questions, opts, answers, examScoring, {
+            custom: customMode,
+          })
         : null;
     const pct = verdict ? verdict.pct : Math.round((score / total) * 100);
     // CTAL-TA v4.0 é pontuação ponderada (K2=1, K3=2, K4=3; corte 51/78);
@@ -1330,7 +1383,10 @@ export default function Quiz({
               ? t(lang, "quiz.excellentMsg")
               : passed
                 ? t(lang, "quiz.passedMsg")
-                : t(lang, "quiz.failedMsg", { passMark: passMarkEff, total: displayTotal })}
+                : t(lang, "quiz.failedMsg", {
+                    passMark: passMarkEff,
+                    total: displayTotal,
+                  })}
           </p>
           {showRecommendation && (
             <p style={{ marginTop: "0.5rem", fontWeight: 500 }}>
@@ -1401,7 +1457,9 @@ export default function Quiz({
                   reset();
                 }}
               >
-                {t(lang, "quiz.studyChapter", { chapter: chapterName(weakestChapter, lang) })}
+                {t(lang, "quiz.studyChapter", {
+                  chapter: chapterName(weakestChapter, lang),
+                })}
               </button>
             )}
             {/* r10: treinar as erradas desta prova direto do resultado —
@@ -1431,14 +1489,26 @@ export default function Quiz({
                 label: t(lang, "quiz.reviewFilterWrong"),
                 test: (i) => !isBlank(i) && !isCorrect(i),
               },
-              { id: "blank", label: t(lang, "quiz.reviewFilterBlank"), test: isBlank },
+              {
+                id: "blank",
+                label: t(lang, "quiz.reviewFilterBlank"),
+                test: isBlank,
+              },
               {
                 id: "flagged",
                 label: t(lang, "quiz.reviewFilterFlagged"),
                 test: (i) => flags[i] === true,
               },
-              { id: "correct", label: t(lang, "quiz.reviewFilterCorrect"), test: isCorrect },
-              { id: "all", label: t(lang, "quiz.reviewFilterAll"), test: () => true },
+              {
+                id: "correct",
+                label: t(lang, "quiz.reviewFilterCorrect"),
+                test: isCorrect,
+              },
+              {
+                id: "all",
+                label: t(lang, "quiz.reviewFilterAll"),
+                test: () => true,
+              },
             ].map((f) => ({
               ...f,
               count: questions.reduce((acc, _q, i) => acc + (f.test(i) ? 1 : 0), 0),
@@ -1709,16 +1779,16 @@ export default function Quiz({
 
               {mode === "srs" && (
                 <div className="srs-quality">
-                  <button className="btn srs-again" onClick={() => rateSRS("again")}>
+                  <button className="btn srs-again" onClick={() => rateSrsMode("again")}>
                     {t(lang, "quiz.srsAgain")}
                   </button>
-                  <button className="btn srs-hard" onClick={() => rateSRS("hard")}>
+                  <button className="btn srs-hard" onClick={() => rateSrsMode("hard")}>
                     {t(lang, "quiz.srsHard")}
                   </button>
-                  <button className="btn srs-good" onClick={() => rateSRS("good")}>
+                  <button className="btn srs-good" onClick={() => rateSrsMode("good")}>
                     {t(lang, "quiz.srsGood")}
                   </button>
-                  <button className="btn srs-easy" onClick={() => rateSRS("easy")}>
+                  <button className="btn srs-easy" onClick={() => rateSrsMode("easy")}>
                     {t(lang, "quiz.srsEasy")}
                   </button>
                 </div>

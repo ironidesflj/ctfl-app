@@ -1,14 +1,15 @@
 const RELEASE_KEY_PREFIX = "synapse.releaseNotes.seen";
 
 export const CURRENT_RELEASE = {
-  version: "3.13.0",
+  version: "3.14.0",
   significant: true,
   pt: {
     eyebrow: "Novidades da versão",
     title: "O Synapse evoluiu",
-    intro:
-      "Esta atualização completa a experiência de estudo do CTAL-TA e melhora a leitura da atividade.",
+    intro: "Esta atualização conecta seus flashcards ao Progresso e melhora as revisões espaçadas.",
     items: [
+      "Acompanhe cartões iniciados, retenção e próximas revisões no Progresso.",
+      "Use atalhos de teclado, veja quando o cartão volta e desfaça a última avaliação.",
       "O CTAL-TA agora tem flashcards, syllabus e glossário próprios em português e inglês.",
       "O novo conteúdo cobre os cinco capítulos e inclui os objetivos de aprendizagem K4.",
       "O heatmap agora mostra 12 semanas alinhadas ao calendário, com meses e dias identificados.",
@@ -20,8 +21,10 @@ export const CURRENT_RELEASE = {
   en: {
     eyebrow: "What's new in",
     title: "Synapse has evolved",
-    intro: "This update completes the CTAL-TA study experience and improves activity tracking.",
+    intro: "This update connects flashcards to Progress and improves spaced repetition.",
     items: [
+      "Track started cards, retention, and upcoming reviews in Progress.",
+      "Use keyboard shortcuts, see the next review interval, and undo your last rating.",
       "CTAL-TA now has dedicated flashcards, syllabus content, and glossary terms in Portuguese and English.",
       "The new content covers all five chapters, including the K4 learning objectives.",
       "The activity heatmap now shows 12 calendar-aligned weeks with month and day labels.",

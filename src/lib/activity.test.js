@@ -10,6 +10,8 @@ import {
   examCountdown,
   coverPace,
   kLevelBreakdown,
+  flashcardStats,
+  nextDueDate,
 } from "./activity.js";
 
 const iso = (offsetDays = 0) => {
@@ -354,5 +356,78 @@ describe("r11: kLevelBreakdown — desempenho por K", () => {
     expect(kLevelBreakdown(bank, null)).toHaveLength(4);
     expect(kLevelBreakdown(null, {})).toEqual([]);
     expect(kLevelBreakdown(bank, null).every((r) => r.pct === null)).toBe(true);
+  });
+});
+
+// ─── r15 (R18): métricas de flashcards/SRS (painel do Stats) ───
+
+describe("r15: flashcardStats", () => {
+  const CARDS = [
+    { id: "a", ch: 1 },
+    { id: "b", ch: 1 },
+    { id: "c", ch: 2 },
+    { id: "d", ch: 2 },
+  ];
+
+  it("estado vazio: total preservado, tudo zerado, retenção null", () => {
+    const s = flashcardStats(CARDS, {}, {});
+    expect(s).toEqual({
+      total: 4,
+      started: 0,
+      mature: 0,
+      dueToday: 0,
+      reviews: 0,
+      retention: null,
+    });
+  });
+
+  it("started conta só ids de `cards`; maduro exige intervalo ≥ 21", () => {
+    const srs = {
+      a: { interval: 21, dueDate: "2000-01-01" }, // maduro + due (passado)
+      b: { interval: 6, dueDate: "2030-01-01" }, // jovem, futuro
+      z: { interval: 30, dueDate: "2030-01-01" }, // fora de cards → ignora
+    };
+    const s = flashcardStats(CARDS, srs, {});
+    expect(s.started).toBe(2);
+    expect(s.mature).toBe(1);
+    expect(s.dueToday).toBe(1); // 'a' com dueDate no passado
+  });
+
+  it("retenção = (Bom+Fácil)/total de avaliações, arredondada", () => {
+    const s = flashcardStats(CARDS, {}, { reviews: 7, good: 4, easy: 2, again: 1 });
+    expect(s.retention).toBe(86); // 6/7
+    const zero = flashcardStats(CARDS, {}, { reviews: 0 });
+    expect(zero.retention).toBeNull();
+  });
+
+  it("entradas malformadas degradam sem crash", () => {
+    expect(flashcardStats(null, null, null).total).toBe(0);
+    const weird = flashcardStats([{ id: "x" }], { x: {} }, undefined);
+    expect(weird.started).toBe(1); // entrada existe (sem intervalo → não maduro)
+    expect(weird.mature).toBe(0);
+  });
+});
+
+describe("r15: nextDueDate", () => {
+  it("retorna a menor dueDate estritamente futura entre os ids", () => {
+    const srs = {
+      a: { dueDate: "2030-05-01" },
+      b: { dueDate: "2030-04-01" },
+      c: { dueDate: "2030-06-01" },
+    };
+    expect(nextDueDate(srs, ["a", "b", "c"], "2030-01-01")).toBe("2030-04-01");
+  });
+
+  it("ignora vencidas hoje (são a fila atual, não a próxima) e sem entrada", () => {
+    const srs = {
+      a: { dueDate: "2030-01-01" }, // == hoje → fora
+      b: { dueDate: "2030-03-01" },
+    };
+    expect(nextDueDate(srs, ["a", "b", "zzz"], "2030-01-01")).toBe("2030-03-01");
+  });
+
+  it("null quando nada está agendado no futuro", () => {
+    expect(nextDueDate({}, ["a"], "2030-01-01")).toBeNull();
+    expect(nextDueDate({ a: { dueDate: "2029-12-31" } }, ["a"], "2030-01-01")).toBeNull();
   });
 });

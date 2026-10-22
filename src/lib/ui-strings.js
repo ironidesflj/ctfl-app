@@ -256,6 +256,20 @@ export const UI = {
       kLevelCovered: "cobertura",
       kLevelAccuracy: "acerto",
       kLevelNone: "—",
+      // r15 (R18): painel Flashcards/Revisão espaçada no Progresso
+      srsTitle: "Flashcards · Revisão espaçada",
+      srsCards: "cartões iniciados",
+      srsDue: "para revisar hoje",
+      srsMature: "maduros (21+d)",
+      srsRetention: "retenção",
+      srsRetentionHint:
+        "Avaliações positivas (Bom + Fácil) sobre o total de revisões espaçadas deste cert — inclui o modo Revisão do Quiz",
+      srsRetentionValue: "{pct}% de acerto nas revisões",
+      srsReviewsCount: "{n} revisões espaçadas",
+      srsCta: "Revisar {n} agora",
+      srsStart: "Começar com {n} cartões",
+      srsEmptyHint:
+        "Cartões com os conceitos-chave do syllabus. O algoritmo SM-2 agenda cada revisão pelo seu desempenho — o que você erra volta antes, o que domina espaça.",
     },
     flashcards: {
       flip: "toque para revelar",
@@ -267,6 +281,15 @@ export const UI = {
       easy: "Fácil",
       dueToday: "Para revisar hoje",
       emptyDomain: "Nenhum flashcard neste domínio ainda.",
+      // r15 (R18)
+      kbdHint: "Espaço vira · 1–4 avaliam · ←/→ navegam",
+      undo: "Desfazer",
+      nextIn: "volta em {n}d",
+      dueDone: "Fila de revisão em dia!",
+      dueNext: "Próxima revisão: {date}",
+      dueNoNext: "Nada agendado — novos cartões aparecem conforme você estuda.",
+      browseAll: "Ver todos os cartões",
+      chipDueTitle: "{n} para revisar neste capítulo",
     },
     glossary: {
       clearSearch: "Limpar busca",
@@ -641,6 +664,20 @@ export const UI = {
       kLevelCovered: "coverage",
       kLevelAccuracy: "accuracy",
       kLevelNone: "—",
+      // r15 (R18): Flashcards/Spaced repetition panel in Progress
+      srsTitle: "Flashcards · Spaced repetition",
+      srsCards: "cards started",
+      srsDue: "due for review today",
+      srsMature: "mature (21+d)",
+      srsRetention: "retention",
+      srsRetentionHint:
+        "Positive ratings (Good + Easy) over all spaced-repetition reviews in this cert — includes the Quiz review mode",
+      srsRetentionValue: "{pct}% hit rate on reviews",
+      srsReviewsCount: "{n} spaced reviews",
+      srsCta: "Review {n} now",
+      srsStart: "Start with {n} cards",
+      srsEmptyHint:
+        "Cards covering the syllabus key concepts. The SM-2 algorithm schedules each review based on your performance — what you miss comes back sooner, what you master gets spaced out.",
     },
     flashcards: {
       flip: "tap to reveal",
@@ -652,6 +689,15 @@ export const UI = {
       easy: "Easy",
       dueToday: "Due today",
       emptyDomain: "No flashcards in this domain yet.",
+      // r15 (R18)
+      kbdHint: "Space flips · 1–4 rate · ←/→ navigate",
+      undo: "Undo",
+      nextIn: "back in {n}d",
+      dueDone: "Review queue all clear!",
+      dueNext: "Next review: {date}",
+      dueNoNext: "Nothing scheduled — new cards appear as you study.",
+      browseAll: "Browse all cards",
+      chipDueTitle: "{n} due in this chapter",
     },
     glossary: {
       clearSearch: "Clear search",

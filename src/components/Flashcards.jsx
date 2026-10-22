@@ -1,9 +1,10 @@
-import { useState, useMemo, useRef } from "react";
+import { useState, useMemo, useRef, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { getBank } from "../lib/bank.js";
 import { FLASHCARDS, flashcardsForCert } from "../data/study.js";
 import { t } from "../lib/ui-strings.js";
-import { getSRSCard, updateSRSCard, getDueItems } from "../lib/storage.js";
+import { getSRSCard, rateSRS, undoSRSRating, getDueItems, todayLocal } from "../lib/storage.js";
+import { nextDueDate } from "../lib/activity.js";
 import { initSM2, sm2, QUALITY } from "../lib/spacedRepetition.js";
 
 const hasEN = (id) => !!FLASHCARDS.find((c) => c.id === id)?.locales?.en;
@@ -26,6 +27,10 @@ export default function Flashcards({ lang = "pt", progress, setProgress }) {
   // (react-hooks/refs) não é permitido; handlers continuam usando o ref pra
   // lógica, o render usa o estado.
   const [isDragging, setIsDragging] = useState(false);
+  // r15 (R18): última avaliação feita — alimenta o undo de 1 nível e a nota
+  // "volta em Nd" (transparência do SM-2). Zera ao desfazer.
+  const [lastRating, setLastRating] = useState(null); // {id, idx, label, prevCard}
+  const [note, setNote] = useState(null); // {label, interval}
 
   const touchStartX = useRef(null);
   const dragXRef = useRef(0);
@@ -36,6 +41,8 @@ export default function Flashcards({ lang = "pt", progress, setProgress }) {
   // não distingue capítulos dentro do CTAL-TA — todos compartilham "analyst").
   const allCards = useMemo(() => flashcardsForCert(lang, certId), [lang, certId]);
   const hasContent = allCards.length > 0;
+  // r15: memoizado — alimenta os useMemos abaixo (chips com fila, próxima
+  // revisão e a lista de cartões do modo due) sem warnings de deps.
   const dueIds = useMemo(
     () =>
       progress
@@ -58,6 +65,29 @@ export default function Flashcards({ lang = "pt", progress, setProgress }) {
 
   const card = cards[idx] || cards[0] || null;
 
+  // r15: due por capítulo — o chip mostra onde há fila esperando (só > 0).
+  const dueByChapter = useMemo(() => {
+    const map = {};
+    for (const c of allCards) {
+      if (dueIds.includes(c.id)) {
+        const k = String(c.ch);
+        map[k] = (map[k] || 0) + 1;
+      }
+    }
+    return map;
+  }, [allCards, dueIds]);
+
+  // r15: quando a fila do dia zera, mostrar quando é a próxima.
+  const nextDue = useMemo(
+    () =>
+      nextDueDate(
+        progress?.srs,
+        allCards.map((c) => c.id),
+        todayLocal()
+      ),
+    [progress, allCards]
+  );
+
   function go(delta) {
     setFlipped(false);
     setIdx((i) => (i + delta + cards.length) % cards.length);
@@ -66,15 +96,72 @@ export default function Flashcards({ lang = "pt", progress, setProgress }) {
     setDomain(d);
     setIdx(0);
     setFlipped(false);
+    // r15: devolve o teclado ao cartão — sem isso, o Espaço re-ativa o chip
+    // focado (comportamento nativo de <button>) e "desfaz" o flip do fluxo
+    // mouse→teclado. Tabulação por teclado continua funcionando (o blur só
+    // roda no clique).
+    if (document.activeElement?.blur) document.activeElement.blur();
   }
 
   function rate(label) {
     if (!card) return;
-    const srsCard = getSRSCard(progress, card.id) || initSM2();
-    const updated = sm2(srsCard, QUALITY[label]);
-    setProgress((p) => updateSRSCard(p, card.id, updated));
+    const prevCard = getSRSCard(progress, card.id); // null = era novo
+    // preview determinístico do intervalo p/ a nota (sm2 é pura — mesma
+    // entrada que rateSRS usa internamente, mesma saída).
+    const updated = sm2(prevCard || initSM2(), QUALITY[label]);
+    setProgress((p) => rateSRS(p, card.id, label));
+    setLastRating({ id: card.id, idx, label, prevCard });
+    setNote({ label, interval: updated.interval });
     go(1);
   }
+
+  // r15: undo de 1 nível — restaura o estado SM-2 ANTERIOR do cartão (null =
+  // volta a ser novo), desconta o contador da label, volta pro cartão certo.
+  function undo() {
+    if (!lastRating) return;
+    setProgress((p) => undoSRSRating(p, lastRating.id, lastRating.label, lastRating.prevCard));
+    setIdx(lastRating.idx);
+    setFlipped(false);
+    setNote(null);
+    setLastRating(null);
+  }
+
+  // r15: teclado — Espaço/Enter vira o cartão, 1–4 avaliam (já virado),
+  // ←/→ navegam. Se o foco está num botão, Enter/Espaço pertencem a ele
+  // (não capturamos — evita duplo disparo). Alvos de texto nunca capturam.
+  useEffect(() => {
+    function onKeyDown(e) {
+      if (e.defaultPrevented || e.metaKey || e.ctrlKey || e.altKey) return;
+      const tag = (e.target?.tagName || "").toLowerCase();
+      if (tag === "input" || tag === "textarea" || tag === "select" || e.target?.isContentEditable)
+        return;
+      const onButton = tag === "button";
+      if (onButton && (e.key === " " || e.key === "Enter")) return;
+      if (e.key === "ArrowLeft" && card) {
+        e.preventDefault();
+        go(-1);
+        return;
+      }
+      if (e.key === "ArrowRight" && card) {
+        e.preventDefault();
+        go(1);
+        return;
+      }
+      if ((e.key === " " || e.key === "Enter") && card) {
+        e.preventDefault();
+        setFlipped((f) => !f);
+        return;
+      }
+      if (!flipped || !card) return;
+      const KEYMAP = { 1: "again", 2: "hard", 3: "good", 4: "easy" };
+      if (KEYMAP[e.key]) {
+        e.preventDefault();
+        rate(KEYMAP[e.key]);
+      }
+    }
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  });
 
   function handleTouchStart(e) {
     if (!flipped) return;
@@ -131,23 +218,42 @@ export default function Flashcards({ lang = "pt", progress, setProgress }) {
             {t(lang, "flashcards.dueToday")} ({dueIds.length})
           </button>
         )}
-        {chapters.map((c) => (
-          <button
-            key={c.chapter}
-            className={"chip" + (domain === String(c.chapter) ? " on" : "")}
-            onClick={() => pickDomain(String(c.chapter))}
-          >
-            {chapterName(c.chapter, lang)}
-          </button>
-        ))}
+        {chapters.map((c) => {
+          const dueN = dueByChapter[String(c.chapter)] || 0;
+          return (
+            <button
+              key={c.chapter}
+              className={"chip" + (domain === String(c.chapter) ? " on" : "")}
+              onClick={() => pickDomain(String(c.chapter))}
+              title={dueN > 0 ? t(lang, "flashcards.chipDueTitle", { n: dueN }) : undefined}
+            >
+              {chapterName(c.chapter, lang)}
+              {dueN > 0 && <sup className="chip-due-n">{dueN}</sup>}
+            </button>
+          );
+        })}
       </div>
 
       {!card ? (
-        <p className="muted">
-          {domain === "due"
-            ? `${t(lang, "flashcards.dueToday")}: 0`
-            : t(lang, "flashcards.emptyDomain")}
-        </p>
+        domain === "due" ? (
+          // r15: fila zerada deixou de ser um beco sem saída — celebra,
+          // mostra quando volta a ter revisão e oferece o resto do baralho.
+          <div className="card flash-done" role="status">
+            <p className="flash-done-title" aria-live="polite">
+              🎉 {t(lang, "flashcards.dueDone")}
+            </p>
+            <p className="muted">
+              {nextDue
+                ? t(lang, "flashcards.dueNext", { date: nextDue })
+                : t(lang, "flashcards.dueNoNext")}
+            </p>
+            <button className="btn" onClick={() => pickDomain("all")}>
+              {t(lang, "flashcards.browseAll")}
+            </button>
+          </div>
+        ) : (
+          <p className="muted">{t(lang, "flashcards.emptyDomain")}</p>
+        )
       ) : (
         <>
           <div className="flash-stack">
@@ -211,6 +317,23 @@ export default function Flashcards({ lang = "pt", progress, setProgress }) {
             </div>
           )}
 
+          {/* r15: transparência do SM-2 — o que a avaliação acabou de agendar
+              + undo de mis-tap no mesmo lugar. aria-live: quem usa teclado
+              (1-4) ouve a confirmação. */}
+          {note && (
+            <p className="flash-note" aria-live="polite">
+              <span className="flash-note-label">
+                {t(lang, `flashcards.${note.label}`)} →{" "}
+                {t(lang, "flashcards.nextIn", { n: note.interval })}
+              </span>
+              {lastRating && (
+                <button className="flash-undo" onClick={undo}>
+                  ↩ {t(lang, "flashcards.undo")}
+                </button>
+              )}
+            </p>
+          )}
+
           <div className="actions">
             <button className="btn" onClick={() => go(-1)}>
               {t(lang, "flashcards.prev")}
@@ -222,6 +345,10 @@ export default function Flashcards({ lang = "pt", progress, setProgress }) {
               {t(lang, "flashcards.next")}
             </button>
           </div>
+
+          <p className="flash-kbd muted" aria-hidden="true">
+            {t(lang, "flashcards.kbdHint")}
+          </p>
         </>
       )}
     </div>

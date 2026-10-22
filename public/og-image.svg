@@ -1,6 +1,6 @@
 <svg width="100%" viewBox="0 0 1250 690" xmlns="http://www.w3.org/2000/svg" role="img" style="">
-<title style="fill:rgb(0, 0, 0);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">Imagem de compartilhamento social do CTFL Prep</title>
-<desc style="fill:rgb(0, 0, 0);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">Cartão de compartilhamento com fundo escuro roxo, logo CT, título "CTFL Prep", subtítulo sobre preparação ISTQB Foundation Level v4.0, e elementos visuais de quiz e progresso à direita.</desc>
+<title>Imagem de compartilhamento social do Synapse</title>
+<desc>Cartão de compartilhamento do Synapse com preparação gratuita para múltiplas certificações ISTQB.</desc>
 <defs>
 <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
 <stop offset="0%" stop-color="#14121f"/>
@@ -19,9 +19,9 @@
 
 <g transform="translate(80,140)" style="fill:rgb(0, 0, 0);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">
   <rect x="0" y="0" width="72" height="72" rx="16" fill="#5a4be7" style="fill:rgb(90, 75, 231);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
-  <text x="36" y="48" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="30" font-weight="700" fill="#ffffff" style="fill:rgb(255, 255, 255);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;JetBrains Mono&quot;, monospace;font-size:30px;font-weight:700;text-anchor:middle;dominant-baseline:auto">CT</text>
+  <text x="36" y="48" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="30" font-weight="700" fill="#ffffff">S</text>
 
-  <text x="0" y="140" font-family="'Space Grotesk', sans-serif" font-size="58" font-weight="700" fill="#ffffff" letter-spacing="-1" style="fill:rgb(255, 255, 255);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Space Grotesk&quot;, sans-serif;font-size:58px;font-weight:700;text-anchor:start;dominant-baseline:auto">CTFL Prep</text>
+  <text x="0" y="140" font-family="'Space Grotesk', sans-serif" font-size="58" font-weight="700" fill="#ffffff">Synapse</text>
 
   <text x="0" y="186" font-family="'Inter', sans-serif" font-size="22" fill="#a8a3c2" style="fill:rgb(168, 163, 194);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:Inter, sans-serif;font-size:22px;font-weight:400;text-anchor:start;dominant-baseline:auto">Preparação gratuita para o ISTQB</text>
   <text x="0" y="216" font-family="'Inter', sans-serif" font-size="22" fill="#a8a3c2" style="fill:rgb(168, 163, 194);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:Inter, sans-serif;font-size:22px;font-weight:400;text-anchor:start;dominant-baseline:auto">Foundation Level v4.0</text>

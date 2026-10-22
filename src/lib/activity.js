@@ -1,3 +1,4 @@
+import { isDue } from "./spacedRepetition.js";
 // r5 — Heatmap de atividade (Stats). Deriva do progress.history (log de
 // respostas com data YYYY-MM-DD) uma janela fixa de dias terminando hoje,
 // com contagens por dia e um nível 0–4 de volume — pronto para renderizar
@@ -292,4 +293,57 @@ export function kLevelBreakdown(bank, attempts) {
       correct: b.correct,
       pct: b.answers > 0 ? Math.round((b.correct / b.answers) * 100) : null,
     }));
+}
+
+/** r15 (roadmap R18) — Métricas de flashcards/SRS para o painel do Stats.
+ * Puras: recebem os cartões do cert (study.js, já filtrados por cert) e o
+ * estado bruto do progress. Não olha ids fora de `cards` — o escopo por
+ * certificação é responsabilidade de quem chama (flashcardsForCert).
+ *
+ * - started: cartões com entrada em srs (vistos pelo menos 1x)
+ * - mature: intervalo atual ≥ 21 dias (memória de longo prazo)
+ * - dueToday: entradas vencidas hoje (isDue, mesmo critério da fila)
+ * - retention: % de avaliações positivas (Bom+Fácil / total) no store do
+ *   cert — inclui o modo revisão do Quiz, que rateia pelo mesmo caminho
+ *   (rateSRS). null quando ainda não houve nenhuma avaliação.
+ */
+export function flashcardStats(cards, srs, srsStats) {
+  const entries = Array.isArray(cards) ? cards : [];
+  const state = srs || {};
+  let started = 0;
+  let mature = 0;
+  let dueToday = 0;
+  for (const c of entries) {
+    const e = state[c.id];
+    if (!e) continue;
+    started += 1;
+    if ((e.interval || 0) >= 21) mature += 1;
+    if (isDue(e)) dueToday += 1;
+  }
+  const st = srsStats || {};
+  const reviews = st.reviews || 0;
+  const positive = (st.good || 0) + (st.easy || 0);
+  const retention = reviews > 0 ? Math.round((positive / reviews) * 100) : null;
+  return {
+    total: entries.length,
+    started,
+    mature,
+    dueToday,
+    reviews,
+    retention,
+  };
+}
+
+/** r15: menor dueDate ESTRITAMENTE futura entre os ids com entrada — alimenta
+ * o "próxima revisão" da fila zerada (Flashcards) e do painel (Stats).
+ * Retorna "YYYY-MM-DD" ou null (nada agendado p/ o futuro). */
+export function nextDueDate(srs, ids, todayStr) {
+  let min = null;
+  for (const id of ids || []) {
+    const e = srs?.[id];
+    if (!e || !e.dueDate) continue;
+    if (e.dueDate <= todayStr) continue; // vencida hoje = fila atual, não "próxima"
+    if (min === null || e.dueDate < min) min = e.dueDate;
+  }
+  return min;
 }

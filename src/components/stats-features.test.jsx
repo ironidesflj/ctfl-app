@@ -270,6 +270,115 @@ describe("r8: Stats — sparkline de tendência dos simulados", () => {
   });
 });
 
+// ─── r15 (R18): painel Flashcards/Revisão espaçada no Progresso ───
+describe("r15: Stats — painel de revisão espaçada", () => {
+  const SRS_STATS = (over = {}) => ({
+    again: 0,
+    hard: 0,
+    good: 0,
+    easy: 0,
+    reviews: 0,
+    lastReview: null,
+    todayDate: null,
+    todayCount: 0,
+    ...over,
+  });
+
+  it("estado virgem (com respostas): convite com CTA de N cartões", () => {
+    renderStats(PROGRESS());
+    expect(screen.getByText(/Flashcards · Revisão espaçada/)).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /Começar com \d+ cartões/i })).toHaveAttribute(
+      "href",
+      "/ctfl/flash"
+    );
+  });
+
+  it("com revisões: métricas de cartões/fila/maduros + retenção", () => {
+    const today = todayLocal();
+    const srs = {
+      "fc-fund-01": {
+        easeFactor: 2.5,
+        interval: 30,
+        repetitions: 4,
+        dueDate: "2030-01-01",
+      }, // maduro
+      "fc-fund-02": {
+        easeFactor: 2.5,
+        interval: 1,
+        repetitions: 1,
+        dueDate: today,
+      }, // due hoje
+    };
+    renderStats(
+      PROGRESS({
+        srs,
+        srsStats: SRS_STATS({ reviews: 10, good: 6, easy: 2, again: 2 }),
+      })
+    );
+    expect(screen.getByText("2/15")).toBeInTheDocument(); // iniciados/total (CTFL: 15 cartões)
+    expect(screen.getByText("80%")).toBeInTheDocument(); // retenção 8/10
+    expect(screen.getByRole("link", { name: /Revisar 1 agora/i })).toHaveAttribute(
+      "href",
+      "/ctfl/flash"
+    );
+    expect(screen.getByText(/10 revisões espaçadas/)).toBeInTheDocument();
+    expect(screen.getByText(/80% de acerto nas revisões/)).toBeInTheDocument();
+  });
+
+  it("fila zerada com agenda futura mostra a próxima revisão (sem CTA)", () => {
+    const srs = {
+      "fc-fund-01": {
+        easeFactor: 2.5,
+        interval: 3,
+        repetitions: 1,
+        dueDate: "2030-01-01",
+      },
+    };
+    renderStats(PROGRESS({ srs, srsStats: SRS_STATS({ reviews: 1, good: 1 }) }));
+    expect(screen.queryByRole("link", { name: /Revisar \d+ agora/i })).toBeNull();
+    expect(screen.getByText(/Próxima revisão: 2030-01-01/)).toBeInTheDocument();
+  });
+
+  it("sem revisões e sem respostas: painel não renderiza (não é o momento)", () => {
+    renderStats(PROGRESS({ total: 0 }));
+    expect(screen.queryByText(/Flashcards · Revisão espaçada/)).toBeNull();
+  });
+
+  it("conquistas novas aparecem no roadmap (srs-100/srs-master)", () => {
+    renderStats(PROGRESS({ achievements: ["first-step"] }));
+    const names = [...document.querySelectorAll(".ach-name")].map((n) => n.textContent);
+    expect(names).toContain("100 revisões");
+    expect(names).toContain("Memória de longo prazo");
+  });
+
+  it("perfil só-flashcards (zero questões) também vê gamificação e roadmap", () => {
+    const srs = {
+      "fc-fund-01": {
+        easeFactor: 2.5,
+        interval: 6,
+        repetitions: 2,
+        dueDate: todayLocal(),
+      },
+    };
+    renderStats(
+      PROGRESS({
+        total: 0,
+        correct: 0,
+        srs,
+        srsStats: SRS_STATS({ reviews: 5, good: 4, again: 1, todayCount: 5 }),
+      })
+    );
+    // sem emptyWelcome: há atividade (de revisão)
+    expect(screen.queryByText(/Você ainda não respondeu nenhuma questão/i)).toBeNull();
+    // roadmap visível com as conquistas de SRS
+    const names = [...document.querySelectorAll(".ach-name")].map((n) => n.textContent);
+    expect(names).toContain("100 revisões");
+    expect(names).toContain("Memória de longo prazo");
+    // painel SRS no lugar do emptyWelcome
+    expect(screen.getByRole("link", { name: /Revisar 1 agora/i })).toBeTruthy();
+  });
+});
+
 // ─── r9: roadmap de conquistas (travadas visíveis com progresso) ───
 describe("r9: Stats — roadmap de conquistas", () => {
   it("mostra as travadas ordenadas; a mais próxima ganha .closest + badge 'quase!'", () => {
@@ -285,7 +394,7 @@ describe("r9: Stats — roadmap de conquistas", () => {
     );
     expect(screen.getByText("Próximas conquistas")).toBeInTheDocument();
     const rows = document.querySelectorAll(".ach-row");
-    expect(rows.length).toBe(6); // 7 conquistas - 1 obtida (first-step)
+    expect(rows.length).toBe(8); // 9 conquistas - 1 obtida (first-step) — r15: +srs-100/srs-master
     expect(rows[0]).toHaveClass("closest");
     expect(rows[0].textContent).toContain("quase!");
     expect(rows[0].textContent).toContain("7 dias"); // streak-7 primeiro (14%)
@@ -303,7 +412,7 @@ describe("r9: Stats — roadmap de conquistas", () => {
       })
     );
     const rows = document.querySelectorAll(".ach-row");
-    expect(rows.length).toBe(5);
+    expect(rows.length).toBe(7); // 9 - 2 obtidas (r15: catálogo cresceu p/ 9)
     expect([...rows].some((r) => r.textContent.includes("7 dias"))).toBe(false);
   });
 

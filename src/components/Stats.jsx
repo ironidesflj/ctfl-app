@@ -1,5 +1,5 @@
 import { useRef, useState, useMemo, Fragment } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { getBank } from "../lib/bank.js";
 import {
   exportProgress,
@@ -21,7 +21,10 @@ import {
   examCountdown,
   coverPace,
   kLevelBreakdown,
+  flashcardStats,
+  nextDueDate,
 } from "../lib/activity.js";
+import { flashcardsForCert } from "../data/study.js";
 import { getSetting, setSetting } from "../lib/settings.js";
 import { t } from "../lib/ui-strings.js";
 import { getNotificationPermission, requestNotificationPermission } from "../lib/notifications.js";
@@ -182,6 +185,22 @@ const ACHIEVEMENTS = {
     en: "Bank complete",
     ptDesc: "Completou a cobertura de todo o banco de questões do cert",
     enDesc: "Completed coverage of the entire cert's question bank",
+  },
+  // r15 (R18): revisão espaçada — 100 avaliações e 10 itens maduros.
+  // "Item" = questão (modo revisão do Quiz) ou flashcard.
+  "srs-100": {
+    icon: "🃏",
+    pt: "100 revisões",
+    en: "100 reviews",
+    ptDesc: "Fez 100 revisões espaçadas (Quiz ou Flashcards)",
+    enDesc: "Completed 100 spaced-repetition reviews (Quiz or Flashcards)",
+  },
+  "srs-master": {
+    icon: "🧠",
+    pt: "Memória de longo prazo",
+    en: "Long-term memory",
+    ptDesc: "10 itens com revisão agendada a 21+ dias",
+    enDesc: "10 items scheduled 21+ days ahead",
   },
 };
 
@@ -360,6 +379,33 @@ export default function Stats({
     return cov.total > 0 ? Math.round((cov.seen / cov.total) * 100) : 0;
   });
 
+  // r15 (R18): Flashcards → Stats. Métricas do sistema de revisão espaçada
+  // do cert — cartões (study.js, escopo cert) + contadores (rateSRS). O
+  // painel substitui a cegueira histórica do Stats: sem isso, o trabalho de
+  // revisão do usuário era invisível no Progresso.
+  const flashCards = useMemo(() => flashcardsForCert(lang, certId), [lang, certId]);
+  const fcs = useMemo(
+    () => flashcardStats(flashCards, progress?.srs, progress?.srsStats),
+    [flashCards, progress]
+  );
+  const srsNextDue = useMemo(
+    () =>
+      fcs.started > 0
+        ? nextDueDate(
+            progress?.srs,
+            flashCards.map((c) => c.id),
+            todayLocal()
+          )
+        : null,
+    [fcs, progress, flashCards]
+  );
+  const srsShow = flashCards.length > 0 && (progress.total > 0 || fcs.started > 0);
+  // r15: atividade = questões OU revisões espaçadas — quem só usa Flashcards
+  // também merece ver a tira de gamificação e o roadmap de conquistas
+  // (as novas srs-100/srs-master seriam invisíveis p/ esse perfil).
+  const srsActive = (progress.srsStats?.reviews || 0) > 0;
+  const hasActivity = progress.total > 0 || srsActive;
+
   // Fase 2: label do cert para interpolar strings
   const certLabel = cert.label;
 
@@ -421,7 +467,7 @@ export default function Stats({
 
   return (
     <div className="study">
-      {progress.total === 0 && (
+      {!hasActivity && (
         <div className="card" style={{ textAlign: "center" }}>
           <p>{t(lang, "stats.emptyWelcome")}</p>
           {/* r6: arrow explícita — onClick={onGoToQuiz} passaria o EVENTO como
@@ -444,7 +490,7 @@ export default function Stats({
       </div>
 
       {/* Tira de gamificação */}
-      {progress.total > 0 && (
+      {hasActivity && (
         <div className="gamification-strip">
           {streak >= 2 && (
             <>
@@ -470,7 +516,7 @@ export default function Stats({
       )}
 
       {/* Fase 2: Achievements com nomes (se houver algum) */}
-      {progress.total > 0 && achievements.length > 0 && (
+      {hasActivity && achievements.length > 0 && (
         <div className="card" style={{ padding: "0.75rem" }}>
           <div
             style={{
@@ -512,7 +558,7 @@ export default function Stats({
       {/* r9: roadmap de conquistas — as travadas ficavam invisíveis; agora
           cada uma mostra o quanto falta, ordenada pela mais próxima (a 1ª
           ganha destaque "quase"). Barras + contagem atual/alvo. */}
-      {progress.total > 0 && roadmap.length > 0 && (
+      {hasActivity && roadmap.length > 0 && (
         <div className="card ach-roadmap-card">
           <h3>
             {t(lang, "stats.roadmapTitle")}{" "}
@@ -687,6 +733,69 @@ export default function Stats({
               {heatToday ? t(lang, "stats.heatmapToday", { n: heatToday.total }) : ""}
             </span>
           </div>
+        </div>
+      )}
+
+      {/* r15 (R18): painel Flashcards/Revisão espaçada — o ciclo de hábito
+          (devido hoje → revisar → progresso visível) que faltava. Estado
+          virgem vira convite com CTA; fila do dia vira CTA direto. */}
+      {srsShow && (
+        <div className="card srs-card">
+          <h3>🃏 {t(lang, "stats.srsTitle")}</h3>
+          {fcs.started === 0 ? (
+            <>
+              <p className="muted srs-sub">{t(lang, "stats.srsEmptyHint")}</p>
+              <Link className="btn primary srs-cta" to={`/${certId}/flash`}>
+                {t(lang, "stats.srsStart", { n: fcs.total })}
+              </Link>
+            </>
+          ) : (
+            <>
+              <div className="srs-grid">
+                <div className="srs-metric">
+                  <b>
+                    {fcs.started}/{fcs.total}
+                  </b>
+                  <span>{t(lang, "stats.srsCards")}</span>
+                </div>
+                <div className={"srs-metric" + (fcs.dueToday > 0 ? " hot" : "")}>
+                  <b>{fcs.dueToday}</b>
+                  <span>{t(lang, "stats.srsDue")}</span>
+                </div>
+                <div className="srs-metric">
+                  <b>{fcs.mature}</b>
+                  <span>{t(lang, "stats.srsMature")}</span>
+                </div>
+                <div className="srs-metric" title={t(lang, "stats.srsRetentionHint")}>
+                  <b>{fcs.retention === null ? "—" : `${fcs.retention}%`}</b>
+                  <span>{t(lang, "stats.srsRetention")}</span>
+                </div>
+              </div>
+              <p className="muted srs-sub">
+                {t(lang, "stats.srsReviewsCount", { n: fcs.reviews })}
+                {fcs.retention !== null && (
+                  <>
+                    {" "}
+                    ·{" "}
+                    {t(lang, "stats.srsRetentionValue", {
+                      pct: fcs.retention,
+                    })}
+                  </>
+                )}
+              </p>
+              {fcs.dueToday > 0 ? (
+                <Link className="btn primary srs-cta" to={`/${certId}/flash`}>
+                  ▶ {t(lang, "stats.srsCta", { n: fcs.dueToday })}
+                </Link>
+              ) : (
+                srsNextDue && (
+                  <p className="muted srs-sub srs-next">
+                    {t(lang, "flashcards.dueNext", { date: srsNextDue })}
+                  </p>
+                )
+              )}
+            </>
+          )}
         </div>
       )}
 

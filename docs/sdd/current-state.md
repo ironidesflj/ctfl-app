@@ -1,4 +1,10 @@
-# Estado atual verificado — 2026-10-15 (v3.13.0 local)
+# Estado atual — 2026-10-22 (v3.14.0 local)
+
+Integração do pacote v3.14.0: painel SRS no Progresso, atalhos e desfazer nos
+Flashcards, contadores de revisão e duas conquistas. Preservados os ajustes
+locais de navegação, release notes, conteúdo e imagem social Synapse.
+Service worker r16-v1; build recompilada para a raiz do domínio.
+Sem commit, push ou publicação nesta integração.
 
 ## Repositórios de referência
 

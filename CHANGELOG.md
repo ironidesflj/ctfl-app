@@ -1,5 +1,52 @@
 # Changelog
 
+## [3.14.0] — 2026-10-22 (Rodada 15 · roadmap R18 — Flashcards → Stats)
+
+### Adicionado
+
+- **Painel "Flashcards · Revisão espaçada" no Progresso** (o R18 adiado desde
+  sempre): métricas de cartões iniciados/total, fila para revisar hoje (com
+  CTA direto "Revisar N agora" → Flashcards), itens maduros (intervalo ≥ 21d)
+  e retenção (% de Bom+Fácil sobre todas as revisões espaçadas do cert —
+  inclui o modo Revisão do Quiz). Estado virgem vira convite ("Começar com N
+  cartões"); fila zerada mostra a próxima revisão agendada.
+- **Contadores de SRS (`progress.srsStats`)**: caminho único de avaliação
+  `rateSRS` (storage) usado por Flashcards e pelo modo Revisão do Quiz —
+  alimenta retenção, conquistas e painel. Estados antigos sem o campo
+  degradam com segurança (normalização na leitura). Incluído no
+  export/backup automaticamente (faz parte do progresso por cert).
+- **Flashcards com teclado**: Espaço/Enter vira o cartão, 1–4 avaliam
+  (Errei/Difícil/Bom/Fácil), ←/→ navegam. Dica de teclado visível apenas em
+  telas com hover (some em touch).
+- **Undo de mis-tap nos Flashcards**: desfaz a última avaliação — restaura o
+  estado SM-2 anterior do cartão (inclusive "voltar a ser novo") e desconta
+  o contador correspondente. Link direto na nota pós-avaliação.
+- **Nota pós-avaliação**: "Bom → volta em 6d" — o SM-2 deixa de ser caixa
+  preta (o que a avaliação acabou de agendar).
+- **Fila zerada comemorativa**: 🎉 celebra, mostra a próxima revisão e
+  oferece "Ver todos os cartões" (antes era um texto seco "Fila de hoje: 0").
+- **Contador de fila nos chips de capítulo** (sup badge quando > 0).
+- **2 conquistas novas**: 🃏 "100 revisões" (100 avaliações SRS totais) e 🧠
+  "Memória de longo prazo" (10 itens agendados a 21+ dias). Roadmap de
+  conquistas atualizado (9 no total).
+
+### Alterado
+
+- Quiz (modo Revisão) e Flashcards passaram a avaliar pelo mesmo caminho
+  `rateSRS` — o auto-seed implícito do modo prática NÃO conta como revisão
+  (retenção honesta: só avaliação deliberada conta).
+
+### Compatibilidade
+
+- Progresso existente preservado (campo novo aditivo, normalizado na
+  leitura). Cache do service worker renovado para `r16-v1`.
+
+### Gates
+
+- 364/364 testes (23 arquivos; +33 novos cobrindo rateSRS/undo/conquistas/
+  painel/teclado/fila zerada). ESLint 0 erros (2 advisories pré-existentes).
+  Prettier verde. Build verde.
+
 ## v3.13.0 — 2026-10-15 — CTAL-TA completo e heatmap redesenhado
 
 - feat(study): CTAL-TA recebe 21 flashcards, 18 itens de syllabus e 37 termos
