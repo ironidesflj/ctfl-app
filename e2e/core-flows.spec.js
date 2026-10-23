@@ -4,6 +4,23 @@ import { readFileSync } from "node:fs";
 const { version } = JSON.parse(readFileSync(new URL("../package.json", import.meta.url), "utf8"));
 const releaseKey = `synapse.releaseNotes.seen.${version}`;
 
+test("cabeçalho mobile preserva título e troca de certificação em 390px", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  for (const cert of ["ctfl", "ctal-ta"]) {
+    await page.goto(`/${cert}/quiz`);
+    const heading = page.getByRole("heading", { level: 1 });
+    await expect(heading).toBeVisible();
+    const lines = await heading.evaluate(
+      (el) => el.getBoundingClientRect().height / parseFloat(getComputedStyle(el).lineHeight)
+    );
+    expect(lines).toBeLessThan(1.1);
+    const change = page.getByRole("link", { name: "Trocar certificação" });
+    await expect(change).toBeVisible();
+    await change.click();
+    await expect(page).toHaveURL(/\/select$/);
+  }
+});
+
 test.beforeEach(async ({ page }) => {
   await page.addInitScript((releaseKey) => {
     if (!sessionStorage.getItem("synapse-e2e-initialized")) {

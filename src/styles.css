@@ -215,8 +215,8 @@ body {
   border-color: var(--line-strong);
 }
 .tab.active {
-  background: var(--accent);
-  border-color: var(--accent);
+  background: var(--cert-accent);
+  border-color: var(--cert-accent);
   color: var(--on-accent);
 }
 
@@ -274,8 +274,8 @@ body {
   border-color: var(--line-strong);
 }
 .mode-btn.active {
-  border-color: var(--accent);
-  background: var(--accent-soft);
+  border-color: var(--cert-accent);
+  background: var(--cert-accent-soft);
 }
 .mode-title {
   font-family: var(--font-display);
@@ -311,8 +311,8 @@ body {
   border-color: var(--line-strong);
 }
 .domain-card.selected {
-  border-color: var(--accent);
-  background: var(--accent-soft);
+  border-color: var(--cert-accent);
+  background: var(--cert-accent-soft);
 }
 .domain-card.wide {
   grid-column: 1 / -1;
@@ -320,7 +320,7 @@ body {
 .domain-weight {
   font-family: var(--font-mono);
   font-size: var(--fs-13);
-  color: var(--accent-text);
+  color: var(--cert-accent-text);
 }
 .domain-name {
   font-size: var(--fs-13);
@@ -351,9 +351,9 @@ body {
   border-color: var(--line-strong);
 }
 .chip.on {
-  background: var(--accent-soft);
-  border-color: var(--accent);
-  color: var(--accent-text);
+  background: var(--cert-accent-soft);
+  border-color: var(--cert-accent);
+  color: var(--cert-accent-text);
 }
 
 /* ---------- buttons ---------- */
@@ -375,8 +375,8 @@ body {
   transform: scale(0.98);
 }
 .btn.primary {
-  background: var(--accent);
-  border-color: var(--accent);
+  background: var(--cert-accent);
+  border-color: var(--cert-accent);
   color: var(--on-accent);
   font-weight: 500;
 }
@@ -413,7 +413,7 @@ body {
 }
 .progress-fill {
   height: 100%;
-  background: var(--accent);
+  background: var(--cert-accent);
   border-radius: 3px;
   transition: width 0.3s;
 }
@@ -1452,7 +1452,7 @@ mark {
   --cert-accent-text: #4a4660;
 }
 [data-cert="ctal-ta"] {
-  --cert-accent: #0f8a86;
+  --cert-accent: #0c7c78;
   --cert-accent-soft: #dff5f3;
   --cert-accent-text: #0b615e;
 }
@@ -1572,6 +1572,27 @@ mark {
 @media (prefers-reduced-motion: reduce) {
   .cert-indicator {
     animation: none;
+  }
+}
+
+/* Cabeçalho mobile: título na primeira linha, controles na seguinte.
+   Mantém o link de troca de certificação disponível. */
+@media (max-width: 480px) {
+  .masthead {
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .masthead > div:not(.mast-mark) {
+    flex: 1 1 calc(100% - 56px);
+    min-width: 0;
+  }
+  .masthead h1 {
+    font-size: var(--fs-20);
+    line-height: 1.15;
+    overflow-wrap: anywhere;
+  }
+  .cert-indicator {
+    display: inline-flex;
   }
 }
 

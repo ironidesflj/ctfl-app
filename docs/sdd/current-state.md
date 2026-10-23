@@ -1,4 +1,9 @@
-# Estado atual — 2026-10-23 (v3.15.1 local)
+# Estado atual — 2026-10-23 (v3.16.0 local)
+
+Integração seletiva v3.16.0: paletas por certificação com 20 guardas de
+identidade/contraste e cabeçalho mobile adaptado para manter a troca de cert.
+Mantido o storage local: undo integral do histórico cheio, datas e contadores.
+Service worker r19-v1; 422 testes, lint e build aprovados antes da validação mobile.
 
 Integração seletiva do pacote v3.15.1: acessibilidade do heatmap, atividade
 SRS, resumos de revisões e limite SM-2 de 365 dias. Corrigido localmente o

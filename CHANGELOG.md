@@ -1,5 +1,16 @@
 # Changelog
 
+## v3.16.0 — 2026-10-23 — Identidade por certificação e cabeçalho mobile
+
+- Abas, botões primários, filtros e barras passam a usar a paleta da certificação.
+- CTAL-TA usa teal com contraste verificado nos temas claro e escuro.
+- Cabeçalho mobile reorganizado em duas linhas para preservar o título e o
+  acesso à troca de certificação, além de idioma e tema.
+- Mantido o undo local com restauração integral do histórico de 400 entradas,
+  datas de atividade e contadores; não incorporada a variante que perde registros.
+- Preservados conteúdo, imagem Synapse, novidades, feedback, CI e Playwright.
+- Cache PWA r19-v1. Suíte com 422 testes e lint aprovados.
+
 ## v3.15.1 — 2026-10-23 — Integração seletiva e preservação de atividade
 
 - Heatmap navegável por teclado; revisões SRS passam a registrar atividade.

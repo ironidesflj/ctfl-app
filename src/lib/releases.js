@@ -1,13 +1,16 @@
 const RELEASE_KEY_PREFIX = "synapse.releaseNotes.seen";
 
 export const CURRENT_RELEASE = {
-  version: "3.15.1",
+  version: "3.16.0",
   significant: true,
   pt: {
     eyebrow: "Novidades da versão",
     title: "O Synapse evoluiu",
-    intro: "Esta atualização melhora o mapa de atividade e o acompanhamento das revisões.",
+    intro:
+      "Esta atualização reforça a identidade de cada certificação e melhora o cabeçalho mobile.",
     items: [
+      "O CTAL-TA ganhou tons teal nos botões, abas e filtros, com contraste verificado.",
+      "O cabeçalho mobile continua oferecendo a troca de certificação.",
       "Navegue pelo mapa de atividade usando as setas do teclado.",
       "Revisões aparecem na atividade; acompanhe o resumo do dia e as últimas duas semanas.",
       "O desfazer preserva o histórico e as datas anteriores, mesmo com o histórico cheio.",
@@ -26,8 +29,10 @@ export const CURRENT_RELEASE = {
   en: {
     eyebrow: "What's new in",
     title: "Synapse has evolved",
-    intro: "This update improves the activity map and review tracking.",
+    intro: "This update strengthens certification identity and improves the mobile header.",
     items: [
+      "CTAL-TA now uses teal buttons, tabs, and filters with verified contrast.",
+      "The mobile header keeps certification switching available.",
       "Navigate the activity map using your keyboard arrow keys.",
       "Reviews appear in activity, with a daily summary and the last two weeks of reviews.",
       "Undo preserves previous history and dates, even when history is full.",
