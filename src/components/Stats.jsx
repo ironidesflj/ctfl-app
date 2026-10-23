@@ -324,7 +324,8 @@ export default function Stats({
   const examFormat = META.examFormat?.[certId];
   const passMark = examFormat?.passMark || 26;
   const examQuestions = examFormat?.questions || 40;
-  const passPct = examQuestions > 0 ? Math.round((passMark / examQuestions) * 100) : 65;
+  const examTotal = examFormat?.totalPoints || examQuestions;
+  const passPct = examTotal > 0 ? Math.round((passMark / examTotal) * 100) : 65;
 
   const coverage = coverageByChapter(progress.seen || {});
 

@@ -2,7 +2,7 @@
  "meta": {
   "title": "Synapse — Multi-Certification Question Bank",
   "description": "Banco de questões profissional bilíngue (EN/PT-BR) para certificações ISTQB",
-  "version": "1.5.0-pools",
+  "version": "1.6.0-ctaltm",
   "generatedDate": "2026-10-14",
   "totalQuestions": 1100,
   "availableLanguages": [
@@ -25,6 +25,11 @@
     "3": 22,
     "4": 4,
     "5": 8
+   },
+   "ctal-tm": {
+    "1": 26,
+    "2": 15,
+    "3": 9
    }
   },
   "examFormat": {
@@ -42,6 +47,20 @@
     "passMark": 51,
     "passMarkPct": 65,
     "totalPoints": 78,
+    "scoring": "points",
+    "pointsByK": {
+     "2": 1,
+     "3": 2,
+     "4": 3
+    },
+    "timeMinutes": 120,
+    "timeMinutesNonNative": 150
+   },
+   "ctal-tm": {
+    "questions": 50,
+    "passMark": 58,
+    "passMarkPct": 65,
+    "totalPoints": 88,
     "scoring": "points",
     "pointsByK": {
      "2": 1,
@@ -167,6 +186,38 @@
       }
      }
     }
+   },
+   "ctal-tm": {
+    "source": "ISTQB Exam Structures & Rules tables",
+    "sourceVersion": "v1.17, 2026-05-05",
+    "totalQuestions": 50,
+    "passMarkPct": 65,
+    "chapters": {
+     "1": {
+      "questions": 26,
+      "kLevels": {
+       "K2": 14,
+       "K3": 4,
+       "K4": 8
+      }
+     },
+     "2": {
+      "questions": 15,
+      "kLevels": {
+       "K2": 7,
+       "K3": 4,
+       "K4": 4
+      }
+     },
+     "3": {
+      "questions": 9,
+      "kLevels": {
+       "K2": 5,
+       "K3": 2,
+       "K4": 2
+      }
+     }
+    }
    }
   },
   "certifications": {
@@ -243,6 +294,12 @@
      "exam": 80,
      "study": 220,
      "total": 300
+    },
+    "ctal-tm": {
+     "exam": 99,
+     "study": 101,
+     "total": 200,
+     "note": "partição r19 scoped (script partition_ctal_tm_r19.py): PRNG próprio na mesma seed para preservar a sequência RNG dos certs já particionados; pools de ctfl/ctal-ta intocados."
     }
    },
    "generatedDate": "2026-10-14"
@@ -22676,7 +22733,7 @@
      "exp": "O controle de teste 'compara o progresso real com o plano de teste e implementa ações corretivas quando necessário' — exatamente o que o Gerente de Teste está fazendo: comparando o progresso (três dias de atraso), implementando ações corretivas (adicionar ambiente, realocar testadores, atualizar cronograma). O planejamento de teste é mais amplo e anterior; a conclusão do teste ocorre em marcos; a análise de teste lida com a base de teste, não com o monitoramento de progresso."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-04",
@@ -22708,7 +22765,7 @@
      "exp": "Segundo o syllabus, o monitoramento envolve 'coletar e registrar resultados de teste, identificar desvios dos testes planejados, identificar e analisar novos riscos que exigem testes e monitorar mudanças nos riscos identificados.' O controle envolve 'implementar o plano de teste e as diretrizes de controle, gerenciar desvios dos testes planejados, tratar riscos recém-identificados e alterados, estabelecer a prontidão para iniciar o teste, conceder e obter aprovação para a conclusão do teste com base nos critérios de saída.' Monitoramento = medir/observar; controle = agir/corrigir."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-05",
@@ -22804,7 +22861,7 @@
      "exp": "Segundo o syllabus, gerentes de projeto, Product Owners e usuários corporativos 'especificam os requisitos, definem o nível de qualidade solicitado e recomendam a cobertura necessária com base nos riscos percebidos. Eles também analisam produtos de trabalho, participam do Teste de Aceite do Usuário (UAT) e tomam decisões com base nos resultados dos testes.' A opção “Eles são responsáveis por implementar o sistema…” descreve desenvolvedores; a opção “Eles são responsáveis por preparar o material…” descreve testadores/líderes/gerentes; a opção “Eles garantem a prontidão operacional do…” descreve operações."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-08",
@@ -23028,7 +23085,7 @@
      "exp": "Segundo o syllabus, o processo central de gerenciamento de teste (planejamento, monitoramento/controle, conclusão) aplica-se em todos os níveis de teste, mas os objetivos específicos, escopo, técnicas, ambiente e critérios de saída diferem por nível. Gerenciamento é necessário em todos os níveis — não apenas no de sistema. O SDLC e o nível de teste influenciam as atividades de gerenciamento; não são determinados apenas por um ou outro."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-15",
@@ -23060,7 +23117,7 @@
      "exp": "Segundo o syllabus, diferentes níveis de teste têm diferentes objetivos que orientam diferentes atividades de gerenciamento: teste de componente tem como alvo unidades individuais, teste de integração tem como alvo interações entre componentes, teste de sistema tem como alvo comportamento de ponta a ponta contra requisitos e teste de aceite valida a adequação ao uso com envolvimento de stakeholders. A opção sobre o alinhamento correto (componente→unidades, sistema→ponta-a-ponta, aceite→adequação ao uso) está correta. A opção sobre todos os níveis preocupados apenas com contagem está errada (contagem); a opção sobre sistema e aceite intercambiáveis está errada (intercambialidade); a opção sobre atribuição incorreta de níveis (componente→UAT, aceite→unidade) também está errada."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-16",
@@ -23092,7 +23149,7 @@
      "exp": "Segundo o syllabus, diferentes tipos de teste requerem diferentes atividades de gerenciamento porque têm diferentes objetivos, técnicas, ambientes e habilidades. Testes não funcionais como performance, segurança e usabilidade tipicamente requerem ambientes dedicados (ex.: similar à produção para performance), testadores especializados e ferramentas e técnicas específicas. Gerenciamento é necessário para ambos; não funcional não é 'autogerenciável'; e planejamento é essencial para não funcional."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-17",
@@ -23156,7 +23213,7 @@
      "exp": "Analisando o contexto: farmacêutico regulado → documentação rastreável para auditoria exigida; SDLC iterativo-incremental → planejamento leve por sprint; núcleo estável com automação → reutilizar regressão automatizada; novos recursos → exploratório manual; equipe distribuída → planejamento e coordenação essenciais. A opção sobre plano leve por sprint, regressão automatizada, exploratório e documentação rastreável reflete a combinação apropriada segundo o syllabus sobre gerenciamento orientado por contexto. As opções sobre plano único antecipado e manual sem documentação e sobre apenas gerenciamento sequencial com plano antecipado ignoram o SDLC iterativo; a opção sobre pular planejamento e depender de exploratório e unit tests ignora regulação e planejamento."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-19",
@@ -23188,7 +23245,7 @@
      "exp": "O aplicativo móvel se beneficia de teste contínuo ágil e planejamento leve; o sistema de back-office se encaixa em planejamento sequencial com portões de critérios de saída; a regulação exige rastreabilidade em ambos. O syllabus apoia gerenciamento de teste orientado por contexto: em projetos híbridos, aplique cada abordagem onde se encaixa e use ferramentas compartilhadas para preocupações transversais como rastreabilidade. A opção sobre abordagem híbrida (ágil no móvel, sequencial no back-office) com rastreabilidade compartilhada reflete essa análise. As opções sobre tratar ambos identicamente com abordagem ágil e sobre tratar ambos identicamente com abordagem sequencial forçam uma abordagem em ambos; a opção sobre terceirizar todo o teste não tem suporte."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-20",
@@ -23284,7 +23341,7 @@
      "exp": "O syllabus lista técnicas para identificar riscos de qualidade: entrevistas com especialistas, avaliações independentes, retrospectivas, workshops de risco, brainstorming, listas de verificação e referir-se a experiências passadas. Workshops de risco são explicitamente listados. Compilar estatísticas de defeitos pós-lançamento é uma atividade posterior, não uma técnica de identificação. Remover o gerente de projeto ou usar um único stakeholder contradiz o syllabus, que enfatiza ampla participação dos stakeholders."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-23",
@@ -23380,7 +23437,7 @@
      "exp": "Segundo o syllabus, fatores de impacto incluem 'frequência de uso da funcionalidade afetada' e 'possível perda financeira, perda ecológica ou social ou responsabilidade.' Fatores de probabilidade dizem respeito à probabilidade de um defeito existir ou ocorrer (ex.: complexidade, maturidade, problemas de equipe). O erro comum do candidato na opção “A frequência de uso é um fator de…” é comum — frequência de uso é um fator de impacto, não de probabilidade, porque se refere a quão frequentemente um defeito (se presente) seria acionado e, portanto, quanto impacto causaria."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-26",
@@ -23444,7 +23501,7 @@
      "exp": "Segundo o syllabus, 'as pessoas mais qualificadas devem testar os itens de teste com os níveis de risco mais altos'; 'testes para níveis de risco mais altos devem começar mais cedo e usar técnicas de teste mais rigorosas, enquanto testes para níveis de risco mais baixos podem começar mais tarde e devem usar técnicas menos rigorosas'; depth-first é apropriado quando mitigar os riscos mais altos cedo é crítico. A opção sobre sênior no alto risco, depth-first e leve no baixo risco aplica os três princípios. A opção sobre júnior na autenticação e sênior nos relatórios atribui sênior ao baixo risco; a opção sobre ambos igualmente em todos os módulos ignora o peso do risco; a opção sobre pular autenticação pula o risco mais alto."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-28",
@@ -23476,7 +23533,7 @@
      "exp": "O syllabus afirma: 'Na prática, os testes geralmente começam com a abordagem depth-first, mas, à medida que o tempo se torna mais limitado, eles mudam para a abordagem breadth-first, testando todos os itens de risco restantes pelo menos uma vez.' Isso equilibra naturalmente ambas as perspectivas: depth-first primeiro aborda a preocupação do oficial de segurança, depois breadth-first aborda o desejo do Product Owner por um snapshot geral de qualidade. As opções sobre apenas breadth-first e sobre apenas depth-first servem apenas um stakeholder; a opção sobre todos os testes em ordem arbitrária ignora priorização. A opção sobre depth-first primeiro, depois breadth-first está correta."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-29",
@@ -23508,7 +23565,7 @@
      "exp": "Segundo o syllabus: 'As técnicas pesadas são formais, usando procedimentos definidos e documentação detalhada. Elas envolvem grupos amplos de stakeholders. A avaliação de risco dentro das técnicas pesadas usa fatores detalhados de probabilidade de risco e impacto do risco e fórmulas matemáticas para calcular a probabilidade e o impacto a partir desses fatores.' Exemplos incluem análise de perigo, custo da exposição, FMEA e Fault Tree Analysis. Técnicas leves são menos completas, exigem menos esforço e usam escalas ordinais."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-30",
@@ -23572,7 +23629,7 @@
      "exp": "O syllabus lista perguntas de sucesso incluindo 'A maioria dos defeitos de alta prioridade foi encontrada no início da execução do teste?' e 'Os stakeholders relevantes foram envolvidos ou representados na análise de risco?' As opções sobre contar casos executados independentemente do risco, contar ferramentas compradas e contar stakeholders na reunião de abertura não são métricas de sucesso listadas no syllabus. A opção sobre verificar detecção precoce de defeitos de alta prioridade reflete diretamente a pergunta de sucesso do syllabus sobre detecção precoce de defeitos de alta prioridade."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-32",
@@ -23636,7 +23693,7 @@
      "exp": "Segundo o syllabus: 'a capacidade de manutenção do código pode ser mais eficaz e eficientemente avaliada usando análise estática do código ou revisão do código. Por outro lado, a eficiência da performance pode ser mais bem avaliada por meio de testes de sistema com script... a utilidade da funcionalidade pode ser mais bem validada com os usuários por meio de testes de aceite manuais colaborativos.' Capacidade de manutenção é melhor avaliada por meio de análise estática ou revisão — não por meio de testes de sistema, aceite ou performance."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-34",
@@ -23668,7 +23725,7 @@
      "exp": "Segundo o syllabus, a abordagem de teste do projeto deve ser derivada analisando: domínio (farmacêutico — normas, padrões, práticas afetam rigor e documentação), metas organizacionais, metas e tipo de projeto, recursos de teste e SDLC. O contexto farmacêutico requer testes funcionais rigorosos baseados em requisitos, rastreabilidade, UAT focado em riscos à segurança do paciente, habilidades especializadas (validação, segurança) e documentação pronta para auditoria. A opção sobre testes rigorosos baseados em requisitos, rastreabilidade, UAT focado em segurança, especialistas externos e documentação para auditoria integra esses fatores. As opções sobre apenas exploratório interno, pular teste inteiramente e terceirizar para fornecedor único sem supervisão ignoram restrições de domínio."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-35",
@@ -23700,7 +23757,7 @@
      "exp": "O syllabus dá explicitamente este exemplo: 'o teste de aceite do usuário para aplicativos de seguro baseados na Web pode se concentrar na usabilidade e no aumento da probabilidade de novos contratos de seguro por meio de testes A/B.' Combinado com a estratégia organizacional de usabilidade e entrega contínua, a abordagem apropriada enfatiza teste A/B e teste de usabilidade integrado à entrega contínua. As as demais opções contradizem tanto a estratégia organizacional quanto o exemplo de domínio."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-36",
@@ -23732,7 +23789,7 @@
      "exp": "SMART = Específico, Mensurável, Atingível, Relevante, com prazo definido. 'Melhorar a qualidade do sistema' é vago (não específico), não dá métrica (não mensurável), não tem prazo (não tem prazo definido). A opção sobre não específico, não mensurável e sem prazo é a crítica correta. Comprimento não é um critério SMART, então a opção sobre muito longo (SMART requer < 10 palavras) está errada; especificidade é necessária, então a opção sobre muito específico e deveria ser mais abstrato inverte o critério; a opção sobre totalmente SMART porque qualidade é importante está errada porque os critérios SMART não são satisfeitos."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-37",
@@ -23764,7 +23821,7 @@
      "exp": "SMART = Específico (95% das transações, limite de 2 segundos), Mensurável (menos de 2 segundos, execução de pico de 30 minutos), Atingível (limite realista), Relevante (objetivo de performance), com prazo definido (até o final da fase de teste de sistema). A opção sobre 95% das transações abaixo de 2 segundos em pico de 30 minutos até o fim do teste de sistema satisfaz todos os cinco critérios. As opções sobre performance boa para usuários felizes, todas as transações rápidas e sistema sem travar sob carga são vagas e não mensuráveis."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-38",
@@ -23828,7 +23885,7 @@
      "exp": "No IDEAL, Estabelecimento é a fase em que a organização desenvolve planos para o trabalho de melhoria, garante patrocínio e define o escopo do programa de melhoria com base nas recomendações do Diagnóstico. Diagnóstico caracteriza os estados atual e desejado; Ação implementa o plano; Aprendizado captura lições para ciclos futuros de melhoria. O cenário descreve Estabelecimento."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-40",
@@ -23956,7 +24013,7 @@
      "exp": "Segundo o syllabus, retrospectivas avaliam processos de teste coletando dados qualitativos e quantitativos, identificando melhorias de processo, documentando lições aprendidas e criando ações de acompanhamento. O syllabus avisa explicitamente contra sessões orientadas a culpa e contra ignorar problemas. A opção sobre coletar dados quali/quanti, identificar melhorias, documentar lições e criar ações de acompanhamento captura essa abordagem completa. As opções sobre pular coleta para atribuir culpa e sobre apenas documentar feedback positivo deturpam a prática; a opção sobre cancelar a retrospectiva cancela uma atividade útil."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-44",
@@ -23970,25 +24027,25 @@
     "en": {
      "q": "In a retrospective, the Test Manager wants to evaluate test effectiveness. According to the CTAL-TM v3.0 syllabus, which data source is MOST directly useful for this purpose?",
      "options": [
-      "The number of coffee cups consumed during the sprint",
-      "The brand of test management tool used",
-      "The colour of the team's T-shirts",
+      "The total number of test cases executed per day during the sprint",
+      "The percentage of automated test cases in the regression suite",
+      "The average execution time of the regression suite",
       "Defect detection percentage (DDP), escape rate, and defect density compared with previous sprints"
      ],
-     "exp": "Per the syllabus, retrospectives evaluate the test process using qualitative and quantitative data, including metrics such as Defect Detection Percentage (DDP), escape rate (defects found in production), and defect density. These metrics directly measure test effectiveness. The other options are irrelevant to test process evaluation."
+     "exp": "Per the syllabus, retrospectives evaluate the test process using qualitative and quantitative data, including metrics such as Defect Detection Percentage (DDP), escape rate (defects found in production), and defect density. These metrics directly measure detection effectiveness. Execution counts, automation level, and execution time are real activity and efficiency metrics, but they do not measure how effectively testing detects defects."
     },
     "pt": {
      "q": "Em uma retrospectiva, o Gerente de Teste quer avaliar a eficácia do teste. Segundo o syllabus CTAL-TM v3.0, qual fonte de dados é MAIS diretamente útil para esse propósito?",
      "options": [
-      "O número de xícaras de café consumidas durante o sprint",
-      "A marca da ferramenta de gerenciamento de teste usada",
-      "A cor das camisetas da equipe",
+      "O número total de casos de teste executados por dia no sprint",
+      "O percentual de casos de teste automatizados na suíte de regressão",
+      "O tempo médio de execução da suíte de regressão",
       "Porcentagem de detecção de defeitos (DDP), taxa de escape e densidade de defeitos comparados com sprints anteriores"
      ],
-     "exp": "Segundo o syllabus, retrospectivas avaliam o processo de teste usando dados qualitativos e quantitativos, incluindo métricas como Porcentagem de Detecção de Defeitos (DDP), taxa de escape (defeitos encontrados em produção) e densidade de defeitos. Essas métricas medem diretamente a eficácia do teste. As outras opções são irrelevantes para a avaliação do processo de teste."
+     "exp": "Segundo o syllabus, retrospectivas avaliam o processo de teste usando dados qualitativos e quantitativos, incluindo métricas como Porcentagem de Detecção de Defeitos (DDP), taxa de escape (defeitos encontrados em produção) e densidade de defeitos. Essas métricas medem diretamente a eficácia da detecção. Contagem de execuções, nível de automação e tempo de execução são métricas reais de atividade e de eficiência, mas não medem a eficácia do teste em detectar defeitos."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-45",
@@ -24052,7 +24109,7 @@
      "exp": "Segundo o syllabus, as práticas recomendadas para introdução de ferramentas incluem projetos piloto, treinamento, gerenciamento de expectativas e adoção faseada — exatamente as atividades que o Gerente de Teste está realizando. A opção sobre seguir práticas recomendadas para introdução (piloto, treinamento, adoção faseada) captura isso. As outras opções caracterizam incorretamente a abordagem: as opções sobre avoidance de risco (equipe com medo), perda de tempo (todas funcionam igual) e aposentadoria da ferramenta (equipe abandonando) estão incorretas."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-47",
@@ -24084,7 +24141,7 @@
      "exp": "Segundo o syllabus, os aspectos técnicos da decisão sobre uma ferramenta incluem compatibilidade com a infraestrutura existente, integração com CI/CD e outras ferramentas, linguagens/plataformas suportadas, escalabilidade e performance. Os critérios de decisão descritos são claramente técnicos. Aspectos de negócio dizem respeito a ROI, estabilidade do fornecedor, licenciamento, etc."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-48",
@@ -24148,7 +24205,7 @@
      "exp": "Segundo o syllabus, um plano de seleção de ferramentas deve cobrir necessidades e restrições, critérios de avaliação técnicos e de negócio, ferramentas candidatas, avaliação piloto, análise de ROI/custo-benefício e riscos associados à seleção e adoção. A opção sobre necessidades, critérios técnicos/de negócio, candidatos, piloto, ROI e riscos captura tudo isso. As opções sobre apenas o preço da mais barata, apenas nomes de três fornecedores sem critério e apenas ordem de compra sem avaliação reduzem o plano a uma única dimensão e ignoram os requisitos abrangentes do syllabus."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-50",
@@ -24180,7 +24237,7 @@
      "exp": "Segundo o syllabus, os planos de seleção de ferramentas devem incluir análise de ROI/custo-benefício cobrindo o custo total de propriedade (licença, manutenção, treinamento, infraestrutura e pessoal) durante a vida útil esperada da ferramenta. A Ferramenta A tem alto custo antecipado mas baixa manutenção; a Ferramenta B é gratuita mas requer custos contínuos de pessoal — apenas uma análise de TCO/ROI ao longo de 3 anos revelará qual é mais econômica. Logotipo, reconhecimento de nome e contagens de marketing não são critérios de seleção."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-51",
@@ -24212,7 +24269,7 @@
      "exp": "Segundo o syllabus, o ciclo de vida da ferramenta inclui: introdução (cobrindo seleção, avaliação e piloto), implantação e uso (treinamento, rollout, uso diário), suporte e manutenção (atualizações, solução de problemas) e aposentadoria (descomissionamento, substituição). As as demais opções colapsam o ciclo de vida em um único estágio e estão incorretas."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-52",
@@ -24244,7 +24301,7 @@
      "exp": "Segundo o syllabus, o estágio de aposentadoria do ciclo de vida da ferramenta ocorre quando a ferramenta não é mais suportada, a tecnologia subjacente está desatualizada ou a manutenção se torna antieconômica. O cenário — suporte descontinuado, tecnologia desatualizada, fardo de manutenção — é característico de aposentadoria. As outras opções descrevem estágios anteriores do ciclo de vida que não se aplicam mais."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-53",
@@ -24258,25 +24315,25 @@
     "en": {
      "q": "According to the CTAL-TM v3.0 syllabus, which of the following is an example of collecting and evaluating metrics using a test tool?",
      "options": [
-      "Counting the number of testers in the team",
-      "Measuring the size of the team's office",
-      "Tracking the brand of testers' laptops",
+      "Using the test management tool to assign executors to test cases",
+      "Exporting the requirements tree tracked in the tool to a static weekly document",
+      "Versioning the suite's automation scripts in the code repository alongside the application",
       "Using a test management tool to track test case execution status, defect density by module, and automation coverage trend over time"
      ],
-     "exp": "Per the syllabus, examples of collecting and evaluating metrics using tools include test execution progress, defect density by module, automation coverage trends, and similar quantitative measurements obtained through the test management or test automation tool. The option about using a test management tool to track execution, defect density by module, and automation coverage trend is a clear example. The options about counting the number of testers, measuring the size of the office, and tracking the brand of laptops are not test metrics that the syllabus associates with tool-based collection."
+     "exp": "Per the syllabus, examples of collecting and evaluating metrics using tools include test execution progress, defect density by module, automation coverage trends, and similar quantitative measurements obtained through the test management or test automation tool. Assigning executors, exporting static documentation, and versioning scripts are legitimate tool uses, but they do not amount to collecting and evaluating test metrics."
     },
     "pt": {
      "q": "Segundo o syllabus CTAL-TM v3.0, qual das seguintes é um exemplo de coletar e avaliar métricas usando uma ferramenta de teste?",
      "options": [
-      "Contar o número de testadores na equipe",
-      "Medir o tamanho do escritório da equipe",
-      "Rastrear a marca dos laptops dos testadores",
+      "Usar a ferramenta de gerenciamento para atribuir executantes aos casos de teste",
+      "Exportar a árvore de requisitos rastreada na ferramenta para um documento estático semanal",
+      "Versionar os scripts de automação da suíte no repositório de código junto com a aplicação",
       "Usar uma ferramenta de gerenciamento de teste para rastrear status de execução de casos de teste, densidade de defeitos por módulo e tendência de cobertura de automação ao longo do tempo"
      ],
-     "exp": "Segundo o syllabus, exemplos de coletar e avaliar métricas usando ferramentas incluem progresso da execução do teste, densidade de defeitos por módulo, tendências de cobertura de automação e medições quantitativas semelhantes obtidas por meio da ferramenta de gerenciamento de teste ou automação. A opção sobre ferramenta de gerenciamento para rastrear execução, densidade de defeitos por módulo e tendência de cobertura de automação é um exemplo claro. As opções sobre contar o número de testadores, medir o tamanho do escritório e rastrear a marca dos laptops não são métricas de teste que o syllabus associa à coleta baseada em ferramentas."
+     "exp": "Segundo o syllabus, exemplos de coletar e avaliar métricas usando ferramentas incluem progresso da execução do teste, densidade de defeitos por módulo, tendências de cobertura de automação e medições quantitativas semelhantes obtidas por meio da ferramenta de gerenciamento de teste ou automação. Atribuir executantes, exportar documentação estática e versionar scripts são usos legítimos de ferramentas, mas não constituem coleta e avaliação de métricas de teste."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-54",
@@ -24308,7 +24365,7 @@
      "exp": "Segundo o syllabus, métricas baseadas em ferramentas fornecem evidência quantitativa e repetível que apoia o monitoramento, controle e melhoria contínua do teste. Elas permitem detecção precoce de tendências (como a queda na taxa de detecção de defeitos), decisões baseadas em dados e identificação de oportunidades de melhoria. As as demais opções caracterizam incorretamente o valor das métricas de ferramenta."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-55",
@@ -24340,7 +24397,7 @@
      "exp": "Segundo o syllabus, métricas de projeto 'medem o progresso em relação aos critérios de saída existentes do projeto, como a porcentagem de testes executados, aprovados e reprovados.' Métricas de produto medem atributos do produto; métricas de processo medem a capacidade e eficácia do processo de teste. 'Métricas de ferramenta' não é uma das três categorias do syllabus."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-56",
@@ -24500,7 +24557,7 @@
      "exp": "Segundo o syllabus, relatórios de teste que permitem decisões dos stakeholders devem incluir resultados relevantes do teste, informações de risco residual, defeitos abertos com severidade e uma recomendação clara. A opção sobre progresso, detalhamento, defeitos de alta severidade, risco residual e decisão recomendada fornece o quadro completo. As opções sobre apenas 90% de aprovação omitindo falhas, apenas número de testes executados sem cobertura de risco e 'tudo bem porque mais da metade passou' escondem informações críticas e enganariam os stakeholders."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-61",
@@ -24532,7 +24589,7 @@
      "exp": "Segundo o syllabus, relatórios de teste devem ser adaptados às necessidades dos stakeholders para permitir a tomada de decisão. Executivos precisam de informações resumidas e orientadas a decisões; desenvolvedores precisam de informações detalhadas e acionáveis de defeitos. Adaptar relatórios garante que cada grupo possa agir com base nas informações. A opção sobre adaptar relatórios (resumo executivo para executivos, detalhado para desenvolvedores) atende às necessidades dos stakeholders. As opções sobre enviar o mesmo log detalhado para ambos e sobre enviar apenas o resumo executivo para ambos não atendem às necessidades dos stakeholders; a opção sobre não enviar relatório nenhum também não atende."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-62",
@@ -24610,25 +24667,25 @@
     "en": {
      "q": "According to the CTAL-TM v3.0 syllabus, which of the following is a factor that can influence test effort?",
      "options": [
-      "The colour of the office walls",
-      "The brand of the testers' coffee",
-      "The number of windows in the test lab",
+      "Only the product characteristics, such as size and complexity",
+      "Only the test team's skills and experience",
+      "Only the project's schedule and budget constraints",
       "Characteristics of the product (size, complexity, quality), the process (test approach, tools, SDLC), the team (skills, experience, motivation), and the project (constraints, time pressure, changes)"
      ],
-     "exp": "Per the syllabus, factors influencing test effort fall into product, process, team/people, and project categories. Product factors include size, complexity, and quality of the test basis. Process factors include test approach, tools, and SDLC. Team factors include skills, experience, and motivation. Project factors include constraints, time pressure, and rate of change. The other options, and C are irrelevant."
+     "exp": "Per the syllabus, factors influencing test effort fall into product, process, team/people, and project categories. Product factors include size, complexity, and quality of the test basis. Process factors include test approach, tools, and SDLC. Team factors include skills, experience, and motivation. Project factors include constraints, time pressure, and rate of change. The 'only' options are incomplete: each names one real category, but effort is influenced by all four categories together."
     },
     "pt": {
      "q": "Segundo o syllabus CTAL-TM v3.0, qual das seguintes é um fator que pode influenciar o esforço de teste?",
      "options": [
-      "A cor das paredes do escritório",
-      "A marca do café dos testadores",
-      "O número de janelas no laboratório de teste",
+      "Apenas as características do produto, como tamanho e complexidade",
+      "Apenas as habilidades e a experiência da equipe de teste",
+      "Apenas as restrições de prazo e orçamento do projeto",
       "Características do produto (tamanho, complexidade, qualidade), do processo (abordagem de teste, ferramentas, SDLC), da equipe (habilidades, experiência, motivação) e do projeto (restrições, pressão de tempo, mudanças)"
      ],
-     "exp": "Segundo o syllabus, os fatores que influenciam o esforço de teste se enquadram nas categorias de produto, processo, equipe/pessoas e projeto. Fatores de produto incluem tamanho, complexidade e qualidade da base de teste. Fatores de processo incluem abordagem de teste, ferramentas e SDLC. Fatores de equipe incluem habilidades, experiência e motivação. Fatores de projeto incluem restrições, pressão de tempo e taxa de mudança. As as demais opções são irrelevantes."
+     "exp": "Segundo o syllabus, os fatores que influenciam o esforço de teste se enquadram nas categorias de produto, processo, equipe/pessoas e projeto. Fatores de produto incluem tamanho, complexidade e qualidade da base de teste. Fatores de processo incluem abordagem de teste, ferramentas e SDLC. Fatores de equipe incluem habilidades, experiência e motivação. Fatores de projeto incluem restrições, pressão de tempo e taxa de mudança. As opções 'apenas' são incompletas: cada uma cita uma categoria real, mas o esforço é influenciado pelas quatro categorias em conjunto."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-65",
@@ -24724,7 +24781,7 @@
      "exp": "Segundo o syllabus, a técnica de estimativa mais apropriada depende do contexto: sem dados históricos, técnicas baseadas em especialistas (ex.: Delphi) funcionam; com requisitos bem definidos, estimativa bottom-up baseada em tarefas funciona; com equipes internas experientes, sessões de especialistas são críveis; com restrições de preço fixo, priorização baseada em risco garante que o escopo caiba no orçamento. A opção sobre combinar especialistas (Delphi), bottom-up e priorização baseada em risco combina essas adequadamente. A opção sobre sentimento de um único especialista sem documentação pula estimativa; a opção sobre recusar-se a estimar por falta de dados históricos recusa-se a estimar; a opção sobre usar apenas métricas de automação de outro projeto usa dados irrelevantes."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-68",
@@ -24756,7 +24813,7 @@
      "exp": "Segundo o syllabus, quando dados históricos são abundantes, estimativa baseada em métricas é apropriada; a equipe experiente pode calibrar as estimativas com julgamento. A opção sobre estimativa baseada em métricas calibrada por julgamento especializado combina ambos. As opções sobre recusar-se a estimar porque dados são enganosos, usar apenas um palpite não informado e usar apenas métricas ignorando a expertise da equipe ignoram dados, equipe ou ambos."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-69",
@@ -24788,7 +24845,7 @@
      "exp": "Segundo o syllabus, um fluxo de trabalho típico de defeitos inclui estados como Novo, Atribuído, Aberto, Corrigido, Verificado, Fechado, com transições para Reaberto (quando a verificação falha), Rejeitado (inválido) e Adiado (postergado). A opção sobre o fluxo Novo → Atribuído → Aberto → Corrigido → Verificado → Fechado (com Reaberto/Rejeitado/Adiado) captura esse fluxo. As opções sobre os fluxos Novo → Fechado, Fechado → Novo → Corrigido e Corrigido → Verificado → Novo ou colapsam ou invertem o fluxo incorretamente."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-70",
@@ -24820,7 +24877,7 @@
      "exp": "Segundo o syllabus, gerenciamento eficaz de defeitos requer ferramenta centralizada, workflow, campos obrigatórios, regras de propriedade, trilhas de auditoria e integração com teste/controle de versão. A opção sobre ferramenta centralizada com workflow, campos, propriedade, trilhas e integração captura tudo isso. As opções sobre rastrear em notas de papel, enviar apenas por e-mail e rastrear verbalmente em stand-ups não fornecem rastreabilidade ou confiabilidade."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-71",
@@ -24916,7 +24973,7 @@
      "exp": "Segundo o syllabus, em desenvolvimento ágil, defeitos podem ser rastreados como histórias de usuário ou itens de backlog, priorizados pelo Product Owner junto com outros itens do backlog e, idealmente, resolvidos dentro do mesmo sprint. Rastreamento leve é preferido, mas algum rastreamento ainda é necessário. As as demais opções deturpam o gerenciamento ágil de defeitos."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-74",
@@ -24980,7 +25037,7 @@
      "exp": "Segundo o syllabus, o gerenciamento de defeitos em desenvolvimento híbrido enfrenta desafios de coordenação: diferentes equipes usam diferentes SDLCs, ritmos, ferramentas e definições; defeitos entre equipes podem ser atrasados, duplicados ou atribuídos incorretamente. A opção sobre dificuldade de coordenação entre equipes híbridas captura o desafio típico. As outras opções negam a existência ou a importância desses desafios."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-76",
@@ -25012,7 +25069,7 @@
      "exp": "Segundo o syllabus, os desafios do gerenciamento híbrido de defeitos são abordados com rastreamento compartilhado ou integrado, definições comuns, triagem entre equipes e regras claras de propriedade para defeitos transversais. A opção sobre rastreamento compartilhado e definições comuns captura isso. As outras opções ou abandonam o híbrido, isolam sistemas ou forçam tamanho único."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-77",
@@ -25044,7 +25101,7 @@
      "exp": "Segundo o syllabus, relatórios de defeito devem capturar: ID, resumo, descrição, passos de reprodução, resultados esperados vs. reais, severidade, prioridade, ambiente, relator, data, status e (após correção) informações da correção e resultado da verificação. A opção sobre o conjunto completo de campos captura tudo isso. As opções sobre apenas o resumo do defeito, apenas o nome do relator e apenas a data omitem campos essenciais."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-78",
@@ -25058,25 +25115,25 @@
     "en": {
      "q": "A Test Manager wants to use defect classification data to drive improvement. According to the CTAL-TM v3.0 syllabus, which classification scheme is MOST useful for identifying which phase defects were introduced and detected?",
      "options": [
-      "Classification by the colour of the test that found the defect",
+      "Classification by defect severity and priority",
       "Orthogonal Defect Classification (ODC) or similar schemes that tag defects by type (e.g., function, interface, timing), trigger, phase introduced, and phase detected",
-      "Classification by tester's mood",
-      "Classification by office location"
+      "Classification by the component or module where the defect was found",
+      "Classification by lifecycle status (new, open, fixed, closed)"
      ],
-     "exp": "Per the syllabus, defect classification schemes such as Orthogonal Defect Classification (ODC) tag defects by type, trigger, phase introduced, and phase detected. This enables phase containment analysis and targeted improvements. The other options, and D are not recognized classification schemes."
+     "exp": "Per the syllabus, defect classification schemes such as Orthogonal Defect Classification (ODC) tag defects by type, trigger, phase introduced, and phase detected. This enables phase containment analysis and targeted improvements. Severity/priority, component location, and lifecycle status are useful, common classifications, but none of them tag the phase in which the defect was introduced or detected — the information needed for phase containment analysis."
     },
     "pt": {
      "q": "Um Gerente de Teste quer usar dados de classificação de defeitos para impulsionar melhoria. Segundo o syllabus CTAL-TM v3.0, qual esquema de classificação é MAIS útil para identificar em qual fase os defeitos foram introduzidos e detectados?",
      "options": [
-      "Classificação pela cor do teste que encontrou o defeito",
+      "Classificação por severidade e prioridade do defeito",
       "Orthogonal Defect Classification (ODC) ou esquemas semelhantes que marcam defeitos por tipo (ex.: função, interface, timing), gatilho, fase introduzida e fase detectada",
-      "Classificação pelo humor do testador",
-      "Classificação pela localização do escritório"
+      "Classificação por componente ou módulo onde o defeito foi encontrado",
+      "Classificação pelo status do ciclo de vida (novo, aberto, corrigido, fechado)"
      ],
-     "exp": "Segundo o syllabus, esquemas de classificação de defeitos como Orthogonal Defect Classification (ODC) marcam defeitos por tipo, gatilho, fase introduzida e fase detectada. Isso permite análise de contenção de fases e melhorias direcionadas. As as demais opções não são esquemas de classificação reconhecidos."
+     "exp": "Segundo o syllabus, esquemas de classificação de defeitos como Orthogonal Defect Classification (ODC) marcam defeitos por tipo, gatilho, fase introduzida e fase detectada. Isso permite análise de contenção de fases e melhorias direcionadas. Severidade/prioridade, localização por componente e status do ciclo de vida são classificações úteis e comuns, mas nenhuma delas marca a fase em que o defeito foi introduzido ou detectado — a informação necessária para a análise de contenção de fases."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-79",
@@ -25140,7 +25197,7 @@
      "exp": "Segundo o syllabus, quando a análise de contenção de fases mostra que defeitos introduzidos cedo são detectados tarde, a ação apropriada é fortalecer atividades de QA precoces (revisões, análise estática, walkthroughs) para que os defeitos sejam capturados mais perto de onde são introduzidos — reduzindo o custo de falhas internas. A opção sobre fortalecer atividades de QA precoces reflete esse princípio. As outras três opções estão erradas: a opção sobre eliminar revisões de requisitos remove revisões úteis; a opção sobre contratar mais testadores de sistema superlota fases tardias; a opção sobre reduzir o teste reduz a qualidade geral."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-81",
@@ -25268,7 +25325,7 @@
      "exp": "Segundo o syllabus, analisar a base de teste e modelar casos de teste são competências Profissionais específicas de teste; configurar ambientes e usar técnicas também envolvem competência Metodológica (métodos, ferramentas, procedimentos). A opção sobre Profissional e Metodológica combinadas captura ambas. A opção sobre apenas Metodológica superestima Metodológica; as opções sobre apenas Pessoal e apenas Social identificam incorretamente a área de competência."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-85",
@@ -25300,7 +25357,7 @@
      "exp": "Segundo o syllabus, as habilidades necessárias dependem do contexto: SDLC (ágil → CI/CD, exploratório), arquitetura (microsserviços → teste de API, segurança, performance), domínio (saúde → conhecimento de negócios), configuração da equipe (distribuída → habilidades sociais para colaboração remota) e modelo de equipe (ágil auto-organizável → competências pessoais). A opção sobre competências combinadas em API, segurança, performance, CI/CD e domínio de saúde captura tudo isso. As outras três opções ignoram o contexto."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-86",
@@ -25332,7 +25389,7 @@
      "exp": "Segundo o syllabus, quando existem lacunas de habilidades, o Gerente de Teste deve identificá-las por meio de uma matriz de habilidades e desenvolver um plano combinando treinamento, mentoria, autoestudo, aprendizagem entre pares, treinamento no trabalho e (quando necessário) contratação ou terceiros. A opção sobre plano de desenvolvimento de habilidades combinando treinamento, mentoria e contratação direcionada captura essa abordagem equilibrada. As outras três opções são ou negligentes ou extremas."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-87",
@@ -25346,25 +25403,25 @@
     "en": {
      "q": "According to the CTAL-TM v3.0 syllabus, which of the following is a recognized technique for assessing test team member skills?",
      "options": [
-      "Asking the team member's friends only",
-      "Looking only at the team member's social media profile",
+      "Considering only the tester's total years of career, without observing typical test tasks",
+      "Applying only a self-assessment questionnaire, without practical verification of the tasks",
       "Demonstration of typical test tasks (e.g., drafting a test strategy, reviewing the test basis, applying test techniques, drafting a test completion report), plus external credentials, certifications, professional experience, and diplomas",
-      "Picking a random skill score from a hat"
+      "Using only academic diplomas, without demonstration of typical test tasks"
      ],
-     "exp": "Per the syllabus, professional and methodological competencies can be assessed via demonstration of typical test tasks (drafting a strategy, reviewing the test basis, applying test techniques, drafting a completion report), supplemented by external credentials, certifications, professional experience, and diplomas. The option about demonstration of typical test tasks and external credentials captures this. The other three options are not recognized assessment techniques."
+     "exp": "Per the syllabus, professional and methodological competencies can be assessed via demonstration of typical test tasks (drafting a strategy, reviewing the test basis, applying test techniques, drafting a completion report), supplemented by external credentials, certifications, professional experience, and degrees. Career length alone, isolated self-assessment, and diplomas alone are insufficient: task demonstration is the core of the assessment, with credentials as a supplement."
     },
     "pt": {
      "q": "Segundo o syllabus CTAL-TM v3.0, qual das seguintes é uma técnica reconhecida para avaliar habilidades de membros da equipe de teste?",
      "options": [
-      "Perguntar apenas aos amigos do membro da equipe",
-      "Olhar apenas o perfil de mídia social do membro da equipe",
+      "Considerar apenas o tempo total de carreira do testador, sem observar tarefas típicas de teste",
+      "Aplicar apenas um questionário de autoavaliação, sem verificação prática das tarefas",
       "Demonstração de tarefas típicas de teste (ex.: esboçar uma estratégia de teste, revisar a base de teste, aplicar técnicas de teste, redigir um relatório de conclusão de teste), além de credenciais externas, certificações, experiência profissional e diplomas",
-      "Escolher uma pontuação de habilidade aleatória de um chapéu"
+      "Usar apenas diplomas acadêmicos, sem demonstração das tarefas típicas de teste"
      ],
-     "exp": "Segundo o syllabus, as competências profissional e metodológica podem ser avaliadas por meio de demonstração de tarefas típicas de teste (esboçar uma estratégia, revisar a base de teste, aplicar técnicas de teste, redigir um relatório de conclusão), suplementadas por credenciais externas, certificações, experiência profissional e diplomas. A opção sobre demonstração de tarefas típicas de teste e credenciais externas captura isso. As outras três opções não são técnicas reconhecidas de avaliação."
+     "exp": "Segundo o syllabus, as competências profissional e metodológica podem ser avaliadas por meio de demonstração de tarefas típicas de teste (esboçar uma estratégia, revisar a base de teste, aplicar técnicas de teste, redigir um relatório de conclusão), suplementadas por credenciais externas, certificações, experiência profissional e diplomas. Tempo de carreira, autoavaliação isolada e diplomas sozinhos não bastam: a demonstração das tarefas é o núcleo da avaliação, com credenciais como complemento."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-88",
@@ -25460,7 +25517,7 @@
      "exp": "Segundo o syllabus, 'para desenvolver a competência social e pessoal, recomenda-se usar abordagens como coaching e mentoria, que geralmente são mais promissoras do que o estudo autônomo. A troca social, o feedback e a reflexão estão entre os principais fatores de sucesso para desenvolver a competência social e pessoal.' A opção sobre coaching e mentoria combinados com troca social, feedback e reflexão captura isso. A opção sobre apenas autoestudo é mais adequada para competências profissionais/metodológicas."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-91",
@@ -25524,7 +25581,7 @@
      "exp": "Segundo o syllabus, os estágios de Tuckman são: Formação (membros se juntam), Confrontação (conflito emerge), Normatização (regras e valores são acordados), Performance (delegação e alta performance), Encerramento (membros saem). A opção com a sequência Formação, Confrontação, Normatização, Performance, Encerramento dá a ordem correta. As outras opções embaralham a sequência."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-93",
@@ -25588,7 +25645,7 @@
      "exp": "Segundo o syllabus, fatores de higiene (salário, condições de trabalho) previnem desmotivação quando presentes, mas não motivam. Motivadores (reconhecimento, autonomia, trabalho desafiador, avanço) impulsionam a motivação real. A opção sobre salário como higiene e motivadores captura a interpretação e ação corretas. A opção sobre dobrar o salário atribui incorretamente o problema; as opções sobre ausência de solução e punir testadores desmotivados são ineficazes ou contraproducentes."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-95",
@@ -25716,7 +25773,7 @@
      "exp": "Segundo o syllabus, um cálculo de custo-benefício estima o valor agregado pelo teste como a redução nos custos de falha menos o custo do teste. Aqui: 400.000 (falhas externas prevenidas) − 80.000 (custo do teste) = 320.000. A opção com o valor 320.000 está correta. A opção com o valor 20.000 aplica incorretamente a fórmula; a opção com o valor 80.000 é apenas o custo do teste; a opção com o valor 500.000 é o custo de falha não mitigado."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-99",
@@ -25748,7 +25805,7 @@
      "exp": "Segundo o syllabus, custo-benefício para melhoria de teste = (economia anual × número de anos) − investimento antecipado = (300.000 × 3) − 100.000 = 900.000 − 100.000 = 800.000. O investimento vale claramente a pena. A opção com o valor 800.000 está correta. As opções com os valores 300.000, 100.000 e Zero calculam mal ou negam o valor."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-100",
@@ -26036,7 +26093,7 @@
      "exp": "Segundo o syllabus, stakeholders de operações/suporte estão interessados em teste porque manterão e operarão o software em produção; eles querem testes de aceitação operacional para garantir que o software possa ser implantado, suportado e recuperado. As outras opções deturpam o seu interesse (eles não maximizam contagens brutas de teste, não querem o teste eliminado e se importam com aspectos não funcionais como operabilidade)."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-109",
@@ -26100,7 +26157,7 @@
      "exp": "O syllabus enfatiza que o conhecimento dos stakeholders complementa a base de teste e é um insumo-chave para identificar riscos e características de qualidade. Trabalhando sozinho, o Gerente de Teste arrisca pontos cegos e cobertura incompleta. As outras opções deturpam o impacto (tamanho, regras de autoria ou ausência de risco)."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-111",
@@ -26356,7 +26413,7 @@
      "exp": "K4 exige analisar a situação e determinar as atividades necessárias. O syllabus é claro de que o planejamento de teste deve começar cedo mesmo em contextos híbridos, de que o teste baseado em risco adapta atividades por ritmo de componente, de que os requisitos de evidência de auditoria devem ser planejados desde o início e de que critérios de saída e comunicação com stakeholders são obrigatórios. As outras opções esperam passivamente, pulam o planejamento ou ignoram parte do contexto — todas contrárias ao syllabus."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-119",
@@ -26388,7 +26445,7 @@
      "exp": "K4 exige analisar um contexto complexo de projeto e determinar as atividades de gerenciamento de teste. O syllabus indica que a análise de risco direciona a abordagem; que a automação deve ser mantida; que a negociação com stakeholders usa informações de risco; que integrações de terceiros exigem planejamento de teste explícito; e que prazos e critérios de saída são obrigatórios no plano de teste. As outras opções adiam passivamente, ignoram o risco ou recusam colaboração."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-120",
@@ -26484,7 +26541,7 @@
      "exp": "O syllabus lista técnicas para identificação de risco, incluindo brainstorming, entrevistas estruturadas, workshops de risco, checklists, lições aprendidas de projetos anteriores e walkthroughs da base de teste. Um walkthrough estruturado de requisitos para perguntar 'o que poderia dar errado' é um walkthrough da base de teste. Brainstorming é não estruturado; matriz de risco é para priorização; causa-efeito é para RCA."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-123",
@@ -26612,7 +26669,7 @@
      "exp": "K4 exige selecionar atividades de teste apropriadas para mitigar riscos pelo seu nível. O syllabus vincula explicitamente técnicas mais profundas, testadores mais experientes e cobertura mais ampla a itens de maior risco, e cobertura mais leve a itens de menor risco. Esforço igual em todos os níveis é desperdício; concentrar apenas em R1 ignora R2; teste em ordem reversa é irracional."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-127",
@@ -26644,7 +26701,7 @@
      "exp": "K4 exige corresponder atividades ao nível de risco. O syllabus recomenda explicitamente técnicas mais profundas (transição de estado, tabela de decisão) para itens de alto risco de segurança, técnicas moderadas (exploratório, checklist) para riscos médios e técnicas leves (fumaça) para itens de baixo risco. As outras opções invertem prioridades, homogeneízam ou pulam o teste inteiramente."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-128",
@@ -26676,7 +26733,7 @@
      "exp": "K4 exige selecionar atividades apropriadas para mitigar riscos por nível. O syllabus indica que riscos altos de segurança e segurança exigem teste especializado e técnicas profundas; riscos médios exigem teste não funcional apropriado; riscos cosméticos baixos exigem atenção mínima. As outras opções alocam técnicas incorretamente, ignoram riscos altos, homogeneízam ou afirmam que riscos altos não podem ser mitigados."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-129",
@@ -26740,7 +26797,7 @@
      "exp": "O syllabus enfatiza que a escolha entre técnicas pesadas e leves de teste baseado em risco depende do contexto. PoCs curtos com tempo limitado e baixa formalidade justificam técnicas leves; técnicas pesadas seriam desproporcionais. Leve nem sempre é superior; o ISTQB não proíbe técnicas pesadas em PoCs; a escolha não é arbitrária."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-131",
@@ -26804,7 +26861,7 @@
      "exp": "O syllabus lista o teste analítico (baseado em risco) como uma das várias escolhas típicas de abordagem de teste (junto com metódico, baseado em modelo, em conformidade com processo, reativo/consultivo, avesso à regressão, etc.). Não é exclusivo, não é proibido em iterativo e não é o mesmo que reativo (reativo usa históricos de defeito, não análise prévia de risco)."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-133",
@@ -26868,7 +26925,7 @@
      "exp": "K4 exige analisar a estratégia organizacional e o contexto do projeto para selecionar a abordagem de teste. A estratégia exige os três para esse contexto (baseado em risco para todos os projetos, em conformidade com processo para regulamentados, avesso à regressão para liberações frequentes). Selecionar apenas um violaria a estratégia. A resposta correta combina os três."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-135",
@@ -26900,7 +26957,7 @@
      "exp": "K4 exige analisar a estratégia organizacional e o contexto do projeto. A estratégia distingue claramente desenvolvimento de novos recursos (reativo/exploratório) de manutenção legada (metódico). O projeto tem ambos, então a seleção correta é aplicar cada abordagem ao componente correspondente. Aplicar uma única abordagem a ambos contradiz a estratégia; teste aleatório não é prescrito."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-136",
@@ -26932,7 +26989,7 @@
      "exp": "O 'T' do SMART significa Time-bound — ter um prazo definido. 'Até, no máximo, 2 dias antes da data de liberação' limita explicitamente a atividade no tempo. Específico é refletido por 'módulo de pagamento'; Mensurável é refletido por 'contado no rastreador de defeitos'; Atingível é refletido por esforço realista, não por um prazo."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-137",
@@ -26964,7 +27021,7 @@
      "exp": "O syllabus exige objetivos de teste SMART. 'Testar o sistema exaustivamente' não é Específico ('exaustivamente' é indefinido), não é Mensurável (nenhum critério quantitativo) e não tem prazo definido (nenhum prazo). Não é muito específico nem muito mensurável, e o SMART é obrigatório no syllabus."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-138",
@@ -27060,7 +27117,7 @@
      "exp": "O syllabus descreve a melhoria baseada em modelo como usando um modelo de referência (por exemplo, TMMi, TPI Next, CMMI) com avaliação contra o modelo para identificar lacunas e prioridades. A melhoria baseada em análise usa dados de defeito sem modelo; daily standups e consultores externos sem modelo não são abordagens baseadas em modelo."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-141",
@@ -27156,7 +27213,7 @@
      "exp": "Segundo o syllabus, retrospectivas (uma parte-chave da melhoria do processo de teste em projetos iterativos) capturam lições aprendidas, identificam o que parar/começar/continuar e produzem itens de melhoria acionáveis para a próxima iteração. Retrospectivas são sem culpa; não são relatórios de auditoria; não eliminam o planejamento."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-144",
@@ -27188,7 +27245,7 @@
      "exp": "A melhoria orientada por retrospectiva, segundo o syllabus, exige converter observações em itens acionáveis, com responsável e prazo, rastreados até o encerramento em iterações subsequentes. Arquivar sem ação, substituir a equipe ou cancelar sprints indefinidamente não são implementações válidas."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-145",
@@ -27220,7 +27277,7 @@
      "exp": "O syllabus lista as melhores práticas para introdução de ferramentas, incluindo conduzir um piloto, treinar usuários, garantir adesão dos stakeholders e ter um business case claro. Uma implementação big-bang sem piloto ou treinamento viola essas práticas. O syllabus não proíbe pilotos nem treinamento."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-146",
@@ -27284,7 +27341,7 @@
      "exp": "Segundo o syllabus, os aspectos de negócio ao decidir sobre um tipo de ferramenta incluem o custo total de propriedade (TCO), cobrindo licença, treinamento, implementação, manutenção, suporte e atualização. Escolher com base apenas no custo antecipado, no marketing ou na linguagem é contrário ao syllabus."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-148",
@@ -27348,7 +27405,7 @@
      "exp": "K4 exige criar um plano de seleção de ferramenta a partir de uma situação dada. O syllabus indica que o plano deve ponderar o encaixe técnico (web, JavaScript, GitHub Actions), as restrições organizacionais (mandato open-source) e as melhores práticas (piloto, critérios de sucesso, treinamento, implementação faseada). As outras opções ignoram o encaixe técnico, baseiam a decisão apenas em marketing ou adiam o planejamento."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-150",
@@ -27380,7 +27437,7 @@
      "exp": "O syllabus descreve o ciclo de vida da ferramenta incluindo seleção, implantação, uso, suporte e aposentadoria/obsolescência. Uma ferramenta que não é mais suportada, não se encaixa mais na tecnologia e está produzindo resultados flaky está no estágio de aposentadoria/obsolescência. Não está em piloto, em uso de pico ou em pré-seleção."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-151",
@@ -27508,7 +27565,7 @@
      "exp": "Segundo o syllabus, avaliar métricas coletadas por ferramentas apoia decisões de gerenciamento de teste (prontidão para liberação, dívida técnica, priorização de melhorias) usando dados consistentes e com tendências. Decoração, substituir o plano de teste ou liberar automaticamente independentemente das métricas não são propósitos válidos."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-155",
@@ -27572,7 +27629,7 @@
      "exp": "Segundo o syllabus, as métricas devem estar alinhadas aos objetivos de teste. O objetivo é verificar zero defeitos críticos abertos e retestes bem-sucedidos — então contagens de defeitos por severidade e contagens de retestes aprovados estão diretamente alinhadas. Casos de teste planejados, orçamento, permanência de desenvolvedores e consumo de café não estão diretamente alinhados com esse critério de saída."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-157",
@@ -27604,7 +27661,7 @@
      "exp": "Segundo o syllabus, o progresso de execução de teste é uma métrica para monitorar o progresso contra o plano e prever a conclusão. Ela não mede a correção do caso de teste, não calcula bônus nem substitui o plano de teste."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-158",
@@ -27636,7 +27693,7 @@
      "exp": "Segundo o syllabus, a cobertura de teste dos requisitos fornece informações sobre a extensão dos requisitos cobertos, o que apoia decisões sobre profundidade de modelagem de teste e escopo. Não é a contagem bruta de casos de teste, não é a velocidade de execução e complementa (não substitui) a matriz de rastreabilidade."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-159",
@@ -27700,7 +27757,7 @@
      "exp": "Segundo o syllabus, a queda na taxa de execução de teste é um sinal que exige investigação e ação corretiva (controle). Parar, esconder ou manipular metas para mascarar a tendência é inadequado."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-161",
@@ -27732,7 +27789,7 @@
      "exp": "K4 exige analisar resultados de teste para criar um relatório que possibilite decisões dos stakeholders. A análise deve ponderar: defeitos críticos em um sistema de segurança são um sinal de parada; a matemática (50/dia × 3 dias = 150 < 200 restantes) mostra que o teste não pode ser concluído; testes bloqueados precisam de resolução. Recomendar estender/adiar/reduzir escopo é apoiar a decisão. As outras opções selecionam uma métrica positiva isolada e ignoram bloqueadores críticos."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-162",
@@ -27764,7 +27821,7 @@
      "exp": "K4 exige analisar resultados para permitir uma decisão. O contexto (portal de RH interno não crítico) mais as métricas (100% de execução, 0 críticos, UAT assinado, regressão verde) apoiam uma recomendação de liberação com problemas conhecidos documentados. Proibir a liberação por qualquer contagem de defeitos, exigir zero defeitos ou rejeitar porque o UAT encontrou defeitos aplica regras incorretamente sem considerar o contexto."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-163",
@@ -27796,7 +27853,7 @@
      "exp": "K4 exige criar um relatório que possibilite decisões dos stakeholders. O syllabus indica que o relatório deve ser conciso, incluir progresso contra o plano, riscos, defeitos, ambiente, previsão e decisões solicitadas. Um dump bruto não permite decisão; folhetos de marketing e opiniões sem métricas são inadequados."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-164",
@@ -27988,7 +28045,7 @@
      "exp": "K4 exige selecionar uma abordagem de estimativa para um contexto dado. O syllabus descreve várias técnicas (baseada em especialista, baseada em métricas, iterativa). Sem dados históricos e com alta incerteza, a combinação de baseada em especialista com reestimativa iterativa é mais apropriada. Métricas puras sem dados é impossível; uma única estimativa não revisada ignora o aprendizado; não estimar não é uma opção."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-170",
@@ -28020,7 +28077,7 @@
      "exp": "Segundo o syllabus, o fluxo de trabalho de defeito inclui estados explícitos (novo, atribuído, aberto, corrigido, reteste, fechado, reaberto, adiado) com responsáveis e regras de transição. Pular para fechado, excluir ou usar email sem fluxo é inadequado."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-171",
@@ -28052,7 +28109,7 @@
      "exp": "Segundo o syllabus, fechar um defeito deve ser feito por um testador que verificou a correção, preservando a independência. O desenvolvedor fechando sua própria correção arrisca viés; permitir que qualquer stakeholder feche defeitos é incorreto; defeitos eventualmente são fechados."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-172",
@@ -28084,7 +28141,7 @@
      "exp": "Segundo o syllabus, o gerenciamento de defeitos eficaz exige testadores, desenvolvedores, um coordenador/moderador e stakeholders que tomam decisões. Limitar a apenas um papel deturpa a natureza multifuncional do gerenciamento de defeitos."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-173",
@@ -28148,7 +28205,7 @@
      "exp": "Segundo o syllabus, o gerenciamento de defeitos em ágil usa rastreamento leve no sprint com correções no mesmo sprint; defeitos adiados vão para o backlog do produto. Exigir um rastreador externo pesado, sempre adiar para um sprint de endurecimento ou não rastrear defeitos não está alinhado com o gerenciamento de defeitos ágil."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-175",
@@ -28180,7 +28237,7 @@
      "exp": "Segundo o syllabus, em ágil, o Product Owner prioriza defeitos dentro do refinamento do backlog/planejamento do sprint; reuniões explícitas de triagem geralmente são reservadas para casos de alta severidade. Proibir triagem inteiramente, exigir triagem diária ou afirmar que o Scrum Guide a proíbe é incorreto."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-176",
@@ -28244,7 +28301,7 @@
      "exp": "Segundo o syllabus, o gerenciamento de defeitos híbrido exige definir uma interface entre os fluxos de trabalho. Forçar uma equipe a adotar o fluxo da outra ou eliminar o rastreamento não é uma ponte — é uma substituição unilateral."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-178",
@@ -28276,7 +28333,7 @@
      "exp": "Segundo o syllabus, o gerenciamento de defeitos deve coletar dados de classificação (tipo de defeito, gatilho, fase de injeção/detecção, causa raiz) para apoiar a análise de melhoria. Dados pessoais, marca do computador e clima não são dados relevantes de classificação."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-179",
@@ -28532,7 +28589,7 @@
      "exp": "K4 exige analisar o contexto do projeto para determinar as habilidades necessárias. As quatro áreas de competência do syllabus (Profissional, Metodológica, Social, Pessoal) e as necessidades específicas do projeto (verificação algorítmica, automação, evidência regulatória) exigem uma análise direcionada de lacunas de habilidades. Contratar apenas especialistas de domínio, apenas juniores ou ninguém deixa de abordar as lacunas identificadas."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-187",
@@ -28564,7 +28621,7 @@
      "exp": "K4 exige analisar o contexto para determinar habilidades. As quatro áreas de competência devem ser avaliadas contra as necessidades específicas do projeto (ASPICE, ISO 21434, teste de penetração, colaboração com fornecedores). Contratar apenas generalistas, apenas engenheiros não testadores ou ignorar o contexto deixa de abordar as lacunas."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-188",
@@ -28596,7 +28653,7 @@
      "exp": "Segundo o syllabus, as técnicas típicas de avaliação de habilidades incluem autoavaliação, avaliação por pares, avaliação pelo gerente, observação e feedback 360 graus. Uma autoavaliação seguida por validação do gerente é exatamente isso. Não é execução de teste, classificação de defeitos ou estimativa."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-189",
@@ -28610,22 +28667,22 @@
     "en": {
      "q": "According to the CTAL-TM v3.0 syllabus, which of the following is a TYPICAL test team member skill assessment technique?",
      "options": [
-      "Polygraph testing, to detect dishonest skill claims",
-      "IQ testing only, with no consideration of test-specific skills",
+      "Assessment based only on how long the member has been on the test team",
+      "A generic logical reasoning test, with no test-skill component",
       "360-degree feedback, where feedback is collected from peers, managers, and stakeholders to provide a comprehensive view of the tester's skills",
-      "Personality typing only, with no skill component"
+      "An anonymous self-assessment filled in by the member alone, without feedback from peers, managers, or stakeholders"
      ],
-     "exp": "Per the syllabus, 360-degree feedback is a typical skill assessment technique. Polygraph, IQ-only, and personality-only are not recognized skill assessment techniques in the syllabus."
+     "exp": "In the syllabus, teams — especially in Agile development — identify skills by regularly participating in retrospectives and receiving feedback; 360-degree feedback collects input from peers, managers, and stakeholders and provides a comprehensive view of the tester's skills. Tenure alone, generic reasoning tests, and self-assessment without external feedback sources are not typical test skill assessment techniques."
     },
     "pt": {
      "q": "Segundo o syllabus CTAL-TM v3.0, qual das seguintes é uma técnica TÍPICA de avaliação de habilidades de membro da equipe de teste?",
      "options": [
-      "Teste de polígrafo, para detectar reivindicações desonestas de habilidades",
-      "Apenas teste de QI, sem consideração de habilidades específicas de teste",
+      "Avaliação baseada apenas no tempo de casa do membro na equipe de teste",
+      "Teste genérico de raciocínio lógico, sem componente de habilidade de teste",
       "Feedback 360 graus, em que o feedback é coletado de pares, gerentes e stakeholders para fornecer uma visão abrangente das habilidades do testador",
-      "Apenas tipagem de personalidade, sem componente de habilidades"
+      "Autoavaliação anônima preenchida pelo próprio membro, sem feedback de pares, gestores ou stakeholders"
      ],
-     "exp": "Segundo o syllabus, o feedback 360 graus é uma técnica típica de avaliação de habilidades. Polígrafo, apenas QI e apenas personalidade não são técnicas reconhecidas de avaliação de habilidades no syllabus."
+     "exp": "No syllabus, equipes — especialmente em desenvolvimento Ágil — identificam habilidades participando regularmente de retrospectivas e recebendo feedback; o feedback 360 graus coleta percepções de pares, gestores e stakeholders e fornece uma visão abrangente das habilidades do testador. Tempo de casa, testes genéricos de raciocínio e autoavaliação sem fontes externas de feedback não são técnicas típicas de avaliação de habilidades de teste."
     }
    },
    "pool": "study"
@@ -28756,7 +28813,7 @@
      "exp": "Segundo o syllabus, os Gerentes de Teste exercem habilidades de negociação e gerenciamento de stakeholders ao equilibrar pressões de liberação com qualidade. Codificação, teste manual e marketing não são a habilidade primária de gerenciamento neste cenário."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-194",
@@ -28788,7 +28845,7 @@
      "exp": "Segundo o syllabus (baseado na teoria de Herzberg), os fatores de motivação incluem conquista, reconhecimento, o trabalho em si, responsabilidade, avanço e crescimento. Salário e iluminação do escritório são fatores de higiene (evitam a insatisfação, mas não motivam); ameaças não são motivadores válidos."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-195",
@@ -28820,7 +28877,7 @@
      "exp": "Segundo o syllabus, os fatores de higiene (salário, condições) evitam a insatisfação, mas não motivam; os fatores de motivação (reconhecimento, crescimento, trabalho significativo) são necessários para a motivação. A insatisfação do testador apesar de bons fatores de higiene sugere falta de fatores de motivação. Mais pagamento, condições piores ou ameaças não são soluções válidas."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-196",
@@ -28852,7 +28909,7 @@
      "exp": "Segundo o syllabus, os custos de falha externa surgem depois que o produto chega ao cliente (defeitos em produção, suporte, hotfixes, recalls, custos legais, reputação). Design e execução de teste são custos de prevenção ou avaliação; treinamento é custo de prevenção."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-197",
@@ -28948,7 +29005,7 @@
      "exp": "K3 exige aplicar custo-benefício na margem. Custo evitado marginal = $400.000 − $200.000 = $200.000. Custo de teste marginal = $100.000. Valor marginal = $200.000 − $100.000 = $100.000. Ignorar o custo de teste, presumir zero ou presumir negativo sem cálculo é incorreto."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "ctaltm-200",
@@ -28980,7 +29037,7 @@
      "exp": "K3 exige aplicar custo-benefício. O erro do executivo é comparar o custo de teste ($400K) com o custo de defeito residual ($200K) em vez de com o custo de defeito evitado ($1,5M − $200K = $1,3M). A análise correta mostra um valor líquido de $900K. Eliminar teste, cortar salários ou substituir teste por correção em produção aplicam incorretamente a lógica de custo-benefício."
     }
    },
-   "pool": "study"
+   "pool": "exam"
   },
   {
    "id": "aitest-01",

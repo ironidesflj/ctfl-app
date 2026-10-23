@@ -124,3 +124,11 @@ pontuação (count e points), corte exato, custom proporcional, casos limite.
 - bstqb.online/ctfl — exame em português no Brasil; tempo estendido apenas
   mediante solicitação na inscrição; +10 min finais para transcrever o
   gabarito (não se aplica a app); exames de exemplo públicos (Sets A/B).
+
+# CTAL-TM v3.0 — v3.17.0
+
+200 questões: 101 de estudo e 99 exclusivas de simulado. Prova com 50
+questões e 88 pontos; aprovação a partir de 58 pontos; duração de 120 min.
+Distribuição por capítulo: 26/15/9. Na célula capítulo 2/K3 há 7 questões
+para 2 × 4 posições: duas formas inteiramente disjuntas não são garantidas.
+As 28 questões K4 estão no simulado; falta conteúdo K4 no pool de estudo.

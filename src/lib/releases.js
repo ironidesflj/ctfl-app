@@ -1,14 +1,15 @@
 const RELEASE_KEY_PREFIX = "synapse.releaseNotes.seen";
 
 export const CURRENT_RELEASE = {
-  version: "3.16.0",
+  version: "3.17.0",
   significant: true,
   pt: {
     eyebrow: "Novidades da versão",
     title: "O Synapse evoluiu",
-    intro:
-      "Esta atualização reforça a identidade de cada certificação e melhora o cabeçalho mobile.",
+    intro: "O CTAL-TM agora está disponível para estudo e simulados.",
     items: [
+      "Prepare-se para Test Management v3.0 com questões, flashcards, syllabus e glossário em PT/EN.",
+      "Simulados CTAL-TM com 50 questões, 88 pontos e corte de 58 pontos.",
       "O CTAL-TA ganhou tons teal nos botões, abas e filtros, com contraste verificado.",
       "O cabeçalho mobile continua oferecendo a troca de certificação.",
       "Navegue pelo mapa de atividade usando as setas do teclado.",
@@ -29,8 +30,10 @@ export const CURRENT_RELEASE = {
   en: {
     eyebrow: "What's new in",
     title: "Synapse has evolved",
-    intro: "This update strengthens certification identity and improves the mobile header.",
+    intro: "CTAL-TM is now available for study and exam simulations.",
     items: [
+      "Study Test Management v3.0 with questions, flashcards, syllabus, and glossary in PT/EN.",
+      "CTAL-TM simulations include 50 questions, 88 points, and a 58-point pass mark.",
       "CTAL-TA now uses teal buttons, tabs, and filters with verified contrast.",
       "The mobile header keeps certification switching available.",
       "Navigate the activity map using your keyboard arrow keys.",

@@ -109,4 +109,34 @@ export const CERTS = {
       },
     ],
   },
+  "ctal-tm": {
+    id: "ctal-tm",
+    label: "CTAL-TM",
+    version: "v3.0",
+    syllabusYear: 2024,
+    chapters: [
+      {
+        chapter: 1,
+        domain: "manager",
+        pt: {
+          name: "Atividades de Teste",
+          sub: "Gerenciamento das Atividades de Teste",
+          short: "Atividades",
+        },
+        en: { name: "Test Activities", sub: "Managing the Test Activities", short: "Activities" },
+      },
+      {
+        chapter: 2,
+        domain: "manager",
+        pt: { name: "O Produto", sub: "Gerenciamento do Produto", short: "Produto" },
+        en: { name: "The Product", sub: "Managing the Product", short: "Product" },
+      },
+      {
+        chapter: 3,
+        domain: "manager",
+        pt: { name: "O Time de Teste", sub: "Gerenciamento do Time de Teste", short: "Time" },
+        en: { name: "The Test Team", sub: "Managing the Team", short: "Team" },
+      },
+    ],
+  },
 };

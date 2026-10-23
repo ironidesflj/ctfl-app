@@ -23,11 +23,11 @@ function renderApp(path) {
 }
 
 describe("catálogo de vitrine (certs-catalog)", () => {
-  it("tem 6 entradas: 2 live, 3 coming-soon, 1 legacy", () => {
+  it("tem 6 entradas: 3 live, 2 coming-soon, 1 legacy", () => {
     expect(CERT_CATALOG).toHaveLength(6);
     const by = (s) => CERT_CATALOG.filter((c) => c.status === s).length;
-    expect(by("live")).toBe(2);
-    expect(by("coming-soon")).toBe(3);
+    expect(by("live")).toBe(3);
+    expect(by("coming-soon")).toBe(2);
     expect(by("legacy")).toBe(1);
   });
 });
@@ -112,7 +112,7 @@ describe("CertSelector (/ sem lastCert, e /select)", () => {
     expect(screen.getByText("CTAL-TA")).toBeInTheDocument();
     // coming-soon presentes e desabilitados
     const soon = screen.getByText("CTAL-TM").closest("button");
-    expect(soon).toBeDisabled();
+    expect(soon).toBeEnabled();
     // legacy (CTFL-AT) não é card clicável na lista — aparece só na nota
     expect(screen.queryByText("CTFL-AT")?.closest("button.cert-card")).toBeFalsy();
     expect(screen.getByText(/legado/i)).toBeInTheDocument();

@@ -1,7 +1,7 @@
 // Conteúdo de estudo — Flashcards + itens de Syllabus.
 //
-// Arquitetura (r14): cada item carrega `cert` ("ctfl" | "ctal-ta") + `ch`
-// (número do capítulo, 1–6 CTFL / 1–5 CTAL-TA). O campo `d` (domínio) é
+// Arquitetura (r14): cada item carrega `cert` ("ctfl" | "ctal-ta" | "ctal-tm") + `ch`
+// (número do capítulo, 1–6 CTFL / 1–5 CTAL-TA / 1–3 CTAL-TM). O campo `d` (domínio) é
 // mantido por compatibilidade com o CTFL, mas o escopo por certificação é
 // feito pelo campo explícito `cert` — o domínio sozinho não distingue
 // capítulos dentro do CTAL-TA (todos os 5 compartilham "analyst").
@@ -596,6 +596,364 @@ export const FLASHCARDS = [
       },
     },
   },
+
+  /* ─────────── CTAL-TM v3.0 (r19 — 21 cards, ids fc-tm-*) ───────────
+     Fonte: ISTQB CTAL-TM v3.0 Syllabus (2024/05/03, istqb.org) — Managing
+     the Test Activities / Managing the Product / Managing the Team.
+     Distribuição por capítulo proporcional ao peso oficial do exame
+     (cap1 26/50 questões · cap2 15/50 · cap3 9/50). */
+  /* ─────────── Capítulo 1 — Managing the Test Activities (11 cards) ─────────── */
+  // 1.1 The Test Process
+  {
+    id: "fc-tm-101",
+    cert: "ctal-tm",
+    ch: 1,
+    d: "manager",
+    locales: {
+      pt: {
+        front: "Planejamento de teste: as 5 tarefas",
+        back: "Iniciar o mais cedo possível (ideal: antes dos requisitos); iterativo, com replanejamento:\n1. Compreender o contexto e organizar o planejamento (política e estratégia organizacionais, escopo, item de teste; aprovação dos stakeholders)\n2. Identificar e analisar os riscos de produto\n3. Identificar as abordagens de tratamento de risco (preventiva, corretiva, mitigadora)\n4. Definir a abordagem de teste + estimar e alocar recursos (equipe, ferramentas, ambientes, dados)\n5. Estabelecer o plano — aceito por TODOS os stakeholders (divergências resolvidas)\nISO/IEC/IEEE 29119-2 cobre esses processos (níveis projeto, programa, portfólio)",
+      },
+      en: {
+        front: "Test planning: the 5 tasks",
+        back: "Start as early as possible (ideally before requirements); iterative, with re-planning:\n1. Understand the context and organize test planning (org policy and strategy, scope, test item; stakeholder approval)\n2. Identify and analyze product risks\n3. Identify risk treatment approaches (preventive, corrective, mitigating)\n4. Define the test approach + estimate and allocate resources (staff, tools, environments, data)\n5. Establish the plan — accepted by ALL stakeholders (disagreements settled)\nISO/IEC/IEEE 29119-2 covers these processes (project, program, portfolio levels)",
+      },
+    },
+  },
+  {
+    id: "fc-tm-102",
+    cert: "ctal-tm",
+    ch: 1,
+    d: "manager",
+    locales: {
+      pt: {
+        front: "Monitoramento × Controle de teste",
+        back: "MONITORAMENTO: coletar e registrar resultados, identificar desvios do planejado, identificar e analisar riscos novos, monitorar mudanças nos riscos conhecidos\nCONTROLE: comparar o progresso real com o plano e agir — implementar o plano e as diretivas, gerenciar desvios, tratar riscos novos/alterados, confirmar a prontidão para iniciar, conceder/obter aprovação da conclusão com base nos critérios de saída\nDiretivas típicas: repriorizar testes (risco virou problema), reavaliar critérios de entrada/saída após retrabalho, ajustar cronograma, adicionar recursos\nAmbos são atividades CONTÍNUAS; o controle realimenta o replanejamento",
+      },
+      en: {
+        front: "Test Monitoring vs. Test Control",
+        back: "MONITORING: collect and record results, identify deviations from plan, identify and analyze new risks, monitor changes in known risks\nCONTROL: compare actual progress against the plan and act — implement the plan and directives, manage deviations, treat new/changed risks, establish readiness to begin testing, grant/obtain completion approval based on exit criteria\nTypical directives: re-prioritize tests (risk became an issue), re-evaluate entry/exit criteria after rework, adjust the schedule, add resources\nBoth are ONGOING activities; control feeds back into re-planning",
+      },
+    },
+  },
+  {
+    id: "fc-tm-103",
+    cert: "ctal-tm",
+    ch: 1,
+    d: "manager",
+    locales: {
+      pt: {
+        front: "Conclusão do teste: as 5 tarefas",
+        back: "Ocorre em marcos (release, fim de iteração, fim de nível); defeitos sem solução viram change requests ou itens do product backlog:\n1. Criar e aprovar o relatório de conclusão (consolida planos, resultados, relatórios de progresso e defeitos)\n2. Arquivar o testware no gerenciamento de configuração (casos para reuso; resultados, logs e relatórios temporariamente)\n3. Entregar o testware a quem precisa (defeitos adiados/aceitos comunicados)\n4. Limpar e restaurar o ambiente ao estado predefinido (dados, ferramentas, drivers, stubs, scripts)\n5. Levantar lições aprendidas (retrospectivas; pode cobrir o SDLC inteiro)",
+      },
+      en: {
+        front: "Test completion: the 5 tasks",
+        back: "Occurs at milestones (release, iteration end, test level completion); unresolved defects become change requests or product backlog items:\n1. Create and approve the test completion report (consolidates plans, results, progress reports, defects)\n2. Archive testware in configuration management (cases for reuse; results, logs, reports temporarily)\n3. Hand over testware to those who need it (deferred/accepted defects communicated)\n4. Clean and restore the environment to a pre-defined state (data, tools, drivers, stubs, scripts)\n5. Capture lessons learned (retrospectives; may cover the whole SDLC)",
+      },
+    },
+  },
+  // 1.2 The Context of Testing
+  {
+    id: "fc-tm-104",
+    cert: "ctal-tm",
+    ch: 1,
+    d: "manager",
+    locales: {
+      pt: {
+        front: "Matriz poder-interesse: os 4 quadrantes",
+        back: "PROMOTORES (influência ALTA, interesse ALTO): colaboradores-chave — moldam a estratégia e o plano de teste\nLATENTES (influência alta, interesse baixo): decisões de alocação de recursos e direção; sem interesse no dia a dia\nDEFENSORES (influência baixa, interesse alto): feedback qualitativo — manter engajados com updates e discussões específicas\nAPÁTICOS (influência baixa, interesse baixo): informar em marcos significativos; consultar em temas pontuais traz insights\nA matriz: aproveita a expertise, apoia a gestão de riscos (interesse + influência → mitigação proativa) e valoriza perspectivas diversas",
+      },
+      en: {
+        front: "Power-interest matrix: the 4 quadrants",
+        back: "PROMOTERS (HIGH influence, HIGH interest): key collaborators — shape the test strategy and plan\nLATENTS (high influence, low interest): resource allocation and high-level direction decisions; no day-to-day interest\nDEFENDERS (low influence, high interest): qualitative feedback — keep engaged with regular updates and specific discussions\nAPATHETICS (low influence, low interest): update on major milestones; seeking their input on specific issues yields insights\nThe matrix: leverages expertise, supports risk management (interest + influence → proactive mitigation), values diverse perspectives",
+      },
+    },
+  },
+  {
+    id: "fc-tm-105",
+    cert: "ctal-tm",
+    ch: 1,
+    d: "manager",
+    locales: {
+      pt: {
+        front: "Sequencial × iterativo + modelo híbrido",
+        back: "SEQUENCIAL (ex.: V-model) × ITERATIVO (ex.: Scrum):\n• Estimativa: detalhada e precoce por nível × iterativa, no planning das histórias\n• Testware: estratégia, plano, casos, cronograma × critérios de aceitação e DoD (documentação mínima)\n• Papéis: gerente de teste dedicado × papéis integrados; facilitador/coach substitui o TM\n• Ferramentas: gestão por fases × CI/CD e automação centrais (teste contínuo)\n• Abordagem e automação: agendada por fases × embutida nas iterações; regressão automatizada no CI/CD\n• Relatório e métricas: por marcos × contínuo com dashboards em tempo real; + velocidade e burndown\nHÍBRIDO — por quê: transição para o Agile ou fit for purpose (adequação ao propósito, ex.: projeto de alto risco); o quê: avaliar a capacidade da equipe de transitar, combinar estrutura + flexibilidade, scrum-of-scrums de testadores, rastrear esforços e casos dentro dos sprints",
+      },
+      en: {
+        front: "Sequential vs. iterative + hybrid model",
+        back: "SEQUENTIAL (e.g., V-model) vs. ITERATIVE (e.g., Scrum):\n• Estimation: early, detailed per level × iterative, part of story planning\n• Testware: strategy, plan, cases, schedule × acceptance criteria and DoD; minimal documentation\n• Roles: dedicated test manager × integrated roles; facilitator/coach replaces the TM\n• Tools: phase-based test management × CI/CD and automation central (continuous testing)\n• Approach and automation: scheduled per phase × embedded in iterations; automated regression in CI/CD\n• Reporting and metrics: milestone-based × continuous with real-time dashboards; + velocity and burndown\nHYBRID — why: transition to Agile or fit for purpose (e.g., high-risk project); what: assess the team's ability to switch, combine structure + flexibility, testers' scrum-of-scrums, track effort and cases within sprints",
+      },
+    },
+  },
+  // 1.3 Risk-Based Testing
+  {
+    id: "fc-tm-106",
+    cert: "ctal-tm",
+    ch: 1,
+    d: "manager",
+    locales: {
+      pt: {
+        front: "TBR: identificação e avaliação de riscos",
+        back: "TBR = identificação + avaliação + monitoramento + mitigação de riscos dirigindo o teste; quanto maior o nível → testar mais cedo, mais intenso e prolongado\nIDENTIFICAÇÃO (o TM colhe dos stakeholders; amostra mais ampla possível; lista acordada com o PM): entrevistas com especialistas, avaliações independentes, retrospectivas, workshops de risco, brainstorming, checklists, experiência passada\nAVALIAÇÃO: nível de risco = PROBABILIDADE (complexidade de tecnologia/arquitetura, imaturidade, pessoal, conflitos, fornecedores, distribuição, liderança fraca, pressões, falta de QA cedo, mudanças frequentes) × IMPACTO (frequência de uso, criticidade, reputação, receita, perdas financeiras/legais, integrações, sem contorno, segurança)\nDados estatisticamente válidos → quantitativo; senão qualitativo: escalas ordinais combinadas em MATRIZ DE RISCO (classificação relativa)",
+      },
+      en: {
+        front: "RBT: risk identification and assessment",
+        back: "RBT = identification + assessment + monitoring + mitigation of risks driving testing; higher level → test earlier, more intensely, longer\nIDENTIFICATION (TM gathers from stakeholders; broadest sample; list agreed with PM): expert interviews, independent assessments, retrospectives, risk workshops, brainstorming, checklists, past experience\nASSESSMENT: risk level = LIKELIHOOD (technology/architecture complexity, immaturity, personnel, conflict, suppliers, distribution, weak leadership, pressures, no early QA, high change rates) × IMPACT (frequency of use, criticality, reputation, revenue, financial/legal losses, integration, no workaround, safety)\nStatistically valid data → quantitative; otherwise qualitative: ordinal scales combined in a RISK MATRIX (relative rating)",
+      },
+    },
+  },
+  {
+    id: "fc-tm-107",
+    cert: "ctal-tm",
+    ch: 1,
+    d: "manager",
+    locales: {
+      pt: {
+        front: "TBR: mitigação e priorização (K4)",
+        back: "Esforço/tempo PROPORCIONAL ao risco: alto → começar cedo, técnicas mais rigorosas, pessoas mais qualificadas; baixo → mais tarde, menos rigor\nAnalisar: itens de teste (rigor não uniforme no objeto), características de qualidade, níveis e tipos (estático, dinâmico ou ambos), SDLC (critérios de entrada), requisitos regulatórios (IEC 61508 prescreve técnicas e cobertura)\nO nível também influencia: revisões de work products, independência e extensão da regressão\nOutras medidas de tratamento: plano de contingência (contornos), transferência (fornecedor), aceitação\nDEPTH-FIRST: ordem estritamente decrescente de risco (mitigar os maiores o quanto antes); com o tempo apertando, trocar para BREADTH-FIRST (≥1 teste por risco com prioridade máxima — visão geral da qualidade)\nTempo esgotado sem executar tudo → recomendação justificada: estender o teste ou aceitar o risco residual (reportar progresso como risco residual apoia a decisão de release)",
+      },
+      en: {
+        front: "RBT: mitigation and prioritization (K4)",
+        back: "Effort/time PROPORTIONAL to risk: high → start early, more rigorous techniques, most qualified people; low → later, less rigor\nAnalyze: test items (non-uniform rigor within the object), quality characteristics, levels and types (static, dynamic, or both), SDLC (entry criteria), regulatory requirements (IEC 61508 prescribes techniques and coverage)\nLevel also drives: work product reviews, independence, extent of regression\nOther treatment measures: contingency plan (workarounds), transfer (vendor), acceptance\nDEPTH-FIRST: strict descending risk order (mitigate the highest ASAP); as time gets tight, switch to BREADTH-FIRST (≥1 test per risk at top priority — overall quality view)\nTime consumed without running everything → justified recommendation: extend testing or accept residual risk (reporting progress as residual risk supports release decisions)",
+      },
+    },
+  },
+  {
+    id: "fc-tm-108",
+    cert: "ctal-tm",
+    ch: 1,
+    d: "manager",
+    locales: {
+      pt: {
+        front: "Técnicas de TBR: pesadas × leves",
+        back: "PESADAS (formais; procedimentos e documentação detalhados; stakeholders amplos; fatores detalhados + fórmulas; sistemas críticos à segurança):\n• Análise de perigo — identifica os perigos por trás de cada risco\n• Custo da exposição — probabilidade de falha + custo da perda típica + custo de testar\n• FMEA (e variantes) — riscos, causas e efeitos prováveis; severidade, prioridade e detecção\n• Análise de árvore de falhas — das falhas para os defeitos que as causam, até as causas-raiz\nLEVES (menos completas; probabilidade + impacto em escala ordinal; grupo menor): SST (exige especificação de requisitos), PRAM e PRISMA (usam requisitos e/ou outras especificações, mas funcionam só com entrada dos stakeholders)\nDificuldades: avaliar o nível (dados históricos), keen beginnings (monitorar e reportar), déjà vu (pessoas certas, mitigar só o importante), riscos-chave perdidos (treinar), stakeholder churn (análise contínua)",
+      },
+      en: {
+        front: "RBT techniques: heavyweight vs. lightweight",
+        back: "HEAVYWEIGHT (formal; defined procedures and detailed documentation; broad stakeholders; detailed factors + formulas; safety-critical):\n• Hazard analysis — identifies the hazards underlying each risk\n• Cost of exposure — failure likelihood + cost of a typical loss + cost of testing for it\n• FMEA (and variants) — risks, potential causes, likely effects; severity, priority, detection rates\n• Fault tree analysis — from failures to the defects causing them, down to root causes\nLIGHTWEIGHT (less thorough; likelihood + impact on an ordinal scale; smaller group): SST (requires requirements specs), PRAM and PRISMA (use requirements and/or other specs but can work purely from stakeholder input)\nDifficulties: assessing risk level (historical data), keen beginnings (monitor and report), déjà vu (right people, mitigate only what matters), key risks missed (training), stakeholder churn (ongoing analysis)",
+      },
+    },
+  },
+  // 1.4 The Project Test Strategy
+  {
+    id: "fc-tm-109",
+    cert: "ctal-tm",
+    ch: 1,
+    d: "manager",
+    locales: {
+      pt: {
+        front: "Estratégia de teste do projeto + S.M.A.R.T.",
+        back: "Estratégia = como testar naquele contexto para atingir os objetivos; principal resultado do planejamento; documentada no plano de teste (no sequencial e quando contratos/regulações exigem)\nEscolha da ABORDAGEM (níveis, tipos, técnicas, práticas — scriptado, manual, back-to-back) analisando: domínio, objetivos organizacionais e características de qualidade, objetivos/tipo do projeto, recursos, SDLC, interfaces com outros sistemas, disponibilidade de dados de teste\nExemplos: manutenibilidade → análise estática/revisão de código; performance → testes de sistema scriptados; utilidade funcional → aceitação manual colaborativa\nPlanos: por release (plano mestre), por nível, por característica (segurança, performance), por iteração no ágil/híbrido\nS.M.A.R.T. p/ objetivos e critérios de saída: Específico, Mensurável, Atingível, Relevante e Temporal (prazo definido)",
+      },
+      en: {
+        front: "Project test strategy + S.M.A.R.T.",
+        back: "Strategy = how to test in that context to meet objectives; main outcome of test planning; documented in the test plan (sequential models and contracts/regulations often require it)\nAPPROACH selection (levels, types, techniques, practices — scripted, manual, back-to-back) by analyzing: domain, organizational goals and quality characteristics, project goals/type, resources, SDLC, interfaces with other systems, test data availability\nExamples: maintainability → static analysis/code review; performance → scripted system tests; functional usefulness → collaborative manual acceptance\nPlans: per release (master test plan), per level, per characteristic (security, performance), per iteration in Agile/hybrid\nS.M.A.R.T. for objectives and exit criteria: Specific, Measurable, Achievable, Relevant, Timely",
+      },
+    },
+  },
+  // 1.5 Improving the Test Process
+  {
+    id: "fc-tm-110",
+    cert: "ctal-tm",
+    ch: 1,
+    d: "manager",
+    locales: {
+      pt: {
+        front: "Melhoria do processo: IDEAL e abordagens",
+        back: "Teste costuma responder por 30-40% (pelo menos) dos custos do projeto; melhoria organizacional > projeto, mas funciona nos dois\nIDEAL (baseado no PDCA; organizacional ou projeto/equipe): Iniciar (objetivos e escopo acordados) → Diagnosticar (avaliar o processo atual) → Estabelecer (plano de melhoria priorizado por ROI/risco/benefícios) → Agir (treinar, pilotar, implantar) → Aprender (verificar benefícios; só então o próximo ciclo)\nMODEL-BASED (compara com melhores práticas externas): TMMi (5 níveis de maturidade; áreas de processo e metas por nível) e TPI NEXT (16 áreas-chave × 4 níveis; checkpoints; matriz de maturidade)\nANALÍTICA (dados do próprio projeto; combinável com a model-based): causa-raiz (Ishikawa/fishbone sobre clusters de defeitos), métricas/indicadores (eficácia, eficiência, previsibilidade), GQM (objetivo → perguntas → métricas)\nRETROSPECTIVA (5 passos): introdução → coletar dados → derivar melhorias → decidir ações (poucas!) → fechar; no sequencial integra a conclusão; no ágil, a cada iteração",
+      },
+      en: {
+        front: "Process improvement: IDEAL and approaches",
+        back: "Testing often accounts for at least 30-40% of project costs; organizational improvement > project level, but both work\nIDEAL (based on PDCA; organizational or project/team): Initiating (objectives and scope agreed) → Diagnosing (assess the current process) → Establishing (improvement plan prioritized by ROI/risk/benefits) → Acting (train, pilot, deploy) → Learning (verify benefits; only then the next cycle)\nMODEL-BASED (compares to external best practices): TMMi (5 maturity levels; process areas and goals per level) and TPI NEXT (16 key areas × 4 levels; checkpoints; maturity matrix)\nANALYTICAL (data from the project itself; combinable with model-based): root cause analysis (Ishikawa/fishbone on defect clusters), metrics/indicators (effectiveness, efficiency, predictability), GQM (goal → questions → metrics)\nRETROSPECTIVE (5 steps): introduction → collect data → derive improvements → decide actions (few!) → close; in sequential it is part of test completion; in Agile, every iteration",
+      },
+    },
+  },
+  // 1.6 Test Tools
+  {
+    id: "fc-tm-111",
+    cert: "ctal-tm",
+    ch: 1,
+    d: "manager",
+    locales: {
+      pt: {
+        front: "Ferramentas: tipos, introdução, ROI e ciclo de vida",
+        back: "3 tipos de ferramentas de negócio: comercial, código aberto, custom\nSELEÇÃO: oportunidades de melhoria, compatibilidade com as tecnologias, integração técnica e organizacional no SDLC, avaliação contra requisitos e critérios objetivos, avaliar fornecedor/suporte, requisitos internos de treinamento, prós/contras das licenças → PoC por último\nADOÇÃO: projeto piloto, adaptar processos E ferramenta, diretrizes de uso, treinamento/coaching/mentoria, rollout incremental, coletar dados do uso real, definir o DONO\nROI — não recorrentes (requisitos, avaliação+PoC, aquisição, diretrizes, treinamento inicial, integração, hardware) × recorrentes (licenças/suporte, manutenção, treinamento contínuo, portabilidade) + custos de oportunidade; riscos: imaturidade, mudança de política do fornecedor, custos maiores e benefícios menores que o esperado\nCICLO DE VIDA (4 estágios, administrador nomeado): Aquisição (dono decide convenções) → Suporte e manutenção → Evolução → Aposentadoria (dados preservados/arquivados)\nMétricas por ferramenta: gestão de teste (status por caso), requisitos (rastreabilidade), defeitos (densidade, DDP), análise estática (complexidade), performance (tempos de resposta)",
+      },
+      en: {
+        front: "Tools: types, introduction, ROI and lifecycle",
+        back: "3 types of business tools: commercial, open-source, custom\nSELECTION: improvement opportunities, technology compatibility, technical and organizational SDLC integration, evaluation against clear requirements and objective criteria, evaluate vendor/support, internal training requirements, licensing pros/cons → PoC last\nADOPTION: pilot project, adapt processes AND tool, usage guidelines, training/coaching/mentoring, incremental rollout, gather data from actual use, define the OWNER\nROI — non-recurring (requirements, evaluation+PoC, purchase, guidelines, initial training, integration, hardware) × recurring (licensing/support, maintenance, ongoing training, porting) + opportunity costs; risks: immaturity, vendor policy changes, higher costs and lower benefits than expected\nLIFECYCLE (4 stages, administrator appointed): Acquisition (owner decides conventions) → Support and maintenance → Evolution → Retirement (data preserved/archived)\nMetrics per tool: test management (case status), requirements (traceability), defects (density, DDP), static analysis (complexity), performance (response times)",
+      },
+    },
+  },
+
+  /* ─────────── Capítulo 2 — Managing the Product (6 cards) ─────────── */
+  // 2.1 Test Metrics
+  {
+    id: "fc-tm-201",
+    cert: "ctal-tm",
+    ch: 2,
+    d: "manager",
+    locales: {
+      pt: {
+        front: "Métricas de teste: categorias e uso por atividade",
+        back: "O que é medido é feito; métricas = indicadores de se os objetivos de teste foram atingidos\nCategorias: PROJETO (progresso vs critérios de saída — % executado/aprovado/falhou), PRODUTO (atributos vs expectativa de qualidade dos usuários), PROCESSO (capacidade, eficácia e eficiência do teste)\nDefinidas no PLANEJAMENTO alinhadas aos objetivos da estratégia; cada métrica: definida, medida, monitorada, reportada\nMONITORAMENTO/CONTROLE: progresso das atividades (relatório de progresso — ex.: % de casos por status, estimativa e custo reais vs planejados)\nCONCLUSÃO: atingimento dos objetivos e critérios de saída (relatório de conclusão — ex.: coberturas de requisitos e de risco de produto, defeitos resolvidos vs acumulados)\nEficácia de detecção: DDP (defect detection percentage)",
+      },
+      en: {
+        front: "Test metrics: categories and use per activity",
+        back: "What gets measured gets done; metrics = indicators of whether test objectives were met\nCategories: PROJECT (progress vs exit criteria — % executed/passed/failed), PRODUCT (attributes vs users' quality expectations), PROCESS (test process capability, effectiveness, efficiency)\nDefined in PLANNING aligned with the strategy's objectives; each metric: defined, measured, monitored, reported\nMONITORING/CONTROL: activity progress (progress report — e.g., % cases by status, actual vs planned estimate and cost)\nCOMPLETION: achievement of objectives and exit criteria (completion report — e.g., requirements and product risk coverage, resolved vs accumulated defects)\nDetection effectiveness: DDP (defect detection percentage)",
+      },
+    },
+  },
+  {
+    id: "fc-tm-202",
+    cert: "ctal-tm",
+    ch: 2,
+    d: "manager",
+    locales: {
+      pt: {
+        front: "Relatórios de teste por audiência (K4)",
+        back: "Objetivo: entendimento IMEDIATO para a gestão — reportar como snapshot ou tendência (evolução no tempo)\nNíveis altos (sistema, integração de sistemas, aceitação, segurança): base de teste = requisitos, casos de uso, histórias, riscos de produto; cobertura ESTRUTURAL é mais aplicável nos níveis baixos (instrução no componente, interface na integração de componentes)\n100% de cobertura estrutural nos níveis baixos NÃO elimina defeitos e riscos nos níveis altos\nPOR OBJETIVO — riscos: % com todos os testes aprovados / com falhas / ainda não testados; defeitos: resolvidos vs acumulados + quebras por item, origem, release, nível/iteração de introdução-detecção-remoção, severidade/prioridade, causa-raiz, status; progresso: planejados-implementados-executados-aprovados-falhos-bloqueados-pulados + horas reais vs planejadas; cobertura: requisitos, risco, código; custos: risco residual dos não testados + custo real vs planejado\nCombinar categorias (tendência de defeitos abertos × testes executados); poucos defeitos novos + critérios de saída acordados → decidir ENCERRAR",
+      },
+      en: {
+        front: "Test reporting by audience (K4)",
+        back: "Goal: IMMEDIATE understanding for management — report as a snapshot or a trend (evolution over time)\nHigher levels (system, system integration, acceptance, security): test basis = requirements, use cases, user stories, product risks; STRUCTURAL coverage is more applicable at lower levels (statement at component, interface at component integration)\n100% structural coverage at low levels does NOT eliminate defects and risks at higher levels\nBY PURPOSE — risks: % with all tests passed / with failures / not yet fully tested; defects: resolved vs accumulated + breakdowns by item, source, release, level/iteration of introduction-detection-removal, severity/priority, root cause, status; progress: planned-implemented-executed-passed-failed-blocked-skipped + actual vs planned hours; coverage: requirements, risk, code; costs: residual risk of untested components + actual vs planned cost\nCombine categories (open defect trend × executed tests); few new defects + agreed exit criteria → decide to STOP",
+      },
+    },
+  },
+  // 2.2 Test Estimation
+  {
+    id: "fc-tm-203",
+    cert: "ctal-tm",
+    ch: 2,
+    d: "manager",
+    locales: {
+      pt: {
+        front: "Estimativa de teste: o quê e fatores",
+        back: "ESFORÇO (horas-pessoa ou story points; esforço ≠ duração), TEMPO (dias corridos e úteis; marcos e prazo), CUSTO (orçamento: recursos, ferramentas, infraestrutura) — triângulo tempo-custo-qualidade: valores interdependentes\nFATORES DO ESFORÇO:\n• Produto: qualidade da base de teste, tamanho do objeto, complexidade do domínio, requisitos de qualidade (segurança, confiabilidade)\n• Processo de desenvolvimento: estabilidade/maturidade, modelo (ágil/iterativo/híbrido), automação, ferramentas e ambientes\n• Pessoas: satisfação (feriados, férias), skills e experiência (projetos e domínio)\n• Resultados do teste: nº e severidade dos defeitos, retrabalho\n• Contexto: distribuição entre unidades, localização, complexidade, tipo de trabalho (virtual/presencial)\nPremissas SEMPRE documentadas como parte da estimativa; atualizar com nova informação; dados históricos apoiam",
+      },
+      en: {
+        front: "Test estimation: what and factors",
+        back: "EFFORT (person hours or story points; effort ≠ duration), TIME (calendar and working days; milestones and deadline), COST (budget: resources, tools, infrastructure) — time-cost-quality triangle: interdependent values\nEFFORT FACTORS:\n• Product: test basis quality, size of the test object, domain complexity, quality characteristic requirements (security, reliability)\n• Development process: stability/maturity, model (Agile/iterative/hybrid), automation, tools and environments\n• People: satisfaction (holidays, vacation), skills and experience (projects and domain)\n• Test results: number and severity of defects, rework\n• Context: distribution across subsidiaries, location, complexity, type of work (virtual/on-site)\nAssumptions ALWAYS documented as part of the estimate; update with new information; historical data helps",
+      },
+    },
+  },
+  {
+    id: "fc-tm-204",
+    cert: "ctal-tm",
+    ch: 2,
+    d: "manager",
+    locales: {
+      pt: {
+        front: "Técnicas de estimativa e seleção (K4)",
+        back: "Duas famílias: BASEADA EM MÉTRICAS (dados históricos: razões, extrapolação) × BASEADA EM ESPECIALISTAS (Delphi, Wideband Delphi, planning poker)\nPrática comum: estimar o nº de casos derivados da base de teste (decomposição bottom-up das tarefas)\nCritérios de seleção:\n• Erro da estimativa — três pontos (otimista, provável, pessimista) dá valor esperado + desvio-padrão\n• Disponibilidade de dados — razões e extrapolação exigem histórico confiável\n• Disponibilidade de especialistas — Delphi e planning poker dependem deles\n• Conhecimento de modelagem — extrapolação e três pontos usam fórmulas\n• Restrições de tempo — planning poker é rápido; extrapolação é mais difícil\nDicas: complexidade baixa → métricas; alta → especialistas; sequencial → Wideband Delphi; ágil → planning poker; estimativa entregue à gestão com justificativa (parâmetros mudam → reajustar)",
+      },
+      en: {
+        front: "Estimation techniques and selection (K4)",
+        back: "Two families: METRIC-BASED (historical data: ratios, extrapolation) vs. EXPERT-BASED (Delphi, Wideband Delphi, planning poker)\nCommon practice: estimate the number of test cases derived from the test basis (bottom-up task decomposition)\nSelection criteria:\n• Estimation error — three-point (optimistic, likely, pessimistic) yields expected value + standard deviation\n• Data availability — ratios and extrapolation need reliable history\n• Expert availability — Delphi and planning poker rely on them\n• Modeling knowledge — extrapolation and three-point use formulas\n• Time constraints — planning poker is quick; extrapolation is harder\nTips: low complexity → metrics; high → experts; sequential → Wideband Delphi; Agile → planning poker; deliver the estimate to management with justification (parameters change → adjust)",
+      },
+    },
+  },
+  // 2.3 Defect Management
+  {
+    id: "fc-tm-205",
+    cert: "ctal-tm",
+    ch: 2,
+    d: "manager",
+    locales: {
+      pt: {
+        front: "Gerenciamento de defeitos: o fluxo de trabalho",
+        back: "Teste ESTÁTICO procura defeitos; DINÂMICO revela por falha (anomalia = discrepância real × esperado; falso-negativo = o tester não observa a anomalia)\nTeste que falha nem sempre gera relatório (ex.: TDD — os testes falham por design até o desenvolvimento terminar)\nFluxo simples: ABERTO (novo) → EM ANDAMENTO → [REJEITADO (inválido, teste errado, duplicado — com motivo)] → RESOLVIDO (corrigido, pronto para o reteste → teste de confirmação segue os passos do relatório) → FECHADO (terminal, após confirmação bem-sucedida ou aceite da rejeição)\nExtensões comuns: REABERTO, ACEITO, ESCLARECIMENTO, ADIADO\nBoas práticas: definir organizacional; duplicatas/falsos-positivos com estado próprio ou motivo; UM terminal com motivo de fechamento; nomes consistentes com outras entidades (histórias, tarefas); estados consecutivos sob papéis DIFERENTES; >1 transição de saída por estado; atributos mínimos\nDetectar e remover na MESMA fase (contenção de fase) minimiza o custo da qualidade",
+      },
+      en: {
+        front: "Defect management: the workflow",
+        back: "STATIC testing searches for defects; DYNAMIC reveals them via failure (anomaly = actual vs expected discrepancy; false-negative = the tester does not observe the anomaly)\nA failed test does not always create a report (e.g., TDD — tests fail by design until development is complete)\nSimple workflow: OPEN (new) → IN PROGRESS → [REJECTED (invalid, wrong test, duplicate — with reason)] → RESOLVED (fixed, ready for retest → confirmation test follows the report's steps) → CLOSED (terminal, after successful confirmation or acknowledging rejection)\nCommon extensions: RE-OPENED, ACCEPTED, CLARIFICATION, DEFERRED\nGood practices: define organization-wide; duplicates/false-positives with their own state or reason; ONE terminal state with closure reason; names consistent with other entities (stories, tasks); consecutive states under DIFFERENT roles; >1 outgoing transition per state; minimal attributes\nDetecting and removing in the SAME phase (phase containment) minimizes cost of quality",
+      },
+    },
+  },
+  {
+    id: "fc-tm-206",
+    cert: "ctal-tm",
+    ch: 2,
+    d: "manager",
+    locales: {
+      pt: {
+        front: "Defeitos: comitê, ágil, híbrido e melhoria",
+        back: "COMITÊ de gerenciamento de defeitos (cross-functional: TM, desenvolvimento, fornecedores, gestão do projeto/produto) decide corrigir (e qual equipe)/rejeitar/adiar na REUNIÃO DE TRIAGEM, pesando benefícios, riscos e custos; ferramenta NÃO substitui comunicação — as duas são necessárias\nÁGIL (leve; sem relatório quando se resolve conversando): relatório QUANDO bloqueia o sprint sem correção imediata na equipe, não se resolve na iteração (regra comum: mesmo dia), depende de outra equipe, depende de fornecedor, ou pedido explícito; não resolvido → product backlog; formalidade conforme co-localização, fusos, nº de equipes, maturidade, tamanho, riscos do produto, regulação\nHÍBRIDO: sincronizar ferramentas (ideal: uma só; prática: sincronização automática), POs nas reuniões (mais frequentes, podem ser mais curtas), plano único alinhado + transparência via dashboards/backlog\nMELHORIA com os dados: fases de introdução/detecção/remoção (contenção + custo da qualidade), causa-raiz, clusters (riscos técnicos, refactoring), reabertos (debugging), duplicatas/rejeitados (qualidade do relatório)",
+      },
+      en: {
+        front: "Defects: committee, Agile, hybrid and improvement",
+        back: "DEFECT MANAGEMENT COMMITTEE (cross-functional: TM, development, suppliers, project/product management) decides to fix (and which team)/reject/defer in the TRIAGE MEETING, weighing benefits, risks and costs; a tool is NOT a substitute for communication — both are needed\nAGILE (lightweight; no report when it can be resolved by talking): create a report WHEN it blocks sprint activities without an immediate in-team fix, cannot be resolved within the iteration (common rule: same day), depends on another team, depends on a supplier, or explicitly requested; unresolved → product backlog; formality per co-location, time zones, number of teams, maturity, size, product risks, regulation\nHYBRID: synchronize tools (ideal: one; practice: automatic sync), POs in the meetings (more frequent, may be shorter), one aligned project plan + transparency via dashboards/backlog\nIMPROVEMENT with the data: phases of introduction/detection/removal (containment + cost of quality), root causes, clusters (technical risks, refactoring), re-opened (debugging quality), duplicates/rejected (report quality)",
+      },
+    },
+  },
+
+  /* ─────────── Capítulo 3 — Managing the Team (4 cards) ─────────── */
+  // 3.1 The Test Team
+  {
+    id: "fc-tm-301",
+    cert: "ctal-tm",
+    ch: 3,
+    d: "manager",
+    locales: {
+      pt: {
+        front: "As 4 áreas de competência (+ skills por atividade)",
+        back: "PROFISSIONAL: tarefas especializadas — técnicas de teste, expertise tecnológica e de negócio, gestão de projetos\nMETODOLÓGICA: gerais, independentes do domínio, para tarefas complexas/novas — analíticas, conceituais, julgamento\nSOCIAL: comunicação, cooperação, gestão de conflitos (intra e intercultural) — adaptabilidade, assertividade\nPESSOAL: autogestão, autorresponsabilidade, receber críticas, confiabilidade, resiliência, disciplina, abertura a mudanças, disposição para ajudar/aprender e delegar\nPor atividade (K4): planejamento → conceitual; monitoramento/controle → gestão de projetos; análise → analíticas; design → técnicas + conceitual; implementação → julgamento + técnica; execução → técnica; conclusão → comunicação + responsabilidade\nÁgil exige MAIS competência social que o sequencial documental; equipe autogerida, mais autogestão e disciplina; hierárquica, o líder delega",
+      },
+      en: {
+        front: "The 4 areas of competence (+ skills per activity)",
+        back: "PROFESSIONAL: specialized tasks — test techniques, technological and business expertise, project management\nMETHODOLOGICAL: general, domain-independent, for complex/novel tasks — analytical, conceptual, judgment\nSOCIAL: communication, cooperation, conflict management (intra and intercultural) — adaptability, assertiveness\nPERSONAL: self-management, personal responsibility, taking criticism, reliability, resilience, discipline, openness to change, willingness to help/learn, delegation\nPer activity (K4): planning → conceptual; monitoring/control → project management; analysis → analytical; design → techniques + conceptual; implementation → judgment + technical; execution → technical; completion → communication + responsibility\nAgile demands MORE social competence than document-centric sequential; self-organized team, more self-management and discipline; hierarchical, the leader delegates",
+      },
+    },
+  },
+  {
+    id: "fc-tm-302",
+    cert: "ctal-tm",
+    ch: 3,
+    d: "manager",
+    locales: {
+      pt: {
+        front: "Avaliar e desenvolver skills + Tuckman",
+        back: "AVALIAR: matriz de habilidades (exigidas × disponíveis); Belbin (equipes eficazes misturam tipos de papel/personalidade), DISG, PCM; demonstrando tarefas típicas (esboçar estratégia e discutir feedback, revisar a base e comunicar achados, escolher técnicas, aplicar técnicas, escrever relatório de conclusão) + certificações, experiência, diplomas; no ágil: retrospectivas e feedback\nDESENVOLVER: treinamento (conhecimento predefinido), autoestudo, aprendizado entre pares, mentoria/coaching (individuais), treinamento no trabalho (mistura)\nProfissional/metodológica ← treinamento + autoestudo (ex.: ISTQB); social/pessoal ← treinamento + coaching (troca social, feedback e reflexão são os fatores-chave)\nLÍDER: planejar, monitorar, controlar, reportar + conhecimento de teste (abordagens, estratégias, técnicas, SDLC); resiliência, delegar, ser aceito pela equipe, afirmar os interesses do teste\nTUCKMAN: Forming (ajudar a entrar) → Storming (resolver conflitos) → Norming (disciplina e valores acordados) → Performing (delegar responsabilidade) → Adjourning (valorizar quem sai)",
+      },
+      en: {
+        front: "Assess and develop skills + Tuckman",
+        back: "ASSESS: skills matrix (required vs available); Belbin (effective teams mix role/personality types), DISG, PCM; demonstrating typical test tasks (outline a strategy and discuss feedback, review the test basis and communicate findings, choose techniques, apply techniques, write a completion report) + certifications, experience, degrees; in Agile: retrospectives and feedback\nDEVELOP: training (predefined knowledge), self-study, peer learning, mentoring/coaching (individual), training on the job (a mix)\nProfessional/methodological ← training + self-study (e.g., ISTQB); social/personal ← training + coaching (social exchange, feedback and reflection are the key success factors)\nLEADER: plan, monitor, control, report + test knowledge (approaches, strategies, techniques, SDLC); resilience, delegation, being accepted by the team, asserting test interests\nTUCKMAN: Forming (help members join) → Storming (resolve conflicts) → Norming (discipline and agreed values) → Performing (delegate responsibility) → Adjourning (appreciation with departing members)",
+      },
+    },
+  },
+  {
+    id: "fc-tm-303",
+    cert: "ctal-tm",
+    ch: 3,
+    d: "manager",
+    locales: {
+      pt: {
+        front: "Herzberg: motivadores × fatores de higiene",
+        back: "MOTIVADORES (percebidos conscientemente; geram crescimento e satisfação):\n• Reconhecimento e apreciação pelo trabalho (incentivos, abordagem individual)\n• Maior responsabilidade e autonomia (ex.: definir os processos de teste da equipe)\n• Tarefas interessantes, significativas e desafiadoras (ex.: escolher e introduzir uma nova ferramenta)\n• Evolução e desenvolvimento profissional (tester sênior → gerente de teste, dono do processo)\nFATORES DE HIGIENE (dados como certos; cumpri-los não gera satisfação; se faltam, DESMOTIVAM): remuneração adequada, política de pessoal e estilo de gestão apreciativos, condições de trabalho agradáveis (especificações claras, objetos maduros, defeitos corrigidos, ambiente estável), segurança (emprego e acordos), bons relacionamentos\nPapel do TM: eliminar continuamente os desmotivadores E criar/reforçar os motivadores",
+      },
+      en: {
+        front: "Herzberg: motivators vs. hygiene factors",
+        back: "MOTIVATORS (consciously perceived; lead to growth and satisfaction):\n• Recognition and appreciation for the work (incentives, individual approach)\n• Increased responsibility and autonomy (e.g., defining the team's test processes)\n• Interesting, meaningful, challenging tasks (e.g., selecting and introducing a new tool)\n• Professional advancement and development (senior tester → test manager, process owner)\nHYGIENE FACTORS (taken for granted; fulfilling them does not create satisfaction; if missing, they DEMOTIVATE): appropriate remuneration, appreciative personnel policy and management style, pleasant working conditions (unambiguous specifications, mature test objects, fixed defects, stable environment), safety (job and adhered agreements), good relationships\nTM's role: continuously eliminate demotivators AND create/strengthen motivators",
+      },
+    },
+  },
+  // 3.2 Stakeholder Relationships
+  {
+    id: "fc-tm-304",
+    cert: "ctal-tm",
+    ch: 3,
+    d: "manager",
+    locales: {
+      pt: {
+        front: "Custo da qualidade e custo-benefício do teste",
+        back: "4 categorias (Feigenbaum — adotada pelo CTAL-TM; o FL v4 apresenta Boehm):\nPREVENÇÃO DE DEFEITOS (proativas: qualificação dos desenvolvedores, revisão precoce da base, boa comunicação) + AVALIAÇÃO (detecção: teste estático e dinâmico, revisões) = pró-ativas\nFALHA INTERNA (reativas antes da entrega: corrigir defeitos achados no teste, contornos) × FALHA EXTERNA (pós-release, sem valor agregado: perda de receita/ativos/saúde/vida/ambiente, custos legais, teste/implantação/suporte extras, defeitos de campo)\nAvaliação + falha interna costumam ser MUITO menores que a falha externa → teste é extremamente valioso (business case)\nEconomia média por defeito = falha externa − (avaliação + falha interna); ex.: 4.000 − (500 + 200) = 3.300\nBenefícios QUALITATIVOS (reputação, releases previsíveis, confiança, proteção legal) × QUANTITATIVOS (defeitos achados/prevenidos/corrigidos pré-release, riscos conhecidos e documentados, informação para a decisão de go-live)\nCurva de Boehm: quanto mais tarde o defeito é achado, maior o custo → testar cedo; TBR investe esforço proporcional ao risco (nem teste demais, nem de menos)",
+      },
+      en: {
+        front: "Cost of quality and cost-benefit of testing",
+        back: "4 categories (Feigenbaum — adopted by CTAL-TM; the FL v4 presents Boehm):\nDEFECT PREVENTION (proactive: developer qualification, early test basis review, good communication) + APPRAISAL (detection: static and dynamic testing, reviews) = proactive\nINTERNAL FAILURE (reactive before delivery: fixing defects found in testing, workarounds) vs. EXTERNAL FAILURE (post-release, non-value-added: loss of revenue/assets/health/life/environment, legal costs, extra testing/deployment/support, field defects)\nAppraisal + internal failure are usually MUCH lower than external failure → testing is extremely valuable (business case)\nAverage savings per defect = external failure − (appraisal + internal failure); e.g., 4,000 − (500 + 200) = 3,300\nQUALITATIVE benefits (reputation, predictable releases, confidence, legal protection) vs. QUANTITATIVE (defects found/prevented/fixed pre-release, known and documented risks, information for go-live decisions)\nBoehm's curve: the later a defect is found, the higher the cost → test early; RBT invests effort proportional to risk (neither too much nor too little testing)",
+      },
+    },
+  },
 ];
 
 export const SYLLABUS_ITEMS = [
@@ -1132,6 +1490,301 @@ export const SYLLABUS_ITEMS = [
       en: {
         kw: "Results → Improvements (K4) + Classification → RCA (K2)",
         desc: "Third K4: analyze results to improve DETECTION (techniques, areas, data). Defect classification by type feeds root cause analysis and prevents recurrence.",
+      },
+    },
+  },
+
+  /* ─────────── CTAL-TM v3.0 (r19 — 18 itens, ids syl-tm-*) ─────────── */
+  /* ─────────── Capítulo 1 — Managing the Test Activities (10 itens) ─────────── */
+  {
+    id: "syl-tm-101",
+    cert: "ctal-tm",
+    ch: 1,
+    d: "manager",
+    locales: {
+      pt: {
+        kw: "Processo de teste: planejamento, monitoramento, conclusão (K2)",
+        desc: "As 3 atividades que o TM gerencia (o processo completo com análise/design/implementação/execução é do FL v4): 5 tarefas do planejamento, monitoramento × controle contínuos e 5 tarefas da conclusão. ISO/IEC/IEEE 29119-2. 2 questões.",
+      },
+      en: {
+        kw: "Test process: planning, monitoring, completion (K2)",
+        desc: "The 3 activities the TM manages (the full process incl. analysis/design/implementation/execution is FL v4): 5 planning tasks, continuous monitoring vs. control, and 5 completion tasks. ISO/IEC/IEEE 29119-2. 2 questions.",
+      },
+    },
+  },
+  {
+    id: "syl-tm-102",
+    cert: "ctal-tm",
+    ch: 1,
+    d: "manager",
+    locales: {
+      pt: {
+        kw: "Stakeholders e matriz poder-interesse (K2)",
+        desc: "Interesses por grupo (desenvolvedores, testadores, PM/PO/usuários de negócio, operações, clientes e usuários) e a classificação nos 4 quadrantes — Promotores, Latentes, Defensores, Apáticos (influência × interesse): decore os 4 pares, caem casos de classificação.",
+      },
+      en: {
+        kw: "Stakeholders and the power-interest matrix (K2)",
+        desc: "Interests per group (developers, testers, PM/PO/business users, operations, customers and users) and classifying them into the 4 quadrants — Promoters, Latents, Defenders, Apathetics (influence × interest): memorize the 4 pairs; classification scenarios appear.",
+      },
+    },
+  },
+  {
+    id: "syl-tm-103",
+    cert: "ctal-tm",
+    ch: 1,
+    d: "manager",
+    locales: {
+      pt: {
+        kw: "Contexto: híbrido e modelos de SDLC (K2)",
+        desc: "Razões do híbrido (transição para o Agile, fit for purpose) + tabela sequencial × iterativo (estimativa, testware, papéis, ferramentas, automação, relatórios, métricas) + atividades de gestão por nível (componente → aceitação) e por tipo (funcional, não funcional, caixa-preta, caixa-branca).",
+      },
+      en: {
+        kw: "Context: hybrid and SDLC models (K2)",
+        desc: "Reasons for hybrid (transition to Agile, fit for purpose) + the sequential vs. iterative table (estimation, testware, roles, tools, automation, reporting, metrics) + management activities per level (component → acceptance) and per type (functional, non-functional, black-box, white-box).",
+      },
+    },
+  },
+  {
+    id: "syl-tm-104",
+    cert: "ctal-tm",
+    ch: 1,
+    d: "manager",
+    locales: {
+      pt: {
+        kw: "Analisar o projeto → atividades de gestão (K4)",
+        desc: "Dado um cenário, determinar as atividades que enfatizam planejamento (escopo completo, riscos, recursos), monitoramento (execução, ferramentas/ambientes, colaboração) e controle (gestão adaptativa, portões de qualidade). 2 questões K4 — pratique com cenários completos.",
+      },
+      en: {
+        kw: "Analyze the project → management activities (K4)",
+        desc: "Given a scenario, determine activities emphasizing planning (comprehensive scope, risks, resources), monitoring (execution, tools/environments, collaboration) and control (adaptive management, quality gates). 2 K4 questions — practice with full scenarios.",
+      },
+    },
+  },
+  {
+    id: "syl-tm-105",
+    cert: "ctal-tm",
+    ch: 1,
+    d: "manager",
+    locales: {
+      pt: {
+        kw: "TBR: identificação e avaliação (K2)",
+        desc: "As 7 técnicas de identificação com a amostra mais ampla de stakeholders; avaliação = probabilidade × impacto (fatores de cada), matriz de risco; quantitativo só com dados estatisticamente válidos, senão ordinal qualitativo.",
+      },
+      en: {
+        kw: "RBT: identification and assessment (K2)",
+        desc: "The 7 identification techniques with the broadest stakeholder sample; assessment = likelihood × impact (factors for each), risk matrix; quantitative only with statistically valid data, otherwise qualitative ordinal.",
+      },
+    },
+  },
+  {
+    id: "syl-tm-106",
+    cert: "ctal-tm",
+    ch: 1,
+    d: "manager",
+    locales: {
+      pt: {
+        kw: "TBR: mitigação pelo nível de risco (K4)",
+        desc: "Selecionar atividades proporcionais ao risco: início, rigor da técnica, nível (estático/dinâmico/ambos), equipe mais qualificada nos maiores riscos, regulações (IEC 61508); depth-first × breadth-first; risco residual e a recomendação justificada de estender × aceitar. 2 questões K4.",
+      },
+      en: {
+        kw: "RBT: mitigation by risk level (K4)",
+        desc: "Select activities proportional to risk: start point, technique rigor, level (static/dynamic/both), most qualified people on the highest risks, regulations (IEC 61508); depth-first vs. breadth-first; residual risk and the justified recommendation to extend vs. accept. 2 K4 questions.",
+      },
+    },
+  },
+  {
+    id: "syl-tm-107",
+    cert: "ctal-tm",
+    ch: 1,
+    d: "manager",
+    locales: {
+      pt: {
+        kw: "Técnicas de TBR: pesadas × leves (K2)",
+        desc: "Pesadas (análise de perigo, custo da exposição, FMEA, árvore de falhas — formais, fórmulas, safety-critical) × leves (SST, PRAM, PRISMA — probabilidade e impacto em escala ordinal). Métricas de sucesso e as 5 dificuldades (keen beginnings, déjà vu, churn de stakeholders...).",
+      },
+      en: {
+        kw: "RBT techniques: heavyweight vs. lightweight (K2)",
+        desc: "Heavyweight (hazard analysis, cost of exposure, FMEA, fault tree analysis — formal, formulas, safety-critical) vs. lightweight (SST, PRAM, PRISMA — likelihood and impact on an ordinal scale). Success metrics and the 5 difficulties (keen beginnings, déjà vu, stakeholder churn...).",
+      },
+    },
+  },
+  {
+    id: "syl-tm-108",
+    cert: "ctal-tm",
+    ch: 1,
+    d: "manager",
+    locales: {
+      pt: {
+        kw: "Estratégia do projeto + S.M.A.R.T. (K4/K3)",
+        desc: "Fatores da abordagem (domínio, objetivos organizacionais e do projeto, recursos, SDLC, interfaces, dados de teste) — a seleção é K4 (2 questões); S.M.A.R.T. para objetivos e critérios de saída (Específico, Mensurável, Atingível, Relevante, Temporal) é K3 (2 questões).",
+      },
+      en: {
+        kw: "Project strategy + S.M.A.R.T. (K4/K3)",
+        desc: "Approach factors (domain, organizational and project goals, resources, SDLC, interfaces, test data) — selection is K4 (2 questions); S.M.A.R.T. for objectives and exit criteria (Specific, Measurable, Achievable, Relevant, Timely) is K3 (2 questions).",
+      },
+    },
+  },
+  {
+    id: "syl-tm-109",
+    cert: "ctal-tm",
+    ch: 1,
+    d: "manager",
+    locales: {
+      pt: {
+        kw: "Melhoria: IDEAL, modelos e retrospectivas (K2/K3)",
+        desc: "IDEAL (Iniciar, Diagnosticar, Estabelecer, Agir, Aprender — baseado no PDCA); model-based (TMMi 5 níveis, TPI NEXT 16 áreas-chave) × analítica (causa-raiz, métricas, GQM); implementar a retrospectiva em 5 passos é o K3 do capítulo (2 questões).",
+      },
+      en: {
+        kw: "Improvement: IDEAL, models and retrospectives (K2/K3)",
+        desc: "IDEAL (Initiating, Diagnosing, Establishing, Acting, Learning — based on PDCA); model-based (TMMi 5 levels, TPI NEXT 16 key areas) vs. analytical (root cause analysis, metrics, GQM); implementing the 5-step retrospective is the chapter's K3 (2 questions).",
+      },
+    },
+  },
+  {
+    id: "syl-tm-110",
+    cert: "ctal-tm",
+    ch: 1,
+    d: "manager",
+    locales: {
+      pt: {
+        kw: "Ferramentas de teste (K2/K4)",
+        desc: "Tipos (comercial, código aberto, custom); boas práticas de seleção e adoção (piloto, PoC por último, diretrizes, dono); ROI com custos recorrentes × não recorrentes + riscos e benefícios — o plano de seleção é K4 (2 questões); ciclo de vida (aquisição, suporte/manutenção, evolução, aposentadoria) e métricas por ferramenta.",
+      },
+      en: {
+        kw: "Test tools (K2/K4)",
+        desc: "Types (commercial, open-source, custom); selection and adoption good practices (pilot, PoC last, guidelines, owner); ROI with recurring vs. non-recurring costs + risks and benefits — the selection plan is K4 (2 questions); lifecycle (acquisition, support/maintenance, evolution, retirement) and per-tool metrics.",
+      },
+    },
+  },
+
+  /* ─────────── Capítulo 2 — Managing the Product (5 itens) ─────────── */
+  {
+    id: "syl-tm-201",
+    cert: "ctal-tm",
+    ch: 2,
+    d: "manager",
+    locales: {
+      pt: {
+        kw: "Métricas por atividade de gestão (K2)",
+        desc: "Categorias (projeto, produto, processo) e o uso por atividade: definidas no planejamento, progresso no monitoramento/controle, objetivos e critérios de saída na conclusão; exemplos (coberturas, % por status, defeitos resolvidos vs totais, custo, DDP).",
+      },
+      en: {
+        kw: "Metrics per management activity (K2)",
+        desc: "Categories (project, product, process) and use per activity: defined in planning, progress in monitoring/control, objectives and exit criteria in completion; examples (coverages, % by status, resolved vs total defects, cost, DDP).",
+      },
+    },
+  },
+  {
+    id: "syl-tm-202",
+    cert: "ctal-tm",
+    ch: 2,
+    d: "manager",
+    locales: {
+      pt: {
+        kw: "Relatórios que capacitam decisões (K4)",
+        desc: "Analisar resultados para criar relatórios que capacitam stakeholders a decidir: snapshot × tendência, métricas por objetivo (riscos, defeitos, progresso, cobertura, custos), cobertura estrutural nos níveis baixos (100% não elimina riscos nos altos), encerrar quando defeitos caem + critérios acordados. 2 questões K4.",
+      },
+      en: {
+        kw: "Reports that empower decisions (K4)",
+        desc: "Analyze results to create reports that empower stakeholders to decide: snapshot vs. trend, metrics by purpose (risks, defects, progress, coverage, costs), structural coverage at low levels (100% does not eliminate risks at high levels), stop when defects fall + agreed criteria. 2 K4 questions.",
+      },
+    },
+  },
+  {
+    id: "syl-tm-203",
+    cert: "ctal-tm",
+    ch: 2,
+    d: "manager",
+    locales: {
+      pt: {
+        kw: "Estimativa: fatores e técnicas (K2/K4)",
+        desc: "Esforço/tempo/custo (triângulo tempo-custo-qualidade) e os 5 grupos de fatores (produto, processo de desenvolvimento, pessoas, resultados do teste, contexto); baseada em métricas × em especialistas (três pontos, Delphi/Wideband Delphi, planning poker, extrapolação) — a seleção por contexto é K4 (2 questões).",
+      },
+      en: {
+        kw: "Estimation: factors and techniques (K2/K4)",
+        desc: "Effort/time/cost (time-cost-quality triangle) and the 5 factor groups (product, development process, people, test results, context); metric-based vs. expert-based (three-point, Delphi/Wideband Delphi, planning poker, extrapolation) — context-driven selection is K4 (2 questions).",
+      },
+    },
+  },
+  {
+    id: "syl-tm-204",
+    cert: "ctal-tm",
+    ch: 2,
+    d: "manager",
+    locales: {
+      pt: {
+        kw: "Defeitos: fluxo, comitê, ágil e híbrido (K3/K2)",
+        desc: "Workflow (ABERTO → EM ANDAMENTO → RESOLVIDO → FECHADO + REJEITADO etc.) com as boas práticas de desenho — implementá-lo é K3 (2 questões); comitê cross-functional e triagem; quando criar relatório no ágil; desafios do híbrido (ferramentas, priorização com PO, plano alinhado).",
+      },
+      en: {
+        kw: "Defects: workflow, committee, Agile and hybrid (K3/K2)",
+        desc: "Workflow (OPEN → IN PROGRESS → RESOLVED → CLOSED + REJECTED etc.) with design good practices — implementing it is K3 (2 questions); cross-functional committee and triage; when to create reports in Agile; hybrid challenges (tools, prioritization with PO, aligned plan).",
+      },
+    },
+  },
+  {
+    id: "syl-tm-205",
+    cert: "ctal-tm",
+    ch: 2,
+    d: "manager",
+    locales: {
+      pt: {
+        kw: "Dados de defeitos → melhoria (K3)",
+        desc: "Obrigatórios no relatório: título, descrição (passos para reproduzir), severidade, prioridade — coletar só o que agrega valor (usar os dados e a classificação é K3, 2 questões); estatísticas para melhoria: fases de introdução/detecção/remoção, causa-raiz, clusters, reabertos, duplicatas/rejeitados.",
+      },
+      en: {
+        kw: "Defect data → improvement (K3)",
+        desc: "Mandatory in the report: title, description (steps to reproduce), severity, priority — collect only what adds value (using data and classification is K3, 2 questions); statistics for improvement: phases of introduction/detection/removal, root cause, clusters, re-opened, duplicates/rejected.",
+      },
+    },
+  },
+
+  /* ─────────── Capítulo 3 — Managing the Team (3 itens) ─────────── */
+  {
+    id: "syl-tm-301",
+    cert: "ctal-tm",
+    ch: 3,
+    d: "manager",
+    locales: {
+      pt: {
+        kw: "Competências e skills do time (K2/K4)",
+        desc: "As 4 áreas (profissional, metodológica, social, pessoal) com exemplos; dado o contexto do projeto, determinar as skills exigidas por atividade de teste é K4 (2 questões): planejamento → conceitual, análise → analítica, execução → técnica, conclusão → comunicação e responsabilidade.",
+      },
+      en: {
+        kw: "Team competences and skills (K2/K4)",
+        desc: "The 4 areas (professional, methodological, social, personal) with examples; given the project context, determining required skills per test activity is K4 (2 questions): planning → conceptual, analysis → analytical, execution → technical, completion → communication and responsibility.",
+      },
+    },
+  },
+  {
+    id: "syl-tm-302",
+    cert: "ctal-tm",
+    ch: 3,
+    d: "manager",
+    locales: {
+      pt: {
+        kw: "Avaliar, desenvolver e liderar (K2)",
+        desc: "Matriz de habilidades, Belbin e a demonstração de tarefas típicas; 5 abordagens de desenvolvimento (treinamento, autoestudo, pares, mentoria/coaching, no trabalho) e o que serve para cada competência; habilidades de gestão e as fases de Tuckman (Forming → Adjourning).",
+      },
+      en: {
+        kw: "Assess, develop and lead (K2)",
+        desc: "Skills matrix, Belbin and demonstrating typical tasks; 5 development approaches (training, self-study, peer learning, mentoring/coaching, on the job) and which suits each competence; management skills and Tuckman's phases (Forming → Adjourning).",
+      },
+    },
+  },
+  {
+    id: "syl-tm-303",
+    cert: "ctal-tm",
+    ch: 3,
+    d: "manager",
+    locales: {
+      pt: {
+        kw: "Motivação, custo da qualidade e custo-benefício (K2/K3)",
+        desc: "Herzberg: motivadores × fatores de higiene (exemplos de cada); as 4 categorias de custo da qualidade (prevenção, avaliação, falha interna, falha externa — Feigenbaum); o cálculo do custo-benefício (economia média por defeito) é K3 (2 questões).",
+      },
+      en: {
+        kw: "Motivation, cost of quality and cost-benefit (K2/K3)",
+        desc: "Herzberg: motivators vs. hygiene factors (examples of each); the 4 cost of quality categories (prevention, appraisal, internal failure, external failure — Feigenbaum); the cost-benefit calculation (average savings per defect) is K3 (2 questions).",
       },
     },
   },

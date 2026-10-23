@@ -1,5 +1,17 @@
 # Changelog
 
+## v3.17.0 — 2026-10-23 — CTAL-TM disponível
+
+- CTAL-TM v3.0 disponível com 200 questões, 21 flashcards, 18 itens de
+  syllabus e 37 termos de glossário em PT/EN.
+- Pools exclusivos: 101 questões de estudo e 99 de simulado. Blueprint:
+  50 questões, 88 pontos, corte 58 e 120 minutos.
+- Corrigido o alvo de aprovação em Progresso e conquistas para usar o total
+  de pontos, evitando 116% no CTAL-TM e 113% no CTAL-TA.
+- Preservados questões CTFL/CTAL-TA, undo sem perda, cabeçalho mobile,
+  identidade social Synapse, feedback, novidades e configuração de CI.
+- Limitação de conteúdo: todos os itens K4 CTAL-TM estão no pool de simulado.
+
 ## v3.16.0 — 2026-10-23 — Identidade por certificação e cabeçalho mobile
 
 - Abas, botões primários, filtros e barras passam a usar a paleta da certificação.

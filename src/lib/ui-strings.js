@@ -315,7 +315,7 @@ export const UI = {
       badge: "Baseado nos syllabus oficiais do ISTQB",
       heroValueProp: "Tudo que você precisa para passar nas certificações ISTQB, de graça.",
       heroSubtitle: "Preparação gratuita para certificações ISTQB — Foundation e Advanced Level",
-      statCerts: "2 certificações disponíveis",
+      statCerts: "3 certificações disponíveis",
       statLang: "PT/EN",
       statFree: "Gratuito",
       ctaStart: "Escolher certificação →",
@@ -356,7 +356,7 @@ export const UI = {
       socialFreeText: "100% gratuito, sem cadastro, sem anúncios",
       socialOpenSourceText: "Código aberto no GitHub",
       socialFutureNote:
-        "CTFL e CTAL-TA já disponíveis. Test Manager, AI Testing e Advanced Test Automation chegam em seguida.",
+        "CTFL, CTAL-TA e CTAL-TM já disponíveis. AI Testing e Advanced Test Automation chegam em seguida.",
 
       faqTitle: "Perguntas frequentes",
       faqQ1: "Preciso me cadastrar?",
@@ -365,7 +365,7 @@ export const UI = {
       faqA2: "Sim, sem anúncios, sem plano pago, sem pegadinha.",
       faqQ3: "O conteúdo é oficial do ISTQB?",
       faqA3:
-        "Baseado nos syllabus públicos oficiais do ISTQB (CTFL e CTAL-TA hoje, outros a caminho) — o app não é afiliado ao ISTQB.",
+        "Baseado nos syllabus públicos oficiais do ISTQB (CTFL, CTAL-TA e CTAL-TM hoje, outros a caminho) — o app não é afiliado ao ISTQB.",
       faqQ4: "Funciona no celular?",
       faqA4: "Sim, é instalável como app (PWA), funciona offline.",
       faqQ5: "Posso usar em inglês?",
@@ -730,7 +730,7 @@ export const UI = {
       badge: "Based on official ISTQB syllabi",
       heroValueProp: "Everything you need to pass ISTQB certifications, for free.",
       heroSubtitle: "Free prep for ISTQB certifications — Foundation and Advanced Level",
-      statCerts: "2 certifications available",
+      statCerts: "3 certifications available",
       statLang: "PT/EN",
       statFree: "Free",
       ctaStart: "Choose your certification →",
@@ -771,7 +771,7 @@ export const UI = {
       socialFreeText: "100% free, no sign-up, no ads",
       socialOpenSourceText: "Open source on GitHub",
       socialFutureNote:
-        "CTFL and CTAL-TA are already live. Test Manager, AI Testing, and Advanced Test Automation are coming next.",
+        "CTFL, CTAL-TA, and CTAL-TM are already live. AI Testing and Advanced Test Automation are coming next.",
 
       faqTitle: "Frequently asked questions",
       faqQ1: "Do I need to sign up?",
@@ -780,7 +780,7 @@ export const UI = {
       faqA2: "Yes, no ads, no paid plan, no catch.",
       faqQ3: "Is the content official ISTQB material?",
       faqA3:
-        "Based on official public ISTQB syllabi (CTFL and CTAL-TA today, more on the way) — the app isn't affiliated with ISTQB.",
+        "Based on official public ISTQB syllabi (CTFL, CTAL-TA, and CTAL-TM today, more on the way) — the app isn't affiliated with ISTQB.",
       faqQ4: "Does it work on mobile?",
       faqA4: "Yes, it's installable as an app (PWA) and works offline.",
       faqQ5: "Can I use it in English?",

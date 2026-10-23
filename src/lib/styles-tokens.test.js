@@ -86,7 +86,9 @@ const forcedTokens = {};
 }
 
 const ON_ACCENT = { light: "#ffffff", dark: "#14121f" };
-const LIVE_CERTS = ["ctfl", "ctal-ta"];
+// r19: ctal-tm promovido a live — a paleta plum #7d3a72 já passava de 4.5:1
+// (7.7:1 claro / 5.0:1 dark), então a promoção não exigiu escurecimento.
+const LIVE_CERTS = ["ctfl", "ctal-ta", "ctal-tm"];
 const ALL_CERTS = ["ctfl", "ctfl-at", "ctal-ta", "ctal-tm", "ct-ai", "ctal-at-v2"];
 
 describe("r18: seletores de identidade usam os tokens de cert", () => {
@@ -156,7 +158,7 @@ describe("r18: tokens por cert — completos, WCAG AA e camadas consistentes", (
     expect(contrast(d["cert-accent-text"], d["cert-accent-soft"])).toBeGreaterThanOrEqual(4.5);
   });
 
-  it.each(["ctfl-at", "ctal-tm", "ct-ai", "ctal-at-v2"])(
+  it.each(["ctfl-at", "ct-ai", "ctal-at-v2"])(
     "coming-soon %s claro: accent×branco ≥ 3.0 (AA UI); promoção a live exige escurecer até 4.5",
     (cert) => {
       const t = lightTokens[cert][0];

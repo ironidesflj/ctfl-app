@@ -30,7 +30,7 @@ export const CERT_CATALOG = [
   },
   {
     id: "ctal-tm",
-    status: "coming-soon",
+    status: "live",
     mark: "TM",
     label: "CTAL-TM",
     fullName: "Test Manager",
@@ -42,7 +42,7 @@ export const CERT_CATALOG = [
     mark: "AI",
     label: "CT-AI",
     fullName: "AI Testing",
-    version: "v2.0",
+    version: "v1.0",
   },
   {
     id: "ctal-at-v2",

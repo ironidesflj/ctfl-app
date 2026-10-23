@@ -1,4 +1,4 @@
-// Glossário ISTQB multi-certificação — conteúdo CTFL e CTAL-TA em PT/EN.
+// Glossário ISTQB (PT/EN) — CTFL v4.0, CTAL-TA v4.0 e CTAL-TM v3.0.
 export const GLOSSARY = [
   {
     cert: "ctfl",
@@ -1405,6 +1405,496 @@ export const GLOSSARY = [
     en: {
       term: "Defect classification",
       def: "Grouping defects by type/origin to reveal patterns, feed root cause analysis, and define actions preventing recurrence.",
+    },
+  },
+
+  /* ─────────── CTAL-TM v3.0 (r19 — 37 termos, ids gl-tm-*) ───────────
+     Fonte: ISTQB CTAL-TM v3.0 Syllabus (2024/05/03, istqb.org) + Standard
+     Glossary of Terms Used in Software Testing. */
+  /* ─────────── Capítulo 1 — Managing the Test Activities (19 termos) ─────────── */
+  {
+    cert: "ctal-tm",
+    id: "gl-tm-101",
+    chapter: 1,
+    pt: {
+      term: "Planejamento de teste",
+      def: "Atividade que identifica as atividades e os recursos necessários para atingir os objetivos de teste: abordagem, escopo, recursos, cronograma, entregáveis e participantes. Deve começar o mais cedo possível (idealmente antes dos requisitos), ser iterativa e passar por 5 tarefas — compreender o contexto, analisar os riscos, definir os tratamentos, definir a abordagem com os recursos e estabelecer o plano aceito pelos stakeholders.",
+    },
+    en: {
+      term: "Test planning",
+      def: "The activity that identifies the activities and resources needed to achieve the test objectives: approach, scope, resources, schedule, deliverables, and participants. It should start as early as possible (ideally before requirements), be iterative, and go through 5 tasks — understand the context, analyze risks, define treatments, define the approach with resources, and establish the plan accepted by stakeholders.",
+    },
+  },
+  {
+    cert: "ctal-tm",
+    id: "gl-tm-102",
+    chapter: 1,
+    pt: {
+      term: "Monitoramento de teste",
+      def: "Atividade contínua de coleta e avaliação dos dados de teste: registrar resultados, identificar desvios do planejado, identificar e analisar riscos novos e monitorar mudanças nos riscos já identificados. Fornece a informação que alimenta o controle e a verificação dos critérios de saída.",
+    },
+    en: {
+      term: "Test monitoring",
+      def: "The ongoing activity of collecting and evaluating test data: recording results, identifying deviations from the plan, identifying and analyzing new risks, and monitoring changes to identified risks. It provides the information that feeds control and the verification of exit criteria.",
+    },
+  },
+  {
+    cert: "ctal-tm",
+    id: "gl-tm-103",
+    chapter: 1,
+    pt: {
+      term: "Controle de teste",
+      def: "Atividade contínua que usa os dados do monitoramento para guiar o teste: comparar o progresso real com o plano e implementar ações corretivas — gerenciar desvios, tratar riscos novos ou alterados, confirmar a prontidão para iniciar os testes e aprovar a conclusão com base nos critérios de saída.",
+    },
+    en: {
+      term: "Test control",
+      def: "The ongoing activity that uses monitoring data to guide testing: comparing actual progress against the plan and implementing corrective actions — managing deviations, treating new or changed risks, establishing readiness to begin testing, and approving completion based on exit criteria.",
+    },
+  },
+  {
+    cert: "ctal-tm",
+    id: "gl-tm-104",
+    chapter: 1,
+    pt: {
+      term: "Conclusão do teste",
+      def: "Atividade que ocorre em marcos do projeto (release, fim de iteração ou de nível de teste) e reúne o relatório de conclusão aprovado, o arquivamento e a entrega do testware, a limpeza e restauração do ambiente de teste e as lições aprendidas (retrospectivas) para melhoria do processo.",
+    },
+    en: {
+      term: "Test completion",
+      def: "The activity that occurs at project milestones (release, iteration or test level completion) and comprises the approved completion report, archiving and handover of testware, cleaning and restoring the test environment, and lessons learned (retrospectives) for process improvement.",
+    },
+  },
+  {
+    cert: "ctal-tm",
+    id: "gl-tm-105",
+    chapter: 1,
+    pt: {
+      term: "Matriz poder-interesse",
+      def: "Ferramenta estratégica do gerente de teste que mapeia os stakeholders por influência e interesse em 4 quadrantes: Promotores (influência alta, interesse alto), Latentes (alta, baixo), Defensores (baixa, alto) e Apáticos (baixa, baixo). Orienta o engajamento, aproveita a expertise dos stakeholders e apoia a gestão proativa de riscos.",
+    },
+    en: {
+      term: "Power-interest matrix",
+      def: "A strategic tool for the test manager that maps stakeholders by influence and interest into 4 quadrants: Promoters (high influence, high interest), Latents (high, low), Defenders (low, high), and Apathetics (low, low). It guides engagement, leverages stakeholder expertise, and supports proactive risk management.",
+    },
+  },
+  {
+    cert: "ctal-tm",
+    id: "gl-tm-106",
+    chapter: 1,
+    pt: {
+      term: "Modelo híbrido de desenvolvimento",
+      def: "Modelo que integra elementos das abordagens sequenciais tradicionais e das práticas ágeis — seja como transição gradual para o Agile, seja por adequação ao propósito (fit for purpose), quando projetos de alto risco combinam tarefas sequenciais e práticas ágeis.",
+    },
+    en: {
+      term: "Hybrid software development model",
+      def: "A model that integrates elements from traditional sequential approaches and Agile practices — either as a gradual transition to Agile or as fit for purpose, when high-risk projects combine sequential tasks and Agile practices.",
+    },
+  },
+  {
+    cert: "ctal-tm",
+    id: "gl-tm-107",
+    chapter: 1,
+    pt: {
+      term: "Risco de produto",
+      def: "Situação potencial em que problemas de qualidade podem existir em um produto de trabalho. O teste o mitiga ao revelar defeitos (consciência e chance de tratá-los antes da release) e, quando não acha defeitos, indica que o nível de risco é menor que o esperado. Também chamado de risco de qualidade no syllabus.",
+    },
+    en: {
+      term: "Product risk",
+      def: "A potential situation where quality problems may exist in a work product. Testing mitigates it by revealing defects (awareness and the chance to deal with them before release), and when tests find no defects, it indicates the risk level is lower than expected. Also called quality risk in the syllabus.",
+    },
+  },
+  {
+    cert: "ctal-tm",
+    id: "gl-tm-108",
+    chapter: 1,
+    pt: {
+      term: "Teste baseado em risco",
+      def: "Abordagem que dirige o teste pela identificação, avaliação, monitoramento e mitigação de riscos: quanto maior o nível de risco, mais cedo o teste deve começar e mais intenso e prolongado deve ser o esforço. Serve para selecionar e priorizar os testes e para reportar o progresso em termos de risco residual.",
+    },
+    en: {
+      term: "Risk-based testing",
+      def: "An approach that drives testing by the identification, assessment, monitoring, and mitigation of risks: the higher the risk level, the earlier testing should begin and the more intense and prolonged the effort. It serves to select and prioritize tests and to report progress in terms of residual risk.",
+    },
+  },
+  {
+    cert: "ctal-tm",
+    id: "gl-tm-109",
+    chapter: 1,
+    pt: {
+      term: "Análise de risco",
+      def: "Atividade composta pela identificação de riscos (coleta junto ao conjunto mais amplo possível de stakeholders) e pela avaliação de riscos (estimativa de probabilidade e impacto para determinar o nível). Faz parte, com o controle de risco (monitoramento + mitigação), do processo genérico de gestão de riscos.",
+    },
+    en: {
+      term: "Risk analysis",
+      def: "The activity comprising risk identification (gathering from the broadest possible set of stakeholders) and risk assessment (estimating likelihood and impact to determine the level). Together with risk control (monitoring + mitigation), it forms the generic risk management process.",
+    },
+  },
+  {
+    cert: "ctal-tm",
+    id: "gl-tm-110",
+    chapter: 1,
+    pt: {
+      term: "Probabilidade do risco",
+      def: "Chance de o risco ocorrer. Fatores que a influenciam: complexidade da tecnologia/arquitetura, maturidade da organização, problemas de pessoal (skills, disponibilidade, motivação), conflitos, problemas contratuais com fornecedores, equipes distribuídas, liderança fraca, pressão de tempo/recurso/orçamento, falta de QA precoce e altas taxas de mudança.",
+    },
+    en: {
+      term: "Risk likelihood",
+      def: "The chance of the risk occurring. Influencing factors: technology/architecture complexity, organizational maturity, personnel issues (skills, availability, motivation), conflict, supplier contract problems, distributed teams, weak leadership, time/resource/budget pressure, lack of early QA, and high change rates.",
+    },
+  },
+  {
+    cert: "ctal-tm",
+    id: "gl-tm-111",
+    chapter: 1,
+    pt: {
+      term: "Impacto do risco",
+      def: "Dano causado caso o risco ocorra. Fatores: frequência de uso da função afetada, criticidade da função e do objetivo de negócio, dano à reputação, perda de receita, perdas financeiras/ambientais/sociais ou responsabilidades, sanções legais (civis ou criminais), problemas de integração, falta de contornos razoáveis e necessidade de segurança.",
+    },
+    en: {
+      term: "Risk impact",
+      def: "The damage caused if the risk occurs. Factors: frequency of use of the affected feature, criticality of the feature and business goal, reputational damage, loss of income, financial/ecological/social losses or liability, civil or criminal legal sanctions, interfacing and integration issues, lack of reasonable workarounds, and safety needs.",
+    },
+  },
+  {
+    cert: "ctal-tm",
+    id: "gl-tm-112",
+    chapter: 1,
+    pt: {
+      term: "Nível de risco",
+      def: "Combinação da probabilidade com o impacto, tipicamente via matriz de risco — uma classificação qualitativa e relativa em escala ordinal (ex.: muito baixo a muito alto). Só é quantitativa (probabilidade percentual × impacto monetário) quando baseada em dados estatisticamente válidos.",
+    },
+    en: {
+      term: "Risk level",
+      def: "The combination of likelihood and impact, typically via a risk matrix — a qualitative, relative rating on an ordinal scale (e.g., very low to very high). It is only quantitative (percentage likelihood × monetary impact) when based on statistically valid data.",
+    },
+  },
+  {
+    cert: "ctal-tm",
+    id: "gl-tm-113",
+    chapter: 1,
+    pt: {
+      term: "Mitigação de risco",
+      def: "Conjunto de ações que reduzem a probabilidade ou o impacto de um risco; o teste é a mais importante atividade de mitigação de riscos de qualidade. Outras medidas possíveis: plano de contingência (contornos), transferência do risco a terceiros (ex.: fornecedor do componente) e aceitação do risco.",
+    },
+    en: {
+      term: "Risk mitigation",
+      def: "The set of actions that reduce a risk's likelihood or impact; testing is the most important quality risk mitigation activity. Other possible measures: a contingency plan (workarounds), risk transfer to a third party (e.g., the component vendor), and risk acceptance.",
+    },
+  },
+  {
+    cert: "ctal-tm",
+    id: "gl-tm-114",
+    chapter: 1,
+    pt: {
+      term: "Risco residual",
+      def: "Nível de risco que permanece após a mitigação — por exemplo, o risco dos componentes ainda não testados. O teste baseado em risco reporta o progresso em termos de risco residual a qualquer momento, apoiando o time e os stakeholders nas decisões de release (estender o teste ou aceitar o risco).",
+    },
+    en: {
+      term: "Residual risk",
+      def: "The risk level remaining after mitigation — e.g., the risk of components not yet tested. Risk-based testing reports progress in terms of residual risk at any point in time, supporting the team and stakeholders in release decisions (extend testing or accept the risk).",
+    },
+  },
+  {
+    cert: "ctal-tm",
+    id: "gl-tm-115",
+    chapter: 1,
+    pt: {
+      term: "FMEA (análise de modos de falha e efeitos)",
+      def: "Técnica pesada (heavyweight) de análise de risco, típica de sistemas críticos à segurança: identifica riscos de qualidade, suas causas potenciais e seus efeitos prováveis, atribuindo taxas de severidade, prioridade e detecção. Usa procedimentos formais, documentação detalhada e fatores matemáticos.",
+    },
+    en: {
+      term: "FMEA (failure mode and effect analysis)",
+      def: "A heavyweight risk analysis technique, typical of safety-critical systems: it identifies quality risks, their potential causes, and likely effects, assigning severity, priority, and detection rates. It uses formal procedures, detailed documentation, and mathematical factors.",
+    },
+  },
+  {
+    cert: "ctal-tm",
+    id: "gl-tm-116",
+    chapter: 1,
+    pt: {
+      term: "Estratégia de teste do projeto",
+      def: "Descrição de como o teste será realizado naquele contexto específico para que os objetivos da organização sejam atingidos — em particular os relativos à qualidade do produto e às atividades de teste. É o principal resultado do planejamento e costuma ser documentada no plano de teste (no modelo sequencial e quando contratos, acordos ou leis exigem).",
+    },
+    en: {
+      term: "Project test strategy",
+      def: "A description of how testing will be performed in a specific context so that the organization's objectives are met — particularly those relating to product quality and test activities. It is the main outcome of test planning and is usually documented in the test plan (in sequential models and when contracts, agreements, or laws require it).",
+    },
+  },
+  {
+    cert: "ctal-tm",
+    id: "gl-tm-117",
+    chapter: 1,
+    pt: {
+      term: "Abordagem de teste",
+      def: "Maneira de implementar as tarefas de teste: a seleção e a combinação de níveis, tipos e técnicas de teste (estático e dinâmico) e de outras práticas (teste scriptado, manual, back-to-back). É a decisão-chave do gerente de teste na formulação da estratégia — a combinação certa afeta diretamente a eficácia e a eficiência.",
+    },
+    en: {
+      term: "Test approach",
+      def: "The manner in which testing tasks are implemented: the selection and combination of test levels, types, and techniques (static and dynamic) plus other practices (scripted, manual, back-to-back testing). It is the test manager's key decision in shaping the strategy — the right combination directly affects effectiveness and efficiency.",
+    },
+  },
+  {
+    cert: "ctal-tm",
+    id: "gl-tm-118",
+    chapter: 1,
+    pt: {
+      term: "Metodologia S.M.A.R.T.",
+      def: "Critérios para definir objetivos de teste e critérios de saída mensuráveis: Específico (claro e sem ambiguidade), Mensurável (quantificável, com critérios de progresso), Atingível (viável com recursos, prazo e capacidades), Relevante (alinhado aos objetivos do projeto) e Temporal (com prazo e data-limite definidos).",
+    },
+    en: {
+      term: "S.M.A.R.T. goal methodology",
+      def: "Criteria for defining measurable test objectives and exit criteria: Specific (clear and unambiguous), Measurable (quantifiable, with progress criteria), Achievable (feasible with resources, timeframe, and capabilities), Relevant (aligned with overall project objectives), and Timely (specific timeframe and defined deadline).",
+    },
+  },
+  {
+    cert: "ctal-tm",
+    id: "gl-tm-119",
+    chapter: 1,
+    pt: {
+      term: "Modelo IDEAL",
+      def: "Modelo de melhoria de processo de teste baseado no ciclo PDCA, com 5 fases: Initiating/Iniciar (objetivos e escopo acordados), Diagnosing/Diagnosticar (avaliação do processo atual), Establishing/Estabelecer (plano de melhoria priorizado), Acting/Agir (treinar, pilotar, implantar) e Learning/Aprender (verificar benefícios antes do próximo ciclo). Aplica-se ao nível organizacional ou de projeto/equipe.",
+    },
+    en: {
+      term: "IDEAL model",
+      def: "A test process improvement model based on the PDCA cycle, with 5 phases: Initiating (objectives and scope agreed), Diagnosing (assessment of the current process), Establishing (prioritized improvement plan), Acting (train, pilot, deploy), and Learning (verify benefits before the next cycle). Applicable at the organizational or project/team level.",
+    },
+  },
+
+  /* ─────────── Capítulo 2 — Managing the Product (11 termos) ─────────── */
+  {
+    cert: "ctal-tm",
+    id: "gl-tm-201",
+    chapter: 2,
+    pt: {
+      term: "Métrica de teste",
+      def: "Indicador definido, medido, monitorado e reportado para responder se os objetivos de teste foram atingidos. Categorias: projeto (progresso vs critérios de saída, ex.: % de testes executados/aprovados/falhos), produto (atributos do produto vs expectativa de qualidade dos usuários) e processo (capacidade, eficácia e eficiência do processo de teste).",
+    },
+    en: {
+      term: "Test metric",
+      def: "An indicator defined, measured, monitored, and reported to answer whether test objectives were met. Categories: project (progress vs exit criteria, e.g., % of tests executed/passed/failed), product (product attributes vs users' quality expectations), and process (test process capability, effectiveness, and efficiency).",
+    },
+  },
+  {
+    cert: "ctal-tm",
+    id: "gl-tm-202",
+    chapter: 2,
+    pt: {
+      term: "Objetivo de teste",
+      def: "A resposta ao por que testamos; metas do teste de um projeto ou iteração, definidas com S.M.A.R.T. no plano de teste e das quais derivam os critérios de saída. As métricas são definidas no planejamento para medir seu atingimento.",
+    },
+    en: {
+      term: "Test objective",
+      def: "The answer to why we test; the goals of testing for a project or iteration, defined with S.M.A.R.T. in the test plan, from which exit criteria are derived. Metrics are defined during planning to measure their achievement.",
+    },
+  },
+  {
+    cert: "ctal-tm",
+    id: "gl-tm-203",
+    chapter: 2,
+    pt: {
+      term: "Estimativa de teste",
+      def: "Atividade de gerenciamento que estima quanto tempo, esforço e custo as tarefas de teste exigirão: esforço em horas-pessoa ou story points, tempo em dias corridos e úteis, e custo do orçamento (recursos, ferramentas, infraestrutura). Premissas devem ser documentadas e a estimativa atualizada com informações novas.",
+    },
+    en: {
+      term: "Test estimation",
+      def: "The management activity that estimates the time, effort, and cost test tasks will take: effort in person hours or story points, time in calendar and working days, and cost from the budget (resources, tools, infrastructure). Assumptions must be documented and the estimate updated with new information.",
+    },
+  },
+  {
+    cert: "ctal-tm",
+    id: "gl-tm-204",
+    chapter: 2,
+    pt: {
+      term: "Estimativa em três pontos",
+      def: "Técnica que usa as estimativas otimista, mais provável e pessimista para calcular o valor esperado e o desvio-padrão (medida da incerteza) da estimativa de teste. Exige algum conhecimento de modelagem para aplicar as fórmulas.",
+    },
+    en: {
+      term: "Three-point estimation",
+      def: "A technique that uses optimistic, most likely, and pessimistic estimates to calculate the expected value and the standard deviation (a measure of uncertainty) of a test estimate. It requires some modeling knowledge to apply the formulas.",
+    },
+  },
+  {
+    cert: "ctal-tm",
+    id: "gl-tm-205",
+    chapter: 2,
+    pt: {
+      term: "Wideband Delphi",
+      def: "Técnica de estimativa baseada em especialistas com rodadas de julgamento e convergência de opiniões. O syllabus a cita como escolha adequada quando o projeto usa modelo de desenvolvimento sequencial.",
+    },
+    en: {
+      term: "Wideband Delphi",
+      def: "An expert-based estimation technique using rounds of judgment and opinion convergence. The syllabus cites it as a suitable choice when the project uses a sequential development model.",
+    },
+  },
+  {
+    cert: "ctal-tm",
+    id: "gl-tm-206",
+    chapter: 2,
+    pt: {
+      term: "Planning poker",
+      def: "Técnica de estimativa colaborativa baseada na opinião de especialistas ou membros da equipe, típica do desenvolvimento ágil: a equipe discute e vota valores (ex.: story points) até convergir. É rápida de executar, o que a torna viável sob restrições de tempo.",
+    },
+    en: {
+      term: "Planning poker",
+      def: "A collaborative, expert-based estimation technique typical of Agile development: the team discusses and votes on values (e.g., story points) until convergence. It is quick to run, making it feasible under time constraints.",
+    },
+  },
+  {
+    cert: "ctal-tm",
+    id: "gl-tm-207",
+    chapter: 2,
+    pt: {
+      term: "Anomalia",
+      def: "Qualquer condição que difere do esperado — a discrepância entre o resultado real e o resultado esperado observada no teste dinâmico. No início não se sabe se é causada por um defeito no produto de trabalho ou por outra coisa (ex.: falha de automação ou má interpretação de requisito); por isso outros padrões falam em incidente/anomaly management.",
+    },
+    en: {
+      term: "Anomaly",
+      def: "Any condition that differs from expectations — the discrepancy between actual and expected results observed in dynamic testing. Initially it is unknown whether it is caused by a defect in a work product or something else (e.g., automation failure or a misunderstood requirement), which is why other standards call it incident/anomaly management.",
+    },
+  },
+  {
+    cert: "ctal-tm",
+    id: "gl-tm-208",
+    chapter: 2,
+    pt: {
+      term: "Relatório de defeito",
+      def: "Documento que comunica uma anomalia e a acompanha pelo fluxo de defeitos. Informações obrigatórias: título com resumo, descrição detalhada (de preferência com passos para reproduzir), severidade do impacto no sistema e/ou nos stakeholders e prioridade de correção. A ferramenta costuma acrescentar identificador, datas, autor, estado, dono, histórico e referências.",
+    },
+    en: {
+      term: "Defect report",
+      def: "The document that communicates an anomaly and follows it through the defect workflow. Mandatory information: a title with a short summary, a detailed description (preferably including steps to reproduce), the severity of the impact on the system and/or stakeholders, and the fix priority. The tool usually adds an identifier, dates, author, state, owner, history, and references.",
+    },
+  },
+  {
+    cert: "ctal-tm",
+    id: "gl-tm-209",
+    chapter: 2,
+    pt: {
+      term: "Fluxo de trabalho de defeitos",
+      def: "Sequência de estados do relatório de defeito, com um responsável por estado: ABERTO (novo) → EM ANDAMENTO → (REJEITADO) → RESOLVIDO (corrigido, pronto para reteste — teste de confirmação) → FECHADO, com extensões como REABERTO, ACEITO, ESCLARECIMENTO e ADIADO. Boas práticas: definição organizacional, um único estado terminal, estados consecutivos sob papéis diferentes e mais de uma transição de saída por estado.",
+    },
+    en: {
+      term: "Defect workflow",
+      def: "The sequence of states of a defect report, with one owner per state: OPEN (new) → IN PROGRESS → (REJECTED) → RESOLVED (fixed, ready for retest — confirmation test) → CLOSED, with extensions such as RE-OPENED, ACCEPTED, CLARIFICATION, and DEFERRED. Good practices: organization-wide definition, a single terminal state, consecutive states under different roles, and more than one outgoing transition per state.",
+    },
+  },
+  {
+    cert: "ctal-tm",
+    id: "gl-tm-210",
+    chapter: 2,
+    pt: {
+      term: "Severidade e prioridade do defeito",
+      def: "Severidade = grau de impacto da anomalia sobre o sistema sob teste e/ou os stakeholders do produto. Prioridade = urgência de corrigir a anomalia, definida em relação às demais tarefas — tipicamente pela triagem, que pesa benefícios, riscos e custos de corrigir.",
+    },
+    en: {
+      term: "Defect severity and priority",
+      def: "Severity = the degree of the anomaly's impact on the system under test and/or product stakeholders. Priority = the urgency of fixing the anomaly, set relative to other tasks — typically by triage, which weighs the benefits, risks, and costs of fixing.",
+    },
+  },
+  {
+    cert: "ctal-tm",
+    id: "gl-tm-211",
+    chapter: 2,
+    pt: {
+      term: "Comitê de gerenciamento de defeitos",
+      def: "Equipe cross-functional (gerente de teste, representantes de desenvolvimento, fornecedores, gestão do projeto e do produto, demais interessados) responsável por gerenciar os defeitos do projeto: decide se cada relatório representa defeito válido e se deve ser corrigido (e por qual equipe), rejeitado ou adiado, em geral na reunião de triagem.",
+    },
+    en: {
+      term: "Defect management committee",
+      def: "A cross-functional team (test manager, development representatives, suppliers, project and product management, other interested stakeholders) responsible for managing a project's defects: it decides whether each report represents a valid defect and whether it should be fixed (and by which team), rejected, or deferred, usually in the triage meeting.",
+    },
+  },
+
+  /* ─────────── Capítulo 3 — Managing the Team (7 termos) ─────────── */
+  {
+    cert: "ctal-tm",
+    id: "gl-tm-301",
+    chapter: 3,
+    pt: {
+      term: "Custo da qualidade",
+      def: "Meio de quantificar o custo total dos esforços e defeitos relacionados à qualidade, classificando custos em 4 categorias: prevenção de defeitos, avaliação, falha interna e falha externa. O CTAL-TM adota a abordagem de Feigenbaum (o FL v4 apresenta a de Boehm); avaliação + falha interna costumam ser muito menores que a falha externa, o que sustenta o business case do teste.",
+    },
+    en: {
+      term: "Cost of quality",
+      def: "A means of quantifying the total cost of quality-related efforts and defects by classifying costs into 4 categories: defect prevention, appraisal, internal failure, and external failure. CTAL-TM adopts Feigenbaum's approach (the FL v4 presents Boehm's); appraisal + internal failure are usually much lower than external failure, which supports the business case for testing.",
+    },
+  },
+  {
+    cert: "ctal-tm",
+    id: "gl-tm-302",
+    chapter: 3,
+    pt: {
+      term: "Custos de prevenção de defeitos",
+      def: "Categoria do custo da qualidade: custo de todas as atividades planejadas e proativas para prevenir má qualidade — ex.: qualificação dos desenvolvedores (treinamento em código manutenível ou seguro), revisão da base de teste o mais cedo possível e comunicação adequada dentro da equipe.",
+    },
+    en: {
+      term: "Defect prevention costs",
+      def: "Cost of quality category: the cost of all planned, proactive activities to prevent poor quality — e.g., qualifying developers (training in maintainable or secure code), reviewing the test basis as early as possible, and appropriate communication within the team.",
+    },
+  },
+  {
+    cert: "ctal-tm",
+    id: "gl-tm-303",
+    chapter: 3,
+    pt: {
+      term: "Custos de avaliação",
+      def: "Categoria do custo da qualidade: custo de todas as atividades de detecção de defeitos — execução do teste estático e do teste dinâmico e revisão de produtos de trabalho.",
+    },
+    en: {
+      term: "Appraisal costs",
+      def: "Cost of quality category: the cost of all defect detection activities — performing static and dynamic testing and reviewing work products.",
+    },
+  },
+  {
+    cert: "ctal-tm",
+    id: "gl-tm-304",
+    chapter: 3,
+    pt: {
+      term: "Custos de falha interna",
+      def: "Categoria do custo da qualidade: custo das atividades reativas a defeitos encontrados antes da entrega — ex.: correção dos defeitos achados durante o teste e fornecimento de contornos (workarounds).",
+    },
+    en: {
+      term: "Internal failure costs",
+      def: "Cost of quality category: the cost of reactive activities for defects found before delivery — e.g., fixing defects found during testing and providing workarounds.",
+    },
+  },
+  {
+    cert: "ctal-tm",
+    id: "gl-tm-305",
+    chapter: 3,
+    pt: {
+      term: "Custos de falha externa",
+      def: "Categoria do custo da qualidade: custo das atividades reativas e sem valor agregado de um produto defeituoso entregue ao cliente (pós-release) — perda de receita, ativos, saúde humana, vidas ou meio ambiente; custos legais; e teste, implantação e suporte extras motivados por defeitos de campo.",
+    },
+    en: {
+      term: "External failure costs",
+      def: "Cost of quality category: the cost of non-value-added, reactive activities for a defective product delivered to the customer (post-release) — loss of revenue, assets, human health, lives, or the environment; legal costs; and extra testing, deployment, and support caused by field defects.",
+    },
+  },
+  {
+    cert: "ctal-tm",
+    id: "gl-tm-306",
+    chapter: 3,
+    pt: {
+      term: "Áreas de competência",
+      def: "Classificação das habilidades em 4 áreas: profissional (tarefas especializadas — técnicas de teste, expertise técnica e de negócio, gestão de projetos), metodológica (analíticas, conceituais e de julgamento, independentes do domínio), social (comunicação, cooperação e gestão de conflitos) e pessoal (autogestão, autorresponsabilidade, resiliência, abertura a mudanças).",
+    },
+    en: {
+      term: "Areas of competence",
+      def: "The classification of skills into 4 areas: professional (specialized tasks — test techniques, technical and business expertise, project management), methodological (analytical, conceptual, and judgment skills, domain-independent), social (communication, cooperation, and conflict management), and personal (self-management, personal responsibility, resilience, openness to change).",
+    },
+  },
+  {
+    cert: "ctal-tm",
+    id: "gl-tm-307",
+    chapter: 3,
+    pt: {
+      term: "Motivadores × fatores de higiene",
+      def: "Teoria dos dois fatores de Herzberg. Motivadores são percebidos conscientemente e geram crescimento e satisfação: reconhecimento, responsabilidade e autonomia, tarefas desafiadoras e desenvolvimento profissional. Fatores de higiene são pressupostos — cumpri-los não gera satisfação, mas sua falta desmotiva: remuneração, estilo de gestão, condições de trabalho, segurança e relacionamentos.",
+    },
+    en: {
+      term: "Motivators vs. hygiene factors",
+      def: "Herzberg's two-factor theory. Motivators are consciously perceived and lead to growth and satisfaction: recognition, responsibility and autonomy, challenging tasks, and professional development. Hygiene factors are taken for granted — fulfilling them does not create satisfaction, but their absence demotivates: remuneration, management style, working conditions, safety, and relationships.",
     },
   },
 ];

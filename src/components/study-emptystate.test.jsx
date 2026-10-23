@@ -118,6 +118,53 @@ describe("Glossary — cert scoping", () => {
   });
 });
 
+/* ─────────── r19: CTAL-TM vai a live — conteúdo real em tudo ─────────── */
+
+describe("Flashcards — cert scoping (CTAL-TM)", () => {
+  it("mostra conteúdo CTAL-TM real (nada de estado vazio)", () => {
+    renderAt("/ctal-tm/flashcards", "/:cert/flashcards", Flashcards);
+    expect(screen.queryByText(EMPTY_STATE_PT)).not.toBeInTheDocument();
+    expect(screen.getByText(/Planejamento de teste: as 5 tarefas/)).toBeInTheDocument();
+  });
+
+  it("CTAL-TM não mostra cards de outros certs", () => {
+    renderAt("/ctal-tm/flashcards", "/:cert/flashcards", Flashcards);
+    expect(screen.queryByText(/7 Princípios de Teste/)).not.toBeInTheDocument();
+    expect(screen.queryByText(/Papel do Analista de Testes/)).not.toBeInTheDocument();
+  });
+
+  it("helper: flashcardsForCert entrega os 21 cards do CTAL-TM", () => {
+    expect(flashcardsForCert("pt", "ctal-tm")).toHaveLength(21);
+    expect(flashcardsForCert("en", "ctal-tm")).toHaveLength(21);
+  });
+});
+
+describe("Syllabus — cert scoping (CTAL-TM)", () => {
+  it("mostra conteúdo CTAL-TM real (nada de estado vazio)", () => {
+    renderAt("/ctal-tm/syllabus", "/:cert/syllabus", Syllabus);
+    expect(screen.queryByText(EMPTY_STATE_PT)).not.toBeInTheDocument();
+    expect(screen.getByText(/Relatórios que capacitam decisões/)).toBeInTheDocument();
+  });
+
+  it("helper: syllabusForCert entrega os 18 itens do CTAL-TM", () => {
+    expect(syllabusForCert("pt", "ctal-tm")).toHaveLength(18);
+    expect(syllabusForCert("en", "ctal-tm")).toHaveLength(18);
+  });
+});
+
+describe("Glossary — cert scoping (CTAL-TM)", () => {
+  it("mostra termos CTAL-TM reais (nada de estado vazio)", () => {
+    renderAt("/ctal-tm/glossary", "/:cert/glossary", Glossary);
+    expect(screen.queryByText(EMPTY_STATE_PT)).not.toBeInTheDocument();
+    expect(screen.getByText(/Conclusão do teste/)).toBeInTheDocument();
+  });
+
+  it("helper: glossaryForCert entrega os 37 termos do CTAL-TM", () => {
+    expect(glossaryForCert("pt", "ctal-tm")).toHaveLength(37);
+    expect(glossaryForCert("en", "ctal-tm")).toHaveLength(37);
+  });
+});
+
 /* ─────────── Integridade do conteúdo (Database Architect) ─────────── */
 
 describe("study content — integridade estrutural", () => {
@@ -127,8 +174,8 @@ describe("study content — integridade estrutural", () => {
       ...SYLLABUS_ITEMS.map((i) => ({ ...i, kind: "item" })),
     ];
     for (const it of all) {
-      expect(["ctfl", "ctal-ta"]).toContain(it.cert);
-      const maxCh = it.cert === "ctfl" ? 6 : 5;
+      expect(["ctfl", "ctal-ta", "ctal-tm"]).toContain(it.cert);
+      const maxCh = it.cert === "ctfl" ? 6 : it.cert === "ctal-ta" ? 5 : 3;
       expect(it.ch).toBeGreaterThanOrEqual(1);
       expect(it.ch).toBeLessThanOrEqual(maxCh);
       expect(it.locales.pt).toBeTruthy();
@@ -138,9 +185,9 @@ describe("study content — integridade estrutural", () => {
 
   it("todo termo do glossário tem cert válido, capítulo e PT/EN completos", () => {
     for (const g of GLOSSARY) {
-      expect(["ctfl", "ctal-ta"]).toContain(g.cert);
+      expect(["ctfl", "ctal-ta", "ctal-tm"]).toContain(g.cert);
       expect(g.chapter).toBeGreaterThanOrEqual(1);
-      expect(g.chapter).toBeLessThanOrEqual(g.cert === "ctfl" ? 6 : 5);
+      expect(g.chapter).toBeLessThanOrEqual(g.cert === "ctfl" ? 6 : g.cert === "ctal-ta" ? 5 : 3);
       expect(g.pt?.term).toBeTruthy();
       expect(g.pt?.def).toBeTruthy();
       expect(g.en?.term).toBeTruthy();
@@ -169,5 +216,16 @@ describe("study content — integridade estrutural", () => {
       expect(SYLLABUS_ITEMS.some((i) => i.cert === "ctfl" && i.ch === ch)).toBe(true);
       expect(GLOSSARY.some((g) => g.cert === "ctfl" && g.chapter === ch)).toBe(true);
     }
+    // r19: CTAL-TM — 3 capítulos, com distribuição proporcional ao exame
+    const TM_PER_CH = { 1: 11, 2: 6, 3: 4 };
+    for (const ch of [1, 2, 3]) {
+      expect(FLASHCARDS.filter((c) => c.cert === "ctal-tm" && c.ch === ch).length).toBe(
+        TM_PER_CH[ch]
+      );
+      expect(SYLLABUS_ITEMS.some((i) => i.cert === "ctal-tm" && i.ch === ch)).toBe(true);
+      expect(GLOSSARY.some((g) => g.cert === "ctal-tm" && g.chapter === ch)).toBe(true);
+    }
+    expect(SYLLABUS_ITEMS.filter((i) => i.cert === "ctal-tm").length).toBe(18);
+    expect(GLOSSARY.filter((g) => g.cert === "ctal-tm").length).toBe(37);
   });
 });

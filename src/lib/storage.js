@@ -592,8 +592,8 @@ export function achievementProgress(progress, bank, examFormat = null) {
   const examHistory = progress.examHistory || [];
   const bestPct = examHistory.reduce((m, e) => Math.max(m, e.pct || 0), 0);
   const passPct =
-    examFormat && examFormat.questions > 0
-      ? Math.round((examFormat.passMark / examFormat.questions) * 100)
+    examFormat && (examFormat.totalPoints || examFormat.questions) > 0
+      ? Math.round((examFormat.passMark / (examFormat.totalPoints || examFormat.questions)) * 100)
       : 65;
 
   let chapter = { current: 0, target: 0, pct: 0 };

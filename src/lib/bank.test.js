@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { getBank } from "./bank.js";
 
-describe.each(["ctfl", "ctal-ta"])("bank(%s) - distribuição do simulado", (certId) => {
+describe.each(["ctfl", "ctal-ta", "ctal-tm"])("bank(%s) - distribuição do simulado", (certId) => {
   it("buildExamInLang segue os pesos oficiais por capítulo, sem filler aleatório", () => {
     const { chapters, META, buildExamInLang } = getBank(certId);
     const WEIGHTS_TOTAL = Object.values(META.chapterWeights[certId]).reduce(

@@ -34,6 +34,16 @@ const BASE = () => ({
   examHistory: [],
 });
 
+it("meta de aprovação CTAL-TM usa pontos e nunca ultrapassa 100%", () => {
+  const result = achievementProgress(BASE(), null, {
+    questions: 50,
+    totalPoints: 88,
+    passMark: 58,
+    scoring: "points",
+  });
+  expect(result["passed-exam"].target).toBe(66);
+});
+
 describe("integração v3.15.1: undo preserva a atividade anterior", () => {
   it("restaura exatamente 400 registros e a data anterior após avaliar e desfazer", () => {
     const original = {

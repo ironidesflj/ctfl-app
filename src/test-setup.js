@@ -6,4 +6,4 @@ import "@testing-library/jest-dom";
 // do módulo, que roda depois deste setup).
 import { loadBankFor } from "./lib/bank.js";
 
-await Promise.all([loadBankFor("ctfl"), loadBankFor("ctal-ta")]);
+await Promise.all([loadBankFor("ctfl"), loadBankFor("ctal-ta"), loadBankFor("ctal-tm")]);

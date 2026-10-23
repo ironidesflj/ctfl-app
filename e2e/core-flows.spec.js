@@ -4,9 +4,28 @@ import { readFileSync } from "node:fs";
 const { version } = JSON.parse(readFileSync(new URL("../package.json", import.meta.url), "utf8"));
 const releaseKey = `synapse.releaseNotes.seen.${version}`;
 
+test("CTAL-TM conclui simulado com pontuação e progresso próprios", async ({ page }) => {
+  await page.goto("/ctal-tm/quiz");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Test Manager");
+  await page.getByRole("button", { name: /simulado/i }).click();
+  await page.getByRole("button", { name: "Iniciar" }).click();
+  await page.getByRole("button", { name: /ver todas as questões/i }).click();
+  await expect(page.locator(".exam-grid-item")).toHaveCount(50);
+  await page.locator(".exam-grid-item").last().click();
+  await page.getByRole("button", { name: "Finalizar" }).click();
+  const exam = await page.evaluate(
+    () => JSON.parse(localStorage.getItem("synapse.progress.v1.ctal-tm")).examHistory[0]
+  );
+  expect(exam.pointsTotal).toBe(88);
+  expect(exam.passed).toBe(false);
+  expect(exam.scoring).toBe("points");
+  await page.getByRole("tab", { name: "Progresso" }).click();
+  await expect(page.locator(".ach-roadmap-card")).not.toContainText("116%");
+});
+
 test("cabeçalho mobile preserva título e troca de certificação em 390px", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
-  for (const cert of ["ctfl", "ctal-ta"]) {
+  for (const cert of ["ctfl", "ctal-ta", "ctal-tm"]) {
     await page.goto(`/${cert}/quiz`);
     const heading = page.getByRole("heading", { level: 1 });
     await expect(heading).toBeVisible();

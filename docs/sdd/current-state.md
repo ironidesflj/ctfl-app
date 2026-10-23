@@ -1,4 +1,12 @@
-# Estado atual — 2026-10-23 (v3.16.0 local)
+# Estado atual — 2026-10-23 (v3.17.0 local)
+
+Integração seletiva CTAL-TM: 200 questões (101 estudo/99 simulado), conteúdo
+bilíngue e blueprint 50 questões/88 pontos/corte 58/120 minutos.
+Corrigido alvo percentual de aprovação de provas pontuadas no Stats e conquistas.
+Questões CTFL/CTAL-TA preservadas na comparação estrutural dos pacotes.
+Mantidos storage e ajustes institucionais locais. Cache r20-v1.
+Limitação: K4 CTAL-TM só no simulado; estudo sem amostra K4 não satisfaz
+o gate de prontidão K4 existente. Não relaxado o gate para esconder essa dívida.
 
 Integração seletiva v3.16.0: paletas por certificação com 20 guardas de
 identidade/contraste e cabeçalho mobile adaptado para manter a troca de cert.
