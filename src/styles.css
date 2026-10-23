@@ -2474,6 +2474,12 @@ mark {
   justify-content: center;
   margin-top: 0.5rem;
 }
+/* v3.15.1 (port r16): rows semânticas (role=row) para o padrão WAI-ARIA
+   grid — display:contents remove a caixa do layout: os filhos continuam
+   caindo nas trilhas do grid PAI exatamente como antes (geometria intacta). */
+.hm-row {
+  display: contents;
+}
 .hm-corner {
   grid-column: 1;
   grid-row: 1;
@@ -3585,4 +3591,82 @@ button.hm-cell:focus-visible {
   vertical-align: super;
   line-height: 1.4;
   font-variant-numeric: tabular-nums;
+}
+
+/* v3.15.1 (port da linha r15 paralela): strip de contexto dos Flashcards
+   (hoje · retenção · no sistema) — feedback loop visível entre avaliação
+   e progresso. */
+.srs-strip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+  margin: 0 0 0.9rem;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: var(--fs-12, 12px);
+  color: var(--text-3);
+}
+.srs-strip-item {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 2px 10px;
+  background: var(--card);
+  white-space: nowrap;
+}
+.srs-strip-sep {
+  color: var(--text-3);
+}
+.srs-strip-hint {
+  border-style: dashed;
+}
+
+/* v3.15.1 (port): mini-barras de revisões dos últimos 14 dias no painel
+   do Stats — volume por dia, mesma escala de cor do heatmap. */
+.srs-bars {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  gap: 3px;
+  height: 44px;
+  align-items: end;
+}
+.srs-bar-col {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  height: 100%;
+  min-width: 0;
+}
+.srs-bar {
+  display: block;
+  width: 100%;
+  max-width: 14px;
+  border-radius: 2px 2px 0 0;
+  background: var(--line);
+  transition: height 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.srs-bar[data-level="1"] {
+  background: color-mix(in srgb, var(--ok) 30%, var(--bg));
+}
+.srs-bar[data-level="2"] {
+  background: color-mix(in srgb, var(--ok) 55%, var(--bg));
+}
+.srs-bar[data-level="3"] {
+  background: color-mix(in srgb, var(--ok) 80%, var(--bg));
+}
+.srs-bar[data-level="4"] {
+  background: var(--ok);
+}
+@media (prefers-reduced-motion: reduce) {
+  .srs-bar {
+    transition: none;
+  }
+}
+/* print: strip e barras são runtime (não imprimem) */
+@media print {
+  .srs-strip,
+  .srs-bars {
+    display: none !important;
+  }
 }

@@ -283,3 +283,36 @@ describe("r15: Flashcards — fila zerada e chips", () => {
     expect(screen.getByText(/Espaço vira/i)).toBeTruthy();
   });
 });
+
+describe("v3.15.1 (port r15): strip de contexto — hoje · retenção · no sistema", () => {
+  it("aparece após avaliações e reflete os contadores do srsStats", () => {
+    renderFlash(
+      PROGRESS({
+        srsStats: {
+          again: 0,
+          hard: 0,
+          good: 3,
+          easy: 1,
+          reviews: 4,
+          lastReview: iso(),
+          todayDate: iso(),
+          todayCount: 2,
+        },
+        srs: {
+          "fc-fund-01": { easeFactor: 2.5, interval: 6, repetitions: 2, dueDate: iso(6) },
+          "fc-fund-02": { easeFactor: 2.5, interval: 1, repetitions: 1, dueDate: iso(1) },
+        },
+      })
+    );
+    const strip = document.querySelector(".srs-strip");
+    expect(strip).toBeTruthy();
+    expect(strip.textContent).toContain("hoje: 2");
+    expect(strip.textContent).toContain("retenção: 100%");
+    expect(strip.textContent).toContain("no sistema: 2");
+  });
+
+  it("estado virgem: sem strip (nada a mostrar além do convite)", () => {
+    renderFlash(PROGRESS());
+    expect(document.querySelector(".srs-strip")).toBeNull();
+  });
+});

@@ -157,7 +157,7 @@ describe("r6: Stats — export CSV do histórico", () => {
 describe("r6: Stats — aria do heatmap com plural correto", () => {
   it("1 dia e 1 resposta ficam no singular no aria-label", () => {
     renderStats(PROGRESS({ total: 1, history: [{ date: todayLocal(), correct: true }] }));
-    const heat = screen.getByRole("group", { name: /Mapa de atividade/ });
+    const heat = screen.getByRole("grid", { name: /Mapa de atividade/ });
     expect(heat.getAttribute("aria-label")).toContain("1 dia com estudo");
     expect(heat.getAttribute("aria-label")).toContain("1 resposta");
   });
@@ -175,7 +175,7 @@ describe("r14: Stats — heatmap redesenhado (semanas alinhadas + inspeção por
         ],
       })
     );
-    const heat = screen.getByRole("group", { name: /Mapa de atividade/ });
+    const heat = screen.getByRole("grid", { name: /Mapa de atividade/ });
     const cells = heat.querySelectorAll(".hm-cell:not(.future)");
     const futures = heat.querySelectorAll(".hm-cell.future");
     // 12 semanas × 7 dias = 84 células (contando futuros) + 5 da legenda
@@ -693,5 +693,171 @@ describe("r11: Stats — card Desempenho por K-level", () => {
       expect(p.className).not.toMatch(/ ok| no/);
     });
     expect(container.querySelector(".klevel-pct.ok")).toBeNull();
+  });
+});
+
+describe("v3.15.1: Stats — heatmap navegável por teclado (grid WAI-ARIA + roving tabindex)", () => {
+  const isoShift = (days) => {
+    const d = new Date(`${todayLocal()}T12:00:00`);
+    d.setDate(d.getDate() + days);
+    return d.toISOString().slice(0, 10);
+  };
+
+  it("grid com 8 rows semânticas e UMA única parada de Tab (hoje)", () => {
+    renderStats(
+      PROGRESS({
+        total: 1,
+        history: [{ date: todayLocal(), correct: true }],
+      })
+    );
+    const heat = screen.getByRole("grid", { name: /Mapa de atividade/ });
+    // 1 row de meses (aria-hidden) + 7 rows de dias
+    expect(heat.querySelectorAll('[role="row"]')).toHaveLength(8);
+    // roving tabindex: exatamente 1 célula com tabIndex 0 — a de hoje
+    const stops = heat.querySelectorAll('button[tabindex="0"]');
+    expect(stops).toHaveLength(1);
+    expect(stops[0].getAttribute("data-date")).toBe(todayLocal());
+    // dica de navegação ligada ao grid via aria-describedby
+    expect(heat).toHaveAttribute("aria-describedby", "hm-hint");
+    expect(document.getElementById("hm-hint").textContent).toContain("setas");
+  });
+
+  it("seta ← move foco e seleção para o dia anterior (detalhe acompanha)", () => {
+    const yesterday = isoShift(-1);
+    renderStats(
+      PROGRESS({
+        total: 3,
+        history: [
+          { date: yesterday, correct: true },
+          { date: yesterday, correct: false },
+          { date: todayLocal(), correct: true },
+        ],
+      })
+    );
+    const heat = screen.getByRole("grid", { name: /Mapa de atividade/ });
+    const todayBtn = heat.querySelector(`[data-date="${todayLocal()}"]`);
+    todayBtn.focus();
+    expect(document.activeElement).toBe(todayBtn);
+    fireEvent.keyDown(heat, { key: "ArrowLeft" });
+    const prev = heat.querySelector(`[data-date="${yesterday}"]`);
+    expect(document.activeElement).toBe(prev);
+    expect(prev).toHaveAttribute("tabindex", "0");
+    expect(todayBtn).toHaveAttribute("tabindex", "-1");
+    expect(document.querySelector(".hm-detail").textContent).toContain("2 resposta");
+  });
+
+  it("setas não atravessam o futuro: ↓ a partir de hoje fica onde está", () => {
+    renderStats(
+      PROGRESS({
+        total: 1,
+        history: [{ date: todayLocal(), correct: true }],
+      })
+    );
+    const heat = screen.getByRole("grid", { name: /Mapa de atividade/ });
+    const todayBtn = heat.querySelector(`[data-date="${todayLocal()}"]`);
+    todayBtn.focus();
+    fireEvent.keyDown(heat, { key: "ArrowDown" });
+    expect(document.activeElement).toBe(todayBtn);
+    expect(todayBtn).toHaveAttribute("tabindex", "0");
+  });
+
+  it("Home vai à 1ª célula e End retorna a hoje", () => {
+    renderStats(
+      PROGRESS({
+        total: 1,
+        history: [{ date: todayLocal(), correct: true }],
+      })
+    );
+    const heat = screen.getByRole("grid", { name: /Mapa de atividade/ });
+    const todayBtn = heat.querySelector(`[data-date="${todayLocal()}"]`);
+    const dow = new Date(`${todayLocal()}T12:00:00`).getDay();
+    const firstDate = isoShift(-((dow + 6) % 7) - 11 * 7);
+    fireEvent.keyDown(heat, { key: "Home" });
+    expect(document.activeElement.getAttribute("data-date")).toBe(firstDate);
+    fireEvent.keyDown(heat, { key: "End" });
+    expect(document.activeElement).toBe(todayBtn);
+  });
+
+  it("célula selecionada carrega aria-selected; clique move a parada de Tab", async () => {
+    const user = userEvent.setup();
+    renderStats(
+      PROGRESS({
+        total: 2,
+        history: [
+          { date: todayLocal(), correct: true },
+          { date: todayLocal(), correct: false },
+        ],
+      })
+    );
+    const heat = screen.getByRole("grid", { name: /Mapa de atividade/ });
+    const todayBtn = heat.querySelector(`[data-date="${todayLocal()}"]`);
+    expect(todayBtn).toHaveAttribute("aria-selected", "true");
+    const other = heat.querySelector(`[data-date="${isoShift(-3)}"]`);
+    await user.click(other);
+    expect(other).toHaveAttribute("aria-selected", "true");
+    expect(todayBtn).toHaveAttribute("aria-selected", "false");
+    expect(other).toHaveAttribute("tabindex", "0");
+    expect(todayBtn).toHaveAttribute("tabindex", "-1");
+  });
+});
+
+describe("v3.15.1: Stats — revisões acendem o heatmap (integração r15 portada)", () => {
+  it("usuário só de flashcards vê o mapa (gate: total=0 OU atividade)", () => {
+    const { container } = renderStats(
+      PROGRESS({
+        total: 0,
+        history: [{ date: todayLocal(), correct: true, kind: "srs" }],
+      })
+    );
+    expect(container.querySelector(".heatmap-card")).toBeInTheDocument();
+  });
+
+  it("detalhe do dia distingue respostas de revisões", () => {
+    renderStats(
+      PROGRESS({
+        total: 2,
+        history: [
+          { date: todayLocal(), correct: true },
+          { date: todayLocal(), correct: true, kind: "srs" },
+        ],
+      })
+    );
+    expect(document.querySelector(".hm-detail").textContent).toContain("1 revisão");
+  });
+
+  it("painel SRS mostra mini-barras dos últimos 14 dias e a linha de hoje", () => {
+    const { container } = renderStats(
+      PROGRESS({
+        srsStats: {
+          again: 0,
+          hard: 0,
+          good: 3,
+          easy: 1,
+          reviews: 4,
+          lastReview: todayLocal(),
+          todayDate: todayLocal(),
+          todayCount: 2,
+        },
+        srs: {
+          "fc-fund-01": {
+            easeFactor: 2.5,
+            interval: 30,
+            repetitions: 4,
+            dueDate: "2030-01-01",
+          },
+        },
+        history: [
+          { date: todayLocal(), correct: true, kind: "srs" },
+          { date: todayLocal(), correct: true, kind: "srs" },
+          { date: todayLocal(), correct: true, kind: "srs" },
+        ],
+      })
+    );
+    expect(container.querySelectorAll(".srs-bar")).toHaveLength(14);
+    const acesas = [...container.querySelectorAll(".srs-bar")].filter(
+      (b) => b.getAttribute("data-level") !== "0"
+    );
+    expect(acesas.length).toBe(1); // só hoje tem volume
+    expect(container.textContent).toContain("2 revisão(ões) hoje");
   });
 });

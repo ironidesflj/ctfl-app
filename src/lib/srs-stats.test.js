@@ -10,6 +10,7 @@ import {
   checkAchievements,
   achievementProgress,
   loadProgress,
+  todayLocal,
 } from "./storage.js";
 import { initSM2, sm2, QUALITY } from "./spacedRepetition.js";
 
@@ -31,6 +32,36 @@ const BASE = () => ({
   lastStudyDate: null,
   achievements: [],
   examHistory: [],
+});
+
+describe("integração v3.15.1: undo preserva a atividade anterior", () => {
+  it("restaura exatamente 400 registros e a data anterior após avaliar e desfazer", () => {
+    const original = {
+      ...BASE(),
+      history: Array.from({ length: 400 }, (_, i) => ({
+        date: "2026-01-01",
+        correct: true,
+        id: `old-${i}`,
+      })),
+      lastStudyDate: "2026-01-01",
+      srsStats: normalizeSRSStats(),
+    };
+    const rated = rateSRS(original, "fc", "good");
+    expect(rated.history).toHaveLength(400);
+    const undone = undoSRSRating(rated, "fc", "good", null);
+    expect(undone.history).toEqual(original.history);
+    expect(undone.lastStudyDate).toBe(original.lastStudyDate);
+    expect(undone.srsStats).toEqual(original.srsStats);
+    expect(original.history).toHaveLength(400);
+  });
+
+  it("não deixa atividade ou data fantasma quando a primeira revisão é desfeita", () => {
+    const original = BASE();
+    const undone = undoSRSRating(rateSRS(original, "fc", "good"), "fc", "good", null);
+    expect(undone.history).toEqual([]);
+    expect(undone.lastStudyDate).toBeNull();
+    expect(undone.srsStats).toEqual(normalizeSRSStats());
+  });
 });
 
 describe("r15: rateSRS — caminho único de avaliação", () => {
@@ -243,5 +274,58 @@ describe("r15: estados antigos sem srsStats degradam com segurança", () => {
     expect(loaded.srsStats.reviews).toBe(0);
     expect(loaded.srsStats.todayCount).toBe(0);
     expect(normalizeSRSStats(null).reviews).toBe(0);
+  });
+});
+
+describe("v3.15.1 (port r15): rateSRS grava atividade no history", () => {
+  it("cada avaliação empurra entrada kind:'srs' com correct mapeado e id", () => {
+    let s = rateSRS(BASE(), "fc-fund-01", "good");
+    expect(s.history).toHaveLength(1);
+    expect(s.history[0]).toEqual({
+      date: todayLocal(),
+      correct: true,
+      kind: "srs",
+      id: "fc-fund-01",
+    });
+    expect(s.lastStudyDate).toBe(todayLocal());
+    s = rateSRS(s, "fc-fund-01", "again"); // Errei não conta como acerto
+    expect(s.history).toHaveLength(2);
+    expect(s.history[1].correct).toBe(false);
+    expect(s.history[1].id).toBe("fc-fund-01");
+  });
+
+  it("undoSRSRating remove a entrada CERTA (outro item no meio não é tocado)", () => {
+    let s = rateSRS(BASE(), "fc-fund-01", "good");
+    s = rateSRS(s, "fc-fund-02", "easy");
+    s = rateSRS(s, "fc-fund-01", "hard");
+    expect(s.history).toHaveLength(3);
+    const prevCard = null; // fc-fund-01 era novo na 1ª avaliação
+    const undone = undoSRSRating(s, "fc-fund-01", "hard", prevCard);
+    // remove a ÚLTIMA entrada do item — a do fc-fund-02 permanece
+    expect(undone.history).toHaveLength(2);
+    expect(undone.history.every((h) => h.id !== "fc-fund-01" || h.correct === true)).toBe(true);
+    expect(undone.history.some((h) => h.id === "fc-fund-02")).toBe(true);
+    expect(undone.srsStats.reviews).toBe(2); // 3 - 1
+  });
+
+  it("cap do history em 400 entradas (revisões incluídas)", () => {
+    let s = BASE();
+    const seed = {
+      ...s,
+      history: Array.from({ length: 395 }, () => ({
+        date: "2026-01-01",
+        correct: true,
+        kind: "quiz",
+      })),
+    };
+    s = seed;
+    s = rateSRS(s, "fc-fund-01", "good");
+    s = rateSRS(s, "fc-fund-01", "good");
+    s = rateSRS(s, "fc-fund-01", "good");
+    s = rateSRS(s, "fc-fund-01", "good");
+    s = rateSRS(s, "fc-fund-01", "good");
+    s = rateSRS(s, "fc-fund-01", "good");
+    expect(s.history.length).toBeLessThanOrEqual(400);
+    expect(s.history.filter((h) => h.kind === "srs").length).toBe(6);
   });
 });

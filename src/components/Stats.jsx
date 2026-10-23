@@ -23,6 +23,7 @@ import {
   kLevelBreakdown,
   flashcardStats,
   nextDueDate,
+  srsSummary,
 } from "../lib/activity.js";
 import { flashcardsForCert } from "../data/study.js";
 import { getSetting, setSetting } from "../lib/settings.js";
@@ -338,6 +339,69 @@ export default function Stats({
   const heatToday = heat.todayCell;
   // dia selecionado para o detalhe por toque (default = hoje)
   const [heatSel, setHeatSel] = useState(null);
+  // v3.15.1 (port r16): navegação por teclado no heatmap — padrão WAI-ARIA
+  // "grid" com roving tabindex: UMA única parada de Tab (default = hoje)
+  // em vez de ~80, setas movem foco+seleção (←/→ = dia anterior/próximo na
+  // leitura da semana; ↑/↓ = mesmo dia na semana anterior/próxima), Home =
+  // 1ª célula, End = hoje. Fecha a dívida de acessibilidade r14.
+  const [navPos, setNavPos] = useState(null);
+  const heatGridRef = useRef(null);
+  // hoje na matriz do grid (varredura 12×7 = 84 células — barata demais
+  // para memo manual; o React Compiler cobre o resto)
+  const todayPos = (() => {
+    if (!heatToday) return null;
+    for (let w = 0; w < heat.grid.length; w++) {
+      const r = heat.grid[w].findIndex((c) => c && c.date === heatToday.date);
+      if (r >= 0) return { w, r };
+    }
+    return null;
+  })();
+  // parada de Tab: célula navegada, hoje, ou a última célula existente
+  const stopPos =
+    navPos ||
+    todayPos ||
+    (() => {
+      const w = heat.grid.length - 1;
+      for (let r = 6; r >= 0; r--) if (heat.grid[w]?.[r]) return { w, r };
+      return { w: 0, r: 0 };
+    })();
+  const onHeatKey = (e) => {
+    const K = e.key;
+    if (!["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown", "Home", "End"].includes(K)) return;
+    e.preventDefault();
+    const W = heat.grid.length;
+    const from = navPos || todayPos || stopPos;
+    let { w, r } = from;
+    if (K === "Home") {
+      w = 0;
+      r = 0;
+    } else if (K === "End") {
+      const end = todayPos || stopPos;
+      w = end.w;
+      r = end.r;
+    } else if (K === "ArrowLeft") {
+      if (r > 0) r -= 1;
+      else if (w > 0) {
+        w -= 1;
+        r = 6;
+      }
+    } else if (K === "ArrowRight") {
+      if (r < 6) r += 1;
+      else if (w < W - 1) {
+        w += 1;
+        r = 0;
+      }
+    } else if (K === "ArrowUp") {
+      if (w > 0) w -= 1;
+    } else if (K === "ArrowDown") {
+      if (w < W - 1) w += 1;
+    }
+    const cell = heat.grid[w]?.[r];
+    if (!cell) return; // borda da janela ou dia futuro: fica onde está
+    setNavPos({ w, r });
+    setHeatSel(cell);
+    heatGridRef.current?.querySelector(`[data-date="${cell.date}"]`)?.focus();
+  };
   const selCell = heatSel || heatToday;
   // r6: plural correto no aria do heatmap ("1 dia" vs "2 dias").
   const heatAria = t(lang, "stats.heatmapAria", {
@@ -399,6 +463,22 @@ export default function Stats({
         : null,
     [fcs, progress, flashCards]
   );
+  // v3.15.1 (port): mini-barras das revisões dos últimos 14 dias (do
+  // history kind:"srs") + revisões de hoje — o volume visual do hábito.
+  const srsBars = useMemo(
+    () =>
+      srsSummary(
+        {
+          srsStats: progress?.srsStats,
+          srs: progress?.srs,
+          history: progress?.history,
+          todayStr: todayLocal(),
+        },
+        14
+      ),
+    [progress]
+  );
+  const srsMaxBar = Math.max(1, ...srsBars.bars.map((b) => b.n));
   const srsShow = flashCards.length > 0 && (progress.total > 0 || fcs.started > 0);
   // r15: atividade = questões OU revisões espaçadas — quem só usa Flashcards
   // também merece ver a tira de gamificação e o roadmap de conquistas
@@ -660,19 +740,37 @@ export default function Stats({
       {/* r14: heatmap de atividade — 12 semanas alinhadas (segunda→domingo),
           rótulos de mês/dia, toque-para-inspecionar (tooltips não existem em
           touch), células quadradas por TRACKS fixos (o bug do aspect-r see
-          styles.css) */}
-      {progress.total > 0 && (
+          styles.css).
+          v3.15.1 (port r15): revisões de flashcards também são atividade —
+          o gate vem do PRÓPRIO heatmap (heatSummary.answers soma quiz+srs
+          do history): um usuário só-de-flashcards ganha o mapa aceso.
+          v3.15.1 (port r16): grid WAI-ARIA com roving tabindex — 1 parada
+          de Tab, setas/Home/End navegam selecionando. */}
+      {(progress.total > 0 || heatSummary.answers > 0) && (
         <div className="card heatmap-card">
           <h3>{t(lang, "stats.heatmapTitle")}</h3>
-          <div className="heatmap" role="group" aria-label={heatAria}>
-            <span className="hm-corner" aria-hidden="true" />
-            {heat.monthMarks.map((m, i) => (
-              <span key={"m" + i} className="hm-month" aria-hidden="true">
-                {m || ""}
-              </span>
-            ))}
+          <div
+            className="heatmap"
+            role="grid"
+            aria-label={heatAria}
+            aria-describedby="hm-hint"
+            ref={heatGridRef}
+            onKeyDown={onHeatKey}
+          >
+            {/* rows semânticas com display:contents (styles.css) —
+                participam da árvore de acessibilidade sem criar caixa:
+                o layout do grid CSS fica idêntico ao r14 (geometria é
+                requisito — lição r14). */}
+            <div role="row" className="hm-row" aria-hidden="true">
+              <span className="hm-corner" />
+              {heat.monthMarks.map((m, i) => (
+                <span key={"m" + i} className="hm-month">
+                  {m || ""}
+                </span>
+              ))}
+            </div>
             {HM_DAYS.map((d, r) => (
-              <Fragment key={"d" + r}>
+              <div key={"d" + r} role="row" className="hm-row">
                 <span className="hm-day" aria-hidden="true">
                   {d || ""}
                 </span>
@@ -680,17 +778,30 @@ export default function Stats({
                   const c = col[r];
                   if (!c)
                     return (
-                      <span key={"f" + w + "-" + r} className="hm-cell future" aria-hidden="true" />
+                      <span
+                        key={"f" + w + "-" + r}
+                        role="presentation"
+                        className="hm-cell future"
+                        aria-hidden="true"
+                      />
                     );
                   const isToday = heatToday && c.date === heatToday.date;
                   const isSel = selCell && c.date === selCell.date;
+                  const isStop = stopPos.w === w && stopPos.r === r;
                   return (
                     <button
                       key={c.date}
                       type="button"
+                      role="gridcell"
+                      data-date={c.date}
+                      tabIndex={isStop ? 0 : -1}
+                      aria-selected={isSel}
                       className={"hm-cell" + (isToday ? " today" : "") + (isSel ? " sel" : "")}
                       data-level={c.level}
-                      onClick={() => setHeatSel(c)}
+                      onClick={() => {
+                        setHeatSel(c);
+                        setNavPos({ w, r });
+                      }}
                       title={t(lang, "stats.heatmapCell", {
                         date: c.date,
                         total: c.total,
@@ -704,22 +815,31 @@ export default function Stats({
                     />
                   );
                 })}
-              </Fragment>
+              </div>
             ))}
           </div>
           <p className="hm-detail" aria-live="polite">
             {selCell
               ? selCell.total > 0
-                ? t(lang, "stats.heatmapDay", {
-                    date: selCell.date,
-                    total: selCell.total,
-                    pct: selCell.pct === null ? "—" : selCell.pct,
-                  })
+                ? selCell.reviews > 0
+                  ? t(lang, "stats.heatmapDayReviews", {
+                      date: selCell.date,
+                      total: selCell.total,
+                      reviews: selCell.reviews,
+                      pct: selCell.pct === null ? "—" : selCell.pct,
+                    })
+                  : t(lang, "stats.heatmapDay", {
+                      date: selCell.date,
+                      total: selCell.total,
+                      pct: selCell.pct === null ? "—" : selCell.pct,
+                    })
                 : t(lang, "stats.heatmapDayEmpty", { date: selCell.date })
               : ""}
           </p>
           <div className="heatmap-foot">
-            <span className="muted hm-hint">{t(lang, "stats.heatmapTapHint")}</span>
+            <span className="muted hm-hint" id="hm-hint">
+              {t(lang, "stats.heatmapTapHint")}
+            </span>
             <span className="hm-legend" aria-hidden="true">
               {t(lang, "stats.heatmapLess")}
               <span className="hm-cell" data-level="0" />
@@ -783,6 +903,45 @@ export default function Stats({
                   </>
                 )}
               </p>
+              {/* v3.15.1 (port): mini-barras 14d + linha de hoje — o volume
+                  do hábito no mesmo card que agenda a próxima revisão. */}
+              {srsBars.bars.some((b) => b.n > 0) && (
+                <div
+                  className="srs-bars"
+                  role="img"
+                  aria-label={t(lang, "stats.srsBarsLabel", { days: 14 })}
+                >
+                  {srsBars.bars.map((b) => {
+                    const level =
+                      b.n === 0
+                        ? 0
+                        : b.n >= srsMaxBar
+                          ? 4
+                          : b.n >= srsMaxBar * 0.66
+                            ? 3
+                            : b.n >= srsMaxBar * 0.33
+                              ? 2
+                              : 1;
+                    return (
+                      <span className="srs-bar-col" key={b.date}>
+                        <span
+                          className="srs-bar"
+                          data-level={level}
+                          style={{ height: `${Math.max(6, Math.round((b.n / srsMaxBar) * 100))}%` }}
+                        />
+                      </span>
+                    );
+                  })}
+                </div>
+              )}
+              {srsBars.todayCount > 0 && (
+                <p className="muted srs-sub">
+                  {t(lang, "stats.srsTodayLine", {
+                    n: srsBars.todayCount,
+                    pct: srsBars.retention ?? 0,
+                  })}
+                </p>
+              )}
               {fcs.dueToday > 0 ? (
                 <Link className="btn primary srs-cta" to={`/${certId}/flash?due=1`}>
                   ▶ {t(lang, "stats.srsCta", { n: fcs.dueToday })}

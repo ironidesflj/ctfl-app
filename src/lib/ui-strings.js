@@ -169,7 +169,7 @@ export const UI = {
       heatmapToday: "Hoje: {n}",
       heatmapDay: "{date}: {total} resposta(s) · {pct}% de acerto",
       heatmapDayEmpty: "{date}: sem respostas",
-      heatmapTapHint: "Toque num dia para ver o detalhe",
+      heatmapTapHint: "Toque num dia para ver o detalhe · setas navegam, Home/End nos extremos",
       noHistory: "Sem histórico ainda. Responda algumas questões para ver sua evolução aqui.",
       emptyWelcome: "Você ainda não respondeu nenhuma questão.",
       emptyCta: "Ir para o Quiz",
@@ -270,6 +270,9 @@ export const UI = {
       srsStart: "Começar com {n} cartões",
       srsEmptyHint:
         "Cartões com os conceitos-chave do syllabus. O algoritmo SM-2 agenda cada revisão pelo seu desempenho — o que você erra volta antes, o que domina espaça.",
+      heatmapDayReviews: "{date}: {total} resposta(s) · {reviews} revisão(ões) · {pct}% de acerto",
+      srsTodayLine: "{n} revisão(ões) hoje · retenção {pct}%",
+      srsBarsLabel: "Revisões dos últimos {days} dias",
     },
     flashcards: {
       flip: "toque para revelar",
@@ -290,6 +293,10 @@ export const UI = {
       dueNoNext: "Nada agendado — novos cartões aparecem conforme você estuda.",
       browseAll: "Ver todos os cartões",
       chipDueTitle: "{n} para revisar neste capítulo",
+      stripToday: "hoje: {n}",
+      stripRetention: "retenção: {pct}%",
+      stripSystem: "no sistema: {n}",
+      stripInvite: "vire e avalie um cartão para começar",
     },
     glossary: {
       clearSearch: "Limpar busca",
@@ -577,7 +584,7 @@ export const UI = {
       heatmapToday: "Today: {n}",
       heatmapDay: "{date}: {total} answer(s) · {pct}% accuracy",
       heatmapDayEmpty: "{date}: no answers",
-      heatmapTapHint: "Tap a day to see details",
+      heatmapTapHint: "Tap a day to see details · arrow keys navigate, Home/End for edges",
       noHistory: "No history yet. Answer some questions to see your evolution here.",
       emptyWelcome: "You haven't answered any questions yet.",
       emptyCta: "Go to Quiz",
@@ -678,6 +685,9 @@ export const UI = {
       srsStart: "Start with {n} cards",
       srsEmptyHint:
         "Cards covering the syllabus key concepts. The SM-2 algorithm schedules each review based on your performance — what you miss comes back sooner, what you master gets spaced out.",
+      heatmapDayReviews: "{date}: {total} answer(s) · {reviews} review(s) · {pct}% accuracy",
+      srsTodayLine: "{n} review(s) today · retention {pct}%",
+      srsBarsLabel: "Reviews over the last {days} days",
     },
     flashcards: {
       flip: "tap to reveal",
@@ -698,6 +708,10 @@ export const UI = {
       dueNoNext: "Nothing scheduled — new cards appear as you study.",
       browseAll: "Browse all cards",
       chipDueTitle: "{n} due in this chapter",
+      stripToday: "today: {n}",
+      stripRetention: "retention: {pct}%",
+      stripSystem: "in system: {n}",
+      stripInvite: "flip and rate a card to get started",
     },
     glossary: {
       clearSearch: "Clear search",

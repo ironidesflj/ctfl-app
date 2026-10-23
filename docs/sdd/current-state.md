@@ -1,4 +1,10 @@
-# Estado atual — 2026-10-22 (v3.14.1 local)
+# Estado atual — 2026-10-23 (v3.15.1 local)
+
+Integração seletiva do pacote v3.15.1: acessibilidade do heatmap, atividade
+SRS, resumos de revisões e limite SM-2 de 365 dias. Corrigido localmente o
+undo com histórico cheio e a restauração da data de atividade e contadores.
+Preservados recursos institucionais, imagem social e configuração local.
+Service worker r18-v1; 402 testes, lint e build aprovados.
 
 Aplicado o pacote corretivo v3.14.1: desfazer na celebração e entre filtros,
 revogação de conquistas SRS no desfazer, CTA direto para pendentes, contador

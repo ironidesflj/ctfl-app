@@ -1,5 +1,17 @@
 # Changelog
 
+## v3.15.1 — 2026-10-23 — Integração seletiva e preservação de atividade
+
+- Heatmap navegável por teclado; revisões SRS passam a registrar atividade.
+- Resumo de revisões nos Flashcards e mini-barras de 14 dias no Progresso.
+- Intervalos SM-2 limitados a 365 dias.
+- Desfazer restaura registros descartados pelo limite de 400, a data de último
+  estudo e os contadores anteriores; remove conquistas de sequência criadas
+  pela avaliação desfeita, preservando conquistas anteriores.
+- Mantidos modal de novidades, feedback, imagem social, banco, Playwright e
+  lint sem avisos da linha local. Sem mudança no formato dos backups.
+- Validação: 402 testes; lint e build aprovados.
+
 ## v3.14.1 — 2026-10-22 — Correções da revisão espaçada
 
 - Desfazer permanece disponível ao concluir a fila e restaura o filtro anterior.

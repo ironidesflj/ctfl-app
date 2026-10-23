@@ -236,6 +236,9 @@ export function getDueItems(state, allIds) {
 // os contadores de progress.srsStats (retenção, conquistas, painel do Stats).
 // bank é opcional: sem ele, checkAchievements só re-avalia os critérios que
 // não dependem de cobertura (conquistas já obtidas são preservadas pelo Set).
+// Undo metadata stays in memory; backups and persisted progress keep their schema.
+const srsUndoMetadata = new WeakMap();
+
 export function rateSRS(state, itemId, label, bank = null) {
   const prev = state.srs?.[itemId] || initSM2();
   const updated = sm2(prev, QUALITY[label]);
@@ -249,10 +252,25 @@ export function rateSRS(state, itemId, label, bank = null) {
     todayDate: today,
     todayCount: s.todayDate === today ? (s.todayCount || 0) + 1 : 1,
   };
+  // v3.15.1 (port da linha r15 paralela): a revisão É atividade — grava
+  // entrada kind:"srs" no history (alimenta heatmap, streak de 5/dia e
+  // evolução). correct = quality >= 3 (hard conta como lembrança fraca,
+  // de novo não). O id permite ao undo desfazer a entrada CERTA mesmo
+  // com revisões de itens diferentes no mesmo dia.
+  const event = { date: today, correct: QUALITY[label] >= 3, kind: "srs", id: itemId };
+  const previousHistory = state.history || [];
+  srsUndoMetadata.set(event, {
+    dropped: previousHistory.slice(0, Math.max(0, previousHistory.length + 1 - 400)),
+    lastStudyDate: state.lastStudyDate,
+    stats: s,
+    achievements: state.achievements || [],
+  });
   const next = {
     ...state,
     srs: { ...(state.srs || {}), [itemId]: updated },
     srsStats: nextStats,
+    history: [...(state.history || []), event].slice(-400),
+    lastStudyDate: today,
   };
   next.achievements = checkAchievements(next, bank);
   return next;
@@ -270,7 +288,7 @@ export function rateSRS(state, itemId, label, bank = null) {
 export function undoSRSRating(state, itemId, label, prevCard) {
   const today = todayLocal();
   const s = normalizeSRSStats(state.srsStats);
-  const nextStats = {
+  let nextStats = {
     ...s,
     [label]: Math.max(0, (s[label] || 0) - 1),
     reviews: Math.max(0, (s.reviews || 0) - 1),
@@ -281,8 +299,44 @@ export function undoSRSRating(state, itemId, label, prevCard) {
   const srs = { ...(state.srs || {}) };
   if (prevCard == null) delete srs[itemId];
   else srs[itemId] = prevCard;
+  // v3.15.1 (port): remove do history a entrada que a avaliação gravou —
+  // sem isso o heatmap ficaria com atividade fantasma pós-undo. Procura de
+  // trás pra frente a ÚLTIMA entrada kind:"srs" com o id do item avaliado;
+  // primeiro tenta a de hoje, depois qualquer data (tolera avaliação às
+  // 23:59 desfeita após a meia-noite). Entradas antigas sem id (pré-
+  // v3.15.1) nunca são tocadas.
+  let history = [...(state.history || [])];
+  let idx = -1;
+  for (let i = history.length - 1; i >= 0; i--) {
+    const h = history[i];
+    if (h?.kind === "srs" && h?.id === itemId && h?.date === today) {
+      idx = i;
+      break;
+    }
+  }
+  if (idx === -1) {
+    for (let i = history.length - 1; i >= 0; i--) {
+      const h = history[i];
+      if (h?.kind === "srs" && h?.id === itemId) {
+        idx = i;
+        break;
+      }
+    }
+  }
+  const metadata = idx !== -1 ? srsUndoMetadata.get(history[idx]) : null;
+  const wasLatest = idx === history.length - 1;
+  if (idx !== -1) history.splice(idx, 1);
+  if (metadata) {
+    history = [...metadata.dropped, ...history].slice(-400);
+    if (s.reviews === metadata.stats.reviews + 1) nextStats = metadata.stats;
+  }
   // r16: revogação dos critérios vivos (espelho 1:1 do checkAchievements)
   const achievements = new Set(state.achievements || []);
+  if (metadata) {
+    for (const id of ["streak-7", "streak-30"]) {
+      if (!metadata.achievements.includes(id)) achievements.delete(id);
+    }
+  }
   if (nextStats.reviews < 100) achievements.delete("srs-100");
   const matureItems = Object.values(srs).filter((c) => (c.interval || 0) >= 21).length;
   if (matureItems < 10) achievements.delete("srs-master");
@@ -290,6 +344,8 @@ export function undoSRSRating(state, itemId, label, prevCard) {
     ...state,
     srs,
     srsStats: nextStats,
+    history,
+    lastStudyDate: metadata && wasLatest ? metadata.lastStudyDate : state.lastStudyDate,
     achievements: [...achievements],
   };
 }

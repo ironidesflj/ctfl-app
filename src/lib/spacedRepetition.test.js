@@ -105,3 +105,23 @@ describe("SM-2 algorithm", () => {
     expect(isDue(card)).toBe(true);
   });
 });
+
+describe("v3.15.1 (port r15): teto de intervalo do SM-2", () => {
+  it("intervalo nunca passa de 365 dias (RangeError impossível)", () => {
+    let card = initSM2();
+    for (let i = 0; i < 60; i++) card = sm2(card, QUALITY.easy);
+    expect(card.interval).toBeLessThanOrEqual(365);
+    // e a data devida continua válida (parseável)
+    expect(() => new Date(`${card.dueDate}T12:00:00`)).not.toThrow();
+    expect(Number.isNaN(new Date(`${card.dueDate}T12:00:00`).getTime())).toBe(false);
+  });
+
+  it("sequência normal não é afetada (1 → 6 → 15)", () => {
+    let card = sm2(initSM2(), QUALITY.good);
+    expect(card.interval).toBe(1);
+    card = sm2(card, QUALITY.good);
+    expect(card.interval).toBe(6);
+    card = sm2(card, QUALITY.good);
+    expect(card.interval).toBe(15);
+  });
+});

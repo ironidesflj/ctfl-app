@@ -17,6 +17,14 @@ export function initSM2() {
   return { easeFactor: 2.5, interval: 0, repetitions: 0, dueDate: null };
 }
 
+// v3.15.1 (port da linha r15 paralela): teto de intervalo — avaliar o
+// mesmo cartão muitas vezes numa sessão fazia o intervalo crescer EF× por
+// repetição (2,5 → 6 → 15 → 38 → 94 → …) e o setDate() eventualmente
+// estourava o range de datas do JS (RangeError: Invalid time value), além
+// de agendar revisões a anos de distância. 365d = decisão de produto: um
+// cartão maduro volta NO MÁXIMO anualmente.
+export const MAX_INTERVAL_DAYS = 365;
+
 // quality: 0-5. UI simplificada futura: "Errei"/"Difícil"/"Bom"/"Fácil" = 1/3/4/5.
 export function sm2(card, quality) {
   let { easeFactor, interval, repetitions } = card;
@@ -28,7 +36,7 @@ export function sm2(card, quality) {
     repetitions += 1;
     if (repetitions === 1) interval = 1;
     else if (repetitions === 2) interval = 6;
-    else interval = Math.round(interval * easeFactor);
+    else interval = Math.min(Math.round(interval * easeFactor), MAX_INTERVAL_DAYS);
   }
 
   easeFactor = easeFactor + (0.1 - (5 - quality) * (0.08 + (5 - quality) * 0.02));

@@ -36,9 +36,12 @@ export function heatmapWeeks(history, todayStr, weeks = 12, lang = "pt") {
   const byDate = new Map();
   (history || []).forEach((h) => {
     if (typeof h?.date !== "string") return;
-    const d = byDate.get(h.date) || { total: 0, correct: 0 };
+    const d = byDate.get(h.date) || { total: 0, correct: 0, reviews: 0 };
     d.total += 1;
     if (h.correct) d.correct += 1;
+    // v3.15.1 (port): revisões de flashcards (kind:"srs") acendem o
+    // heatmap e o detalhe do dia distingue respostas de revisões.
+    if (h.kind === "srs") d.reviews += 1;
     byDate.set(h.date, d);
   });
 
@@ -71,11 +74,12 @@ export function heatmapWeeks(history, todayStr, weeks = 12, lang = "pt") {
         col.push(null); // placeholder de dia futuro (a semana atual é parcial)
         continue;
       }
-      const d = byDate.get(iso) || { total: 0, correct: 0 };
+      const d = byDate.get(iso) || { total: 0, correct: 0, reviews: 0 };
       const cell = {
         date: iso,
         total: d.total,
         correct: d.correct,
+        reviews: d.reviews,
         pct: d.total > 0 ? Math.round((d.correct / d.total) * 100) : null,
         level: heatmapLevel(d.total),
         future: false,
@@ -346,4 +350,43 @@ export function nextDueDate(srs, ids, todayStr) {
     if (min === null || e.dueDate < min) min = e.dueDate;
   }
   return min;
+}
+
+/**
+ * v3.15.1 (port da linha r15 paralela, adaptado ao srsStats com labels):
+ * resumo de repetição espaçada para o strip dos Flashcards e o painel do
+ * Stats. Retenção = (good + easy) / reviews (Bom e Fácil = lembrou);
+ * todayCount = revisões feitas HOJE (normalizado na leitura); bars =
+ * volume de revisões por dia na janela terminando hoje (mini-barras 14d do
+ * painel — mesma aritmética meio-dia do heatmap, imune a DST).
+ */
+export function srsSummary({ srsStats, srs, history, todayStr }, days = 14) {
+  const st = srsStats || {};
+  const reviews = Math.max(0, Math.floor(Number(st.reviews) || 0));
+  const positive =
+    Math.max(0, Math.floor(Number(st.good) || 0)) + Math.max(0, Math.floor(Number(st.easy) || 0));
+  const retention = reviews > 0 ? Math.round((positive / reviews) * 100) : null;
+  const todayCount =
+    st.todayDate === todayStr ? Math.max(0, Math.floor(Number(st.todayCount) || 0)) : 0;
+
+  const cards = srs && typeof srs === "object" && !Array.isArray(srs) ? srs : {};
+  const inSystem = Object.keys(cards).length;
+
+  const bars = [];
+  if (typeof todayStr === "string" && /^\d{4}-\d{2}-\d{2}$/.test(todayStr)) {
+    const byDate = new Map();
+    (Array.isArray(history) ? history : []).forEach((h) => {
+      if (h?.kind === "srs" && typeof h?.date === "string")
+        byDate.set(h.date, (byDate.get(h.date) || 0) + 1);
+    });
+    const end = new Date(`${todayStr}T12:00:00`);
+    for (let i = days - 1; i >= 0; i--) {
+      const dt = new Date(end);
+      dt.setDate(end.getDate() - i);
+      const iso = `${dt.getFullYear()}-${String(dt.getMonth() + 1).padStart(2, "0")}-${String(dt.getDate()).padStart(2, "0")}`;
+      bars.push({ date: iso, n: byDate.get(iso) || 0 });
+    }
+  }
+
+  return { reviews, retention, todayCount, inSystem, bars };
 }

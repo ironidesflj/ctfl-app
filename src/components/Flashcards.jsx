@@ -4,7 +4,7 @@ import { getBank } from "../lib/bank.js";
 import { FLASHCARDS, flashcardsForCert } from "../data/study.js";
 import { t } from "../lib/ui-strings.js";
 import { getSRSCard, rateSRS, undoSRSRating, getDueItems, todayLocal } from "../lib/storage.js";
-import { nextDueDate } from "../lib/activity.js";
+import { nextDueDate, srsSummary } from "../lib/activity.js";
 import { initSM2, sm2, QUALITY } from "../lib/spacedRepetition.js";
 
 const hasEN = (id) => !!FLASHCARDS.find((c) => c.id === id)?.locales?.en;
@@ -103,6 +103,23 @@ export default function Flashcards({ lang = "pt", progress, setProgress }) {
         todayLocal()
       ),
     [progress, allCards]
+  );
+
+  // v3.15.1 (port): strip de contexto — hoje · retenção · no sistema, do
+  // MESMO srsStats que o painel do Stats lê (uma fonte de verdade). Reage
+  // na hora a cada avaliação (progress é prop do App).
+  const strip = useMemo(
+    () =>
+      srsSummary(
+        {
+          srsStats: progress?.srsStats,
+          srs: progress?.srs,
+          history: progress?.history,
+          todayStr: todayLocal(),
+        },
+        14
+      ),
+    [progress]
   );
 
   function go(delta) {
@@ -271,14 +288,46 @@ export default function Flashcards({ lang = "pt", progress, setProgress }) {
         })}
       </div>
 
+      {strip.reviews > 0 && (
+        <p className="srs-strip" aria-live="polite">
+          <span className="srs-strip-item">
+            {t(lang, "flashcards.stripToday", { n: strip.todayCount })}
+          </span>
+          <span aria-hidden="true" className="srs-strip-sep">
+            ·
+          </span>
+          <span className="srs-strip-item">
+            {t(lang, "flashcards.stripRetention", {
+              pct: strip.retention ?? 0,
+            })}
+          </span>
+          <span aria-hidden="true" className="srs-strip-sep">
+            ·
+          </span>
+          <span className="srs-strip-item">
+            {t(lang, "flashcards.stripSystem", { n: strip.inSystem })}
+          </span>
+        </p>
+      )}
+
       {!card ? (
         domain === "due" ? (
           // r15: fila zerada deixou de ser um beco sem saída — celebra,
           // mostra quando volta a ter revisão e oferece o resto do baralho.
+          // v3.15.1 (port): o resumo do dia (revisões hoje · retenção)
+          // fecha o feedback loop NA celebração.
           <div className="card flash-done" role="status">
             <p className="flash-done-title" aria-live="polite">
               🎉 {t(lang, "flashcards.dueDone")}
             </p>
+            {strip.todayCount > 0 && (
+              <p className="muted">
+                {t(lang, "stats.srsTodayLine", {
+                  n: strip.todayCount,
+                  pct: strip.retention ?? 0,
+                })}
+              </p>
+            )}
             <p className="muted">
               {nextDue
                 ? t(lang, "flashcards.dueNext", { date: nextDue })

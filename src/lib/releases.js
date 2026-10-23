@@ -1,13 +1,16 @@
 const RELEASE_KEY_PREFIX = "synapse.releaseNotes.seen";
 
 export const CURRENT_RELEASE = {
-  version: "3.14.1",
+  version: "3.15.1",
   significant: true,
   pt: {
     eyebrow: "Novidades da versão",
     title: "O Synapse evoluiu",
-    intro: "Esta atualização corrige o desfazer, a fila de revisão e as datas dos flashcards.",
+    intro: "Esta atualização melhora o mapa de atividade e o acompanhamento das revisões.",
     items: [
+      "Navegue pelo mapa de atividade usando as setas do teclado.",
+      "Revisões aparecem na atividade; acompanhe o resumo do dia e as últimas duas semanas.",
+      "O desfazer preserva o histórico e as datas anteriores, mesmo com o histórico cheio.",
       "Desfaça a última avaliação mesmo após concluir a fila, restaurando o filtro e corrigindo as conquistas.",
       "O botão Revisar agora abre os cartões pendentes; as datas seguem seu fuso local.",
       "Acompanhe cartões iniciados, retenção e próximas revisões no Progresso.",
@@ -23,8 +26,11 @@ export const CURRENT_RELEASE = {
   en: {
     eyebrow: "What's new in",
     title: "Synapse has evolved",
-    intro: "This update fixes undo, the review queue, and flashcard scheduling dates.",
+    intro: "This update improves the activity map and review tracking.",
     items: [
+      "Navigate the activity map using your keyboard arrow keys.",
+      "Reviews appear in activity, with a daily summary and the last two weeks of reviews.",
+      "Undo preserves previous history and dates, even when history is full.",
       "Undo your last rating even after clearing the queue, restoring the filter and correcting achievements.",
       "Review now opens due cards directly; scheduling dates follow your local time zone.",
       "Track started cards, retention, and upcoming reviews in Progress.",
