@@ -86,9 +86,17 @@ describe("storage - exam draft index epoch (r20)", () => {
   const draftKey = (cert) => `synapse.examDraft.v1.${cert}`;
   const draft = (epoch) => ({
     questionIds: ["ctaltm-101", "ctaltm-102"],
-    optOrder: [[0, 1, 2, 3], [3, 2, 1, 0]],
-    answers: [1, null], flags: [false, false], durations: [12, 0],
-    idx: 1, timeLeft: 3000, custom: false, savedAt: Date.now(),
+    optOrder: [
+      [0, 1, 2, 3],
+      [3, 2, 1, 0],
+    ],
+    answers: [1, null],
+    flags: [false, false],
+    durations: [12, 0],
+    idx: 1,
+    timeLeft: 3000,
+    custom: false,
+    savedAt: Date.now(),
     ...(typeof epoch === "number" ? { epoch } : {}),
   });
 
