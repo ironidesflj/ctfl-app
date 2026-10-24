@@ -2,7 +2,7 @@
  "meta": {
   "title": "Synapse — Multi-Certification Question Bank",
   "description": "Banco de questões profissional bilíngue (EN/PT-BR) para certificações ISTQB",
-  "version": "1.6.0-ctaltm",
+  "version": "1.6.1-editorial.1",
   "generatedDate": "2026-10-14",
   "totalQuestions": 1100,
   "availableLanguages": [
@@ -22683,22 +22683,22 @@
     "en": {
      "q": "A Test Manager joins a project after the requirements have already been baselined and tells the team that test planning cannot begin until the design phase is complete. According to the CTAL-TM v3.0 syllabus, what is the MOST accurate statement about when test planning should start?",
      "options": [
-      "Test planning should start only after the design phase is complete and the test basis is stable",
-      "Test planning should be started as early as possible, preferably before requirements are identified, and updated as the project advances",
-      "Test planning should start only when the test environment is ready and test data is available",
-      "Test planning is performed once at the beginning of the project and should not change afterward"
+      "Begin after design approval, then revise the plan as implementation progresses",
+      "Begin early, preferably before requirements identification, and revise as the project progresses",
+      "Begin when execution resources are ready, using requirement reviews to prepare the inputs",
+      "Begin during requirements analysis, then retain that baseline while tracking changes in reports"
      ],
-     "exp": "The syllabus states that test planning 'should be initiated as early as possible in the development process, preferably before the identification of requirements, and should be updated as the project advances.' Test planning is iterative and continuous, not a single one-shot activity, and it does not need to wait for design completion or environment readiness — those are inputs that get refined as planning is updated."
+     "exp": "The best answer is 'Begin early, preferably before requirements identification, and revise as the project progresses'. Planning starts before implementation details are settled and evolves with the project. Waiting for design approval or execution readiness delays it unnecessarily. Starting early but freezing the plan also misses the need to adapt. See CTAL-TM v3.0, section 1.1.1."
     },
     "pt": {
      "q": "Um Gerente de Teste entra em um projeto depois que os requisitos já foram baseline e diz à equipe que o planejamento de teste não pode começar até a fase de design ser concluída. Segundo o syllabus CTAL-TM v3.0, qual é a afirmação MAIS precisa sobre quando o planejamento de teste deve começar?",
      "options": [
-      "O planejamento de teste deve começar apenas após a fase de design ser concluída e a base de teste estar estável",
-      "O planejamento de teste deve ser iniciado o mais cedo possível, de preferência antes da identificação dos requisitos, e atualizado conforme o projeto avança",
-      "O planejamento de teste deve começar apenas quando o ambiente de teste estiver pronto e os dados de teste estiverem disponíveis",
-      "O planejamento de teste é realizado uma vez no início do projeto e não deve mudar depois"
+      "Começar após a aprovação do design e revisar o plano conforme a implementação avança",
+      "Começar cedo, de preferência antes da identificação dos requisitos, e revisar conforme o projeto avança",
+      "Começar quando os recursos de execução estiverem prontos, preparando os insumos nas revisões de requisitos",
+      "Começar na análise de requisitos e manter essa baseline, acompanhando mudanças nos relatórios"
      ],
-     "exp": "O syllabus afirma que o planejamento de teste 'deve ser iniciado o mais cedo possível no processo de desenvolvimento, de preferência antes da identificação dos requisitos, e deve ser atualizado conforme o projeto avança.' O planejamento de teste é iterativo e contínuo, não uma atividade única, e não precisa esperar pela conclusão do design ou pela prontidão do ambiente — esses são insumos que são refinados conforme o planejamento é atualizado."
+     "exp": "A melhor resposta é 'Começar cedo, de preferência antes da identificação dos requisitos, e revisar conforme o projeto avança'. O planejamento começa antes de os detalhes de implementação estarem definidos e evolui com o projeto. Esperar a aprovação do design ou a prontidão da execução o atrasa desnecessariamente. Começar cedo e congelar o plano também ignora a necessidade de adaptação. Ver CTAL-TM v3.0, seção 1.1.1."
     }
    },
    "pool": "study"
@@ -22715,20 +22715,20 @@
     "en": {
      "q": "A Test Manager observes that test execution is three days behind schedule due to recurring environment outages. The Test Manager decides to add a second environment, reallocate two testers to higher-priority tests, and update the schedule. According to the CTAL-TM v3.0 syllabus, these actions belong to which test management activity?",
      "options": [
-      "Test planning, because resources are being reallocated and the schedule is being updated",
-      "Test completion, because lessons learned from the outage are being captured",
-      "Test control, because actual progress is being compared with the plan and corrective actions are being implemented",
-      "Test analysis, because the test basis is being re-examined for new risks"
+      "Test planning: establishing initial resource estimates and the baseline schedule",
+      "Test completion: evaluating the outage and archiving the release testware",
+      "Test control: implementing corrective actions to address deviations from the plan",
+      "Test analysis: identifying test conditions from changes to the test basis"
      ],
      "exp": "Test control 'compares actual progress against the test plan and implements corrective actions when necessary' — exactly what the Test Manager is doing: comparing progress (three days behind), implementing corrective actions (adding environment, reallocating testers, updating schedule). Test planning is broader and earlier; test completion happens at milestones; test analysis deals with the test basis, not with progress monitoring."
     },
     "pt": {
      "q": "Um Gerente de Teste observa que a execução do teste está três dias atrasada devido a quedas recorrentes do ambiente. O Gerente de Teste decide adicionar um segundo ambiente, realocar dois testadores para testes de maior prioridade e atualizar o cronograma. Segundo o syllabus CTAL-TM v3.0, essas ações pertencem a qual atividade de gerenciamento de teste?",
      "options": [
-      "Planejamento de teste, porque recursos estão sendo realocados e o cronograma está sendo atualizado",
-      "Conclusão do teste, porque as lições aprendidas com a queda estão sendo capturadas",
-      "Controle de teste, porque o progresso real está sendo comparado com o plano e ações corretivas estão sendo implementadas",
-      "Análise de teste, porque a base de teste está sendo reexaminada para novos riscos"
+      "Planejamento de teste: estabelecer estimativas iniciais de recursos e a baseline do cronograma",
+      "Conclusão do teste: avaliar a indisponibilidade e arquivar o testware da versão",
+      "Controle de teste: implementar ações corretivas para tratar desvios em relação ao plano",
+      "Análise de teste: identificar condições de teste a partir de mudanças na base de teste"
      ],
      "exp": "O controle de teste 'compara o progresso real com o plano de teste e implementa ações corretivas quando necessário' — exatamente o que o Gerente de Teste está fazendo: comparando o progresso (três dias de atraso), implementando ações corretivas (adicionar ambiente, realocar testadores, atualizar cronograma). O planejamento de teste é mais amplo e anterior; a conclusão do teste ocorre em marcos; a análise de teste lida com a base de teste, não com o monitoramento de progresso."
     }
@@ -22747,20 +22747,20 @@
     "en": {
      "q": "Which of the following statements BEST distinguishes test monitoring from test control in the CTAL-TM v3.0 syllabus?",
      "options": [
-      "Monitoring is performed by testers; control is performed by the Test Manager",
-      "Monitoring happens only at the end of the project; control happens continuously throughout",
-      "Monitoring defines exit criteria; control defines entry criteria",
-      "Monitoring collects and records test results and identifies deviations from the plan; control implements corrective actions based on those deviations"
+      "Monitoring prioritizes corrective actions; control gathers evidence of deviations",
+      "Monitoring selects test techniques; control derives test cases from those techniques",
+      "Monitoring defines test objectives; control estimates the resources to achieve them",
+      "Monitoring identifies deviations; control implements corrective actions"
      ],
      "exp": "Per the syllabus, monitoring involves 'collecting and recording test results, identifying deviations from planned tests, identifying and analyzing new risks that require testing, and monitoring changes in identified risks.' Control involves 'implementing the test plan and control guidelines, managing deviations from planned tests, treating newly identified and changed risks, establishing readiness to begin testing, granting and obtaining approval for test completion based on exit criteria.' Monitoring = measure/observe; control = act/correct."
     },
     "pt": {
      "q": "Qual das seguintes afirmações MELHOR distingue monitoramento de teste de controle de teste no syllabus CTAL-TM v3.0?",
      "options": [
-      "O monitoramento é realizado por testadores; o controle é realizado pelo Gerente de Teste",
-      "O monitoramento acontece apenas no final do projeto; o controle acontece continuamente durante todo o projeto",
-      "O monitoramento define critérios de saída; o controle define critérios de entrada",
-      "O monitoramento coleta e registra resultados de teste e identifica desvios do plano; o controle implementa ações corretivas com base nesses desvios"
+      "Monitoramento prioriza ações corretivas; controle reúne evidências de desvios",
+      "Monitoramento seleciona técnicas de teste; controle deriva casos de teste dessas técnicas",
+      "Monitoramento define objetivos de teste; controle estima os recursos para alcançá-los",
+      "Monitoramento identifica desvios; controle implementa ações corretivas"
      ],
      "exp": "Segundo o syllabus, o monitoramento envolve 'coletar e registrar resultados de teste, identificar desvios dos testes planejados, identificar e analisar novos riscos que exigem testes e monitorar mudanças nos riscos identificados.' O controle envolve 'implementar o plano de teste e as diretrizes de controle, gerenciar desvios dos testes planejados, tratar riscos recém-identificados e alterados, estabelecer a prontidão para iniciar o teste, conceder e obter aprovação para a conclusão do teste com base nos critérios de saída.' Monitoramento = medir/observar; controle = agir/corrigir."
     }
@@ -22843,20 +22843,20 @@
     "en": {
      "q": "A Test Manager is identifying stakeholders for a new testing effort. According to the CTAL-TM v3.0 syllabus, which of the following statements BEST describes why project managers, Product Owners, and business users are key test stakeholders?",
      "options": [
-      "They are responsible for implementing the system under test and for performing unit testing",
-      "They are responsible for preparing test material, including developing test plans and reporting progress",
-      "They specify requirements, define the requested level of quality, recommend coverage based on perceived risks, and participate in UAT",
-      "They ensure operational readiness of the system for production and contribute to defining non-functional requirements"
+      "They implement the product and use component test results to guide code changes",
+      "They design test cases and use execution results to report testing progress",
+      "They define the required quality and recommend coverage based on perceived risks",
+      "They prepare production operations and evaluate service readiness before deployment"
      ],
      "exp": "Per the syllabus, project managers, Product Owners, and business users 'specify the requirements, define the requested level of quality, and recommend the necessary coverage based on the perceived risks. They also review work products, participate in User Acceptance Testing (UAT) and make decisions based on test results.' Another option describes developers; Another option describes testers/leads/managers; Another option describes operations."
     },
     "pt": {
      "q": "Um Gerente de Teste está identificando stakeholders para um novo esforço de teste. Segundo o syllabus CTAL-TM v3.0, qual das seguintes afirmações MELHOR descreve por que gerentes de projeto, Product Owners e usuários corporativos são stakeholders-chave de teste?",
      "options": [
-      "Eles são responsáveis por implementar o sistema em teste e por realizar o teste de unidade",
-      "Eles são responsáveis por preparar o material de teste, incluindo o desenvolvimento de planos de teste e o relato de progresso",
-      "Eles especificam os requisitos, definem o nível de qualidade solicitado, recomendam a cobertura com base nos riscos percebidos e participam do UAT",
-      "Eles garantem a prontidão operacional do sistema para produção e contribuem para definir requisitos não funcionais"
+      "Eles implementam o produto e usam resultados de testes de componente para orientar mudanças no código",
+      "Eles projetam casos de teste e usam resultados de execução para relatar o progresso dos testes",
+      "Eles definem a qualidade requerida e recomendam cobertura com base nos riscos percebidos",
+      "Eles preparam a operação em produção e avaliam a prontidão do serviço antes da implantação"
      ],
      "exp": "Segundo o syllabus, gerentes de projeto, Product Owners e usuários corporativos 'especificam os requisitos, definem o nível de qualidade solicitado e recomendam a cobertura necessária com base nos riscos percebidos. Eles também analisam produtos de trabalho, participam do Teste de Aceite do Usuário (UAT) e tomam decisões com base nos resultados dos testes.' A opção “Eles são responsáveis por implementar o sistema…” descreve desenvolvedores; a opção “Eles são responsáveis por preparar o material…” descreve testadores/líderes/gerentes; a opção “Eles garantem a prontidão operacional do…” descreve operações."
     }
@@ -22875,20 +22875,20 @@
     "en": {
      "q": "In a project, the operations team is involved in operational acceptance testing and helps define non-functional requirements. According to the CTAL-TM v3.0 syllabus, which statement about this stakeholder group is MOST accurate?",
      "options": [
-      "Operations is the same as the customer stakeholder group because both interact with the running system",
-      "Operations is the same as the test team because both validate the system before release",
-      "Operations is irrelevant to test planning because their work begins only after release",
-      "Operations is a distinct stakeholder group concerned with operational readiness and with non-functional requirements"
+      "Operations contributes business acceptance priorities and determines the product purchase criteria",
+      "Operations contributes test design techniques and prepares the functional test specifications",
+      "Operations contributes implementation choices and designs the component test architecture",
+      "Operations contributes non-functional requirements and assesses operational readiness"
      ],
      "exp": "The syllabus explicitly lists operations as a distinct stakeholder group: 'Operations team: involved in operational acceptance testing, they ensure the readiness of the system for production and contribute to the definition of non-functional requirements.' Operations is distinct from customers (who buy) and from testers (who prepare test material); their involvement begins before release through operational acceptance testing and requirement definition."
     },
     "pt": {
      "q": "Em um projeto, a equipe de operações está envolvida no teste de aceite operacional e ajuda a definir requisitos não funcionais. Segundo o syllabus CTAL-TM v3.0, qual afirmação sobre esse grupo de stakeholders é MAIS precisa?",
      "options": [
-      "Operações é o mesmo que o grupo de stakeholders clientes porque ambos interagem com o sistema em execução",
-      "Operações é o mesmo que a equipe de teste porque ambos validam o sistema antes do lançamento",
-      "Operações é irrelevante para o planejamento de teste porque seu trabalho começa apenas após o lançamento",
-      "Operações é um grupo distinto de stakeholders preocupado com a prontidão operacional e com os requisitos não funcionais"
+      "Operações contribui com prioridades de aceitação do negócio e determina os critérios de compra do produto",
+      "Operações contribui com técnicas de design de teste e prepara as especificações de testes funcionais",
+      "Operações contribui com escolhas de implementação e projeta a arquitetura dos testes de componente",
+      "Operações contribui com requisitos não funcionais e avalia a prontidão operacional"
      ],
      "exp": "O syllabus lista explicitamente operações como um grupo distinto de stakeholders: 'Equipe de operações: envolvidos em testes de aceite operacional, eles garantem a prontidão do sistema para a produção e contribuem para a definição de requisitos não funcionais.' Operações é distinto de clientes (que compram) e de testadores (que preparam material de teste); seu envolvimento começa antes do lançamento por meio de testes de aceite operacional e definição de requisitos."
     }
@@ -22939,20 +22939,20 @@
     "en": {
      "q": "According to the CTAL-TM v3.0 syllabus, why does the syllabus recommend that Test Managers use a power/interest matrix in test management?",
      "options": [
-      "To replace the test plan with a stakeholder-driven schedule",
-      "To prioritize stakeholder involvement and manage expectations efficiently, leveraging stakeholder expertise and supporting risk management",
-      "To rank testers by their technical skills and assign salaries accordingly",
-      "To replace risk-based testing with stakeholder-based testing"
+      "To estimate testing effort from the relative influence of the project sponsors",
+      "To prioritize stakeholder involvement and manage their expectations",
+      "To assign test design tasks according to each stakeholder's technical specialization",
+      "To derive test case execution order from the reporting hierarchy"
      ],
      "exp": "Per the syllabus, the stakeholder matrix 'is a strategic tool in test management that: uses stakeholder expertise, with end users and technical teams providing feedback and insight on performance and security; supports risk management by highlighting stakeholder interests and influence, encouraging proactive mitigation efforts; values diverse perspectives with valuable feedback.' It guides prioritization of involvement and efficient expectation management — it does not replace plans, salaries, or risk-based testing."
     },
     "pt": {
      "q": "Segundo o syllabus CTAL-TM v3.0, por que o syllabus recomenda que Gerentes de Teste usem uma matriz de poder/interesse no gerenciamento de testes?",
      "options": [
-      "Para substituir o plano de teste por um cronograma orientado a stakeholders",
-      "Para priorizar o envolvimento dos stakeholders e gerenciar expectativas de forma eficiente, aproveitando a experiência dos stakeholders e apoiando o gerenciamento de riscos",
-      "Para classificar testadores por suas habilidades técnicas e atribuir salários adequadamente",
-      "Para substituir o teste baseado em risco por teste baseado em stakeholders"
+      "Para estimar o esforço de teste com base na influência relativa dos patrocinadores do projeto",
+      "Para priorizar o envolvimento dos stakeholders e gerenciar suas expectativas",
+      "Para atribuir tarefas de design de teste conforme a especialização técnica de cada stakeholder",
+      "Para derivar a ordem de execução dos casos de teste a partir da hierarquia de reporte"
      ],
      "exp": "Segundo o syllabus, a matriz de stakeholders 'é uma ferramenta estratégica no gerenciamento de testes que: utiliza a experiência dos stakeholders, com usuários finais e equipes técnicas fornecendo feedback e percepção sobre performance e segurança; apoia o gerenciamento de riscos ao destacar os interesses e a influência dos stakeholders, incentivando esforços proativos de mitigação; valoriza as diversas perspectivas com feedback valioso.' Ela orienta a priorização do envolvimento e o gerenciamento eficiente de expectativas — não substitui planos, salários ou teste baseado em risco."
     }
@@ -22971,20 +22971,20 @@
     "en": {
      "q": "A project uses a hybrid software development model: a sequential cycle for regulatory-compliant documentation, alongside iterative agile sprints for feature development. According to the CTAL-TM v3.0 syllabus, which test management approach is MOST appropriate for this hybrid model?",
      "options": [
-      "Apply only the sequential test management approach because documentation drives the regulatory audit",
-      "Apply only the agile test management approach because iterative delivery is faster",
-      "Combine test management activities from both sequential and agile approaches, adapting each to the part of the project it serves",
-      "Skip test management for the agile portion since agile teams self-organize"
+      "Use sequential test governance across both streams, with sprint results consolidated at phase gates",
+      "Use sprint-level test governance across both streams, with regulatory records assembled at release",
+      "Adapt sequential and agile test management activities to the relevant parts of the project",
+      "Manage each stream independently, reconciling their test strategies during final acceptance"
      ],
      "exp": "Per the syllabus, hybrid models require combining elements: testing in a hybrid SDLC requires understanding which activities belong to which approach and applying them appropriately. The Test Manager should combine sequential and agile test management activities adapted to the relevant parts of the project, not choose one exclusively or skip management. Hybrid models explicitly need adapted test management on both sides."
     },
     "pt": {
      "q": "Um projeto usa um modelo híbrido de desenvolvimento de software: um ciclo sequencial para documentação em conformidade regulatória, junto com sprints ágeis iterativos para desenvolvimento de recursos. Segundo o syllabus CTAL-TM v3.0, qual abordagem de gerenciamento de teste é MAIS apropriada para esse modelo híbrido?",
      "options": [
-      "Aplicar apenas a abordagem sequencial de gerenciamento de teste porque a documentação direciona a auditoria regulatória",
-      "Aplicar apenas a abordagem ágil de gerenciamento de teste porque a entrega iterativa é mais rápida",
-      "Combinar atividades de gerenciamento de teste das abordagens sequencial e ágil, adaptando cada uma à parte do projeto que ela atende",
-      "Pular o gerenciamento de teste para a parte ágil, já que equipes ágeis se auto-organizam"
+      "Usar governança sequencial de teste nas duas frentes, consolidando resultados dos sprints nos marcos de fase",
+      "Usar governança de teste por sprint nas duas frentes, reunindo os registros regulatórios na liberação",
+      "Adaptar atividades sequenciais e ágeis de gerenciamento de teste às partes correspondentes do projeto",
+      "Gerenciar cada frente de forma independente, conciliando suas estratégias de teste na aceitação final"
      ],
      "exp": "Segundo o syllabus, modelos híbridos requerem combinação de elementos: testar em um SDLC híbrido exige entender quais atividades pertencem a qual abordagem e aplicá-las adequadamente. O Gerente de Teste deve combinar atividades de gerenciamento de teste sequenciais e ágeis adaptadas às partes relevantes do projeto, não escolher uma exclusivamente nem pular o gerenciamento. Modelos híbridos precisam explicitamente de gerenciamento de teste adaptado em ambos os lados."
     }
@@ -23003,20 +23003,20 @@
     "en": {
      "q": "In an iterative-incremental SDLC, the test team adopts a strategy of producing a lightweight test plan per sprint that is updated every iteration, rather than a single comprehensive test plan at project start. According to the CTAL-TM v3.0 syllabus, this decision is BEST justified by which statement?",
      "options": [
-      "Iterative SDLCs require no test planning at all, only execution",
-      "Iterative SDLCs require exactly the same test planning as sequential SDLCs",
-      "Iterative SDLCs require a single test plan produced at the end of the project",
-      "Iterative SDLCs benefit from test planning that is iterative and updated per iteration, accommodating changes and feedback"
+      "It bases planning changes on release-level results rather than iteration feedback",
+      "It preserves the initial project plan while recording sprint changes in progress reports",
+      "It postpones scope revisions until the next release to stabilize the current iteration",
+      "It updates test planning per iteration to incorporate changes and feedback"
      ],
      "exp": "The syllabus emphasizes that test planning is iterative and must accommodate the SDLC. For iterative-incremental SDLCs, planning per iteration accommodates changes and feedback, so a lightweight, per-sprint test plan that is updated each iteration is appropriate. Iterative SDLCs still need planning; they are not identical to sequential; and producing a single plan only at the end would defeat the purpose of iterative refinement."
     },
     "pt": {
      "q": "Em um SDLC iterativo-incremental, a equipe de teste adota uma estratégia de produzir um plano de teste leve por sprint que é atualizado a cada iteração, em vez de um único plano de teste abrangente no início do projeto. Segundo o syllabus CTAL-TM v3.0, essa decisão é MELHOR justificada por qual afirmação?",
      "options": [
-      "SDLCs iterativos não requerem nenhum planejamento de teste, apenas execução",
-      "SDLCs iterativos requerem exatamente o mesmo planejamento de teste que SDLCs sequenciais",
-      "SDLCs iterativos requerem um único plano de teste produzido no final do projeto",
-      "SDLCs iterativos se beneficiam de um planejamento de teste iterativo e atualizado por iteração, acomodando mudanças e feedback"
+      "Ele fundamenta mudanças no planejamento nos resultados da versão, em vez do feedback de cada iteração",
+      "Ele preserva o plano inicial do projeto e registra mudanças dos sprints nos relatórios de progresso",
+      "Ele adia revisões de escopo para a próxima versão, a fim de estabilizar a iteração corrente",
+      "Ele atualiza o planejamento de teste a cada iteração para incorporar mudanças e feedback"
      ],
      "exp": "O syllabus enfatiza que o planejamento de teste é iterativo e deve acomodar o SDLC. Para SDLCs iterativo-incrementais, o planejamento por iteração acomoda mudanças e feedback, então um plano de teste leve por sprint atualizado a cada iteração é apropriado. SDLCs iterativos ainda precisam de planejamento; não são idênticos aos sequenciais; e produzir um único plano apenas no final derrotaria o propósito do refinamento iterativo."
     }

@@ -1,4 +1,29 @@
-# Estado atual — 2026-10-23 (v3.17.0 local)
+# Estado atual — 2026-10-24
+
+Revisão editorial em andamento: banco candidato 1.6.1-editorial.1 sincronizado
+LOCALMENTE na fonte e no app; versão do aplicativo permanece 3.17.0. Sem envio.
+Primeiro lote: 12 questões lidas, oito reformuladas em PT/EN; gabaritos, IDs,
+pools e as outras 192 questões preservados. Restam 188 questões para leitura
+semântica e revisão independente do lote. Quatro guardas ainda reprovam.
+Registro: banco/editorial/ctaltm-batch-01.json e CTALTM_QUALITY_REVIEW.md.
+
+App v3.17.0 publicado na linha a5f664f. Correção de proteção canônica aplicada
+LOCALMENTE, sem commit/push: fonte reconciliada para v1.6.0-ctaltm, monólitos
+idênticos e fatias verificadas. CTAL-TM incluído nas guardas bloqueantes.
+O sync e o novo job canonical-bank do app agora rejeitam divergência e dívida
+de qualidade, mas os workflows ainda não foram executados no GitHub.
+
+Validação técnica local: 11 testes de proteção do banco, 443 testes do app,
+cinco E2E Chromium, formatação, lint e build aprovados. Snapshot histórico
+docs/sdd/Archive ignorado pelo Prettier, sem inclusão no commit.
+
+Bloqueio editorial aberto: CTAL-TM falha LENGTH_BIAS, LENGTH_EFFECT_SIZE,
+HEDGE_RATIO e RUNS_TEST (exit 1). Triagem gerada para 200 questões; revisão
+semântica completa pendente. Nenhuma baseline ou tolerância nova adicionada.
+Spec ativa: spec-canonical-bank-protection.md. Evidências detalhadas no banco:
+CTALTM_QUALITY_REVIEW.md e ctaltm-quality-triage.json.
+
+## Histórico de integrações
 
 Integração seletiva CTAL-TM: 200 questões (101 estudo/99 simulado), conteúdo
 bilíngue e blueprint 50 questões/88 pontos/corte 58/120 minutos.

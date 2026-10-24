@@ -24,7 +24,7 @@ describe("r5: code-split do banco — integridade das fatias", () => {
           (c) => String(c.chapter) === String(q.chapter) && c.domain === q.domain
         );
       });
-      expect(slice.questions.map((q) => q.id).sort()).toEqual(expected.map((q) => q.id).sort());
+      expect(slice.questions).toEqual(expected);
       // meta viaja junto (blueprints, examFormat, chapterWeights)
       expect(slice.meta).toEqual(monolith.meta);
     }

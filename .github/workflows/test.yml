@@ -7,6 +7,26 @@ on:
     branches: [main]
 
 jobs:
+  canonical-bank:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: app
+      - uses: actions/checkout@v4
+        with:
+          repository: ironidesflj/ctfl-question-bank-ptbr
+          path: bank
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Verify canonical source and complete derived slices
+        run: python3 bank/verify_sync.py bank app
+      - name: Enforce canonical quality guards for all live certifications
+        working-directory: bank
+        run: |
+          python3 check_alignment.py --bank-file ctfl-questions-ptbr.json --threshold 0
+          python3 check_alignment.py --bank-file synapse-question-bank.json --threshold 0
   test:
     runs-on: ubuntu-latest
     steps:

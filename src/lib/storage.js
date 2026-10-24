@@ -7,6 +7,11 @@ const keyFor = (certId) => `synapse.progress.v1.${certId}`;
 // aba/rota/recarregamento. Chave própria por cert, separada do progresso.
 const draftKeyFor = (certId) => `synapse.examDraft.v1.${certId}`;
 
+// r20: epoch do layout das posições das opções por certificação. Rascunhos
+// antigos não podem ser retomados depois de uma troca de índice.
+const CERT_INDEX_EPOCHS = { ctfl: 1, "ctal-ta": 1, "ctal-tm": 1 };
+const certIndexEpoch = (certId) => CERT_INDEX_EPOCHS[certId] ?? 1;
+
 // Fase 0: timezone dinâmico (antes hardcoded America/Sao_Paulo).
 const TZ = (() => {
   try {
@@ -689,7 +694,10 @@ export function clearProgress(certId = activeCert) {
 // retomada, mantendo a resposta já marcada apontando pra mesma opção.
 export function saveExamDraft(certId, draft) {
   try {
-    localStorage.setItem(draftKeyFor(certId), JSON.stringify(draft));
+    localStorage.setItem(
+      draftKeyFor(certId),
+      JSON.stringify({ ...draft, epoch: certIndexEpoch(certId) })
+    );
     return true;
   } catch (e) {
     reportStorageError("saveExamDraft", e);
@@ -712,6 +720,14 @@ export function loadExamDraft(certId) {
       typeof d.timeLeft !== "number" ||
       d.timeLeft <= 0
     ) {
+      return null;
+    }
+    if ((typeof d.epoch === "number" ? d.epoch : 1) !== certIndexEpoch(certId)) {
+      try {
+        localStorage.removeItem(draftKeyFor(certId));
+      } catch {
+        // limpeza best-effort; nunca retomar um layout incompatível
+      }
       return null;
     }
     // r3: flags de "marcar para revisão" (opcional — rascunhos salvos antes

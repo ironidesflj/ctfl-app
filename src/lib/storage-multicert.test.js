@@ -6,6 +6,9 @@ import {
   clearProgress,
   toggleSaved,
   setActiveCertForStorage,
+  saveExamDraft,
+  loadExamDraft,
+  clearExamDraft,
 } from "./storage.js";
 
 describe("storage - per-cert isolation", () => {
@@ -74,5 +77,44 @@ describe("storage - per-cert isolation", () => {
     // other certs remain untouched by the migration
     const ctal = loadProgress("ctal-ta");
     expect(ctal.total).toBe(0);
+  });
+});
+
+describe("storage - exam draft index epoch (r20)", () => {
+  beforeEach(() => localStorage.clear());
+
+  const draftKey = (cert) => `synapse.examDraft.v1.${cert}`;
+  const draft = (epoch) => ({
+    questionIds: ["ctaltm-101", "ctaltm-102"],
+    optOrder: [[0, 1, 2, 3], [3, 2, 1, 0]],
+    answers: [1, null], flags: [false, false], durations: [12, 0],
+    idx: 1, timeLeft: 3000, custom: false, savedAt: Date.now(),
+    ...(typeof epoch === "number" ? { epoch } : {}),
+  });
+
+  it("carimba o epoch atual e retoma o rascunho", () => {
+    saveExamDraft("ctal-tm", draft());
+    expect(JSON.parse(localStorage.getItem(draftKey("ctal-tm"))).epoch).toBe(1);
+    expect(loadExamDraft("ctal-tm").questionIds).toEqual(["ctaltm-101", "ctaltm-102"]);
+    clearExamDraft("ctal-tm");
+  });
+
+  it("descarta e remove epoch incompatível", () => {
+    localStorage.setItem(draftKey("ctal-tm"), JSON.stringify(draft(2)));
+    expect(loadExamDraft("ctal-tm")).toBeNull();
+    expect(localStorage.getItem(draftKey("ctal-tm"))).toBeNull();
+  });
+
+  it("mantém isolamento por certificação", () => {
+    localStorage.setItem(draftKey("ctfl"), JSON.stringify(draft(1)));
+    localStorage.setItem(draftKey("ctal-tm"), JSON.stringify(draft(2)));
+    expect(loadExamDraft("ctfl")).not.toBeNull();
+    expect(loadExamDraft("ctal-tm")).toBeNull();
+  });
+
+  it("aceita rascunho legado sem epoch sob epoch 1", () => {
+    localStorage.setItem(draftKey("ctfl"), JSON.stringify(draft()));
+    expect(loadExamDraft("ctfl")).not.toBeNull();
+    clearExamDraft("ctfl");
   });
 });

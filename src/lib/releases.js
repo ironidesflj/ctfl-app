@@ -1,7 +1,7 @@
 const RELEASE_KEY_PREFIX = "synapse.releaseNotes.seen";
 
 export const CURRENT_RELEASE = {
-  version: "3.17.0",
+  version: "3.17.1",
   significant: true,
   pt: {
     eyebrow: "Novidades da versão",
@@ -23,6 +23,7 @@ export const CURRENT_RELEASE = {
       "O novo conteúdo cobre os cinco capítulos e inclui os objetivos de aprendizagem K4.",
       "O heatmap agora mostra 12 semanas alinhadas ao calendário, com meses e dias identificados.",
       "Você pode tocar ou clicar em cada dia para ver respostas e percentual de acerto.",
+      "Rascunhos de simulados agora são protegidos contra mudanças futuras na posição das alternativas.",
     ],
     cta: "Entendi",
     close: "Fechar novidades",
@@ -47,6 +48,7 @@ export const CURRENT_RELEASE = {
       "The new content covers all five chapters, including the K4 learning objectives.",
       "The activity heatmap now shows 12 calendar-aligned weeks with month and day labels.",
       "You can tap or click any day to inspect answers and accuracy.",
+      "Exam drafts are now protected against future changes to option positions.",
     ],
     cta: "Got it",
     close: "Close release notes",

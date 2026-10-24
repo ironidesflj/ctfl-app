@@ -1,5 +1,22 @@
 # Plano atual
 
+## Fase autorizada em 2026-10-24
+
+Spec ativa: `spec-canonical-bank-protection.md`. Sem autorização de push.
+
+- Aplicado localmente: reconciliação v1.6.0-ctaltm na fonte, cobertura LIVE
+  CTAL-TM nas guardas, proteções de sync/CI e comparação integral de fatias.
+- Aplicado localmente: exclusão do snapshot histórico do format check.
+- Evidência técnica: 11 testes de proteção, 443 testes app, cinco E2E,
+  formatação/lint/build aprovados; fontes/fatias idênticas.
+- NÃO CONCLUÍDO: revisão editorial integral CTAL-TM. Quatro guardas permanecem
+  bloqueantes. Não alterar baseline/threshold para fechar a fase.
+- Após revisão: versionar alterações de conteúdo na fonte, regenerar fatias,
+  validar tudo e apresentar os diffs. Publicar primeiro a fonte e depois o app
+  somente após autorização; não enviar esta fase como se o conteúdo estivesse verde.
+
+## Registro histórico do plano anterior
+
 ## Fechado nesta fase
 
 1. Reconciliação e versionamento do SDD.

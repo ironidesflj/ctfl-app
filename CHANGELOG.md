@@ -1,5 +1,12 @@
 # Changelog
 
+## Não publicado — Proteção da fonte canônica
+
+- CI compara os bancos com a fonte e exige guardas para todas as certs LIVE.
+- Integridade das fatias compara conteúdo completo, não apenas IDs e metadados.
+- Snapshot histórico não rastreado excluído do format check.
+- CTAL-TM segue com quatro falhas editoriais bloqueantes; sem afrouxar critérios.
+
 ## v3.17.0 — 2026-10-23 — CTAL-TM disponível
 
 - CTAL-TM v3.0 disponível com 200 questões, 21 flashcards, 18 itens de
