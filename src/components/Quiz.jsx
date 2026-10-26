@@ -1342,7 +1342,10 @@ export default function Quiz({
 
     return (
       <div className="quiz">
-        <div className={"card result" + (mode === "exam" ? " exam-result" : "")}>
+        <div
+          id="quiz-result-top"
+          className={"card result" + (mode === "exam" ? " exam-result" : "")}
+        >
           {mode === "exam" && passed && !reduceMotion && <Confetti />}
           {mode === "exam" && <ScoreRing pct={pct} passed={passed} />}
           <div className="result-score">
@@ -1519,7 +1522,10 @@ export default function Quiz({
               .filter(({ i }) => active.test(i));
             return (
               <div className="card">
-                <h3>{t(lang, "quiz.reviewTitleAll")}</h3>
+                <div className="review-heading">
+                  <h3>{t(lang, "quiz.reviewTitleAll")}</h3>
+                  <a href="#quiz-result-top">{t(lang, "quiz.reviewBackToResult")}</a>
+                </div>
                 <div
                   className="review-filters"
                   role="group"
@@ -1594,7 +1600,10 @@ export default function Quiz({
 
         {showReview && mode !== "exam" && (
           <div className="card">
-            <h3>{t(lang, "quiz.reviewErrors")}</h3>
+            <div className="review-heading">
+              <h3>{t(lang, "quiz.reviewErrors")}</h3>
+              <a href="#quiz-result-top">{t(lang, "quiz.reviewBackToResult")}</a>
+            </div>
             {wrong.length === 0 ? (
               <p className="ok">{t(lang, "quiz.noErrors")}</p>
             ) : (

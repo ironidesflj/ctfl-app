@@ -1,5 +1,19 @@
 # Plano atual
 
+## Identidade visual — 2026-10-26
+
+Plano incremental em `spec-identidade-visual-2026-10.md`. Etapas 1–3
+concluídas localmente; etapa 4 aplicada e conferida visualmente.
+Etapa 5 aplicada com contraste calculado e conferida visualmente;
+etapa 6 auditada sem necessidade de copiar a landing; etapas 7–8 auditadas,
+com melhorias funcionais separadas do patch visual. A revisão navegável
+confirmou foco e cabeçalho sticky e corrigiu a paleta de cert no tema escuro.
+Os gates locais fecharam com 447 testes, lint, formatação, build e 5 E2E
+Chromium. Aceite visual do Iron recebido em 2026-10-26 para commit local
+deste lote. Push e publicação dependem de pedido separado.
+
+O plano abaixo registra o estado histórico da fase de proteção canônica.
+
 ## Fase autorizada em 2026-10-24
 
 Spec ativa: `spec-canonical-bank-protection.md`. Sem autorização de push.

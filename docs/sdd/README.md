@@ -5,6 +5,9 @@ repositórios `ctfl-app` e `ctfl-question-bank-ptbr`.
 
 ## Arquivos ativos
 
+- `spec-identidade-visual-2026-10.md`: aplicação gradual do patch visual,
+  etapas concluídas localmente e próximas verificações.
+
 - `constitution.md`: regras permanentes de decisão, execução e fechamento.
 - `current-state.md`: estado verificado dos dois repositórios.
 - `plan.md`: próximos itens autorizados, adiados e fora de escopo.

@@ -54,8 +54,9 @@ describe("primeira visita", () => {
 describe("masthead dinâmico + data-cert", () => {
   it("rota de cert (ctal-ta): mostra dados do CTAL-TA, não CTFL, e seta data-cert", () => {
     const { container } = renderApp("/ctal-ta/quiz");
-    // fullName do CTAL-TA no h1, não "CTFL Prep" nem "Foundation Level"
-    expect(screen.getByRole("heading", { level: 1 }).textContent).toBe("Test Analyst");
+    // A marca permanece Synapse; o subtítulo contextualiza a certificação.
+    expect(screen.getByRole("heading", { level: 1 }).textContent).toBe("Synapse");
+    expect(screen.getByText(/ISTQB Test Analyst v4\.0/)).toBeInTheDocument();
     expect(screen.queryByText("CTFL Prep")).not.toBeInTheDocument();
     // badge cert-indicator com o label
     expect(screen.getByText("CTAL-TA")).toBeInTheDocument();
@@ -122,8 +123,9 @@ describe("CertSelector (/ sem lastCert, e /select)", () => {
     const user = userEvent.setup();
     renderApp("/select");
     await user.click(screen.getByText("CTAL-TA").closest("button"));
-    // masthead agora mostra CTAL-TA
-    expect(screen.getByRole("heading", { level: 1 }).textContent).toBe("Test Analyst");
+    // masthead mantém a marca e mostra o CTAL-TA no subtítulo
+    expect(screen.getByRole("heading", { level: 1 }).textContent).toBe("Synapse");
+    expect(screen.getByText(/ISTQB Test Analyst v4\.0/)).toBeInTheDocument();
   });
 });
 
@@ -148,8 +150,8 @@ describe("r10 — rota neutra /go/:tab (atalhos do PWA)", () => {
   it("com lastCert salvo, redireciona pro cert + tab pedidos", async () => {
     localStorage.setItem("synapse.lastCert", "ctal-ta");
     renderApp("/go/stats");
-    // masthead do CTAL-TA prova o redirect (rota /ctal-ta/stats)
-    expect(await screen.findByRole("heading", { level: 1 })).toHaveTextContent("Test Analyst");
+    // subtítulo do CTAL-TA prova o redirect (rota /ctal-ta/stats)
+    expect(await screen.findByText(/ISTQB Test Analyst v4\.0/)).toBeInTheDocument();
   });
 
   it("tab inválida cai no default (quiz), não em 404 do router", async () => {

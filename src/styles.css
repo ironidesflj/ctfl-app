@@ -4,6 +4,7 @@
   --surface-2: #f0eef6;
   --line: #e2dff0;
   --line-strong: #cdc8e4;
+  --control-line: #7a7396;
   --text: #1b1830;
   --text-2: #5c5775;
   --text-3: #6e6a86;
@@ -56,6 +57,7 @@
     --surface-2: #221f30;
     --line: #2c2940;
     --line-strong: #3a3654;
+    --control-line: #6b6590;
     --text: #ecebf5;
     --text-2: #a8a3c2;
     --text-3: #8b87a3;
@@ -87,6 +89,7 @@
   --surface-2: #f0eef6;
   --line: #e2dff0;
   --line-strong: #cdc8e4;
+  --control-line: #7a7396;
   --text: #1b1830;
   --text-2: #5c5775;
   --text-3: #6e6a86;
@@ -111,6 +114,7 @@
   --surface-2: #221f30;
   --line: #2c2940;
   --line-strong: #3a3654;
+  --control-line: #6b6590;
   --text: #ecebf5;
   --text-2: #a8a3c2;
   --text-3: #8b87a3;
@@ -161,24 +165,36 @@ body {
   gap: 14px;
   margin-bottom: 1.5rem;
 }
+/* Durante o quiz e a revisão, idioma, tema e troca de certificação
+   permanecem acessíveis mesmo após uma rolagem longa. */
+.app:has(.quiz) > .masthead {
+  position: sticky;
+  top: 0;
+  z-index: 12;
+  padding: 10px 0;
+  background: var(--bg);
+  border-bottom: 1px solid var(--line);
+}
 .mast-mark {
+  --syn-field: var(--accent);
   font-family: var(--font-mono);
   font-weight: 500;
   font-size: var(--fs-20);
   color: #fff;
-  background: var(--cert-accent);
-  width: 46px;
-  height: 46px;
+  background: var(--accent);
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 12px;
+  border-radius: 10px;
   letter-spacing: -1px;
 }
 .masthead h1 {
   font-family: var(--font-display);
-  font-size: var(--fs-24);
-  font-weight: 700;
+  font-size: var(--fs-20);
+  font-weight: 600;
   letter-spacing: -0.5px;
 }
 .mast-sub {
@@ -203,7 +219,7 @@ body {
   font-family: var(--font-body);
   font-size: var(--fs-14);
   padding: 12px 16px;
-  border: 1px solid var(--line);
+  border: 1px solid var(--control-line);
   border-radius: 999px;
   background: transparent;
   color: var(--text-2);
@@ -542,8 +558,11 @@ body {
   color: var(--warn);
 }
 .q-text {
-  font-size: var(--fs-16);
-  line-height: 1.55;
+  max-width: 58ch;
+  font-family: var(--font-body);
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.5;
   margin-bottom: 1.2rem;
 }
 
@@ -558,16 +577,24 @@ body {
   align-items: flex-start;
   text-align: left;
   font-family: var(--font-body);
-  font-size: var(--fs-14);
-  line-height: 1.45;
+  font-size: var(--fs-15);
+  line-height: 1.5;
   padding: 13px 16px;
   border-radius: var(--radius-sm);
-  border: 1px solid var(--line);
+  border: 1px solid var(--control-line);
   background: var(--surface);
   color: var(--text);
   cursor: pointer;
   transition: all 0.12s;
   width: 100%;
+}
+@media (max-width: 480px) {
+  .q-text {
+    font-size: var(--fs-16);
+  }
+  .opt {
+    font-size: var(--fs-14);
+  }
 }
 .opt:not(:disabled):hover {
   border-color: var(--accent);
@@ -617,6 +644,7 @@ body {
 /* ---------- result + review ---------- */
 .result {
   text-align: center;
+  scroll-margin-top: 80px;
 }
 .result-score {
   font-family: var(--font-display);
@@ -1474,32 +1502,32 @@ mark {
 
 /* ---------- tema escuro (prefers-color-scheme: dark) ---------- */
 @media (prefers-color-scheme: dark) {
-  [data-cert="ctfl"] {
+  :root:not([data-theme="light"]) [data-cert="ctfl"] {
     --cert-accent: #8b7dff;
     --cert-accent-soft: #241f3d;
     --cert-accent-text: #b9aeff;
   }
-  [data-cert="ctfl-at"] {
+  :root:not([data-theme="light"]) [data-cert="ctfl-at"] {
     --cert-accent: #9691ab;
     --cert-accent-soft: #2c2940;
     --cert-accent-text: #c4c0d6;
   }
-  [data-cert="ctal-ta"] {
+  :root:not([data-theme="light"]) [data-cert="ctal-ta"] {
     --cert-accent: #4dd4cf;
     --cert-accent-soft: #123330;
     --cert-accent-text: #7fe8e3;
   }
-  [data-cert="ctal-tm"] {
+  :root:not([data-theme="light"]) [data-cert="ctal-tm"] {
     --cert-accent: #d99bd0;
     --cert-accent-soft: #3a2438;
     --cert-accent-text: #eab8e2;
   }
-  [data-cert="ct-ai"] {
+  :root:not([data-theme="light"]) [data-cert="ct-ai"] {
     --cert-accent: #ff7fa8;
     --cert-accent-soft: #3a1826;
     --cert-accent-text: #ffa8c2;
   }
-  [data-cert="ctal-at-v2"] {
+  :root:not([data-theme="light"]) [data-cert="ctal-at-v2"] {
     --cert-accent: #e0a53f;
     --cert-accent-soft: #3a2c11;
     --cert-accent-text: #f0c46e;
@@ -1507,32 +1535,32 @@ mark {
 }
 
 /* ---------- tema escuro forçado (data-theme="dark") ---------- */
-[data-theme="dark"][data-cert="ctfl"] {
+[data-theme="dark"] [data-cert="ctfl"] {
   --cert-accent: #8b7dff;
   --cert-accent-soft: #241f3d;
   --cert-accent-text: #b9aeff;
 }
-[data-theme="dark"][data-cert="ctfl-at"] {
+[data-theme="dark"] [data-cert="ctfl-at"] {
   --cert-accent: #9691ab;
   --cert-accent-soft: #2c2940;
   --cert-accent-text: #c4c0d6;
 }
-[data-theme="dark"][data-cert="ctal-ta"] {
+[data-theme="dark"] [data-cert="ctal-ta"] {
   --cert-accent: #4dd4cf;
   --cert-accent-soft: #123330;
   --cert-accent-text: #7fe8e3;
 }
-[data-theme="dark"][data-cert="ctal-tm"] {
+[data-theme="dark"] [data-cert="ctal-tm"] {
   --cert-accent: #d99bd0;
   --cert-accent-soft: #3a2438;
   --cert-accent-text: #eab8e2;
 }
-[data-theme="dark"][data-cert="ct-ai"] {
+[data-theme="dark"] [data-cert="ct-ai"] {
   --cert-accent: #ff7fa8;
   --cert-accent-soft: #3a1826;
   --cert-accent-text: #ffa8c2;
 }
-[data-theme="dark"][data-cert="ctal-at-v2"] {
+[data-theme="dark"] [data-cert="ctal-at-v2"] {
   --cert-accent: #e0a53f;
   --cert-accent-soft: #3a2c11;
   --cert-accent-text: #f0c46e;
@@ -1626,6 +1654,7 @@ mark {
   border-radius: var(--radius);
   border: 2px solid transparent;
   background: var(--surface-2);
+  box-shadow: 0 1px 2px rgba(27, 24, 48, 0.08);
   text-align: left;
   cursor: pointer;
   transition:
@@ -1639,20 +1668,21 @@ mark {
 .cert-card:disabled {
   cursor: default;
   border-style: dashed;
-  border-color: var(--line);
-  opacity: 0.7;
+  border-color: var(--control-line);
 }
 .cert-card .cc-mark {
   color: var(--cert-accent);
   margin-bottom: 6px;
 }
 .cert-card .cc-title {
+  display: block;
   font-family: var(--font-mono);
   font-weight: 500;
   font-size: var(--fs-12);
   color: var(--cert-accent-text);
 }
 .cert-card .cc-sub {
+  display: block;
   color: var(--text-3);
   font-size: var(--fs-12);
 }
@@ -1847,6 +1877,30 @@ mark {
 }
 
 /* ---------- revisão da prova (filtros + item) ---------- */
+.review-heading {
+  position: sticky;
+  top: 68px;
+  z-index: 6;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 8px 0;
+  background: var(--surface);
+}
+.review-heading h3 {
+  margin: 0;
+}
+.review-heading a {
+  color: var(--accent-text);
+  font-size: var(--fs-13);
+}
+@media (max-width: 480px) {
+  .review-heading {
+    top: 112px;
+  }
+}
 .review-filters {
   display: flex;
   flex-wrap: wrap;

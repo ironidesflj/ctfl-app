@@ -451,10 +451,10 @@ export default function App() {
             <BrandMark size={26} />
           </div>
           <div>
-            <h1>{catalogCert ? catalogCert.fullName : "Synapse"}</h1>
+            <h1>Synapse</h1>
             {catalogCert && (
               <p className="mast-sub">
-                ISTQB {catalogCert.label} {catalogCert.version} · {ALL.length}{" "}
+                ISTQB {catalogCert.fullName} {catalogCert.version} · {ALL.length}{" "}
                 {t(lang, "questionsCount")}
               </p>
             )}

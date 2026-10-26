@@ -6,7 +6,8 @@ const releaseKey = `synapse.releaseNotes.seen.${version}`;
 
 test("CTAL-TM conclui simulado com pontuação e progresso próprios", async ({ page }) => {
   await page.goto("/ctal-tm/quiz");
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Test Manager");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Synapse");
+  await expect(page.locator(".mast-sub")).toContainText("Test Manager v3.0");
   await page.getByRole("button", { name: /simulado/i }).click();
   await page.getByRole("button", { name: "Iniciar" }).click();
   await page.getByRole("button", { name: /ver todas as questões/i }).click();
@@ -55,7 +56,8 @@ test("seleção, estudo, persistência, idioma e reabertura do onboarding", asyn
   await page.goto("/select");
   await page.locator('[data-cert="ctfl"]').click();
   await expect(page).toHaveURL(/\/ctfl\/quiz$/);
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Foundation Level");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Synapse");
+  await expect(page.locator(".mast-sub")).toContainText("Foundation Level v4.0");
 
   await page.getByRole("button", { name: "Iniciar" }).click();
   await page.locator(".opt").first().click();
@@ -104,6 +106,11 @@ test("simulado pode ser concluído e persistido", async ({ page }) => {
   await page.getByRole("button", { name: "Finalizar" }).click();
 
   await expect(page.locator(".result-score")).toContainText("/40");
+  await page.getByRole("button", { name: "Revisar erros" }).click();
+  const backToResult = page.getByRole("link", { name: "Voltar ao resultado" });
+  await expect(backToResult).toHaveAttribute("href", "#quiz-result-top");
+  await backToResult.click();
+  await expect(page.locator("#quiz-result-top")).toBeVisible();
   const examHistory = await page.evaluate(
     () => JSON.parse(localStorage.getItem("synapse.progress.v1.ctfl")).examHistory
   );

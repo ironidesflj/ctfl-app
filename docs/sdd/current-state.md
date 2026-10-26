@@ -1,5 +1,23 @@
 # Estado atual — 2026-10-24
 
+## Atualização local — 2026-10-26
+
+App 3.18.0 com integração visual gradual do patch de identidade. Cartões de
+certificação preservados; marca, cabeçalho e tipografia do quiz refinados.
+O cabeçalho agora apresenta “Synapse” como título estável e a certificação
+no subtítulo/chip em todas as rotas.
+Cabeçalho sticky no quiz aplicado e conferido visualmente.
+Contraste de bordas de controles ajustado; landing existente auditada e
+preservada.
+Conferência navegável identificou e corrigiu seletores de cor por cert no tema
+escuro manual; cabeçalho sticky e foco de 2 px confirmados no navegador.
+Revisão longa ganhou atalho para retornar ao resultado. Gates locais do lote:
+447 testes, lint, formatação, build e 5 E2E Chromium aprovados.
+Plano e limites em `spec-identidade-visual-2026-10.md`. Aceite visual recebido
+em 2026-10-26 para fechamento em commit local; push/publicação não autorizados.
+O conteúdo abaixo é histórico e não representa o
+estado atual do banco ou do app.
+
 Revisão editorial em andamento: banco candidato 1.6.1-editorial.1 sincronizado
 LOCALMENTE na fonte e no app; versão do aplicativo permanece 3.17.0. Sem envio.
 Primeiro lote: 12 questões lidas, oito reformuladas em PT/EN; gabaritos, IDs,

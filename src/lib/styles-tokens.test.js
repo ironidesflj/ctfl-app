@@ -1,10 +1,11 @@
 // r18 (v3.16.0) — guarda do design system de paletas por certificação.
 // A feature "paleta por cert" (dívida r14) aplica --cert-accent nos pontos
-// de identidade da UI (tabs, CTA primário, chips, barras). A régua aqui é
+// de contexto da UI (tabs, CTA primário, chips, barras). A marca do cabeçalho
+// permanece violeta Synapse. A régua aqui é
 // tripla: (1) os seletores de identidade REALMENTE usam os tokens de cert
 // (não o --accent global — senão a feature regrediu silenciosamente);
 // (2) os tokens passam WCAG AA nos pares que o CSS monta — fundo cheio com
-// texto branco (tab/botão primário/mast-mark) e texto sobre fundo soft
+// texto branco (tab/botão primário) e texto sobre fundo soft
 // (chips/domain-weight) — com a fórmula oficial (relative luminance), não
 // hardcode; e (3) as DUAS camadas de tema escuro (auto via prefers-color-
 // scheme e forçado via data-theme) ficam consistentes entre si.
@@ -45,8 +46,8 @@ function contrast(a, b) {
 // ---------- helpers: parse por camada ----------
 // O arquivo tem 3 camadas de tokens por cert, NESTA ordem:
 //   claro:  [data-cert="x"] { … }
-//   dark-auto: @media (prefers-color-scheme: dark) { [data-cert="x"] { … } }
-//   dark-forçado: [data-theme="dark"][data-cert="x"] { … }
+//   dark-auto: @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) [data-cert="x"] { … } }
+//   dark-forçado: [data-theme="dark"] [data-cert="x"] { … }
 function parseBlocks(section, attr = "data-cert") {
   const tokens = {};
   const re = new RegExp(`\\[${attr}="([a-z0-9-]+)"\\]\\s*\\{([^}]*)\\}`, "g");
@@ -70,10 +71,10 @@ const forcedStart = css.indexOf("tema escuro forçado");
 const lightTokens = parseBlocks(css.slice(lightStart, darkAutoStart));
 // dark-auto: blocos [data-cert] entre os comentários de seção
 const darkAutoTokens = parseBlocks(css.slice(darkAutoStart, forcedStart));
-// dark-forçado: blocos [data-theme="dark"][data-cert] (attr composto → parse direto)
+// dark-forçado: tema no ancestral, cert no app (parse direto)
 const forcedTokens = {};
 {
-  const re = /\[data-theme="dark"\]\[data-cert="([a-z0-9-]+)"\]\s*\{([^}]*)\}/g;
+  const re = /\[data-theme="dark"\]\s+\[data-cert="([a-z0-9-]+)"\]\s*\{([^}]*)\}/g;
   let m;
   while ((m = re.exec(css))) {
     const decls = {};
@@ -109,7 +110,6 @@ describe("r18: seletores de identidade usam os tokens de cert", () => {
     [".chip.on", "background: var(--cert-accent-soft)"],
     [".mode-btn.active", "border-color: var(--cert-accent)"],
     [".domain-card.selected", "border-color: var(--cert-accent)"],
-    [".mast-mark", "background: var(--cert-accent)"],
     [".cert-indicator", "background: var(--cert-accent-soft)"],
   ];
   it.each(SELECTORS)("%s mantém %s (não regrediu p/ --accent global)", (sel, decl) => {
@@ -126,6 +126,12 @@ describe("r18: seletores de identidade usam os tokens de cert", () => {
 
   it(":root define o fallback --cert-accent (tela /select mantém identidade global)", () => {
     expect(css).toMatch(/--cert-accent:\s*var\(--accent\)/);
+  });
+
+  it("a marca do cabeçalho mantém o violeta Synapse em todas as certificações", () => {
+    const block = blocksOf(".mast-mark").find((b) => b.includes("background:"));
+    expect(block).toContain("background: var(--accent)");
+    expect(block).not.toContain("background: var(--cert-accent)");
   });
 });
 
