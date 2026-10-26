@@ -9,7 +9,7 @@ const draftKeyFor = (certId) => `synapse.examDraft.v1.${certId}`;
 
 // r20: epoch do layout das posições das opções por certificação. Rascunhos
 // antigos não podem ser retomados depois de uma troca de índice.
-const CERT_INDEX_EPOCHS = { ctfl: 1, "ctal-ta": 1, "ctal-tm": 1 };
+const CERT_INDEX_EPOCHS = { ctfl: 1, "ctal-ta": 1, "ctal-tm": 2 };
 const certIndexEpoch = (certId) => CERT_INDEX_EPOCHS[certId] ?? 1;
 
 // Fase 0: timezone dinâmico (antes hardcoded America/Sao_Paulo).

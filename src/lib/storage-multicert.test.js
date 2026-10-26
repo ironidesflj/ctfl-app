@@ -102,20 +102,20 @@ describe("storage - exam draft index epoch (r20)", () => {
 
   it("carimba o epoch atual e retoma o rascunho", () => {
     saveExamDraft("ctal-tm", draft());
-    expect(JSON.parse(localStorage.getItem(draftKey("ctal-tm"))).epoch).toBe(1);
+    expect(JSON.parse(localStorage.getItem(draftKey("ctal-tm"))).epoch).toBe(2);
     expect(loadExamDraft("ctal-tm").questionIds).toEqual(["ctaltm-101", "ctaltm-102"]);
     clearExamDraft("ctal-tm");
   });
 
   it("descarta e remove epoch incompatível", () => {
-    localStorage.setItem(draftKey("ctal-tm"), JSON.stringify(draft(2)));
+    localStorage.setItem(draftKey("ctal-tm"), JSON.stringify(draft(1)));
     expect(loadExamDraft("ctal-tm")).toBeNull();
     expect(localStorage.getItem(draftKey("ctal-tm"))).toBeNull();
   });
 
   it("mantém isolamento por certificação", () => {
     localStorage.setItem(draftKey("ctfl"), JSON.stringify(draft(1)));
-    localStorage.setItem(draftKey("ctal-tm"), JSON.stringify(draft(2)));
+    localStorage.setItem(draftKey("ctal-tm"), JSON.stringify(draft(1)));
     expect(loadExamDraft("ctfl")).not.toBeNull();
     expect(loadExamDraft("ctal-tm")).toBeNull();
   });

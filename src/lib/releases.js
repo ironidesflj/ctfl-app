@@ -1,7 +1,7 @@
 const RELEASE_KEY_PREFIX = "synapse.releaseNotes.seen";
 
 export const CURRENT_RELEASE = {
-  version: "3.17.1",
+  version: "3.18.0",
   significant: true,
   pt: {
     eyebrow: "Novidades da versão",
@@ -24,6 +24,7 @@ export const CURRENT_RELEASE = {
       "O heatmap agora mostra 12 semanas alinhadas ao calendário, com meses e dias identificados.",
       "Você pode tocar ou clicar em cada dia para ver respostas e percentual de acerto.",
       "Rascunhos de simulados agora são protegidos contra mudanças futuras na posição das alternativas.",
+      "As questões CTAL-TM receberam revisão editorial e o banco passou pelas guardas de qualidade.",
     ],
     cta: "Entendi",
     close: "Fechar novidades",
@@ -49,6 +50,7 @@ export const CURRENT_RELEASE = {
       "The activity heatmap now shows 12 calendar-aligned weeks with month and day labels.",
       "You can tap or click any day to inspect answers and accuracy.",
       "Exam drafts are now protected against future changes to option positions.",
+      "CTAL-TM questions received an editorial review and the bank passed its quality gates.",
     ],
     cta: "Got it",
     close: "Close release notes",

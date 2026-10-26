@@ -156,7 +156,7 @@ describe("Glossary — cert scoping (CTAL-TM)", () => {
   it("mostra termos CTAL-TM reais (nada de estado vazio)", () => {
     renderAt("/ctal-tm/glossary", "/:cert/glossary", Glossary);
     expect(screen.queryByText(EMPTY_STATE_PT)).not.toBeInTheDocument();
-    expect(screen.getByText(/Conclusão do teste/)).toBeInTheDocument();
+    expect(screen.getAllByText(/Conclusão do teste/).length).toBeGreaterThan(0);
   });
 
   it("helper: glossaryForCert entrega os 37 termos do CTAL-TM", () => {
