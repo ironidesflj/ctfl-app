@@ -9,10 +9,10 @@ React + Vite, instalável como PWA, funciona offline.
 
 - **CTFL v4.0:** 300 questões
 - **CTAL-TA v4.0:** 200 itens
+- **CTAL-TM v3.0:** 200 itens
 
 **Roadmap de Lançamentos Futuros (Em Breve):**
 
-- **CTAL-TM v3.0:** 200 itens (em breve)
 - **CT-AI v2.0:** 200 itens (em breve)
 - **CTAL-AT v2.0:** 200 itens (em breve - syllabus totalmente novo do zero, a ser gerado)
 
@@ -22,10 +22,10 @@ React + Vite, instalável como PWA, funciona offline.
 
 ## Funcionalidades
 
-- **Quiz — modo Estudo:** pool exclusivo (CTFL: 220; CTAL-TA: 110), feedback por questão, filtra domínio/quantidade,
+- **Quiz — modo Estudo:** pool exclusivo (CTFL: 220; CTAL-TA: 110; CTAL-TM: 110), feedback por questão, filtra domínio/quantidade,
   marca questões, oferece modo **"Errei antes"** e treino dirigido por
   capítulo/K-level.
-- **Quiz — modo Simulado:** pool exclusivo (CTFL: 80; CTAL-TA: 90), questões
+- **Quiz — modo Simulado:** pool exclusivo (CTFL: 80; CTAL-TA: 90; CTAL-TM: 90), questões
   estratificadas pelo blueprint oficial de capítulo e K-level (CTFL: 40q/60min;
   CTAL-TA: 45q/120min e pontuação K2=1, K3=2, K4=3; corte 51/78), personalização,
   grade de navegação, rascunho persistido, retomada e revisão no fim.
@@ -46,11 +46,12 @@ React + Vite, instalável como PWA, funciona offline.
   rota ou o estado atual.
 - **Feedback:** link global e seção institucional abrem um Issue Form público no
   GitHub; o app não envia nem armazena progresso, respostas ou dados pessoais.
-- **Banco:** multi-certificação (`getBank(certId)`), CTFL (300q) e CTAL-TA
-  (200q) no ar, com pools de estudo/simulado mutuamente exclusivos e
-  distribuição proporcional ao blueprint oficial de cada uma.
+- **Banco:** multi-certificação (`getBank(certId)`), CTFL, CTAL-TA e CTAL-TM
+  no ar, com pools de estudo/simulado mutuamente exclusivos e distribuição
+  proporcional ao blueprint oficial de cada uma. O CTAL-TM passou por revisão
+  editorial e pelas guardas psicométricas bloqueantes do banco 1.7.0-rc1.
 - **Toggle PT/EN no header:** alterna o idioma das questões, Flashcards,
-  Syllabus e Glossário nas duas certificações disponíveis.
+  Syllabus e Glossário nas certificações disponíveis.
 
 ## Acesso institucional e feedback
 
