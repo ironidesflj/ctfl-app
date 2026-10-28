@@ -1,4 +1,14 @@
-User-agent: *
+User-agent: Googlebot
 Allow: /
 
-Sitemap: https://ctfl-app.vercel.app/sitemap.xml
+User-agent: Bingbot
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: *
+Allow: /

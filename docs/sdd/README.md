@@ -1,26 +1,16 @@
 # SDD canônico do Synapse
 
-Esta é a fonte de verdade versionada para decisões de produto e estado entre os
-repositórios `ctfl-app` e `ctfl-question-bank-ptbr`.
+`docs/sdd/` registra o estado e as decisões do app. O banco editorial tem governança própria no repositório `ctfl-question-bank-ptbr`.
 
-## Arquivos ativos
+## Ativos
 
-- `constitution.md`: regras permanentes de decisão, execução e fechamento.
-- `current-state.md`: estado verificado dos dois repositórios.
-- `plan.md`: próximos itens autorizados, adiados e fora de escopo.
-- `spec-onboarding-reentry.md`: spec histórica reconstruída e fechada.
-- `spec-release-communication.md`: toast técnico + modal de novidades para
-  releases significativas.
-- `spec-institutional-access.md`: retorno global à apresentação completa sem
-  perder rota ou estado.
-- `spec-global-feedback.md`: canal externo público com aviso de privacidade e
-  nenhuma coleta pelo app.
+- `constitution.md`: regras permanentes.
+- `current-state.md`: versão e limites verificados.
+- `plan.md`: entrega corrente e próximos itens.
+- `spec-reformulacao-2026-10.md`: escopo e aceite do app 4.1.0.
 
-As specs 1 (Stats/gamificação), 2 (prontidão por blueprint) e 3
-(desalinhamento de letra) estão fechadas. O snapshot histórico detalhado que
-originou este diretório permanece no workspace agregador em `sdd_extracted/`,
-mas não é mais canônico porque não pertence a um repositório Git.
+## Históricos
 
-Toda atualização futura deve alterar `current-state.md` e `plan.md` no mesmo
-lote do código/documentação correspondente. Mudanças no banco devem registrar
-o commit daquele repositório e a saída determinística das guardas.
+As specs `spec-identidade-visual-2026-10.md`, `spec-onboarding-reentry.md`, `spec-release-communication.md`, `spec-institutional-access.md` e `spec-global-feedback.md` documentam decisões do app Vite 3.x. Seus detalhes de rota, build, chaves e testes não descrevem a implementação 4.1.0.
+
+Toda entrega deve atualizar `current-state.md` e `plan.md` no mesmo lote do código. Mudanças no banco exigem validação das fontes e guardas no repositório canônico.
