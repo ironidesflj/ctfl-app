@@ -2,10 +2,10 @@
 
 ## Entrega 4.1.0
 
-- Conferir o diff do app reformulado e dos seis bancos gerados.
-- Executar gerador, testes, lint, tipos e build.
-- Enviar a versão 4.1.0 para `origin/main`, conforme pedido do Iron.
-- Conferir o resultado do CI e do deploy após o push. O push pode iniciar a publicação automática configurada no host.
+- Diff do app reformulado e dos seis bancos gerados conferido.
+- Gerador, testes, lint, tipos e build aprovados localmente.
+- Código enviado à branch `feat/synapse-4-1-redesign` e PR draft #8 aberto para `main`. A revisão automática bloqueou o push direto à branch padrão por causa da substituição ampla; o merge depende de revisão explícita.
+- Conferir CI do PR e, após merge, o deploy e os fluxos de primeira visita e atualização em produção.
 
 ## Próximos itens, fora desta entrega
 
