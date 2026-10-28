@@ -5,7 +5,7 @@
 - Diff do app reformulado e dos seis bancos gerados conferido.
 - Gerador, testes, lint, tipos e build aprovados localmente.
 - Código enviado à branch `feat/synapse-4-1-redesign` e PR draft #8 aberto para `main`. A revisão automática bloqueou o push direto à branch padrão por causa da substituição ampla; o merge depende de revisão explícita.
-- Conferir CI do PR e, após merge, o deploy e os fluxos de primeira visita e atualização em produção.
+- CI e preview Vercel do PR aprovados. Após merge, conferir o deploy e os fluxos de primeira visita e atualização em produção.
 
 ## Próximos itens, fora desta entrega
 

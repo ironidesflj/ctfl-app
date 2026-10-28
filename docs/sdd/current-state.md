@@ -12,7 +12,7 @@ Os pools de estudo e simulado são exclusivos: CTFL 220/80, CTAL-TA 110/90 e CTA
 
 ## Verificação desta entrega
 
-`bun run bank:build`, `bun run test`, `bun run lint`, `bun run typecheck` e `bun run build` são os gates do app. O preview local foi inspecionado no navegador em Progresso, incluindo o recorte do dia atual. O CI usa os mesmos gates e confere que os bancos gerados estão versionados. A publicação em produção ainda depende do resultado do deploy após o push.
+`bun run bank:build`, `bun run test`, `bun run lint`, `bun run typecheck` e `bun run build` passaram localmente e no CI do PR #8. O preview local foi inspecionado no navegador em Progresso, incluindo o recorte do dia atual. O CI também confirmou que os bancos gerados estão versionados. O preview Vercel do PR ficou pronto com `vercel.json` configurado para Next.js; produção aguarda revisão e merge.
 
 ## Limite de migração
 
