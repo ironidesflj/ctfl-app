@@ -1,0 +1,69 @@
+{
+  "certs": {
+    "ctfl": {
+      "bankVersion": "1.7.0-rc1",
+      "study": 220,
+      "exam": 80,
+      "byChapter": {
+        "1": 44,
+        "2": 26,
+        "3": 30,
+        "4": 60,
+        "5": 49,
+        "6": 11
+      },
+      "examByChapter": {
+        "1": 16,
+        "2": 12,
+        "3": 8,
+        "4": 22,
+        "5": 18,
+        "6": 4
+      },
+      "warnings": [],
+      "sections": 0
+    },
+    "ctal-ta": {
+      "bankVersion": "1.7.0-rc1",
+      "study": 110,
+      "exam": 90,
+      "byChapter": {
+        "1": 20,
+        "2": 8,
+        "3": 54,
+        "4": 10,
+        "5": 18
+      },
+      "examByChapter": {
+        "1": 16,
+        "2": 6,
+        "3": 44,
+        "4": 8,
+        "5": 16
+      },
+      "warnings": [],
+      "sections": 110
+    },
+    "ctal-tm": {
+      "bankVersion": "1.7.0-rc1",
+      "study": 101,
+      "exam": 99,
+      "byChapter": {
+        "1": 57,
+        "2": 27,
+        "3": 17
+      },
+      "examByChapter": {
+        "1": 52,
+        "2": 29,
+        "3": 18
+      },
+      "warnings": [
+        "ctal-tm: célula simulado 2×K3 com 7 < 8 (F=2)"
+      ],
+      "sections": 0
+    }
+  },
+  "uniqueIds": 700,
+  "errors": []
+}

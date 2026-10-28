@@ -7,38 +7,18 @@ on:
     branches: [main]
 
 jobs:
-  canonical-bank:
+  app:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
         with:
-          path: app
-      - uses: actions/checkout@v4
-        with:
-          repository: ironidesflj/ctfl-question-bank-ptbr
-          path: bank
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-      - name: Verify canonical source and complete derived slices
-        run: python3 bank/verify_sync.py bank app
-      - name: Enforce canonical quality guards for all live certifications
-        working-directory: bank
-        run: |
-          python3 check_alignment.py --bank-file ctfl-questions-ptbr.json --threshold 0
-          python3 check_alignment.py --bank-file synapse-question-bank.json --threshold 0
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: npm
-      - run: npm ci
-      - run: npm run lint
-      - run: npm run format:check
-      - run: npm run test
-      - run: npm run build
-      - run: npx playwright install --with-deps chromium
-      - run: npm run test:e2e
+          bun-version: 1.3.14
+      - run: bun install --frozen-lockfile
+      - run: bun run bank:build
+      - name: Verify generated banks are committed
+        run: git diff --exit-code -- src/synapse/data/banks scripts/bank-report.json
+      - run: bun run test
+      - run: bun run lint
+      - run: bun run typecheck
+      - run: bun run build

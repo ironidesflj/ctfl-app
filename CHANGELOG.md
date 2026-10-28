@@ -1,6 +1,16 @@
 # Changelog
 
-## Não publicado — Proteção da fonte canônica
+## v4.1.0 — 2026-10-28 — App reformulado
+
+- Next.js 16/React 19, casca única e oito views com identidade Caderno.
+- Pools exclusivos reais para CTFL, CTAL-TA e CTAL-TM; estudo, flashcards, simulado, prontidão, syllabus e glossário em PT/EN.
+- Abertura da constelação com pausa final de leitura e onboarding reformulado de primeira visita, reabrível em Sobre.
+- Heatmap móvel de 12 semanas com o dia atual inteiro e dias futuros ocultos.
+- PWA com atualização controlada pelo usuário; CI, documentação e comandos de build atualizados.
+- Progresso legado 3.18.0 preservado nas chaves antigas, sem importação automática.
+
+
+## Histórico 3.x — proteção da fonte canônica (estado anterior à reformulação)
 
 - CI compara os bancos com a fonte e exige guardas para todas as certs LIVE.
 - Integridade das fatias compara conteúdo completo, não apenas IDs e metadados.
