@@ -1,5 +1,16 @@
 # Changelog
 
+## v4.1.0 — candidata em revisão
+
+- Candidata Synapse baseada em React + Vite, com bancos de estudo e simulado
+  separados por certificação. A versão 3.18.0 segue como base em produção até
+  o merge desta branch.
+- CTFL, CTAL-TA e CTAL-TM disponíveis na interface. A revisão editorial do
+  banco CTAL-TM permanece aberta; consulte `docs/sdd/current-state.md`.
+- Melhorias de persistência, backup/restauração, metas, capítulos e fluxo de
+  estudo fazem parte desta candidata. A publicação depende da revisão e dos
+  gates; esta entrada não representa um release publicado.
+
 ## Não publicado — Proteção da fonte canônica
 
 - CI compara os bancos com a fonte e exige guardas para todas as certs LIVE.

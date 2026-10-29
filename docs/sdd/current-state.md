@@ -1,4 +1,9 @@
-# Estado atual — 2026-10-24
+# Estado do SDD — referência anterior: 2026-10-24
+
+> O registro abaixo documenta a fase de proteção canônica do banco em 24/10;
+> não descreve integralmente o checkout Vite atual. Para a referência deste
+> checkout, consulte o adendo datado no fim do arquivo. Detalhes de release
+> publicados permanecem no `CHANGELOG.md`.
 
 Revisão editorial em andamento: banco candidato 1.6.1-editorial.1 sincronizado
 LOCALMENTE na fonte e no app; versão do aplicativo permanece 3.17.0. Sem envio.
@@ -167,3 +172,22 @@ Sem commit, push ou publicação nesta integração.
   testes unitários/de componente, build verde e 3/3 smokes Playwright.
 - Contagens verificadas por assert: 21 flashcards, 18 itens de syllabus e 37
   termos de glossário CTAL-TA, todos bilíngues e cobrindo os cinco capítulos.
+
+## Candidata Synapse 4.1.0 Vite — 2026-10-29
+
+- Branch `feat/synapse-vite-redesign`; candidata Synapse 4.1.0 em revisão.
+  A versão 3.18.0 permanece como base em produção até o merge. Esta branch não
+  representa publicação.
+- A interface atual está em `src/synapse/` e usa React + Vite. `store.tsx`
+  carrega bancos de estudo e de simulado por certificação; há dados para CTFL,
+  CTAL-TA e CTAL-TM em `src/synapse/data/banks/`.
+- CTAL-TM está disponível na interface, mas sua revisão editorial segue aberta.
+  A proteção canônica e as quatro falhas registradas para o banco no bloco de
+  24/10 continuam pendências; disponibilidade no app não equivale a aprovação
+  editorial.
+- O README deste checkout resume comandos e estrutura atuais; `DEPLOY.md`
+  descreve Vercel como destino oficial e Pages como opção manual. O workflow
+  `deploy.yml` publica a partir da raiz e não configura build de subpath por si.
+- Não há, neste adendo, confirmação de publicação nem contagens atuais de
+  testes/build. Consulte a execução de CI da branch antes de registrar esses
+  gates como aprovados.

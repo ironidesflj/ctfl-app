@@ -1,4 +1,8 @@
-# Plano atual
+# Plano — registro anterior e encaminhamento da candidata Vite
+
+> A fase abaixo foi registrada em 2026-10-24 para o app anterior. O checkout
+> Vite 4.1.0 atual é descrita em `current-state.md`; 3.18.0 segue em produção
+> até o merge, e os gates da candidata ainda precisam ser confirmados.
 
 ## Fase autorizada em 2026-10-24
 
@@ -67,3 +71,12 @@ validação final e autorização posterior para commit/push.
   conteúdo específica.
 - `vite-plugin-pwa` permanece inerte em `devDependencies`; remoção exige
   reconciliar os lockfiles npm/Bun no mesmo lote.
+
+## Encaminhamento para a candidata 4.1.0 Vite — 2026-10-29
+
+- Revisão editorial CTAL-TM e guardas canônicas: continuam pendentes conforme
+  o registro da fase de 24/10; não remover nem afrouxar essas barreiras.
+- Documentação de produto e deploy: README, CHANGELOG e DEPLOY descrevem a
+  candidata Vite e mantêm 3.18.0 como base em produção até o merge.
+- CI e publicação: verificar os gates da candidata antes de declarar a migração
+  fechada ou registrar qualquer publicação.

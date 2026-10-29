@@ -1,167 +1,285 @@
-import { describe, it, expect, afterEach, beforeEach } from "vitest";
-import { render, screen, cleanup, waitFor } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import { MemoryRouter } from "react-router-dom";
+import { describe, it, expect, beforeEach, afterEach } from "vitest";
+import { render, screen, cleanup, fireEvent, waitFor } from "@testing-library/react";
 import App from "./App.jsx";
-import { CERT_CATALOG } from "./certs-catalog.js";
-import { releaseSeenKey } from "./lib/releases.js";
+import { CERTS } from "./synapse/data/certs";
 
 afterEach(cleanup);
 beforeEach(() => {
+  window.history.replaceState(null, "", "/");
   localStorage.clear();
-  // pula o onboarding pra chegar no masthead/rotas direto
-  localStorage.setItem("ctfl_onboarding_done", "1");
-  localStorage.setItem(releaseSeenKey(), "1");
+  // Marca onboarding e versão como vistos para testes de navegação direta da casca
+  localStorage.setItem("synapse.onboarding.v2", "1");
+  localStorage.setItem("synapse.ver.v1", "4.1.0");
 });
 
-function renderApp(path) {
-  return render(
-    <MemoryRouter initialEntries={[path]}>
-      <App />
-    </MemoryRouter>
-  );
-}
-
-describe("catálogo de vitrine (certs-catalog)", () => {
-  it("tem 6 entradas: 3 live, 2 coming-soon, 1 legacy", () => {
-    expect(CERT_CATALOG).toHaveLength(6);
-    const by = (s) => CERT_CATALOG.filter((c) => c.status === s).length;
-    expect(by("live")).toBe(3);
-    expect(by("coming-soon")).toBe(2);
-    expect(by("legacy")).toBe(1);
-  });
-});
-
-describe("primeira visita", () => {
-  it("não empilha novidades depois de concluir o onboarding", async () => {
-    const user = userEvent.setup();
-    localStorage.clear();
-    renderApp("/");
-    await user.click(screen.getByRole("button", { name: /escolher minha certificação/i }));
-    expect(screen.queryByRole("dialog", { name: /synapse evoluiu/i })).not.toBeInTheDocument();
-    expect(localStorage.getItem(releaseSeenKey())).toBe("1");
+describe("Synapse 4.1 · Shell e Navegação", () => {
+  it("renderiza o cabeçalho com marca Synapse by Noos, ferramentas e cert ativa", async () => {
+    render(<App />);
+    expect(screen.getByRole("button", { name: /Synapse — início/i })).toBeInTheDocument();
+    expect(screen.getByText("by Noos")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /Trocar de prova: CTFL/i })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "PT" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "EN" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /Alternar tema/i })).toBeInTheDocument();
   });
 
-  it("não duplica o acesso institucional enquanto o onboarding inicial já está aberto", () => {
-    localStorage.clear();
-    renderApp("/");
-
-    expect(screen.queryByRole("button", { name: "Sobre o Synapse" })).not.toBeInTheDocument();
-    expect(screen.getByRole("heading", { name: "Sobre o autor" })).toBeInTheDocument();
-  });
-});
-
-describe("masthead dinâmico + data-cert", () => {
-  it("rota de cert (ctal-ta): mostra dados do CTAL-TA, não CTFL, e seta data-cert", () => {
-    const { container } = renderApp("/ctal-ta/quiz");
-    // fullName do CTAL-TA no h1, não "CTFL Prep" nem "Foundation Level"
-    expect(screen.getByRole("heading", { level: 1 }).textContent).toBe("Test Analyst");
-    expect(screen.queryByText("CTFL Prep")).not.toBeInTheDocument();
-    // badge cert-indicator com o label
-    expect(screen.getByText("CTAL-TA")).toBeInTheDocument();
-    expect(container.querySelector(".app")).toHaveAttribute("data-cert", "ctal-ta");
+  it("renderiza o trilho de navegação com todas as abas primárias e secundárias", async () => {
+    const { container } = render(<App />);
+    expect(container.querySelector('button[data-nav="hoje"]')).toBeInTheDocument();
+    expect(container.querySelector('button[data-nav="estudar"]')).toBeInTheDocument();
+    expect(container.querySelector('button[data-nav="simulado"]')).toBeInTheDocument();
+    expect(container.querySelector('button[data-nav="flashcards"]')).toBeInTheDocument();
+    expect(container.querySelector('button[data-nav="syllabus"]')).toBeInTheDocument();
+    expect(container.querySelector('button[data-nav="progresso"]')).toBeInTheDocument();
+    expect(container.querySelector('button[data-nav="glossary"]')).toBeInTheDocument();
+    expect(container.querySelector('button[data-nav="about"]')).toBeInTheDocument();
+    expect(container.querySelector('button[data-nav="certs"]')).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /Enviar feedback/i })).toBeInTheDocument();
   });
 
-  it("rota / (seleção): masthead neutro (Synapse), SEM data-cert", () => {
-    const { container } = renderApp("/");
-    expect(screen.getByRole("heading", { level: 1 }).textContent).toBe("Synapse");
-    expect(container.querySelector(".app")).not.toHaveAttribute("data-cert");
-    // não vaza "CTFL Prep" nem subtítulo de cert na tela de escolha
-    expect(screen.queryByText("CTFL Prep")).not.toBeInTheDocument();
-  });
-});
+  it("navega entre as telas Hoje, Estudar, Simulado, Flashcards, Syllabus, Progresso, Glossário, Certificações e Sobre", async () => {
+    const { container } = render(<App />);
 
-describe("acesso institucional e feedback globais", () => {
-  it("expõe as duas ações no shell e usa o formulário público dedicado", () => {
-    renderApp("/ctfl/quiz");
-
-    expect(screen.getByRole("button", { name: "Sobre o Synapse" })).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: /enviar feedback/i })).toHaveAttribute(
-      "href",
-      "https://github.com/ironidesflj/ctfl-app/issues/new?template=feedback.yml"
+    // Inicia em Hoje
+    expect(container.querySelector('button[data-nav="hoje"]')).toHaveAttribute(
+      "aria-current",
+      "page"
     );
-    expect(screen.getByRole("link", { name: /enviar feedback/i })).toHaveAttribute(
-      "rel",
-      "noopener noreferrer"
+
+    // Navega para Estudar
+    fireEvent.click(container.querySelector('button[data-nav="estudar"]'));
+    await waitFor(() => {
+      expect(container.querySelector('button[data-nav="estudar"]')).toHaveAttribute(
+        "aria-current",
+        "page"
+      );
+    });
+
+    // Navega para Simulado
+    fireEvent.click(container.querySelector('button[data-nav="simulado"]'));
+    await waitFor(() => {
+      expect(container.querySelector('button[data-nav="simulado"]')).toHaveAttribute(
+        "aria-current",
+        "page"
+      );
+    });
+
+    // Navega para Flashcards
+    fireEvent.click(container.querySelector('button[data-nav="flashcards"]'));
+    await waitFor(() => {
+      expect(container.querySelector('button[data-nav="flashcards"]')).toHaveAttribute(
+        "aria-current",
+        "page"
+      );
+    });
+
+    // Navega para Syllabus
+    fireEvent.click(container.querySelector('button[data-nav="syllabus"]'));
+    await waitFor(() => {
+      expect(container.querySelector('button[data-nav="syllabus"]')).toHaveAttribute(
+        "aria-current",
+        "page"
+      );
+    });
+
+    // Navega para Progresso
+    fireEvent.click(container.querySelector('button[data-nav="progresso"]'));
+    await waitFor(() => {
+      expect(container.querySelector('button[data-nav="progresso"]')).toHaveAttribute(
+        "aria-current",
+        "page"
+      );
+    });
+
+    // Navega para Glossário
+    fireEvent.click(container.querySelector('button[data-nav="glossary"]'));
+    await waitFor(() => {
+      expect(container.querySelector('button[data-nav="glossary"]')).toHaveAttribute(
+        "aria-current",
+        "page"
+      );
+    });
+
+    // Navega para Certificações
+    fireEvent.click(container.querySelector('button[data-nav="certs"]'));
+    await waitFor(() => {
+      expect(container.querySelector('button[data-nav="certs"]')).toHaveAttribute(
+        "aria-current",
+        "page"
+      );
+    });
+
+    // Navega para Sobre
+    fireEvent.click(container.querySelector('button[data-nav="about"]'));
+    await waitFor(() => {
+      expect(container.querySelector('button[data-nav="about"]')).toHaveAttribute(
+        "aria-current",
+        "page"
+      );
+    });
+  });
+
+  it("alterna o idioma da interface entre PT e EN", async () => {
+    const { container } = render(<App />);
+
+    // Troca para inglês
+    fireEvent.click(screen.getByRole("button", { name: "EN" }));
+    await waitFor(() => {
+      expect(container.querySelector('button[data-nav="hoje"]')?.textContent).toContain("Today");
+      expect(container.querySelector('button[data-nav="estudar"]')?.textContent).toContain("Study");
+      expect(container.querySelector('button[data-nav="simulado"]')?.textContent).toContain("Exam");
+      expect(container.querySelector('button[data-nav="progresso"]')?.textContent).toContain(
+        "Progress"
+      );
+    });
+
+    // Volta para português
+    fireEvent.click(screen.getByRole("button", { name: "PT" }));
+    await waitFor(() => {
+      expect(container.querySelector('button[data-nav="hoje"]')?.textContent).toContain("Hoje");
+      expect(container.querySelector('button[data-nav="estudar"]')?.textContent).toContain(
+        "Estudar"
+      );
+    });
+  });
+
+  it("troca de certificação ativa veste o app inteiro com o código correspondente", async () => {
+    const { container } = render(<App />);
+
+    // Abre certificações
+    fireEvent.click(screen.getByRole("button", { name: /Trocar de prova: CTFL/i }));
+    await waitFor(() => {
+      expect(container.querySelector('button[data-nav="certs"]')).toHaveAttribute(
+        "aria-current",
+        "page"
+      );
+    });
+
+    // Escolhe CTAL-TA
+    const ctalBtn = screen.getByRole("button", { name: /CTAL-TA/i });
+    fireEvent.click(ctalBtn);
+
+    await waitFor(() => {
+      expect(document.getElementById("certCode")?.textContent).toBe("CTAL-TA");
+      expect(localStorage.getItem("synapse.cert.v1")).toBe("ctal-ta");
+    });
+  });
+});
+
+describe("Catálogo oficial de certificações ISTQB", () => {
+  it("contém as 6 certificações do contrato (3 live, 2 soon, 1 legacy)", () => {
+    const list = Object.values(CERTS);
+    expect(list.length).toBe(6);
+    expect(list.filter((c) => c.status === "live")).toHaveLength(3);
+    expect(list.filter((c) => c.status === "soon")).toHaveLength(2);
+    expect(list.filter((c) => c.status === "legacy")).toHaveLength(1);
+  });
+});
+
+describe("Synapse 4.1 · Telas e Fluxos Caderno", () => {
+  it("Hoje: exibe tarefas diárias, lembrete e streak", async () => {
+    const { container } = render(<App />);
+    expect(container.querySelector('button[data-nav="hoje"]')).toHaveAttribute(
+      "aria-current",
+      "page"
     );
-    expect(screen.getByText(/issue pública no github/i)).toBeInTheDocument();
+
+    await waitFor(() => {
+      expect(screen.getByText(/O que rende hoje/i)).toBeInTheDocument();
+    });
+
+    expect(screen.getByText(/Sessão de estudo/i)).toBeInTheDocument();
+    expect(screen.getByText(/Revisão de cartões/i)).toBeInTheDocument();
+    expect(screen.getByText(/Fechar a lacuna/i)).toBeInTheDocument();
+    expect(screen.getByText(/Simulado cronometrado/i)).toBeInTheDocument();
   });
 
-  it("abre a apresentação completa e volta para a tela anterior sem perder seu estado", async () => {
-    const user = userEvent.setup();
-    renderApp("/ctfl/quiz");
-    const start = screen.getByRole("button", { name: /iniciar/i });
-
-    await user.click(screen.getByRole("button", { name: "Sobre o Synapse" }));
-    expect(screen.getByRole("dialog", { name: "Sobre o Synapse" })).toBeInTheDocument();
-    expect(screen.getByRole("heading", { name: "Sobre o autor" })).toBeInTheDocument();
-    expect(screen.getByRole("heading", { name: "Feedback" })).toBeInTheDocument();
-    await user.click(screen.getByRole("button", { name: "Fechar" }));
-
-    expect(screen.getByRole("button", { name: /iniciar/i })).toBe(start);
-    await waitFor(() =>
-      expect(screen.getByRole("button", { name: "Sobre o Synapse" })).toHaveFocus()
+  it("Progresso: exibe métricas, heatmap e botões de backup e CSV", async () => {
+    // Registra 1 simulado para habilitar a exportação CSV (e.n é obrigatório pelo sanitizador)
+    localStorage.setItem(
+      "synapse.exams.v1",
+      JSON.stringify({
+        ctfl: [
+          { at: Date.now(), passed: true, score: 32, total: 40, n: 40, pct: 80, custom: false },
+        ],
+      })
     );
-  });
-});
 
-describe("CertSelector (/ sem lastCert, e /select)", () => {
-  it("lista 5 itens (2 live + 3 coming-soon), coming-soon desabilitados, legacy fora da lista", () => {
-    renderApp("/select");
-    expect(screen.getByText("CTFL")).toBeInTheDocument();
-    expect(screen.getByText("CTAL-TA")).toBeInTheDocument();
-    // coming-soon presentes e desabilitados
-    const soon = screen.getByText("CTAL-TM").closest("button");
-    expect(soon).toBeEnabled();
-    // legacy (CTFL-AT) não é card clicável na lista — aparece só na nota
-    expect(screen.queryByText("CTFL-AT")?.closest("button.cert-card")).toBeFalsy();
-    expect(screen.getByText(/legado/i)).toBeInTheDocument();
-  });
+    const { container } = render(<App />);
+    fireEvent.click(container.querySelector('button[data-nav="progresso"]'));
 
-  it("clicar num cert live navega e o masthead passa a refletir esse cert", async () => {
-    const user = userEvent.setup();
-    renderApp("/select");
-    await user.click(screen.getByText("CTAL-TA").closest("button"));
-    // masthead agora mostra CTAL-TA
-    expect(screen.getByRole("heading", { level: 1 }).textContent).toBe("Test Analyst");
-  });
-});
+    await waitFor(() => {
+      expect(screen.getByText(/Onde você está/i)).toBeInTheDocument();
+    });
 
-describe("reset de estado na troca de cert (key remount)", () => {
-  it("iniciar quiz no CTFL e trocar pra CTAL-TA volta pro setup, não vaza o quiz", async () => {
-    const user = userEvent.setup();
-    renderApp("/ctfl/quiz");
-    // inicia o quiz (sai do setup)
-    await user.click(screen.getByRole("button", { name: /iniciar/i }));
-    expect(screen.queryByRole("button", { name: /iniciar/i })).not.toBeInTheDocument();
-    // troca de cert via badge → tela de seleção → escolhe CTAL-TA
-    await user.click(screen.getByRole("link", { name: /trocar certificação/i }));
-    await user.click(screen.getByText("CTAL-TA").closest("button"));
-    // se o key remontou, voltamos pro setup do quiz (botão Iniciar de novo)
-    expect(screen.getByRole("button", { name: /iniciar/i })).toBeInTheDocument();
-  });
-});
+    // Painel colapsável Entendendo suas métricas
+    expect(screen.getByText(/Entendendo suas métricas/i)).toBeInTheDocument();
 
-// r10: rotas neutras /go/:tab — alvo dos atalhos do PWA (manifest
-// shortcuts). Resolvem pro ÚLTIMO cert usado; sem cert, caem na seleção.
-describe("r10 — rota neutra /go/:tab (atalhos do PWA)", () => {
-  it("com lastCert salvo, redireciona pro cert + tab pedidos", async () => {
-    localStorage.setItem("synapse.lastCert", "ctal-ta");
-    renderApp("/go/stats");
-    // masthead do CTAL-TA prova o redirect (rota /ctal-ta/stats)
-    expect(await screen.findByRole("heading", { level: 1 })).toHaveTextContent("Test Analyst");
+    // Seção Dados e Backup
+    expect(screen.getByText(/Dados e Backup/i)).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /Exportar backup \(JSON\)/i })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /Baixar histórico \(CSV\)/i })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /Limpar progresso/i })).toBeInTheDocument();
   });
 
-  it("tab inválida cai no default (quiz), não em 404 do router", async () => {
-    localStorage.setItem("synapse.lastCert", "ctfl");
-    renderApp("/go/blabla");
-    // caiu no quiz do CTFL (setup com botão Iniciar) — sem redirect loop
-    expect(await screen.findByRole("button", { name: /iniciar/i })).toBeInTheDocument();
+  it("Glossário: filtra termos por busca", async () => {
+    const { container } = render(<App />);
+    fireEvent.click(container.querySelector('button[data-nav="glossary"]'));
+
+    await waitFor(() => {
+      expect(screen.getByPlaceholderText(/buscar termo ou definição/i)).toBeInTheDocument();
+    });
+
+    const searchInput = screen.getByPlaceholderText(/buscar termo ou definição/i);
+    fireEvent.change(searchInput, { target: { value: "regressão" } });
+    await waitFor(() => {
+      expect(screen.getByText(/teste de regressão/i)).toBeInTheDocument();
+    });
   });
 
-  it("sem lastCert, /go/* leva pra tela de seleção de cert", async () => {
-    renderApp("/go/quiz");
-    expect(await screen.findByText("CTAL-TA")).toBeInTheDocument();
-    expect(screen.getByText("CTFL")).toBeInTheDocument();
+  it("Syllabus: exibe tabela de capítulos e pesos oficiais", async () => {
+    const { container } = render(<App />);
+    fireEvent.click(container.querySelector('button[data-nav="syllabus"]'));
+
+    await waitFor(() => {
+      expect(screen.getByText(/O que a prova cobra/i)).toBeInTheDocument();
+    });
+
+    expect(screen.getByText(/Fundamentos do Teste/i)).toBeInTheDocument();
+  });
+
+  it("Sobre: exibe fontes oficiais, autor, Noos e botão Como funciona", async () => {
+    const { container } = render(<App />);
+    fireEvent.click(container.querySelector('button[data-nav="about"]'));
+
+    await waitFor(() => {
+      expect(screen.getByText(/Fontes oficiais\./i)).toBeInTheDocument();
+    });
+
+    expect(screen.getByText(/Quem faz\./i)).toBeInTheDocument();
+    expect(screen.getByText(/Ironides Francisco/i)).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /Como funciona/i })).toBeInTheDocument();
+  });
+
+  it("Onboarding: abre via Sobre e exibe as estações e demo interativa", async () => {
+    const { container } = render(<App />);
+    fireEvent.click(container.querySelector('button[data-nav="about"]'));
+
+    await waitFor(() => {
+      expect(screen.getByRole("button", { name: /Como funciona/i })).toBeInTheDocument();
+    });
+
+    fireEvent.click(screen.getByRole("button", { name: /Como funciona/i }));
+
+    await waitFor(() => {
+      expect(screen.getByRole("dialog", { name: /Como funciona o Synapse/i })).toBeVisible();
+    });
+
+    expect(screen.getByText(/O que você vai encontrar/i)).toBeInTheDocument();
+    expect(screen.getByText(/Veja como funciona/i)).toBeInTheDocument();
+    expect(
+      screen.getByText(/Qual é a relação correta entre erro, defeito e falha\?/i)
+    ).toBeInTheDocument();
+    expect(screen.getByText(/Perguntas frequentes/i)).toBeInTheDocument();
   });
 });

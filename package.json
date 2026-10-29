@@ -1,7 +1,7 @@
 {
   "name": "synapse",
   "private": true,
-  "version": "3.18.0",
+  "version": "4.1.0",
   "type": "module",
   "description": "App de preparação multi-certificação para exames ISTQB",
   "scripts": {

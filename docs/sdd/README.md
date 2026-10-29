@@ -1,12 +1,15 @@
 # SDD canônico do Synapse
 
-Esta é a fonte de verdade versionada para decisões de produto e estado entre os
-repositórios `ctfl-app` e `ctfl-question-bank-ptbr`.
+Esta é a fonte versionada para decisões de produto e estado entre o app Synapse
+e o repositório `ctfl-question-bank-ptbr`. Os registros com data identificam
+qual fase descrevem; use o cabeçalho de `current-state.md` para o estado mais
+recente deste checkout.
 
 ## Arquivos ativos
 
 - `constitution.md`: regras permanentes de decisão, execução e fechamento.
-- `current-state.md`: estado verificado dos dois repositórios.
+- `current-state.md`: estado verificado e histórico de integrações dos dois
+  repositórios.
 - `plan.md`: próximos itens autorizados, adiados e fora de escopo.
 - `spec-onboarding-reentry.md`: spec histórica reconstruída e fechada.
 - `spec-release-communication.md`: toast técnico + modal de novidades para
