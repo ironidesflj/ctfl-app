@@ -1133,6 +1133,38 @@ svg {
   letter-spacing: 0.03em;
   color: var(--muted);
 }
+
+.saved-banner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 18px 28px;
+  align-items: center;
+  padding: 18px 22px;
+  border: 1px dashed var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  margin-top: 14px;
+}
+.saved-banner .sk {
+  font: 500 9.5px/1.5 var(--f-mono);
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: #d97706;
+}
+.saved-banner h2 {
+  margin-top: 5px;
+  font-family: var(--head-font);
+  font-weight: var(--head-weight);
+  font-size: clamp(18px, 2vw, 22px);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+.saved-banner .nm {
+  margin-top: 5px;
+  font: 400 10.5px/1.6 var(--f-mono);
+  letter-spacing: 0.03em;
+  color: var(--muted);
+}
 .next .btn {
   min-width: 178px;
 }
@@ -1447,6 +1479,33 @@ svg {
 }
 .session-exit {
   flex: 0 0 auto;
+}
+.session-top-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.session-save-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font: 500 12px/1.4 var(--f-mono);
+  padding: 5px 9px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.session-save-btn:hover {
+  color: var(--text);
+  border-color: var(--text);
+}
+.session-save-btn.is-saved {
+  color: #d97706;
+  border-color: #f59e0b;
+  background: rgba(245, 158, 11, 0.08);
 }
 
 .p-ch {
@@ -1790,12 +1849,14 @@ svg {
   .hero .lead {
     font-size: 16px;
   }
-  .next {
+  .next,
+  .saved-banner {
     grid-template-columns: minmax(0, 1fr);
     gap: 16px;
     padding: 20px;
   }
-  .next .btn {
+  .next .btn,
+  .saved-banner .btn {
     width: 100%;
   }
   .chapter > summary {
@@ -4771,6 +4832,17 @@ body {
   outline: 2px solid var(--accent-ink);
   outline-offset: 2px;
 }
+.goal-chips {
+  margin-top: 10px;
+  align-items: center;
+}
+.goal-label {
+  font: 500 10px/1 var(--f-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-right: 2px;
+}
 .sim-custom-row2 {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -5404,20 +5476,24 @@ html[data-boot] .skip {
   outline-offset: 2px;
 }
 
-/* ---------- 4.2 splash: a Trilha Ascendente ---------- */
+/* ---------- 4.2 splash: Motor 3D de Profundidade + Símbolo Opção 03 ---------- */
 
 .splash {
   --sp-scale: 1;
+  --bg: #0d0d14;
+  --fg: #f3f1ff;
+  --synapse: #8f83ff;
+  --synapse-ink: #dcd7ff;
+  --noos-accent: #a89cff;
   position: fixed;
   inset: 0;
   z-index: 90;
   display: grid;
   place-items: center;
   background: var(--bg);
+  overflow: hidden;
   cursor: default;
 }
-/* nasce opaco: nunca revela a casca por baixo (anti-flash r12).
-   O fade de saída é governado por data-fading abaixo. */
 .splash[data-mode="full"] {
   cursor: pointer;
 }
@@ -5426,42 +5502,168 @@ html[data-boot] .skip {
 }
 .splash[data-fading="true"] {
   opacity: 0;
-  /* o fade NÃO libera o clique: durante o crossfade o splash ainda
-     engole toques cegos — nada clica em controle ainda invisível
-     por baixo (achado LOW do Red Team r12) */
-  transition: opacity 0.36s var(--ease);
-}
-@keyframes splash-in {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  transition: opacity 0.55s var(--ease);
 }
 
+/* Camada 1: Canvas 3D com Profundidade, Paralaxe e Hubs com Optical Bloom */
+.splash-sky-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Camada 2: Símbolo Central Opção 03 + Assinatura by Noos */
 .splash-inner {
-  display: grid;
-  justify-items: center;
-  gap: 22px;
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   padding: 24px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    color-mix(in oklab, var(--bg) 82%, transparent) 24%,
+    transparent 62%
+  );
 }
 .splash-mark {
-  width: min(52vw, 250px);
+  width: clamp(118px, 24vw, 138px);
+  height: clamp(118px, 24vw, 138px);
   overflow: visible;
 }
 
-/* a única linha no céu é a da marca */
-.splash-path {
+/* Órbitas Keplerianas (-39.8° e -22°) */
+.splash-orbit {
   fill: none;
-  stroke: var(--synapse);
-  stroke-width: 2.2;
+  stroke: var(--synapse-ink);
+  stroke-width: 1.45;
+  stroke-linecap: round;
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  opacity: 0;
+  animation: splash-orbit 1.25s var(--ease) calc(0.12s * var(--sp-scale)) forwards;
+}
+.splash-orbit.is-secondary {
+  stroke-width: 1.3;
+  animation-name: splash-orbit-sec;
+  animation-delay: calc(0.24s * var(--sp-scale));
+}
+@keyframes splash-orbit {
+  20% {
+    opacity: 0.36;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 0.36;
+  }
+}
+@keyframes splash-orbit-sec {
+  20% {
+    opacity: 0.22;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 0.22;
+  }
+}
+
+/* Anel transversal de fase (+39.3°) */
+.splash-phase-ring {
+  fill: none;
+  stroke: var(--synapse-ink);
+  stroke-width: 1.3;
+  stroke-dasharray: 2.5 3.5;
+  opacity: 0;
+  animation: splash-phase 0.95s var(--ease) calc(0.38s * var(--sp-scale)) forwards;
+}
+@keyframes splash-phase {
+  to {
+    opacity: 0.28;
+  }
+}
+
+/* Asas da Constelação Sináptica */
+.splash-constellation {
+  fill: none;
+  stroke: var(--synapse-ink);
+  stroke-width: 1.2;
   stroke-linecap: round;
   stroke-linejoin: round;
   stroke-dasharray: 100;
   stroke-dashoffset: 100;
-  animation: splash-draw 1.25s var(--ease) forwards;
-  animation-delay: calc(0.12s * var(--sp-scale));
+  opacity: 0;
+  animation: splash-constellation 1.15s var(--ease) calc(0.44s * var(--sp-scale)) forwards;
+}
+.splash-constellation.is-lower {
+  animation-delay: calc(0.56s * var(--sp-scale));
+}
+@keyframes splash-constellation {
+  20% {
+    opacity: 0.44;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 0.44;
+  }
+}
+.splash-constellation-chord {
+  fill: none;
+  stroke: var(--synapse-ink);
+  stroke-width: 1;
+  stroke-dasharray: 2 3.5;
+  opacity: 0;
+  animation: splash-phase 0.85s var(--ease) calc(0.82s * var(--sp-scale)) forwards;
+}
+
+/* Estrelas satélites da constelação do símbolo */
+.splash-stars circle {
+  fill: var(--synapse-ink);
+  opacity: 0;
+  transform: scale(0.25);
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: splash-star 0.55s var(--ease) forwards;
+  animation-delay: calc((0.65s + var(--i, 0) * 0.11s) * var(--sp-scale));
+}
+.splash-stars circle.splash-star-accent {
+  fill: var(--synapse);
+  animation-name: splash-star-accent;
+}
+@keyframes splash-star {
+  70% {
+    opacity: 0.72;
+    transform: scale(1.2);
+  }
+  100% {
+    opacity: 0.65;
+    transform: scale(1);
+  }
+}
+@keyframes splash-star-accent {
+  70% {
+    opacity: 0.95;
+    transform: scale(1.24);
+  }
+  100% {
+    opacity: 0.85;
+    transform: scale(1);
+  }
+}
+
+/* Traço ascendente P₁ → P₂ → P₃ → P₄ */
+.splash-path {
+  fill: none;
+  stroke: var(--synapse-ink);
+  stroke-width: 6.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  animation: splash-draw 1.18s var(--ease) calc(0.34s * var(--sp-scale)) forwards;
 }
 @keyframes splash-draw {
   to {
@@ -5469,138 +5671,189 @@ html[data-boot] .skip {
   }
 }
 
-/* nós intermediários: anéis que acendem quando o traço passa */
+/* Nós intermediários (P₁, P₂, P₃) */
 .splash-node {
   fill: var(--bg);
-  stroke: var(--synapse);
-  stroke-width: 2.2;
-  opacity: 0;
-  transform: scale(0.4);
-  transform-box: fill-box;
-  transform-origin: center;
-  animation: splash-node 0.38s var(--ease) forwards;
-  animation-delay: calc((0.1s + var(--i, 0) * 0.4s) * var(--sp-scale));
-}
-@keyframes splash-node {
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-/* nó final: o conhecimento validado — preenche fechando a animação */
-.splash-end {
-  fill: var(--synapse);
+  stroke: var(--synapse-ink);
+  stroke-width: 3.2;
   opacity: 0;
   transform: scale(0.3);
   transform-box: fill-box;
   transform-origin: center;
-  animation: splash-end 0.5s var(--ease) forwards;
-  animation-delay: calc(1.32s * var(--sp-scale));
+  animation: splash-node 0.44s var(--ease) forwards;
+  animation-delay: calc((0.48s + var(--i, 0) * 0.32s) * var(--sp-scale));
 }
-@keyframes splash-end {
-  to {
+@keyframes splash-node {
+  70% {
+    opacity: 1;
+    transform: scale(1.15);
+  }
+  100% {
     opacity: 1;
     transform: scale(1);
   }
 }
 
-/* textura ambiente: pontos, sem linhas (brand-spec) */
-.splash-stars circle {
-  fill: var(--muted);
+/* Nó final estrela-ápice P₄ + Halo */
+.splash-end {
+  fill: var(--synapse);
   opacity: 0;
-  animation: splash-star 0.9s var(--ease) forwards;
-  animation-delay: calc((0.15s + var(--i, 0) * 0.14s) * var(--sp-scale));
+  transform: scale(0.2);
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: splash-end 0.58s var(--ease) calc(1.46s * var(--sp-scale)) forwards;
 }
-@keyframes splash-star {
-  to {
-    opacity: 0.38;
+@keyframes splash-end {
+  65% {
+    opacity: 1;
+    transform: scale(1.24);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.splash-end-halo {
+  fill: none;
+  stroke: var(--synapse);
+  stroke-width: 1.25;
+  opacity: 0;
+  transform: scale(0.4);
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: splash-end-halo 0.75s var(--ease) calc(1.56s * var(--sp-scale)) forwards;
+}
+@keyframes splash-end-halo {
+  60% {
+    opacity: 0.65;
+    transform: scale(1.08);
+  }
+  100% {
+    opacity: 0.48;
+    transform: scale(1);
   }
 }
 
-.splash-word {
-  display: grid;
-  justify-items: center;
-  gap: 7px;
-  opacity: 0;
-  transform: translateY(6px);
-  animation: splash-word 0.5s var(--ease) forwards;
-  animation-delay: calc(1.55s * var(--sp-scale));
+/* Ato III: Barra + Assinatura "by Noos" */
+.splash-foot {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
 }
-@keyframes splash-word {
+.splash-rule {
+  display: block;
+  width: 40px;
+  height: 1px;
+  background: color-mix(in oklab, var(--fg) 22%, transparent);
+  opacity: 0;
+  transform: scaleX(0);
+  transform-origin: center;
+  animation: splash-rule 0.65s var(--ease) calc(3.45s * var(--sp-scale)) forwards;
+}
+@keyframes splash-rule {
+  to {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+}
+.splash-by {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: color-mix(in oklab, var(--fg) 72%, transparent);
+  opacity: 0;
+  transform: translateY(5px);
+  animation: splash-by 0.7s var(--ease) calc(3.55s * var(--sp-scale)) forwards;
+}
+@keyframes splash-by {
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
-.splash-name {
+.splash-by .noos-mark {
+  width: 13px;
+  height: 13px;
+  opacity: 0.85;
+}
+.splash-by-prefix {
+  font: 400 12px/1 var(--f-body);
+  letter-spacing: 0.04em;
+  opacity: 0.72;
+}
+.splash-by-brand {
   font-family: var(--f-display);
-  font-size: clamp(26px, 6vw, 34px);
-  font-weight: 400;
-  letter-spacing: -0.01em;
-  color: var(--fg);
-}
-.splash-by {
-  font: 500 10px/1 var(--f-mono);
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--synapse-ink);
+  font-style: italic;
+  font-size: 14px;
+  line-height: 1;
+  letter-spacing: 0.01em;
 }
 
-.splash-skip {
-  position: absolute;
-  bottom: calc(26px + env(safe-area-inset-bottom, 0px));
-  left: 50%;
-  translate: -50% 0;
-  min-height: 44px;
-  padding: 10px 22px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  background: var(--surface);
-  font: 500 10.5px/1 var(--f-mono);
-  letter-spacing: 0.09em;
-  text-transform: uppercase;
-  color: var(--muted);
-  cursor: pointer;
-  opacity: 0;
-  animation: splash-in 0.3s var(--ease) 0.9s forwards;
-}
-.splash-skip:hover {
-  border-color: var(--border-strong);
-  color: var(--fg);
-}
-.splash-skip:focus-visible {
-  outline: 2px solid var(--accent-ink);
-  outline-offset: 2px;
-}
-
-/* prefere menos movimento: o símbolo aparece pronto, sem animação */
 @media (prefers-reduced-motion: reduce) {
-  .splash,
-  .splash-skip {
+  .splash {
     animation: none;
     opacity: 1;
   }
   .splash[data-fading="true"] {
     transition: none;
   }
+  .splash-sky-canvas {
+    display: none;
+  }
+  .splash-orbit,
+  .splash-constellation,
   .splash-path {
     stroke-dashoffset: 0;
+    opacity: 0.36;
     animation: none;
   }
+  .splash-path {
+    opacity: 1;
+  }
+  .splash-phase-ring,
+  .splash-constellation-chord,
   .splash-node,
   .splash-end,
-  .splash-word {
+  .splash-end-halo,
+  .splash-rule,
+  .splash-by {
     opacity: 1;
     transform: none;
     animation: none;
   }
   .splash-stars circle {
-    opacity: 0.38;
+    opacity: 0.65;
+    transform: none;
     animation: none;
   }
 }
-
+.splash-skip {
+  position: absolute;
+  z-index: 3;
+  bottom: calc(26px + env(safe-area-inset-bottom, 0px));
+  left: 50%;
+  translate: -50% 0;
+  min-height: 44px;
+  padding: 10px 22px;
+  border: 1px solid rgb(220 215 255 / 22%);
+  border-radius: var(--radius);
+  background: rgb(22 21 37 / 88%);
+  color: #dcd7ff;
+  font: 500 10.5px/1 var(--f-mono);
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.splash-skip:hover {
+  border-color: #8f83ff;
+  color: #fff;
+}
+.splash-skip:focus-visible {
+  outline: 2px solid #a89cff;
+  outline-offset: 2px;
+}
 /* ---------- 4.3 onboarding (primeira visita + diálogo do Sobre) ---------- */
 
 .ob-overlay {

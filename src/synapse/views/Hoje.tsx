@@ -188,7 +188,7 @@ export function Hoje() {
   const weakest = c.chapters.slice().sort((a, b) => ss.pctFor(a) - ss.pctFor(b))[0];
   const due = ss.dueCards().length;
   const studied = ss.todayAttempts(next.n);
-  const goal = 6;
+  const goal = ss.state.goal;
   /* último simulado — alimenta a tarefa 04 */
   const examHist = ss.examHistory();
   const lastExam = examHist.length ? examHist[examHist.length - 1] : null;
@@ -352,6 +352,20 @@ export function Hoje() {
                   <span className="task-bar" aria-hidden="true">
                     <i style={{ width: Math.min(100, Math.round((studied / goal) * 100)) + "%" }} />
                   </span>
+                </div>
+                <div className="goal-chips chip-row" role="group" aria-label={t("today.goalAria")}>
+                  <span className="goal-label">{t("today.goalLabel")}</span>
+                  {[5, 10, 20, 30].map((n) => (
+                    <button
+                      key={n}
+                      type="button"
+                      className={"chip goal-chip" + (n === goal ? " on" : "")}
+                      aria-pressed={n === goal}
+                      onClick={() => ss.setGoal(n)}
+                    >
+                      {n}
+                    </button>
+                  ))}
                 </div>
               </div>
               <button

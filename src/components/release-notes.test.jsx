@@ -1,20 +1,17 @@
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
-import { cleanup, fireEvent, render, screen } from "@testing-library/react";
+import { cleanup, render, screen } from "@testing-library/react";
 import ReleaseNotesModal from "./ReleaseNotesModal.jsx";
-import { releaseSeenKey } from "../lib/releases.js";
+import { CURRENT_RELEASE, currentReleaseCopy, releaseSeenKey } from "../lib/releases.js";
 
 beforeEach(() => localStorage.clear());
 afterEach(cleanup);
 
 describe("release notes significativas", () => {
-  it("mostra a release atual em PT e grava o aceite", () => {
+  it("não mostra o modal legado quando a versão ativa mudou", () => {
+    expect(CURRENT_RELEASE.version).not.toBe(__APP_VERSION__);
     render(<ReleaseNotesModal lang="pt" />);
-    expect(screen.getByRole("dialog", { name: "O Synapse evoluiu" })).toBeInTheDocument();
-    expect(screen.getByText(/CTAL-TA agora tem flashcards/)).toBeInTheDocument();
-
-    fireEvent.click(screen.getByRole("button", { name: "Entendi" }));
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
-    expect(localStorage.getItem(releaseSeenKey())).toBe("1");
+    expect(currentReleaseCopy("pt").title).toBe("O Synapse evoluiu");
   });
 
   it("não reaparece quando a versão já foi vista", () => {
@@ -23,11 +20,9 @@ describe("release notes significativas", () => {
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
   });
 
-  it("tem conteúdo em inglês e fecha com Escape", () => {
+  it("mantém a cópia legada em inglês sem mostrar um anúncio de versão antiga", () => {
     render(<ReleaseNotesModal lang="en" />);
-    expect(screen.getByRole("dialog", { name: "Synapse has evolved" })).toBeInTheDocument();
-    fireEvent.keyDown(window, { key: "Escape" });
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
-    expect(localStorage.getItem(releaseSeenKey())).toBe("1");
+    expect(currentReleaseCopy("en").title).toBe("Synapse has evolved");
   });
 });

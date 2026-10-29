@@ -24,7 +24,7 @@
  * (ou abre, se estiver fechada) na rota neutra /go/quiz, que resolve pro
  * último cert usado. Notificações sem rota focam e pronto.
  */
-const VERSION = "r23-v1";
+const VERSION = "r25-v1";
 const CACHE = `synapse-${VERSION}`;
 
 const SCOPE = new URL(self.registration.scope);
@@ -34,21 +34,71 @@ const SHELL_FILES = [
   "favicon.svg",
   "icon-192.png",
   "icon-512.png",
+  "icon-maskable-512.png",
+  "apple-touch-icon.png",
   "og-image.png",
+  "shortcut-quiz.png",
+  "shortcut-flash.png",
+  "shortcut-stats.png",
 ];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
     (async () => {
       const cache = await caches.open(CACHE);
-      // addAll é atômico (falha tudo se um item falhar) — aceitável no
-      // shell; og-image é o maior item e ainda assim ~100KB.
-      await cache.addAll(SHELL_FILES.map((f) => new URL(f, SCOPE).href));
+      const urls = [SCOPE.href, ...SHELL_FILES.map((f) => new URL(f, SCOPE).href)];
+
+      // Precache base shell files
+      await Promise.all(
+        urls.map(async (u) => {
+          try {
+            const res = await fetch(u);
+            if (res && res.ok) {
+              await cache.put(u, res.clone());
+              // Se for o index.html, extrai scripts e links de css
+              if (u.endsWith("index.html") || u === SCOPE.href) {
+                const text = await res.text();
+                // Encontra scripts e estilos
+                const assetMatches = Array.from(
+                  text.matchAll(/(?:src|href)="([^"]+\.(?:js|css))"/g)
+                );
+                for (const m of assetMatches) {
+                  const assetUrl = new URL(m[1], SCOPE).href;
+                  try {
+                    const aRes = await fetch(assetUrl);
+                    if (aRes && aRes.ok) {
+                      await cache.put(assetUrl, aRes.clone());
+                      // Se for o bundle JS principal, extrai os chunks lazy referenciados (ex: ctfl-*.js)
+                      if (assetUrl.endsWith(".js") && assetUrl.includes("index-")) {
+                        const jsText = await aRes.text();
+                        const chunkMatches = Array.from(
+                          new Set(jsText.match(/[a-zA-Z0-9_-]+\.js/g) || [])
+                        );
+                        for (const chunk of chunkMatches) {
+                          if (chunk.startsWith("ctfl") || chunk.startsWith("ctal")) {
+                            const chunkUrl = new URL(`assets/${chunk}`.replace(/\/+/g, "/"), SCOPE)
+                              .href;
+                            try {
+                              const cRes = await fetch(chunkUrl);
+                              if (cRes && cRes.ok) {
+                                await cache.put(chunkUrl, cRes);
+                              }
+                            } catch {}
+                          }
+                        }
+                      }
+                    }
+                  } catch {}
+                }
+              }
+            }
+          } catch {
+            /* best-effort para assets individuais */
+          }
+        })
+      );
     })()
   );
-  // r8: SEM skipWaiting aqui — a 1ª instalação ativa sozinha (não há SW
-  // antigo controlando); num UPDATE o novo fica em "waiting" até a página
-  // pedir (SKIP_WAITING abaixo), evitando troca de assets no meio da sessão.
 });
 
 // r8: a página manda { type: "SKIP_WAITING" } quando o usuário aceita a
@@ -71,37 +121,51 @@ self.addEventListener("activate", (event) => {
 async function networkFirstNavigation(request) {
   const cache = await caches.open(CACHE);
   const shellHref = new URL("index.html", SCOPE).href;
+  const scopeHref = SCOPE.href;
   try {
     const fresh = await fetch(request);
     if (fresh && fresh.ok) {
       cache.put(request, fresh.clone());
+      cache.put(shellHref, fresh.clone());
       return fresh;
     }
-    // r8: deep links do SPA (ex: /synapse/ctfl/quiz) não existem no
-    // servidor — o app é servido como arquivos estáticos ao lado do
-    // Next.js, que responde 404 nessas rotas. Resposta não-ok em
-    // navegação = serve o shell cacheado e deixa o router do SPA
-    // resolver a rota no client (bookmark/link compartilhado funciona).
-    const cached = (await cache.match(request)) || (await cache.match(shellHref));
+    const cached =
+      (await cache.match(request, { ignoreVary: true })) ||
+      (await cache.match(shellHref, { ignoreVary: true })) ||
+      (await cache.match(scopeHref, { ignoreVary: true }));
     if (cached) return cached;
     return fresh;
   } catch {
-    const cached = (await cache.match(request)) || (await cache.match(shellHref));
+    const cached =
+      (await cache.match(request, { ignoreVary: true })) ||
+      (await cache.match(shellHref, { ignoreVary: true })) ||
+      (await cache.match(scopeHref, { ignoreVary: true }));
     if (cached) return cached;
     return new Response("Offline", { status: 503, statusText: "Offline" });
   }
 }
 
 async function cacheFirst(request) {
-  const cached = await caches.match(request);
+  const cache = await caches.open(CACHE);
+  const cached =
+    (await cache.match(request, { ignoreVary: true })) ||
+    (await cache.match(request.url, { ignoreVary: true })) ||
+    (await caches.match(request.url, { ignoreVary: true }));
   if (cached) return cached;
-  const response = await fetch(request);
-  // só cacheia resposta ok do mesmo escopo (falhas de rede não viram lixo)
-  if (response && response.ok && new URL(request.url).href.startsWith(SCOPE.href)) {
-    const cache = await caches.open(CACHE);
-    cache.put(request, response.clone());
+  try {
+    const response = await fetch(request);
+    // só cacheia resposta ok do mesmo escopo (falhas de rede não viram lixo)
+    if (response && response.ok && new URL(request.url).href.startsWith(SCOPE.href)) {
+      cache.put(request, response.clone());
+    }
+    return response;
+  } catch (err) {
+    const fallback =
+      (await cache.match(request, { ignoreSearch: true, ignoreVary: true })) ||
+      (await cache.match(request.url, { ignoreSearch: true, ignoreVary: true }));
+    if (fallback) return fallback;
+    throw err;
   }
-  return response;
 }
 
 self.addEventListener("fetch", (event) => {

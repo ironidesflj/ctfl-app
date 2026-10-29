@@ -124,6 +124,7 @@ export interface SynState {
   cert: string;
   lang: Lang;
   theme: Theme;
+  goal: number;
   seen: Record<string, Record<string, number>>;
   attempts: Record<string, Record<string, Attempt>>;
   log: Record<string, LogEntry[]>;
@@ -133,6 +134,8 @@ export interface SynState {
   exam: Record<string, string>;
   /** histórico de simulados por prova (últimos 20) */
   exams: Record<string, ExamRecord[]>;
+  /** questões marcadas como salvas por prova (synapse.saved.v1) */
+  saved: Record<string, string[]>;
   /** lembrete diário (synapse.settings.v1) — global, não por prova */
   settings: ReminderSettings;
 }

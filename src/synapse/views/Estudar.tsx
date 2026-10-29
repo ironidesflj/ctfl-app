@@ -82,6 +82,24 @@ export function Estudar() {
     window.setTimeout(() => ss.focusId("qTitle"), 0);
   }
 
+  function startSavedSession() {
+    const qs = ss.savedQuestions();
+    if (!qs.length) return;
+    setSession({
+      ch: 0,
+      qs,
+      i: 0,
+      chosen: null,
+      checked: false,
+      correct: 0,
+      answered: {},
+      phase: "quiz",
+    });
+    setHint(null);
+    ss.scrollTop();
+    window.setTimeout(() => ss.focusId("qTitle"), 0);
+  }
+
   function checkAnswer() {
     const s = session;
     if (!s || s.checked || s.phase !== "quiz") return;
@@ -93,11 +111,12 @@ export function Estudar() {
     const q = s.qs[s.i];
     const ok = s.chosen === q.answer;
     const answered = { ...s.answered };
+    const ch = q.ch || s.ch || 1;
     if (!answered[q.id]) {
       answered[q.id] = true;
-      ss.markSeen(q.id, s.ch);
+      ss.markSeen(q.id, ch);
     }
-    ss.recordAttempt(q.id, s.ch, ok);
+    ss.recordAttempt(q.id, ch, ok);
     setSession({ ...s, checked: true, correct: ok ? s.correct + 1 : s.correct, answered });
     window.setTimeout(() => ss.focusId("fbTitle"), 0);
     ss.announce(
@@ -118,7 +137,7 @@ export function Estudar() {
     } else {
       setSession({ ...s, phase: "done" });
       setHint(null);
-      ss.logSession({ ch: s.ch, total: s.qs.length, correct: s.correct });
+      ss.logSession({ ch: s.ch || 1, total: s.qs.length, correct: s.correct });
       ss.scrollTop();
       window.setTimeout(() => ss.focusId("sumTitle"), 0);
       ss.announce(t("session.done"));
@@ -165,7 +184,7 @@ export function Estudar() {
 
   if (session && session.phase === "done") {
     const s = session;
-    const chLabel = fmt(t("study.chapter"), { n: pad2(s.ch) });
+    const chLabel = s.ch === 0 ? t("study.savedTitle") : fmt(t("study.chapter"), { n: pad2(s.ch) });
     const chapter = ss.chapterOf(s.ch);
     const pct = chapter ? ss.pctFor(chapter) : 0;
 
@@ -191,7 +210,11 @@ export function Estudar() {
               {s.correct}
               <small>{fmt(t("session.scoreOf"), { total: s.qs.length })}</small>
             </div>
-            <p>{fmt(t("session.coverageNow"), { ch: pad2(s.ch), pct })}</p>
+            <p>
+              {s.ch === 0
+                ? fmt(t("study.savedDesc"), { n: s.qs.length })
+                : fmt(t("session.coverageNow"), { ch: pad2(s.ch), pct })}
+            </p>
             <div className="actions">
               <button type="button" className="btn primary" onClick={exitSession}>
                 {t("session.back")}
@@ -216,7 +239,7 @@ export function Estudar() {
   if (session) {
     const s = session;
     const q = s.qs[s.i];
-    const chLabel = fmt(t("study.chapter"), { n: pad2(s.ch) });
+    const chLabel = s.ch === 0 ? t("study.savedTitle") : fmt(t("study.chapter"), { n: pad2(s.ch) });
     const locked = s.checked;
     const result = locked ? (s.chosen === q.answer ? "ok" : "no") : "";
 
@@ -229,9 +252,25 @@ export function Estudar() {
               {t("study.kicker")} · {c.code}
               <span className="k-ch"> · {chLabel}</span>
             </span>
-            <button type="button" className="btn ghost session-exit" onClick={exitSession}>
-              {t("session.exit")}
-            </button>
+            <div className="session-top-actions">
+              <button
+                type="button"
+                className={`btn ghost session-save-btn ${ss.isSaved(q.id) ? "is-saved" : ""}`}
+                onClick={() => {
+                  const next = ss.toggleSaved(q.id);
+                  ss.announce(next ? t("session.savedBadge") : t("session.saveBadge"));
+                }}
+                aria-pressed={ss.isSaved(q.id)}
+                aria-label={ss.isSaved(q.id) ? t("session.unsave") : t("session.save")}
+                title={ss.isSaved(q.id) ? t("session.unsave") : t("session.save")}
+              >
+                <span aria-hidden="true">{ss.isSaved(q.id) ? "★" : "☆"}</span>
+                <span>{ss.isSaved(q.id) ? t("session.savedBadge") : t("session.saveBadge")}</span>
+              </button>
+              <button type="button" className="btn ghost session-exit" onClick={exitSession}>
+                {t("session.exit")}
+              </button>
+            </div>
           </div>
           <div className="session-progress">
             <span>
@@ -439,6 +478,19 @@ export function Estudar() {
                 onClick={() => startSession(next.n)}
               >
                 {ss.seenFor(next) > 0 ? t("study.resume") : t("study.action")}
+              </button>
+            </div>
+          ) : null}
+
+          {ss.savedIds().length > 0 ? (
+            <div className="saved-banner" data-od-id="estudar-salvas">
+              <div>
+                <span className="sk">★ {t("study.savedTitle")}</span>
+                <h2>{fmt(t("study.savedDesc"), { n: ss.savedIds().length })}</h2>
+                <p className="nm">{t("study.savedNote")}</p>
+              </div>
+              <button type="button" className="btn secondary" onClick={startSavedSession}>
+                {t("study.studySaved")}
               </button>
             </div>
           ) : null}

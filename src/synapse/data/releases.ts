@@ -24,11 +24,13 @@ export const CURRENT_RELEASE: {
   significant: true,
   pt: {
     eyebrow: "Novidades da versão",
-    title: "A abertura aprendeu a constelação",
-    intro: "A primeira visita agora segue a Trilha Ascendente — e a abertura parou de piscar.",
+    title: "O Synapse ganhou uma nova identidade",
+    intro:
+      "A nova abertura apresenta a marca em uma animação de profundidade, com tempo para contemplá-la.",
     items: [
       "Onboarding reconstruído na identidade Caderno: quatro estações nos nós da marca, índice de recursos em filetes, demo interativa com os estilos reais da sessão e FAQ — reabrível a qualquer momento no Sobre.",
-      "Abertura sem flash: a constelação nasce antes da interface e faz crossfade direto para o próximo passo — a aba Hoje não aparece antes nem depois da animação.",
+      "Nova marca e abertura 3D em fundo escuro, com transição direta para o próximo passo, sem exibir a interface antes da hora.",
+      "O progresso local da versão 3.18 é migrado ao abrir a atualização; o backup continua disponível em Progresso.",
       "Teclado e leitor de tela respeitados na abertura: nada focável por baixo do splash, foco inicial no título do diálogo e aviso de app pronto.",
     ],
     cta: "Entendi",
@@ -36,11 +38,12 @@ export const CURRENT_RELEASE: {
   },
   en: {
     eyebrow: "What's new in",
-    title: "The opening learned the constellation",
-    intro: "The first visit now follows the Ascending Trail — and the opening stopped flickering.",
+    title: "Synapse has a new identity",
+    intro: "The new opening presents the brand with a depth animation and time to take it in.",
     items: [
       "Onboarding rebuilt in the Caderno identity: four stations on the brand's nodes, a hairline feature index, an interactive demo with the real session styles and an FAQ — reopenable anytime from About.",
-      "Flash-free opening: the constellation is born before the interface and crossfades straight into the next step — the Today tab no longer shows before or after the animation.",
+      "New brand and 3D opening on a dark background, transitioning directly to the next step without showing the interface too early.",
+      "Local progress from version 3.18 is migrated when the update opens; backups remain available in Progress.",
       "Keyboard and screen-reader respect throughout the opening: nothing focusable under the splash, initial focus on the dialog title and a polite app-ready announcement.",
     ],
     cta: "Got it",

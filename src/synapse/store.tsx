@@ -57,7 +57,7 @@ import { migrateViteProgressIfNeeded } from "./migrate";
 
 /* ---------- persistência ---------- */
 
-const STORE = {
+export const STORE = {
   cert: "synapse.cert.v1",
   lang: "synapse.lang.v1",
   theme: "synapse.theme.v1",
@@ -66,12 +66,59 @@ const STORE = {
   log: "synapse.log.v1",
   cards: "synapse.cards.v1",
   srs: "synapse.srs.v1",
+  saved: "synapse.saved.v1",
   checkins: "synapse.checkins.v1",
   exam: "synapse.examdate.v1",
   exams: "synapse.exams.v1",
   examdraft: "synapse.examdraft.v1",
   settings: "synapse.settings.v1",
 } as const;
+
+/** Valida chaves reconhecidas pelo Synapse (v4.1 e legadas da 3.18).
+ * Rejeita qualquer chave estranha ou inventada. */
+export function isRecognizedStorageKey(key: string): boolean {
+  if (typeof key !== "string" || !key) return false;
+  const exactKeys = new Set([
+    "synapse.seen.v1",
+    "synapse.attempts.v1",
+    "synapse.log.v1",
+    "synapse.cards.v1",
+    "synapse.srs.v1",
+    "synapse.checkins.v1",
+    "synapse.examdate.v1",
+    "synapse.exams.v1",
+    "synapse.settings.v1",
+    "synapse.cert.v1",
+    "synapse.lang.v1",
+    "synapse.theme.v1",
+    "synapse.goal",
+    "synapse.onboarding.v2",
+    "synapse.onboarding.v1",
+    "synapse.onboardingDone",
+    "synapse.examdraft.v1",
+    "synapse.saved.v1",
+    "synapse.migrated.v1",
+    "synapse.lastCert",
+    "synapse.reminderEnabled",
+    "synapse.reminderTime",
+    "synapse.examDate",
+    "synapse.lang",
+    "synapse.theme",
+    "ctfl_progress_v1",
+    "ctfl_lang",
+    "ctfl_theme",
+    "ctfl_onboarding_done",
+  ]);
+
+  if (exactKeys.has(key)) return true;
+
+  if (key.startsWith("synapse.progress.v1.") || key.startsWith("synapse.examDraft.v1.")) {
+    const certSuffix = key.replace(/^synapse\.(progress|examDraft)\.v1\./, "");
+    return certSuffix.length > 0 && /^[a-z0-9-]+$/.test(certSuffix);
+  }
+
+  return false;
+}
 
 function readLS(key: string): string | null {
   try {
@@ -195,7 +242,11 @@ function sanitizeDraft(raw: unknown, certId: string): ExamDraft | null {
 
 export function loadExamDraft(certId: string): ExamDraft | null {
   try {
-    const raw = JSON.parse(localStorage.getItem(STORE.examdraft) || "null");
+    let raw = JSON.parse(localStorage.getItem(STORE.examdraft) || "null");
+    if (!raw || (raw.cert && raw.cert !== certId)) {
+      const rawCert = JSON.parse(localStorage.getItem(`synapse.examDraft.v1.${certId}`) || "null");
+      if (rawCert) raw = { ...rawCert, cert: certId };
+    }
     if (!isPlainObject(raw)) return null;
     const draft = sanitizeDraft(raw, certId);
     /* rascunho de outra prova não vale — descarta silenciosamente */
@@ -208,14 +259,20 @@ export function loadExamDraft(certId: string): ExamDraft | null {
 export function saveExamDraft(draft: ExamDraft): void {
   try {
     localStorage.setItem(STORE.examdraft, JSON.stringify(draft));
+    if (draft.cert) {
+      localStorage.setItem(`synapse.examDraft.v1.${draft.cert}`, JSON.stringify(draft));
+    }
   } catch {
     /* modo privado */
   }
 }
 
-export function clearExamDraft(): void {
+export function clearExamDraft(certId?: string): void {
   try {
     localStorage.removeItem(STORE.examdraft);
+    if (certId) {
+      localStorage.removeItem(`synapse.examDraft.v1.${certId}`);
+    }
   } catch {
     /* noop */
   }
@@ -320,6 +377,8 @@ export interface SynapseApi {
   navSeq: number;
 
   /* casca */
+  goal: number;
+  setGoal: (n: number) => void;
   setLang: (lang: Lang) => void;
   setTheme: (theme: Theme) => void;
   setCert: (id: string) => boolean;
@@ -366,6 +425,12 @@ export interface SynapseApi {
   /* conquistas (derivadas do estado vivo) */
   achievements: () => string[];
   achievementRoadmap: () => AchievementProgress[];
+
+  /* questões salvas */
+  savedIds: () => string[];
+  isSaved: (qid: string) => boolean;
+  toggleSaved: (qid: string) => boolean;
+  savedQuestions: () => Question[];
 
   /* cartões */
   cardList: () => { q: Bank[string][number]; ch: number }[];
@@ -448,11 +513,13 @@ const DEFAULT_STATE: SynState = {
   cert: "ctfl",
   lang: "pt",
   theme: "light",
+  goal: 10,
   seen: {},
   attempts: {},
   log: {},
   cards: {},
   srs: {},
+  saved: {},
   checkins: [],
   exam: {},
   exams: {},
@@ -525,15 +592,33 @@ export function SynapseProvider({ children }: { children: ReactNode }) {
     const queryCap = params.get("cap");
     const queryTab = params.get("tab");
 
-    /* Compatibilidade com links e rotas legadas (/ctfl/simulado, /select, etc.) */
+    /* Compatibilidade com links e rotas (/ctfl/quiz, /select, /go/quiz, subpastas, etc.) */
     let pathCert: string | null = null;
     let pathTab: TabId | null = null;
     try {
-      const cleanPath = window.location.pathname.replace(/^\/synapse\/?/, "/").replace(/\/$/, "");
+      const base = import.meta.env.BASE_URL || "/";
+      let pathname = window.location.pathname;
+      if (base !== "/" && pathname.startsWith(base)) {
+        pathname = "/" + pathname.slice(base.length);
+      } else if (pathname.startsWith("/synapse/")) {
+        pathname = pathname.slice("/synapse".length);
+      }
+      const cleanPath = pathname.replace(/^\/+/, "").replace(/\/+$/, "");
       const parts = cleanPath.split("/").filter(Boolean);
+
       if (parts.length > 0) {
-        if (parts[0] === "select") {
+        if (parts[0] === "select" || parts[0] === "certs") {
           pathTab = "certs";
+        } else if (parts[0] === "go") {
+          // Atalhos do manifest: ./go/quiz (Simulado), ./go/flash (Flashcards), ./go/stats (Progresso)
+          const sub = parts[1];
+          if (sub === "quiz" || sub === "simulado") pathTab = "simulado";
+          else if (sub === "flash" || sub === "flashcards") pathTab = "flashcards";
+          else if (sub === "stats" || sub === "progresso") pathTab = "progresso";
+          else if (sub === "estudar") pathTab = "estudar";
+          else if (sub === "syllabus") pathTab = "syllabus";
+          else if (sub === "glossary" || sub === "glossario") pathTab = "glossary";
+          else pathTab = "simulado";
         } else if (isLive(parts[0])) {
           pathCert = parts[0];
           const sub = parts[1];
@@ -543,11 +628,13 @@ export function SynapseProvider({ children }: { children: ReactNode }) {
           else if (sub === "syllabus") pathTab = "syllabus";
           else if (sub === "glossary" || sub === "glossario") pathTab = "glossary";
           else if (sub === "stats" || sub === "progresso") pathTab = "progresso";
+          else if (sub === "about" || sub === "sobre") pathTab = "about";
+          else pathTab = "hoje";
         }
       }
     } catch {}
 
-    const storedCert = readLS(STORE.cert) || "";
+    const storedCert = readLS(STORE.cert) || readLS("synapse.lastCert") || "";
     const id =
       queryCert && isLive(queryCert)
         ? queryCert
@@ -557,6 +644,10 @@ export function SynapseProvider({ children }: { children: ReactNode }) {
             ? storedCert
             : "ctfl";
 
+    const rawGoal = readLS("synapse.goal");
+    const parsedGoal = rawGoal ? parseInt(rawGoal, 10) : 10;
+    const goal = Number.isFinite(parsedGoal) && parsedGoal > 0 ? parsedGoal : 10;
+
     const next: SynState = {
       cert: id,
       lang: readLS(STORE.lang) === "en" ? "en" : "pt",
@@ -564,11 +655,13 @@ export function SynapseProvider({ children }: { children: ReactNode }) {
         (document.documentElement.getAttribute("data-theme") as Theme) === "dark"
           ? "dark"
           : "light",
+      goal,
       seen: readJSON(STORE.seen, {}),
       attempts: readJSON(STORE.attempts, {}),
       log: readJSON(STORE.log, {}),
       cards: readJSON(STORE.cards, {}),
       srs: readJSON(STORE.srs, {}),
+      saved: readJSON(STORE.saved, {}),
       checkins: readJSON<string[]>(STORE.checkins, []),
       exam: readJSON(STORE.exam, {}),
       exams: sanitizeExams(readJSON<Record<string, unknown>>(STORE.exams, {})),
@@ -580,6 +673,18 @@ export function SynapseProvider({ children }: { children: ReactNode }) {
     for (const key of ["seen", "attempts", "log", "cards", "srs", "exam"] as const) {
       if (!next[key] || typeof next[key] !== "object" || Array.isArray(next[key])) {
         (next[key] as SynState[typeof key]) = {} as SynState[typeof key];
+      }
+    }
+    if (!next.saved || typeof next.saved !== "object" || Array.isArray(next.saved)) {
+      next.saved = {};
+    }
+    for (const certId of Object.keys(next.saved)) {
+      if (!Array.isArray(next.saved[certId])) {
+        delete next.saved[certId];
+      } else {
+        next.saved[certId] = next.saved[certId].filter(
+          (id): id is string => typeof id === "string"
+        );
       }
     }
     if (!next.exams || typeof next.exams !== "object" || Array.isArray(next.exams)) {
@@ -649,6 +754,8 @@ export function SynapseProvider({ children }: { children: ReactNode }) {
         setState((prev) => ({ ...prev, cards: readSanitized(STORE.cards, "map") }));
       } else if (e.key === STORE.srs) {
         setState((prev) => ({ ...prev, srs: readSanitized(STORE.srs, "map") }));
+      } else if (e.key === STORE.saved) {
+        setState((prev) => ({ ...prev, saved: readJSON(STORE.saved, {}) }));
       } else if (e.key === STORE.checkins) {
         setState((prev) => ({ ...prev, checkins: readJSON<string[]>(STORE.checkins, []) }));
       } else if (e.key === STORE.exam) {
@@ -763,15 +870,34 @@ export function SynapseProvider({ children }: { children: ReactNode }) {
         url.searchParams.set("tab", next);
         if (typeof opts?.cap === "number") url.searchParams.set("cap", String(opts.cap));
         else url.searchParams.delete("cap");
+
+        const base = import.meta.env.BASE_URL || "/";
+        if (next === "certs") {
+          url.pathname = `${base}certs`.replace(/\/+/g, "/");
+        } else if (state.cert) {
+          url.pathname = `${base}${state.cert}/${next}`.replace(/\/+/g, "/");
+        }
         window.history.pushState({ tab: next, cap: opts?.cap }, "", url.toString());
       } catch {}
     },
-    [scrollTop]
+    [scrollTop, state.cert]
   );
 
   const peekCap = useCallback((): number | null => capRef.current, []);
 
-  /* ---------- idioma / tema / prova ---------- */
+  /* ---------- idioma / tema / meta / prova ---------- */
+
+  const setGoal = useCallback(
+    (n: number) => {
+      const valid = Number.isFinite(n) && n > 0 ? Math.round(n) : 10;
+      setState((prev) => ({ ...prev, goal: valid }));
+      writeLS("synapse.goal", String(valid));
+      announce(
+        fmt(STRINGS[state.lang].today.goalUpdated || "Meta alterada para {n}", { n: valid })
+      );
+    },
+    [announce, state.lang]
+  );
 
   const setLang = useCallback(
     (lang: Lang) => {
@@ -794,16 +920,21 @@ export function SynapseProvider({ children }: { children: ReactNode }) {
       capRef.current = null; /* troca de prova zera o cap — nada de sessão fantasma */
       setState((prev) => ({ ...prev, cert: id }));
       writeLS(STORE.cert, id);
+      writeLS("synapse.lastCert", id);
       document.body.setAttribute("data-cert", id);
       announce(CERTS[id].code + " · " + CERTS[id].name);
       try {
         const url = new URL(window.location.href);
         url.searchParams.set("prova", id);
+        const base = import.meta.env.BASE_URL || "/";
+        if (tab !== "certs") {
+          url.pathname = `${base}${id}/${tab}`.replace(/\/+/g, "/");
+        }
         window.history.replaceState(window.history.state, "", url.toString());
       } catch {}
       return true;
     },
-    [announce]
+    [announce, tab]
   );
 
   /* ---------- lembrete diário (r10) ---------- */
@@ -830,7 +961,7 @@ export function SynapseProvider({ children }: { children: ReactNode }) {
       try {
         if (Notification.permission === "granted") {
           new Notification("Synapse", {
-            body: fmt(STRINGS[state.lang].today.reminderBody, { n: 6 }),
+            body: fmt(STRINGS[state.lang].today.reminderBody, { n: state.goal }),
             tag: "synapse-reminder",
           });
         }
@@ -1436,6 +1567,55 @@ export function SynapseProvider({ children }: { children: ReactNode }) {
       .sort((a, b) => b.pct - a.pct);
   }, [achievements, cert, state.attempts, state.cert, streak, examHistory, seenFor, cardStats]);
 
+  /* ---------- questões salvas (synapse.saved.v1) ---------- */
+
+  const savedIds = useCallback((): string[] => {
+    return state.saved[state.cert] || [];
+  }, [state.saved, state.cert]);
+
+  const isSaved = useCallback(
+    (qid: string): boolean => {
+      const list = state.saved[state.cert];
+      return Array.isArray(list) && list.includes(qid);
+    },
+    [state.saved, state.cert]
+  );
+
+  const toggleSaved = useCallback(
+    (qid: string): boolean => {
+      const cId = state.cert;
+      let nextIsSaved = false;
+      setState((prev) => {
+        const list = prev.saved[cId] || [];
+        const exists = list.includes(qid);
+        const updated = exists ? list.filter((id) => id !== qid) : [...list, qid];
+        nextIsSaved = !exists;
+        const nextSaved = { ...prev.saved, [cId]: updated };
+        writeLS(STORE.saved, JSON.stringify(nextSaved));
+        return { ...prev, saved: nextSaved };
+      });
+      return nextIsSaved;
+    },
+    [state.cert]
+  );
+
+  const savedQuestions = useCallback((): Question[] => {
+    const ids = new Set(state.saved[state.cert] || []);
+    if (!ids.size) return [];
+    const b = questionsFor();
+    const list: Question[] = [];
+    for (const chList of Object.values(b)) {
+      if (Array.isArray(chList)) {
+        for (const q of chList) {
+          if (ids.has(q.id)) {
+            list.push(q);
+          }
+        }
+      }
+    }
+    return list;
+  }, [state.saved, state.cert, questionsFor]);
+
   /* ---------- backup, importação e export CSV ---------- */
 
   const exportBackup = useCallback(() => {
@@ -1454,6 +1634,13 @@ export function SynapseProvider({ children }: { children: ReactNode }) {
         "synapse.examdate.v1": state.exam,
         "synapse.exams.v1": state.exams,
         "synapse.settings.v1": state.settings,
+        "synapse.cert.v1": state.cert,
+        "synapse.lang.v1": state.lang,
+        "synapse.theme.v1": state.theme,
+        "synapse.goal": String(state.goal || readLS("synapse.goal") || "10"),
+        "synapse.onboarding.v2": readLS("synapse.onboarding.v2") || "1",
+        "synapse.examdraft.v1": readJSON(STORE.examdraft, null),
+        "synapse.saved.v1": state.saved,
       },
     };
     const blob = new Blob([JSON.stringify(backup, null, 2)], {
@@ -1470,46 +1657,199 @@ export function SynapseProvider({ children }: { children: ReactNode }) {
     async (file: File): Promise<{ ok: boolean; message: string }> => {
       try {
         const text = await file.text();
-        const parsed = JSON.parse(text);
-        if (!parsed || typeof parsed !== "object") {
+        let parsed: unknown;
+        try {
+          parsed = JSON.parse(text);
+        } catch {
           return { ok: false, message: t("progress.importError") };
         }
-        if (parsed.data && typeof parsed.data === "object") {
-          for (const [key, val] of Object.entries(parsed.data)) {
-            if (typeof val === "object" && val !== null) {
-              localStorage.setItem(key, JSON.stringify(val));
+
+        if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) {
+          return { ok: false, message: t("progress.importError") };
+        }
+
+        const parsedObj = parsed as Record<string, unknown>;
+        let restoredCount = 0;
+        const targetCertsToMigrate = new Set<string>();
+
+        const isProgressObj = (obj: unknown): boolean => {
+          if (!obj || typeof obj !== "object" || Array.isArray(obj)) return false;
+          const validFields = [
+            "seen",
+            "attempts",
+            "history",
+            "srs",
+            "srsStats",
+            "examHistory",
+            "saved",
+            "schemaVersion",
+            "total",
+            "correct",
+          ];
+          return Object.keys(obj as Record<string, unknown>).some((k) => validFields.includes(k));
+        };
+
+        // Caso 1: Backup por certificação legado (app: "synapse" com `progress`)
+        if (parsedObj.progress && typeof parsedObj.progress === "object") {
+          if (!isProgressObj(parsedObj.progress)) {
+            return { ok: false, message: t("progress.importError") };
+          }
+          const targetCert =
+            (typeof parsedObj.cert === "string" && parsedObj.cert) ||
+            (typeof parsedObj.certId === "string" && parsedObj.certId) ||
+            state.cert ||
+            "ctfl";
+          localStorage.setItem(
+            `synapse.progress.v1.${targetCert}`,
+            JSON.stringify(parsedObj.progress)
+          );
+          restoredCount++;
+          targetCertsToMigrate.add(targetCert);
+          migrateViteProgressIfNeeded({ overwrite: true, targetCerts: [targetCert] });
+        }
+        // Caso 2: Progresso cru de cert (schemaVersion ou attempts ou seen sem wrapper de data/app)
+        else if (
+          !parsedObj.data &&
+          parsedObj.app !== "synapse-backup" &&
+          (parsedObj.schemaVersion !== undefined || parsedObj.attempts || parsedObj.seen)
+        ) {
+          if (!isProgressObj(parsedObj)) {
+            return { ok: false, message: t("progress.importError") };
+          }
+          const targetCert =
+            (typeof parsedObj.cert === "string" && parsedObj.cert) ||
+            (typeof parsedObj.certId === "string" && parsedObj.certId) ||
+            state.cert ||
+            "ctfl";
+          localStorage.setItem(`synapse.progress.v1.${targetCert}`, text);
+          restoredCount++;
+          targetCertsToMigrate.add(targetCert);
+          migrateViteProgressIfNeeded({ overwrite: true, targetCerts: [targetCert] });
+        }
+        // Caso 3: Backup contendo `data` (seja app: "synapse-backup" ou formato v4.1)
+        else if (
+          parsedObj.data &&
+          typeof parsedObj.data === "object" &&
+          !Array.isArray(parsedObj.data)
+        ) {
+          const rawData = parsedObj.data as Record<string, unknown>;
+          const validEntries = Object.entries(rawData).filter(
+            ([key, val]) => isRecognizedStorageKey(key) && val !== null && val !== undefined
+          );
+          if (validEntries.length === 0) {
+            return { ok: false, message: t("progress.importError") };
+          }
+          let hasLegacyKeys = false;
+          for (const [key, val] of validEntries) {
+            const strVal = typeof val === "string" ? val : JSON.stringify(val);
+            localStorage.setItem(key, strVal);
+            restoredCount++;
+            if (key.startsWith("synapse.progress.v1.")) {
+              hasLegacyKeys = true;
+              targetCertsToMigrate.add(key.replace("synapse.progress.v1.", ""));
+            } else if (key === "ctfl_progress_v1") {
+              hasLegacyKeys = true;
+              targetCertsToMigrate.add("ctfl");
+            } else if (key.startsWith("synapse.examDraft.v1.")) {
+              hasLegacyKeys = true;
             }
           }
-        } else if (parsed.schemaVersion || parsed.attempts) {
-          const targetCert = parsed.certId || state.cert || "ctfl";
-          localStorage.setItem(`synapse.progress.v1.${targetCert}`, text);
-          migrateViteProgressIfNeeded();
-        } else {
-          for (const [key, val] of Object.entries(parsed)) {
-            if (key.startsWith("synapse.") && typeof val === "object" && val !== null) {
-              localStorage.setItem(key, JSON.stringify(val));
-            }
+          if (hasLegacyKeys) {
+            migrateViteProgressIfNeeded({
+              overwrite: true,
+              targetCerts:
+                targetCertsToMigrate.size > 0 ? Array.from(targetCertsToMigrate) : undefined,
+            });
           }
         }
+        // Caso 4: Chaves diretas no objeto raiz
+        else {
+          const validEntries = Object.entries(parsedObj).filter(
+            ([key, val]) => isRecognizedStorageKey(key) && val !== null && val !== undefined
+          );
+          if (validEntries.length === 0) {
+            return { ok: false, message: t("progress.importError") };
+          }
+          let hasLegacyKeys = false;
+          for (const [key, val] of validEntries) {
+            const strVal = typeof val === "string" ? val : JSON.stringify(val);
+            localStorage.setItem(key, strVal);
+            restoredCount++;
+            if (key.startsWith("synapse.progress.v1.")) {
+              hasLegacyKeys = true;
+              targetCertsToMigrate.add(key.replace("synapse.progress.v1.", ""));
+            } else if (key === "ctfl_progress_v1") {
+              hasLegacyKeys = true;
+              targetCertsToMigrate.add("ctfl");
+            } else if (key.startsWith("synapse.examDraft.v1.")) {
+              hasLegacyKeys = true;
+            }
+          }
+          if (hasLegacyKeys) {
+            migrateViteProgressIfNeeded({
+              overwrite: true,
+              targetCerts:
+                targetCertsToMigrate.size > 0 ? Array.from(targetCertsToMigrate) : undefined,
+            });
+          }
+        }
+
+        // NÃO anuncie sucesso se nenhum dado reconhecido foi restaurado
+        if (restoredCount === 0) {
+          return { ok: false, message: t("progress.importError") };
+        }
+
+        // Releitura imediata de todo o estado para a UI refletir os dados na hora
+        const restoredSeen = readSanitized<Record<string, Record<string, number>>>(
+          STORE.seen,
+          "map"
+        );
+        const restoredAttempts = readSanitized<Record<string, Record<string, Attempt>>>(
+          STORE.attempts,
+          "map"
+        );
+        const restoredLog = readSanitized<Record<string, LogEntry[]>>(STORE.log, "log");
+        const restoredCards = readSanitized<Record<string, Record<string, CardState>>>(
+          STORE.cards,
+          "map"
+        );
+        const restoredSrs = readSanitized<Record<string, SrsCounts>>(STORE.srs, "map");
+        const restoredCheckins = readJSON<string[]>(STORE.checkins, []);
+        const restoredExam = readSanitized<Record<string, string>>(STORE.exam, "day");
+        const restoredExams = sanitizeExams(readJSON<Record<string, unknown>>(STORE.exams, {}));
+        const restoredSaved = readJSON<Record<string, string[]>>(STORE.saved, {});
+        const restoredSettings = sanitizeReminder(readJSON<unknown>(STORE.settings, null));
+        const rawGoal = readLS("synapse.goal");
+        const restoredGoal = rawGoal ? parseInt(rawGoal, 10) : state.goal;
+        const restoredCert = readLS(STORE.cert) || readLS("synapse.lastCert") || state.cert;
+        const restoredLang = (readLS(STORE.lang) === "en" ? "en" : "pt") as Lang;
+        const restoredTheme = (readLS(STORE.theme) === "dark" ? "dark" : "light") as Theme;
+
         setState((prev) => ({
           ...prev,
-          seen: readJSON(STORE.seen, {}),
-          attempts: readJSON(STORE.attempts, {}),
-          log: readJSON(STORE.log, {}),
-          cards: readJSON(STORE.cards, {}),
-          srs: readJSON(STORE.srs, {}),
-          checkins: readJSON<string[]>(STORE.checkins, []),
-          exam: readJSON(STORE.exam, {}),
-          exams: sanitizeExams(readJSON<Record<string, unknown>>(STORE.exams, {})),
-          settings: sanitizeReminder(readJSON<unknown>(STORE.settings, null)),
+          cert: isLive(restoredCert) ? restoredCert : prev.cert,
+          lang: restoredLang,
+          theme: restoredTheme,
+          goal: Number.isFinite(restoredGoal) && restoredGoal > 0 ? restoredGoal : prev.goal,
+          seen: restoredSeen,
+          attempts: restoredAttempts,
+          log: restoredLog,
+          cards: restoredCards,
+          srs: restoredSrs,
+          saved: restoredSaved,
+          checkins: Array.isArray(restoredCheckins) ? restoredCheckins : [],
+          exam: restoredExam,
+          exams: restoredExams,
+          settings: restoredSettings,
         }));
+
         announce(t("progress.importSuccess"));
         return { ok: true, message: t("progress.importSuccess") };
       } catch (err) {
         return { ok: false, message: String(err) };
       }
     },
-    [state.cert, t, announce]
+    [state.cert, state.goal, t, announce]
   );
 
   const exportExamCsv = useCallback(() => {
@@ -1542,6 +1882,9 @@ export function SynapseProvider({ children }: { children: ReactNode }) {
           delete exam[cId];
           const exams = { ...prev.exams };
           delete exams[cId];
+          const saved = { ...prev.saved };
+          delete saved[cId];
+
           writeLS(STORE.seen, JSON.stringify(seen));
           writeLS(STORE.attempts, JSON.stringify(attempts));
           writeLS(STORE.log, JSON.stringify(log));
@@ -1549,7 +1892,8 @@ export function SynapseProvider({ children }: { children: ReactNode }) {
           writeLS(STORE.srs, JSON.stringify(srs));
           writeLS(STORE.exam, JSON.stringify(exam));
           writeLS(STORE.exams, JSON.stringify(exams));
-          return { ...prev, seen, attempts, log, cards, srs, exam, exams };
+          writeLS(STORE.saved, JSON.stringify(saved));
+          return { ...prev, seen, attempts, log, cards, srs, exam, exams, saved };
         });
         localStorage.removeItem(`synapse.progress.v1.${cId}`);
         localStorage.removeItem(`synapse.examDraft.v1.${cId}`);
@@ -1583,6 +1927,8 @@ export function SynapseProvider({ children }: { children: ReactNode }) {
       goTab,
       peekCap,
       navSeq,
+      goal: state.goal,
+      setGoal,
       setLang,
       setTheme,
       setCert,
@@ -1616,6 +1962,10 @@ export function SynapseProvider({ children }: { children: ReactNode }) {
       logExam,
       achievements,
       achievementRoadmap,
+      savedIds,
+      isSaved,
+      toggleSaved,
+      savedQuestions,
       cardList,
       cardState,
       dueCards,
@@ -1651,6 +2001,7 @@ export function SynapseProvider({ children }: { children: ReactNode }) {
       goTab,
       peekCap,
       navSeq,
+      setGoal,
       setLang,
       setTheme,
       setCert,
@@ -1684,6 +2035,10 @@ export function SynapseProvider({ children }: { children: ReactNode }) {
       logExam,
       achievements,
       achievementRoadmap,
+      savedIds,
+      isSaved,
+      toggleSaved,
+      savedQuestions,
       cardList,
       cardState,
       dueCards,

@@ -251,6 +251,7 @@ export function Certificacoes() {
               <button
                 type="button"
                 key={id}
+                data-cert={id}
                 className="cert-tile is-live"
                 style={tileStyle(id)}
                 onClick={() => pick(id)}

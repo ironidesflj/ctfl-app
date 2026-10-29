@@ -1,13 +1,13 @@
 # Guia de Deploy — Synapse
 
-Como a estrutura do repositório afeta o deploy, e o passo a passo para publicar.
+Vercel é o destino oficial do app. Netlify e GitHub Pages são alternativas.
 
 ## Estrutura do repositório
 
-| Cenário                           | Onde fica o app     | Ajuste no deploy                        |
-| --------------------------------- | ------------------- | --------------------------------------- |
-| **Repos separados** (recomendado) | raiz do repo do app | nenhum — tudo detectado automaticamente |
-| **Monorepo**                      | subpasta `app/`     | apontar o _root directory_ para `app/`  |
+| Cenário                           | Onde fica o app     | Ajuste no deploy                               |
+| --------------------------------- | ------------------- | ---------------------------------------------- |
+| **Repos separados** (recomendado) | raiz do repo do app | nenhum — tudo detectado automaticamente        |
+| **Monorepo**                      | subpasta do app     | apontar o _root directory_ para a pasta do app |
 
 Fonte da verdade das questões: o repo do **banco**. Push de
 `ctfl-questions-ptbr.json` ou `synapse-question-bank.json` na `main` dispara o
@@ -18,7 +18,8 @@ um PR no app para merge manual.
 
 ## Opção A — Vercel (recomendada)
 
-A mais simples para apps Vite e a que melhor suporta o PWA (domínio na raiz).
+A produção oficial usa Vercel, na raiz do domínio, o caminho mais simples para
+o roteamento e o service worker do PWA.
 
 1. Acesse vercel.com e conecte sua conta do GitHub.
 2. **Add New → Project** e selecione o repositório do app.
@@ -26,7 +27,7 @@ A mais simples para apps Vite e a que melhor suporta o PWA (domínio na raiz).
    - Framework: **Vite**
    - Build Command: `npm run build`
    - Output Directory: `dist`
-   - **Monorepo:** em _Root Directory_, escolha `app`.
+   - **Monorepo:** em _Root Directory_, escolha a pasta do app.
 4. **Deploy.** A cada push na branch principal, ela republica sozinha.
 
 Não precisa do GitHub Actions neste caso — a Vercel faz o build do lado dela.
@@ -38,8 +39,8 @@ Não precisa do GitHub Actions neste caso — a Vercel faz o build do lado dela.
 1. netlify.com → **Add new site → Import an existing project** → GitHub.
 2. Configurações:
    - Build command: `npm run build`
-   - Publish directory: `dist` (monorepo: `app/dist`)
-   - Base directory: vazio (monorepo: `app`)
+   - Publish directory: `dist` (monorepo: `<pasta-do-app>/dist`)
+   - Base directory: vazio (monorepo: pasta do app)
 3. **Deploy site.**
 
 ---
@@ -52,7 +53,8 @@ Use o arquivo `.github/workflows/deploy.yml` já incluído.
 2. Dispare manualmente o workflow **Deploy to GitHub Pages**.
 3. Em subpath (`https://<usuario>.github.io/<repo>/`), ajuste o comando de
    build para `npm run build -- --base=/<repo>/` e valide as rotas/deep links.
-4. **Monorepo:** ajuste `working-directory` e o `path` do artefato conforme os comentários no `deploy.yml`.
+4. O workflow está configurado para o app na raiz do repositório. Para outro
+   layout, ajuste `working-directory` e o `path` do artefato em `deploy.yml`.
 
 > **Caminhos:** o `vite.config.js` usa `base: "/"` porque o app usa
 > `BrowserRouter`. Deploy em subdiretório exige `--base` e validação adicional

@@ -70,6 +70,11 @@ export interface Strings {
     emptyAction: string;
     emptyAside: string;
     footnote: string;
+    savedTitle: string;
+    savedDesc: string;
+    savedNote: string;
+    studySaved: string;
+    noSaved: string;
   };
   session: {
     exit: string;
@@ -90,6 +95,10 @@ export interface Strings {
     source: string;
     needPick: string;
     saved: string;
+    save: string;
+    unsave: string;
+    saveBadge: string;
+    savedBadge: string;
     chapterLabel: string;
     answer: string;
     k: string;
@@ -174,6 +183,9 @@ export interface Strings {
     reminderOff: string;
     reminderBlocked: string;
     reminderBody: string;
+    goalAria: string;
+    goalLabel: string;
+    goalUpdated: string;
   };
   cards: {
     kicker: string;
@@ -582,6 +594,11 @@ const pt: Strings = {
     emptyAction: "Voltar para a CTFL",
     emptyAside: "Sem banco de estudo",
     footnote: "Local-first · o progresso fica neste dispositivo",
+    savedTitle: "Questões salvas",
+    savedDesc: "{n} questão(ões) marcada(s) para revisão",
+    savedNote: "Revise as questões que você marcou com estrela durante o estudo.",
+    studySaved: "Estudar salvas",
+    noSaved: "Nenhuma questão salva ainda",
   },
   session: {
     exit: "Voltar ao plano",
@@ -602,6 +619,10 @@ const pt: Strings = {
     source: "Fonte",
     needPick: "Escolha uma alternativa para conferir.",
     saved: "Progresso salvo neste dispositivo.",
+    save: "Salvar questão",
+    unsave: "Remover dos salvos",
+    saveBadge: "Salvar",
+    savedBadge: "Salva",
     chapterLabel: "Capítulo {n} · {name}",
     answer: "Resposta {letter}",
     k: "K{k}",
@@ -690,6 +711,9 @@ const pt: Strings = {
     reminderBlocked:
       "Notificações bloqueadas no navegador — ative nas permissões do site para receber o lembrete.",
     reminderBody: "Bora manter o ritmo? Meta de hoje: {n} questões.",
+    goalAria: "Alterar meta diária de questões",
+    goalLabel: "Meta:",
+    goalUpdated: "Meta diária alterada para {n} questões",
   },
   cards: {
     kicker: "03 · Flashcards",
@@ -1113,6 +1137,11 @@ const en: Strings = {
     emptyAction: "Back to CTFL",
     emptyAside: "No study bank yet",
     footnote: "Local-first · progress stays on this device",
+    savedTitle: "Saved questions",
+    savedDesc: "{n} question(s) marked for review",
+    savedNote: "Review the questions you bookmarked with a star during study.",
+    studySaved: "Study saved",
+    noSaved: "No saved questions yet",
   },
   session: {
     exit: "Back to plan",
@@ -1133,6 +1162,10 @@ const en: Strings = {
     source: "Source",
     needPick: "Choose an option to check.",
     saved: "Progress saved on this device.",
+    save: "Save question",
+    unsave: "Remove from saved",
+    saveBadge: "Save",
+    savedBadge: "Saved",
     chapterLabel: "Chapter {n} · {name}",
     answer: "Answer {letter}",
     k: "K{k}",
@@ -1220,6 +1253,9 @@ const en: Strings = {
     reminderBlocked:
       "Notifications blocked in the browser — enable them in the site permissions to get the reminder.",
     reminderBody: "Let’s keep the pace? Today’s goal: {n} questions.",
+    goalAria: "Change daily question goal",
+    goalLabel: "Goal:",
+    goalUpdated: "Daily goal changed to {n} questions",
   },
   cards: {
     kicker: "03 · Flashcards",

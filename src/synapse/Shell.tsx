@@ -37,13 +37,11 @@ const BANK_TABS: TabId[] = ["hoje", "estudar", "simulado", "flashcards", "progre
 
 function BrandMark() {
   return (
-    <svg className="mark" viewBox="0 0 48 48" aria-hidden="true">
-      <path d="M9 36 L18 17 L29 26 L39 11" />
-      <circle cx="9" cy="36" r="3.2" className="hole" />
-      <circle cx="18" cy="17" r="3.2" className="hole" />
-      <circle cx="29" cy="26" r="3.2" className="hole" />
-      <circle cx="39" cy="11" r="4.6" className="end" />
-    </svg>
+    <img
+      className="mark"
+      src={`${import.meta.env.BASE_URL}brand/synapse-mark-compact.svg`}
+      alt=""
+    />
   );
 }
 

@@ -1,20 +1,21 @@
 # Synapse — Multi-Certificação ISTQB
 
-App de preparação para os exames de certificação ISTQB.
-React + Vite, instalável como PWA, funciona offline.
+App de preparação para exames de certificação ISTQB. A candidata desta branch
+é a versão 4.1.0; a versão 3.18.0 permanece como base em produção até o merge.
+Usa React + Vite, pode ser instalada como PWA e oferece suporte offline.
 
-## Estado atual (1.100 questões)
+## Catálogo de conteúdo (1.100 questões)
 
-**Conteúdo no Ar (Lançado):**
+**Certificações disponíveis:**
 
 - **CTFL v4.0:** 300 questões
-- **CTAL-TA v4.0:** 200 itens
-- **CTAL-TM v3.0:** 200 itens
+- **CTAL-TA v4.0:** 200 questões
+- **CTAL-TM v3.0:** 200 questões
 
-**Roadmap de Lançamentos Futuros (Em Breve):**
+**Roadmap:**
 
 - **CT-AI v2.0:** 200 itens (em breve)
-- **CTAL-AT v2.0:** 200 itens (em breve - syllabus totalmente novo do zero, a ser gerado)
+- **CTAL-AT v2.0:** previsto; conteúdo ainda não publicado
 
 **Conteúdo Legado:**
 
@@ -46,10 +47,10 @@ React + Vite, instalável como PWA, funciona offline.
   rota ou o estado atual.
 - **Feedback:** link global e seção institucional abrem um Issue Form público no
   GitHub; o app não envia nem armazena progresso, respostas ou dados pessoais.
-- **Banco:** multi-certificação (`getBank(certId)`), CTFL, CTAL-TA e CTAL-TM
-  no ar, com pools de estudo/simulado mutuamente exclusivos e distribuição
-  proporcional ao blueprint oficial de cada uma. O CTAL-TM passou por revisão
-  editorial e pelas guardas psicométricas bloqueantes do banco 1.7.0-rc1.
+- **Banco:** três certificações disponíveis, com pools de estudo/simulado
+  separados e distribuição conforme o blueprint de cada exame. A revisão
+  editorial e as guardas do banco CTAL-TM seguem em andamento; consulte o
+  changelog e o SDD antes de tratar esse conteúdo como editorialmente fechado.
 - **Toggle PT/EN no header:** alterna o idioma das questões, Flashcards,
   Syllabus e Glossário nas certificações disponíveis.
 
@@ -81,37 +82,18 @@ npm run preview    # serve o build localmente para conferência
 
 ## Deploy
 
-- **Vercel/Netlify:** importe o repositório; build `npm run build`, diretório de saída `dist`.
-- **GitHub Pages:** o workflow é manual; para subpath, gere a build com o
-  `--base` correspondente e valide roteamento/deep links antes de publicar.
+Vercel é o destino oficial, com build `npm run build` e saída `dist`. Netlify
+também pode servir o build. O workflow de GitHub Pages é opcional e manual;
+deploy em subpath exige configurar `--base` e validar rotas/deep links. Veja
+[DEPLOY.md](./DEPLOY.md) para os passos e limitações do PWA.
 
-## Estrutura
+## Banco de questões
 
-```
-src/
-  data/banks/                    chunks lazy das certificações live
-  data/synapse-question-bank.json fonte de verdade do teste de integridade
-  data/study.js                    flashcards + tópicos do syllabus
-  lib/certs.config.js              config por certificação (capítulos, domínios)
-  lib/bank.js                      getBank(certId) — factory: filtros, amostra do simulado
-  lib/activity.js                  métricas, metas, datas e recortes de atividade
-  lib/pwa.js                       registro e atualização gentil do service worker
-  lib/settings.js                  preferências e migração das chaves legadas
-  lib/storage.js                   persistência por cert, rascunho e backup
-  components/                      Quiz, Flashcards, Syllabus, Stats
-  App.jsx, main.jsx, styles.css
-```
-
-## Atualizar o banco de questões
-
-O banco é mantido no repositório `ctfl-question-bank-ptbr`. Push de
-`ctfl-questions-ptbr.json` ou `synapse-question-bank.json` na branch `main` dispara
-`sync-app.yml`, que abre um Pull Request neste repositório com somente os arquivos
-alterados e valida os checksums da origem e do destino. O merge continua manual.
-
-O pipeline legado `build_all.py` encadeia `build_bank.py` → `add_en.py` →
-`check_alignment.py`, mas cobre apenas `ctfl-questions-ptbr.json`. O banco multi-cert
-de 1.100 questões é versionado diretamente no repositório do banco.
+Os bancos usados pelo app ficam em `src/synapse/data/banks/` e são carregados
+por certificação. O monólito `src/synapse/data/synapse-question-bank.json` é
+mantido como referência para testes de integridade do split. A governança,
+sincronização e publicação da fonte canônica estão descritas no SDD e nos
+workflows do repositório do banco.
 
 ## Qualidade
 
@@ -125,9 +107,9 @@ npx playwright install chromium # apenas na primeira execução local
 npm run test:e2e
 ```
 
-O CI executa todos esses gates. A suíte unitária/de componentes tem 340 testes;
-os três smokes E2E em Chromium cobrem seleção, estudo, persistência, idioma,
-onboarding, conclusão/persistência de simulado e novidades por versão.
+O CI executa lint, formatação, testes, build e E2E em Chromium. Para os números
+mais recentes de cobertura e estado de publicação, consulte o changelog e o
+SDD; eles variam entre fases de desenvolvimento.
 
 ## Aviso
 
