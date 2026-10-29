@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-theme="light" data-direction="a" data-app="synapse">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -111,9 +111,15 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet" />
+    <script>
+      try{var t=localStorage.getItem('synapse.theme.v1');if(t==='dark'||(t!=='light'&&window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)){document.documentElement.setAttribute('data-theme','dark');}}catch(e){}
+    </script>
+    <script>
+      try{var o=localStorage.getItem('synapse.onboarding.v2');var m=o!=='1'?'first':(localStorage.getItem('synapse.ver.v1')==='4.1.0'?'quick':'update');var d=document.documentElement;d.setAttribute('data-boot',m);setTimeout(function(){d.removeAttribute('data-boot')},3500);}catch(e){}
+    </script>
   </head>
-  <body>
+  <body data-cert="ctfl">
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
