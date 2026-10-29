@@ -115,11 +115,10 @@ const COPY: Record<Lang, SobreCopy> = {
       "Não é uma conta na nuvem. O progresso fica neste dispositivo; sincronizar entre aparelhos ainda não existe.",
       "Não coleta dado de estudo. O feedback é público e opcional, e não deve levar dado pessoal nem resultado de prova.",
     ],
-    noosTitle: "Dentro do hub Noos.",
+    noosTitle: "Synapse e Noos.",
     noos: [
-      "O Synapse é um dos apps do hub Noosfera, em noos.study. O hub reúne ferramentas de estudo com uma assinatura comum: utilidade primeiro, sem ruído.",
-      "Cada app do hub tem identidade própria. O Synapse ocupa o violeta e a constelação de quatro nós; o parentesco com o Noos aparece na assinatura by Noos, na tipografia e no compromisso local-first — não no logo de outro app.",
-      "Dentro do Synapse, a cor da prova ativa veste a interface. O estudante não estuda para duas certificações ao mesmo tempo: o app inteiro muda de prova quando ele muda.",
+      "O Synapse faz parte do Noos, um conjunto de ferramentas para estudar com mais clareza. Conheça as outras ferramentas em noos.study.",
+      "Seu estudo aqui é gratuito, funciona sem conta e fica salvo neste dispositivo. Ao trocar de certificação, cada prova mantém seu próprio progresso.",
     ],
     sourcesTitle: "Fontes oficiais.",
     sourcesLead:
@@ -243,11 +242,10 @@ const COPY: Record<Lang, SobreCopy> = {
       "It is not a cloud account. Progress stays on this device; cross-device sync does not exist yet.",
       "It does not collect study data. Feedback is public and optional, and must not carry personal data or exam results.",
     ],
-    noosTitle: "Inside the Noos hub.",
+    noosTitle: "Synapse and Noos.",
     noos: [
-      "Synapse is one of the apps in the Noosfera hub at noos.study. The hub brings study tools together under a common signature: utility first, no noise.",
-      "Each app in the hub has its own identity. Synapse occupies violet and the four-node constellation; the kinship with Noos appears in the by Noos signature, the typography and the local-first commitment — not in another app’s logo.",
-      "Inside Synapse, the active exam colour dresses the interface. A student does not study for two certifications at once: the whole app changes exam when they do.",
+      "Synapse is part of Noos, a collection of tools for clearer studying. Explore the other tools at noos.study.",
+      "Studying here is free, needs no account and stays saved on this device. Each certification keeps its own progress when you switch exams.",
     ],
     sourcesTitle: "Official sources.",
     sourcesLead:

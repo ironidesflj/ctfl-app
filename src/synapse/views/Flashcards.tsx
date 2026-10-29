@@ -442,14 +442,18 @@ export function Flashcards() {
           {note && lastRating && (
             <div className="fc-note" aria-live="polite" style={{ marginTop: "16px" }}>
               <span>
-                {t("cards." + note.rating)} →{" "}
+                {t("cards." + note.rating)} ·{" "}
                 {note.days > 0
                   ? lang === "pt"
-                    ? `volta em ${note.days}d`
-                    : `due in ${note.days}d`
+                    ? note.days === 1
+                      ? "revisão amanhã"
+                      : `revisão em ${note.days} dias`
+                    : note.days === 1
+                      ? "review tomorrow"
+                      : `review in ${note.days} days`
                   : lang === "pt"
-                    ? "volta hoje"
-                    : "due today"}
+                    ? "revisão hoje"
+                    : "review today"}
               </span>
               <button type="button" className="fc-undo" onClick={undo}>
                 ↩ {t("cards.undo")}
@@ -551,14 +555,18 @@ export function Flashcards() {
             style={{ marginTop: "12px", marginBottom: "8px" }}
           >
             <span>
-              {t("cards." + note.rating)} →{" "}
+              {t("cards." + note.rating)} ·{" "}
               {note.days > 0
                 ? lang === "pt"
-                  ? `volta em ${note.days}d`
-                  : `due in ${note.days}d`
+                  ? note.days === 1
+                    ? "revisão amanhã"
+                    : `revisão em ${note.days} dias`
+                  : note.days === 1
+                    ? "review tomorrow"
+                    : `review in ${note.days} days`
                 : lang === "pt"
-                  ? "volta hoje"
-                  : "due today"}
+                  ? "revisão hoje"
+                  : "review today"}
             </span>
             <button type="button" className="fc-undo" onClick={undo}>
               ↩ {t("cards.undo")}

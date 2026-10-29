@@ -1,4 +1,20 @@
-# Estado do SDD — referência anterior: 2026-10-24
+# Estado do SDD — 2026-10-29
+
+## Estado atual
+
+- Synapse 4.1.0 Vite integrada à `main` no PR #9 (`143f6ae`). CTFL, CTAL-TA e
+  CTAL-TM estão disponíveis; a dívida editorial de CTAL-TM continua aberta.
+- A primeira visita mostra a abertura completa e o onboarding uma vez; a aba
+  Hoje fica oculta durante a transição. Visitas comuns usam abertura rápida;
+  após 12 horas fora do app, a abertura completa retorna sem onboarding.
+- A migração do progresso 3.18 e o backup foram verificados por testes unitários
+  e de navegador. O relatório Lighthouse local apontou um botão de lembrete
+  sem nome acessível, corrigido no ajuste pós-4.1. A nota de performance mistura
+  a animação deliberada de entrada com scripts de extensões do Chrome.
+- Artefatos históricos encontrados em Downloads foram movidos para um arquivo
+  local fora do Git, com manifesto e SHA-256; não são fonte canônica do banco.
+
+## Histórico — referência de 2026-10-24
 
 > O registro abaixo documenta a fase de proteção canônica do banco em 24/10;
 > não descreve integralmente o checkout Vite atual. Para a referência deste
@@ -173,7 +189,7 @@ Sem commit, push ou publicação nesta integração.
 - Contagens verificadas por assert: 21 flashcards, 18 itens de syllabus e 37
   termos de glossário CTAL-TA, todos bilíngues e cobrindo os cinco capítulos.
 
-## Candidata Synapse 4.1.0 Vite — 2026-10-29
+## Candidata Synapse 4.1.0 Vite — registro antes do merge
 
 - Branch `feat/synapse-vite-redesign`; candidata Synapse 4.1.0 em revisão.
   A versão 3.18.0 permanece como base em produção até o merge. Esta branch não

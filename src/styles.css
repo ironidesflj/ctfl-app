@@ -297,6 +297,12 @@ svg {
   min-height: 44px;
   text-decoration: none;
   flex: 0 0 auto;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
 }
 .brand .mark {
   width: 22px;
@@ -2670,6 +2676,28 @@ svg {
   gap: 10px;
   margin-top: 22px;
 }
+.fc-note {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+  color: var(--fg);
+  font: 500 13px/1.5 var(--f-body);
+}
+.fc-undo {
+  padding: 4px 0;
+  border: 0;
+  background: transparent;
+  color: var(--accent-ink);
+  font: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+.fc-undo:focus-visible {
+  outline: 2px solid var(--accent-ink);
+  outline-offset: 3px;
+}
 
 /* ---------- Syllabus ---------- */
 
@@ -3071,7 +3099,7 @@ svg {
 }
 .pr-note {
   margin-top: 14px;
-  font: 400 9.5px/1.6 var(--f-mono);
+  font: 400 11px/1.6 var(--f-mono);
   letter-spacing: 0.02em;
   color: var(--muted);
 }
@@ -5367,6 +5395,7 @@ body {
   border: 1px solid var(--border);
   border-radius: var(--radius);
   background: var(--surface);
+  color: var(--fg);
   font: 500 13px/1 var(--f-body);
   cursor: pointer;
   text-align: left;
@@ -5498,7 +5527,7 @@ html[data-boot] .skip {
   cursor: pointer;
 }
 .splash[data-mode="quick"] {
-  --sp-scale: 0.45;
+  --sp-scale: 0.8;
 }
 .splash[data-fading="true"] {
   opacity: 0;

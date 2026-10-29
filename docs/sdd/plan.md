@@ -1,8 +1,12 @@
-# Plano — registro anterior e encaminhamento da candidata Vite
+# Plano — estado após integração da 4.1.0
+
+> A 4.1.0 foi integrada à `main` pelo PR #9. Ajustes visuais, acessibilidade e
+> ritmo de abertura estão em preparação. A revisão editorial completa de
+> CTAL-TM permanece pendente; não tratar a disponibilização no app como selo
+> editorial. Os registros abaixo são históricos.
 
 > A fase abaixo foi registrada em 2026-10-24 para o app anterior. O checkout
-> Vite 4.1.0 atual é descrita em `current-state.md`; 3.18.0 segue em produção
-> até o merge, e os gates da candidata ainda precisam ser confirmados.
+> Vite 4.1.0 atual é descrita em `current-state.md`.
 
 ## Fase autorizada em 2026-10-24
 

@@ -6,6 +6,8 @@
      update → splash completo + notas de versão
      quick  → splash rápido enquanto o banco carrega (nunca segura o app)
 
+     return → splash completo após 12 horas fora do app, sem onboarding
+
    Chaves versionadas, iguais às demais do handoff (synapse.*.v1). */
 
 import { APP_VERSION } from "./data/releases";
@@ -13,8 +15,10 @@ import { APP_VERSION } from "./data/releases";
 export const ONBOARDING_KEY = "synapse.onboarding.v2";
 export const VERSION_KEY = "synapse.ver.v1";
 export const INSTALL_KEY = "synapse.install.v1";
+export const LAST_VISIT_KEY = "synapse.lastVisit.v1";
+const RETURN_AFTER_MS = 12 * 60 * 60 * 1000;
 
-export type BootMode = "first" | "update" | "quick";
+export type BootMode = "first" | "update" | "return" | "quick";
 
 function lsGet(key: string): string | null {
   try {
@@ -32,8 +36,16 @@ function lsSet(key: string, value: string): void {
 }
 
 export function bootMode(): BootMode {
+  const now = Date.now();
+  const lastVisit = Number(lsGet(LAST_VISIT_KEY));
+  markVisitEnded();
   if (lsGet(ONBOARDING_KEY) !== "1") return "first";
-  return lsGet(VERSION_KEY) === APP_VERSION ? "quick" : "update";
+  if (lsGet(VERSION_KEY) !== APP_VERSION) return "update";
+  return lastVisit > 0 && now - lastVisit >= RETURN_AFTER_MS ? "return" : "quick";
+}
+
+export function markVisitEnded(): void {
+  lsSet(LAST_VISIT_KEY, String(Date.now()));
 }
 
 export function markOnboardingDone(): void {

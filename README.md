@@ -1,8 +1,8 @@
 # Synapse — Multi-Certificação ISTQB
 
-App de preparação para exames de certificação ISTQB. A candidata desta branch
-é a versão 4.1.0; a versão 3.18.0 permanece como base em produção até o merge.
-Usa React + Vite, pode ser instalada como PWA e oferece suporte offline.
+App de preparação para exames de certificação ISTQB. A versão 4.1.0 está na
+`main` desde o PR #9. Usa React + Vite, pode ser instalada como PWA e oferece
+suporte offline.
 
 ## Catálogo de conteúdo (1.100 questões)
 
