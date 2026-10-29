@@ -13,7 +13,8 @@
 
 - Cabeçalho sem borda de botão nativo, aviso de flashcards legível e painel de
   métricas com contraste correto nos dois temas.
-- Abertura rápida ampliada para pelo menos 1,5 s; após 12 horas fora do app,
+- Abertura rápida ajustada para pelo menos 2,4 s, com assinatura completa e
+  transição sem corte; após 12 horas fora do app,
   a animação completa retorna sem repetir o onboarding.
 - Botão do lembrete recebe nome acessível; texto institucional do Noos passa a
   explicar somente o que interessa ao estudante.
