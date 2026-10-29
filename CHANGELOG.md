@@ -1,15 +1,22 @@
 # Changelog
 
-## v4.1.0 — candidata em revisão
+## v4.1.0 — integrada à main em 2026-10-29
 
-- Candidata Synapse baseada em React + Vite, com bancos de estudo e simulado
-  separados por certificação. A versão 3.18.0 segue como base em produção até
-  o merge desta branch.
+- Synapse baseada em React + Vite, com bancos de estudo e simulado separados
+  por certificação. Integrada pelo PR #9 (`143f6ae`).
 - CTFL, CTAL-TA e CTAL-TM disponíveis na interface. A revisão editorial do
   banco CTAL-TM permanece aberta; consulte `docs/sdd/current-state.md`.
 - Melhorias de persistência, backup/restauração, metas, capítulos e fluxo de
-  estudo fazem parte desta candidata. A publicação depende da revisão e dos
-  gates; esta entrada não representa um release publicado.
+  estudo; nova marca e abertura 3D escura.
+
+## Pós-4.1.0 — ajustes em preparação
+
+- Cabeçalho sem borda de botão nativo, aviso de flashcards legível e painel de
+  métricas com contraste correto nos dois temas.
+- Abertura rápida ampliada para pelo menos 1,5 s; após 12 horas fora do app,
+  a animação completa retorna sem repetir o onboarding.
+- Botão do lembrete recebe nome acessível; texto institucional do Noos passa a
+  explicar somente o que interessa ao estudante.
 
 ## Não publicado — Proteção da fonte canônica
 

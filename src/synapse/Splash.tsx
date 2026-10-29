@@ -21,8 +21,8 @@ import { useSynapse } from "./store";
 
 const IS_TEST = typeof process !== "undefined" && process.env?.NODE_ENV === "test";
 const FULL_FADE_AT_MS = IS_TEST ? 10 : 5600;
-const QUICK_MIN_MS = IS_TEST ? 0 : 450;
-const QUICK_MAX_MS = IS_TEST ? 10 : 1300;
+const QUICK_MIN_MS = IS_TEST ? 0 : 1500;
+const QUICK_MAX_MS = IS_TEST ? 10 : 2300;
 const REDUCED_MS = IS_TEST ? 0 : 350;
 const FADE_MS = IS_TEST ? 0 : 360;
 

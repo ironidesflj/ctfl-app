@@ -28,7 +28,13 @@ import { Onboarding } from "./Onboarding";
 import { ReleaseNotes } from "./ReleaseNotes";
 import { InstallPrompt } from "./InstallPrompt";
 import { UpdateToast } from "./UpdateToast";
-import { bootMode, markOnboardingDone, markVersionSeen, type BootMode } from "./boot";
+import {
+  bootMode,
+  markOnboardingDone,
+  markVersionSeen,
+  markVisitEnded,
+  type BootMode,
+} from "./boot";
 
 const PRIMARY: TabId[] = ["hoje", "estudar", "simulado", "flashcards", "syllabus", "progresso"];
 const SECONDARY: TabId[] = ["glossary", "about", "certs"];
@@ -89,8 +95,8 @@ function ViewError() {
    Três momentos (decididos uma vez por carregamento, em boot.ts):
    first  → splash completo + onboarding de primeira visita;
    update → splash completo + notas de versão;
-   quick  → splash rápido enquanto o banco carrega (some quando ele
-            responde — nunca segura o app). Só depois do boot os
+   return → splash completo após 12 horas fora, sem novo diálogo;
+   quick  → splash breve, mesmo quando o banco já está pronto. Só depois do boot os
             overlays de PWA (install/toast) podem aparecer.
 
    Anti-flash (r12): a casca não aparece nem antes nem depois da
@@ -127,7 +133,7 @@ function BootFlow({ onSettled }: { onSettled: () => void }) {
         mode={boot.mode === "quick" ? "quick" : "full"}
         onReveal={() => setBoot((b) => (b ? { ...b, phase: "flow" } : b))}
         onDone={() => {
-          if (boot.mode === "quick") onSettled();
+          if (boot.mode === "quick" || boot.mode === "return") onSettled();
           setBoot((b) => (b ? { ...b, phase: "done" } : b));
         }}
       />
@@ -168,6 +174,18 @@ export function Shell() {
   const { state, tab, goTab, t, links } = ss;
   const [moreOpen, setMoreOpen] = useState(false);
   const [bootSettled, setBootSettled] = useState(false);
+
+  useEffect(() => {
+    const onHide = () => {
+      if (document.visibilityState === "hidden") markVisitEnded();
+    };
+    document.addEventListener("visibilitychange", onHide);
+    window.addEventListener("pagehide", markVisitEnded);
+    return () => {
+      document.removeEventListener("visibilitychange", onHide);
+      window.removeEventListener("pagehide", markVisitEnded);
+    };
+  }, []);
   const moreBtnRef = useRef<HTMLButtonElement | null>(null);
   const moreMenuRef = useRef<HTMLDivElement | null>(null);
 

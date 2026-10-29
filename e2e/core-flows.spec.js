@@ -6,13 +6,29 @@ const releaseKey = "synapse.ver.v1";
 test.beforeEach(async ({ page }) => {
   await page.addInitScript(
     ({ key, version }) => {
-      localStorage.setItem("synapse.onboarding.v2", "1");
+      if (sessionStorage.getItem("synapse-test-first-run") !== "1") {
+        localStorage.setItem("synapse.onboarding.v2", "1");
+      }
       if (sessionStorage.getItem("synapse-skip-version-seed") !== "1") {
         localStorage.setItem(key, version);
       }
     },
     { key: releaseKey, version: APP_VERSION }
   );
+});
+
+test("primeira visita mostra onboarding após o splash sem expor Hoje", async ({ page }) => {
+  await page.goto("/ctfl/hoje");
+  await page.evaluate(() => {
+    sessionStorage.setItem("synapse-test-first-run", "1");
+    localStorage.removeItem("synapse.onboarding.v2");
+    localStorage.removeItem("synapse.ver.v1");
+  });
+  await page.reload();
+  await expect(page.locator(".splash")).toBeVisible();
+  await expect(page.locator(".top")).toBeHidden();
+  await expect(page.locator(".ob-overlay")).toBeVisible({ timeout: 10000 });
+  await expect(page.locator(".splash")).toHaveCount(0, { timeout: 10000 });
 });
 
 test("CTAL-TM conclui simulado com pontuação e progresso próprios", async ({ page }) => {

@@ -81,6 +81,7 @@ function ReminderCard() {
           type="button"
           role="switch"
           aria-checked={settings.enabled}
+          aria-label={t("today.reminderTitle")}
           className="rem-switch"
           data-on={settings.enabled ? "true" : "false"}
           onClick={toggleReminder}
