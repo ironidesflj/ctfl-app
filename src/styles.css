@@ -5527,7 +5527,7 @@ html[data-boot] .skip {
   cursor: pointer;
 }
 .splash[data-mode="quick"] {
-  --sp-scale: 0.8;
+  --sp-scale: 0.4;
 }
 .splash[data-fading="true"] {
   opacity: 0;

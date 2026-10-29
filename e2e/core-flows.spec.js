@@ -17,6 +17,27 @@ test.beforeEach(async ({ page }) => {
   );
 });
 
+test("abertura rápida conclui a assinatura antes da transição", async ({ page }) => {
+  await page.addInitScript(() => {
+    window.__splashSignatureFinished = false;
+    window.__splashCut = false;
+    document.addEventListener("animationend", (event) => {
+      if (event.target instanceof Element && event.target.classList.contains("splash-by")) {
+        window.__splashSignatureFinished = true;
+      }
+    });
+    new MutationObserver(() => {
+      if (document.querySelector('.splash[data-fading="true"]')) {
+        window.__splashCut = !window.__splashSignatureFinished;
+      }
+    }).observe(document, { subtree: true, attributes: true, attributeFilter: ["data-fading"] });
+  });
+  await page.goto("/ctfl/hoje");
+  await page.locator(".splash").waitFor({ state: "detached" });
+  expect(await page.evaluate(() => window.__splashSignatureFinished)).toBe(true);
+  expect(await page.evaluate(() => window.__splashCut)).toBe(false);
+});
+
 test("primeira visita mostra onboarding após o splash sem expor Hoje", async ({ page }) => {
   await page.goto("/ctfl/hoje");
   await page.evaluate(() => {
