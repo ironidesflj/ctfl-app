@@ -12,10 +12,12 @@ import { fmt, pad2, useSynapse } from "../store";
 import type { Question } from "../types";
 import { AxonQuestionLink } from "../components/AxonQuestionLink";
 import { ViewFoot } from "./Hoje";
+import { shuffleOptionOrder } from "../option-order";
 
 interface SessionState {
   ch: number;
   qs: Question[];
+  optOrder: number[][];
   i: number;
   chosen: number | null;
   checked: boolean;
@@ -41,6 +43,7 @@ export function Estudar() {
     return {
       ch: Number(cap),
       qs,
+      optOrder: qs.map((q) => shuffleOptionOrder(q.options.pt.length)),
       i: 0,
       chosen: null,
       checked: false,
@@ -71,6 +74,7 @@ export function Estudar() {
     setSession({
       ch: Number(ch),
       qs,
+      optOrder: qs.map((q) => shuffleOptionOrder(q.options.pt.length)),
       i: 0,
       chosen: null,
       checked: false,
@@ -89,6 +93,7 @@ export function Estudar() {
     setSession({
       ch: 0,
       qs,
+      optOrder: qs.map((q) => shuffleOptionOrder(q.options.pt.length)),
       i: 0,
       chosen: null,
       checked: false,
@@ -123,7 +128,9 @@ export function Estudar() {
     ss.announce(
       (ok ? t("session.correct") : t("session.wrong")) +
         ". " +
-        fmt(t("session.rightIs"), { letter: String.fromCharCode(65 + q.answer) })
+        fmt(t("session.rightIs"), {
+          letter: String.fromCharCode(65 + s.optOrder[s.i].indexOf(q.answer)),
+        })
     );
   }
 
@@ -242,6 +249,7 @@ export function Estudar() {
     const q = s.qs[s.i];
     const chLabel = s.ch === 0 ? t("study.savedTitle") : fmt(t("study.chapter"), { n: pad2(s.ch) });
     const locked = s.checked;
+    const order = s.optOrder[s.i];
     const result = locked ? (s.chosen === q.answer ? "ok" : "no") : "";
 
     return (
@@ -290,9 +298,10 @@ export function Estudar() {
           <AxonQuestionLink questionId={q.id} lang={lang} />
           <fieldset className="opts" data-locked={locked} aria-label={t("a11y.answer")}>
             <legend className="sr-only">{t("a11y.answer")}</legend>
-            {q.options[lang].map((text, i) => {
-              const isCorrect = locked && i === q.answer;
-              const isWrong = locked && i === s.chosen && s.chosen !== q.answer;
+            {order.map((originalIndex, i) => {
+              const text = q.options[lang][originalIndex];
+              const isCorrect = locked && originalIndex === q.answer;
+              const isWrong = locked && originalIndex === s.chosen && s.chosen !== q.answer;
               const cls = isCorrect ? "opt is-correct" : isWrong ? "opt is-wrong" : "opt";
               const tag = isCorrect ? (
                 <em className="opt-tag is-ok">{t("session.tagCorrect")}</em>
@@ -300,18 +309,18 @@ export function Estudar() {
                 <em className="opt-tag is-no">{t("session.tagYours")}</em>
               ) : null;
               return (
-                <label className={cls} key={q.id + ":" + i}>
+                <label className={cls} key={q.id + ":" + originalIndex}>
                   <input
                     type="radio"
                     name="answer"
-                    value={i}
-                    checked={s.chosen === i}
+                    value={originalIndex}
+                    checked={s.chosen === originalIndex}
                     disabled={locked}
                     ref={i === 0 ? firstOptRef : undefined}
                     onChange={() => {
                       /* trocar de alternativa restaura a dica K */
                       setHint(null);
-                      setSession((prev) => (prev ? { ...prev, chosen: i } : prev));
+                      setSession((prev) => (prev ? { ...prev, chosen: originalIndex } : prev));
                     }}
                   />
                   <span className="opt-key" aria-hidden="true">
