@@ -22,6 +22,7 @@
 import { useEffect, useReducer, useRef, useState } from "react";
 import { clearExamDraft, fmt, loadExamDraft, pad2, saveExamDraft, useSynapse } from "../store";
 import type { Cert, ExamDraft, Question } from "../types";
+import { AxonQuestionLink } from "../components/AxonQuestionLink";
 import { ViewFoot } from "./Hoje";
 
 const LETTERS = ["A", "B", "C", "D", "E"];
@@ -1254,6 +1255,7 @@ export function Simulado() {
                       <span className={"sr-status " + (ok ? "ok" : "no")}>{ok ? "✓" : "✗"}</span>
                     </header>
                     <p className="sr-q">{q.q[lang]}</p>
+                    <AxonQuestionLink questionId={q.id} lang={lang} />
                     <p className={"sr-a " + (ok ? "ok" : "no")}>
                       {ok ? "✓" : "✗"} {t("yourAnswer")} {chosenText || t("notAnswered")}
                     </p>
@@ -1387,6 +1389,7 @@ export function Simulado() {
         <h1 className="q-title" id="qTitle" tabIndex={-1}>
           {q.q[lang]}
         </h1>
+        <AxonQuestionLink questionId={q.id} lang={lang} />
         <p className="sim-q-meta">
           <span className="sim-q-ch">{chapterName}</span>
           <span className={"sim-q-k k" + q.k}>K{q.k}</span>

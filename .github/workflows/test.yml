@@ -16,6 +16,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           repository: ironidesflj/ctfl-question-bank-ptbr
+          ref: main
           path: bank
       - uses: actions/setup-python@v5
         with:
@@ -34,6 +35,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           repository: ironidesflj/ctfl-question-bank-ptbr
+          ref: main
           path: bank
       - uses: actions/setup-node@v4
         with:

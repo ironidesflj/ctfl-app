@@ -896,26 +896,26 @@
       "answer": 3,
       "ref": "ISTQB CTFL v4.0 · cap. 1",
       "q": {
-        "pt": "Qual o impacto de defeitos encontrados em produção comparado a defeitos encontrados em requisitos?",
-        "en": "What is the impact of defects found in production compared to defects found in requirements?"
+        "pt": "Em geral, qual é a tendência do custo de corrigir um defeito quando ele é descoberto mais tarde no ciclo de desenvolvimento?",
+        "en": "In general, what is the likely trend in the cost of fixing a defect when it is discovered later in the development lifecycle?"
       },
       "options": {
         "pt": [
           "O custo de correção de um defeito é o mesmo nas fases do projeto, sem variação",
           "O impacto financeiro dos defeitos é frequentemente irrelevante para o sucesso do projeto",
           "Defeitos encontrados em produção sempre são mais fáceis de corrigir que em requisitos",
-          "Defeitos em produção são muito mais caros de corrigir — o custo cresce a cada fase que passa"
+          "A correção pode custar mais quando o defeito é descoberto tardiamente, pois seus efeitos podem ter se propagado"
         ],
         "en": [
           "The cost of fixing a defect is the same at phases of the project, with no variation",
           "The financial impact of defects is frequently irrelevant to the success of the project",
           "Defects found in production are always easier to fix than in requirements",
-          "Defects in production are much more expensive to fix — the cost grows with each phase that passes"
+          "Fixing it may cost more when it is discovered late, because its effects may have spread"
         ]
       },
       "exp": {
-        "pt": "O custo de correção aumenta exponencialmente com a fase: defeitos em requisitos custam muito menos que em produção.",
-        "en": "The cost of fixing increases exponentially by phase: defects in requirements cost much less than in production."
+        "pt": "Encontrar defeitos cedo pode evitar sua propagação para outros produtos de trabalho e reduzir retrabalho. O custo depende do contexto; não há uma taxa universal de crescimento.",
+        "en": "Finding defects early can prevent them from spreading to other work products and reduce rework. Cost depends on context; there is no universal growth rate."
       }
     },
     {
@@ -1623,26 +1623,26 @@
       "answer": 2,
       "ref": "ISTQB CTFL v4.0 · cap. 2",
       "q": {
-        "pt": "Em projetos ágeis com iterações curtas, qual nível de teste é mais desafiador de executar dentro do sprint?",
-        "en": "In agile projects with short iterations, which test level is most challenging to execute within the sprint?"
+        "pt": "Em um sprint curto, a integração só ocorre no fim e testes ponta a ponta demoram mais que testes unitários. Qual nível tende a ser mais difícil concluir?",
+        "en": "In a short sprint, integration occurs only at the end and end-to-end tests take longer than unit tests. Which level tends to be harder to finish?"
       },
       "options": {
         "pt": [
           "Teste de componente (unitário), por ser o mais simples no sprint em si",
           "Revisões de código realizadas pelos próprios desenvolvedores no sprint",
-          "Teste de sistema e de aceitação completos, por exigirem integração e tempo maiores",
+          "Teste de sistema e aceitação completos, pois dependem da integração tardia e de mais tempo de execução",
           "Testes de regressão unitários frequentemente executados automaticamente no CI"
         ],
         "en": [
           "Component (unit) testing, as it is the simplest within the sprint itself",
           "Code reviews carried out by the developers themselves during the sprint",
-          "Complete system and acceptance testing, as they require more integration and time",
+          "Complete system and acceptance testing, because they depend on late integration and longer execution time",
           "Automated unit regression tests frequently run in the project CI pipeline"
         ]
       },
       "exp": {
-        "pt": "Testes de sistema e aceitação requerem integração e cenários end-to-end, o que pode ser difícil de concluir dentro de um sprint curto.",
-        "en": "System and acceptance tests require integration and end-to-end scenarios, which can be hard to complete within a short sprint."
+        "pt": "Neste cenário específico, a integração tardia e a duração dos fluxos completos dificultam concluir testes de sistema e aceitação no sprint. Em outros projetos a dificuldade pode ser diferente.",
+        "en": "In this specific scenario, late integration and the duration of full flows make system and acceptance testing harder to finish within the sprint. Other projects may have different constraints."
       }
     },
     {
@@ -4207,8 +4207,8 @@
       "answer": 0,
       "ref": "ISTQB CTFL v4.0 · cap. 4",
       "q": {
-        "pt": "Um time de teste está desenhando testes para um sistema de reserva de hotéis. Eles querem testar fluxos completos de negócio de ponta a ponta da perspectiva de um hóspede, como \"Hóspede pesquisa quartos disponíveis, seleciona um quarto, informa dados de pagamento e recebe um e-mail de confirmação\". Qual técnica de teste está mais diretamente alinhada com esse objetivo?",
-        "en": "A test team is designing tests for a hotel booking system. They want to test complete end-to-end business flows from a guest's perspective, such as \"Guest searches for available rooms, selects a room, enters payment details, and receives a confirmation email.\" Which test technique is most directly aligned with this goal?"
+        "pt": "Conteúdo complementar — casos de uso não são cobrados no CTFL v4.0.1. Um time de teste está desenhando testes para um sistema de reserva de hotéis. Eles querem testar fluxos completos de negócio de ponta a ponta da perspectiva de um hóspede, como \"Hóspede pesquisa quartos disponíveis, seleciona um quarto, informa dados de pagamento e recebe um e-mail de confirmação\". Qual técnica de teste está mais diretamente alinhada com esse objetivo?",
+        "en": "Supplementary material — use cases are outside the CTFL v4.0.1 exam scope. A test team is designing tests for a hotel booking system. They want to test complete end-to-end business flows from a guest's perspective, such as \"Guest searches for available rooms, selects a room, enters payment details, and receives a confirmation email.\" Which test technique is most directly aligned with this goal?"
       },
       "options": {
         "pt": [
@@ -4225,8 +4225,8 @@
         ]
       },
       "exp": {
-        "pt": "O teste baseado em casos de uso (use case testing) é projetado para exercitar fluxos completos de interação entre atores e o sistema, do início ao fim, frequentemente cobrindo cenários alternativos e de exceção além do caminho principal. Esse alinhamento com a perspectiva do ator em fluxos de negócio de ponta a ponta é a característica definidora do teste baseado em casos de uso. As outras opções são técnicas que focam em outros aspectos: instrução (código-fonte), EP (entradas isoladas) e branch (decisões no código).",
-        "en": "Use case testing is designed to exercise complete interaction flows between actors and the system, from start to finish, often covering alternate and exception scenarios in addition to the main path. This alignment with the actor's perspective on end-to-end business flows is the defining characteristic of use case testing. The other options are techniques that focus on other aspects: statement (source code), EP (isolated inputs), and branch (decisions in code)."
+        "pt": "O teste baseado em casos de uso (use case testing) é projetado para exercitar fluxos completos de interação entre atores e o sistema, do início ao fim, frequentemente cobrindo cenários alternativos e de exceção além do caminho principal. Esse alinhamento com a perspectiva do ator em fluxos de negócio de ponta a ponta é a característica definidora do teste baseado em casos de uso. As outras opções são técnicas que focam em outros aspectos: instrução (código-fonte), EP (entradas isoladas) e branch (decisões no código). O tema é tratado em CTAL-TA v4.0, §3.2.3.",
+        "en": "Use case testing is designed to exercise complete interaction flows between actors and the system, from start to finish, often covering alternate and exception scenarios in addition to the main path. This alignment with the actor's perspective on end-to-end business flows is the defining characteristic of use case testing. The other options are techniques that focus on other aspects: statement (source code), EP (isolated inputs), and branch (decisions in code). This topic is covered in CTAL-TA v4.0, §3.2.3."
       }
     },
     {
@@ -4400,8 +4400,8 @@
       "answer": 3,
       "ref": "ISTQB CTFL v4.0 · cap. 4",
       "q": {
-        "pt": "No teste baseado em casos de uso, um caso de uso tipicamente define:",
-        "en": "In use case testing, a use case typically defines:"
+        "pt": "Conteúdo complementar — casos de uso não são cobrados no CTFL v4.0.1. No teste baseado em casos de uso, um caso de uso tipicamente define:",
+        "en": "Supplementary material — use cases are outside the CTFL v4.0.1 exam scope. In use case testing, a use case typically defines:"
       },
       "options": {
         "pt": [
@@ -4418,8 +4418,8 @@
         ]
       },
       "exp": {
-        "pt": "Um caso de uso descreve interações entre um ator (humano ou sistema externo) e o sistema, que produzem um resultado de valor para o ator ou para o sistema. Casos de uso capturam requisitos comportamentais do ponto de vista do usuário, frequentemente com um caminho principal e caminhos alternativos. As as demais opções descrevem outros conceitos: valor de entrada isolado, instruções de código e transições de estados internos — nenhum deles é a definição de caso de uso.",
-        "en": "A use case describes interactions between an actor (human or external system) and the system that produce a result of value to the actor or to the system. Use cases capture behavioral requirements from the user's perspective, often with a main path and alternate paths. The other options, and C describe other concepts: isolated input value, code statements, and internal state transitions — none of which is the definition of a use case."
+        "pt": "Um caso de uso descreve interações entre um ator (humano ou sistema externo) e o sistema, que produzem um resultado de valor para o ator ou para o sistema. Casos de uso capturam requisitos comportamentais do ponto de vista do usuário, frequentemente com um caminho principal e caminhos alternativos. As demais opções descrevem outros conceitos: valor de entrada isolado, instruções de código e transições de estados internos — nenhum deles é a definição de caso de uso. O tema é tratado em CTAL-TA v4.0, §3.2.3.",
+        "en": "A use case describes interactions between an actor (human or external system) and the system that produce a result of value to the actor or to the system. Use cases capture behavioral requirements from the user's perspective, often with a main path and alternate paths. The other options describe other concepts: isolated input value, code statements, and internal state transitions — none of which is the definition of a use case. This topic is covered in CTAL-TA v4.0, §3.2.3."
       }
     },
     {

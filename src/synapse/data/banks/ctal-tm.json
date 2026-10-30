@@ -1249,26 +1249,26 @@
       "answer": 0,
       "ref": "ISTQB CTAL-TM v3.0 · cap. 1",
       "q": {
-        "pt": "Um Gerente de Teste está priorizando riscos e usa uma escala de 1–5 para probabilidade e uma escala de 1–5 para impacto, multiplicando-as para obter uma pontuação de risco. Segundo o syllabus CTAL-TM v3.0, qual afirmação MELHOR descreve essa abordagem?",
-        "en": "A Test Manager is prioritizing risks and uses a 1–5 scale for likelihood and a 1–5 scale for impact, multiplying them to get a risk score. According to the CTAL-TM v3.0 syllabus, which statement BEST describes this approach?"
+        "pt": "Com dados extensos e estatisticamente válidos, um gerente estima probabilidade de 20% e impacto de R$ 10.000 para um risco. Segundo o CTAL-TM v3.0, qual abordagem quantitativa é adequada?",
+        "en": "Using extensive and statistically valid data, a manager estimates a risk likelihood of 20% and an impact of $10,000. Under CTAL-TM v3.0, which quantitative approach is appropriate?"
       },
       "options": {
         "pt": [
-          "É um método quantitativo comum para combinar probabilidade e impacto e determinar o nível de risco, consistente com a orientação do syllabus de que o nível depende de ambos os fatores",
-          "O Gerente de Teste deve evitar esse método, pois o syllabus exige que a avaliação do nível de risco seja estritamente qualitativa, sem pontuações numéricas atribuídas à probabilidade ou ao impacto dos riscos",
-          "A multiplicação em escalas de 1 a 5 produz classificação automática, e o Gerente de Teste deve aplicar os cortes padronizados definidos pelo syllabus, sem ajuste pelo contexto do projeto em análise",
-          "O produto mede essencialmente o impacto, porque a escala de probabilidade atua como fator de correção que altera pouco a pontuação final de risco obtida na multiplicação"
+          "Combinar probabilidade e impacto: 0,20 × R$ 10.000 = R$ 2.000 de impacto esperado estimado",
+          "Evitar qualquer cálculo, pois o syllabus exige que toda avaliação de risco seja exclusivamente qualitativa",
+          "Aplicar obrigatoriamente cortes universais fixados pelo syllabus, independentemente do contexto",
+          "Ignorar a probabilidade e usar apenas o impacto de R$ 10.000 como valor esperado"
         ],
         "en": [
-          "It is a common quantitative method for combining likelihood and impact to determine risk level, consistent with the syllabus guidance that the level depends on both factors",
-          "The Test Manager must avoid this method, because the syllabus requires risk level assessment to be strictly qualitative, with no numeric scores assigned to the likelihood or the impact of risks",
-          "Multiplying 1 to 5 scales yields an automatic classification, and the Test Manager must apply the standardized thresholds defined by the syllabus, without adjustment for the project context",
-          "The product essentially measures impact, because the likelihood scale acts as a correction factor that barely changes the final risk score obtained from the multiplication"
+          "Combine likelihood and impact: 0.20 × $10,000 = $2,000 estimated expected impact",
+          "Avoid all calculations because the syllabus requires every risk assessment to be exclusively qualitative",
+          "Apply universal thresholds mandated by the syllabus regardless of project context",
+          "Ignore likelihood and use only the $10,000 impact as the expected value"
         ]
       },
       "exp": {
-        "pt": "O syllabus descreve métodos qualitativos e quantitativos para avaliar o nível de risco. Multiplicar probabilidade × impacto é uma abordagem quantitativa comum, consistente com isso. O syllabus não exige avaliação estritamente qualitativa, não define cortes padronizados de pontuação e o produto matemático preserva a contribuição dos dois fatores.",
-        "en": "The syllabus describes both qualitative and quantitative methods for assessing risk level. Multiplying likelihood × impact is a common quantitative approach consistent with this. The syllabus does not mandate qualitative-only assessment, defines no standardized score thresholds, and the mathematical product preserves the contribution of both factors."
+        "pt": "Com dados extensos e estatisticamente válidos, o syllabus admite avaliação quantitativa pela combinação de probabilidade e impacto. Neste exemplo, 20% × R$ 10.000 = R$ 2.000. Sem tais dados, a avaliação geralmente é qualitativa e relativa.",
+        "en": "With extensive and statistically valid data, the syllabus permits a quantitative assessment combining likelihood and impact. Here 20% × $10,000 = $2,000. Without such data, the assessment is generally qualitative and relative."
       }
     },
     {

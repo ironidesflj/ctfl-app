@@ -10,6 +10,7 @@
 import { useEffect, useRef, useState } from "react";
 import { fmt, pad2, useSynapse } from "../store";
 import type { Question } from "../types";
+import { AxonQuestionLink } from "../components/AxonQuestionLink";
 import { ViewFoot } from "./Hoje";
 
 interface SessionState {
@@ -286,6 +287,7 @@ export function Estudar() {
           <h1 className="q-title" id="qTitle" tabIndex={-1}>
             {q.q[lang]}
           </h1>
+          <AxonQuestionLink questionId={q.id} lang={lang} />
           <fieldset className="opts" data-locked={locked} aria-label={t("a11y.answer")}>
             <legend className="sr-only">{t("a11y.answer")}</legend>
             {q.options[lang].map((text, i) => {
