@@ -128,7 +128,9 @@ export function Estudar() {
     ss.announce(
       (ok ? t("session.correct") : t("session.wrong")) +
         ". " +
-        fmt(t("session.rightIs"), { letter: String.fromCharCode(65 + s.optOrder[s.i].indexOf(q.answer)) })
+        fmt(t("session.rightIs"), {
+          letter: String.fromCharCode(65 + s.optOrder[s.i].indexOf(q.answer)),
+        })
     );
   }
 
