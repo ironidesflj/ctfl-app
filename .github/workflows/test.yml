@@ -31,11 +31,23 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          repository: ironidesflj/ctfl-question-bank-ptbr
+          path: bank
       - uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: npm
       - run: npm ci
+      - name: Generate and validate Axon preview manifest
+        run: npm run axon:preview -- bank
+      - uses: actions/upload-artifact@v4
+        with:
+          name: axon-manifest-preview
+          path: ${{ runner.temp }}/synapse-axon-preview-*/manifest.jsonl
+          if-no-files-found: error
+          retention-days: 7
       - run: npm run lint
       - run: npm run format:check
       - run: npm run test
