@@ -9,6 +9,39 @@ servem esse manifesto.
 
 ## Estado e limites
 
+### Escopo do banco inteiro (não é o escopo do lote atual)
+
+O banco canônico contém 1.100 questões: 300 CTFL, 200 CTFL-AT, 200 CTAL-TA,
+200 CTAL-TM e 200 CT-AI. A partição atual registra 431 questões de estudo nas
+três provas ativas (CTFL 220, CTAL-TA 110, CTAL-TM 101), 269 questões
+exclusivas de simulado (80 + 90 + 99) e 400 questões de CTFL-AT/CT-AI, fora do
+escopo ativo atual. Os pools de simulado ficam permanentemente fora de qualquer
+manifesto público.
+
+O plano de cinco fatias abaixo descreve **uma integração técnica e seu primeiro
+lote**, não cinco etapas para processar as 1.100 questões. Até agora, somente
+50 IDs CTFL foram reservadas; 48 snapshots CTFL estão no preview. Restam 170
+questões no pool de estudo CTFL, além de 110 CTAL-TA e 101 CTAL-TM, sem IDs
+públicas reservadas. As 400 questões CTFL-AT/CT-AI também não têm IDs públicas;
+essas certificações estão fora do escopo ativo atual. Nada disso está aprovado
+para publicação neste lote. Uma expansão futura começa por lotes definidos e
+autorizados separadamente; não exige reler manualmente todo o banco para
+concluir o lote atual.
+
+### Andamento do lote CTFL inicial
+
+| Fatia | Escopo                                            | Estado                                         |
+| ----- | ------------------------------------------------- | ---------------------------------------------- |
+| 1     | Dependência Axon pinada, sem uso em produção      | Integrada (PR #12)                             |
+| 2     | Reservar 50 IDs para CTFL de estudo               | Integrada no banco (PR #1)                     |
+| 3     | Gerar/validar snapshot PT-BR e checksum           | Preview de 48 válido; 2 retidos                |
+| 4     | Rodar preview em CI e guardar artefato temporário | Checks passaram no PR #14; integração pendente |
+| 5     | Publicar no hub e exibir links no app             | Ainda não iniciada                             |
+
+As duas retenções e demais dúvidas editoriais ficam numa fila final; não são
+pré-requisito para avançar a preparação mecânica dos demais itens. Nenhum
+conteúdo do lote está servido pelo app ou pelo hub.
+
 - `@ironidesflj/axon@0.2.2` é a versão publicada e registrada pelo Noos.
   A assinatura real de `verifyChecksum` é `verifyChecksum(record)`; os exemplos
   de duas chamadas no guia publicado estão incorretos.
@@ -45,9 +78,10 @@ servem esse manifesto.
    incrementar a versão sem trocar a ID.
 4. **Fatia 4 — manifesto em CI.** A prévia gera JSONL somente em diretório
    temporário, exige zero rejeições e checksum válido e guarda o artefato por
-   sete dias. Ainda falta aprovação editorial final e revisão do artefato.
-   Só depois desses gates o arquivo poderá ser servido pelo app e entregue ao
-   repositório do hub. A publicação de ID é irreversível.
+   sete dias. O preview mecânico passou no PR #14; integração ainda pendente.
+   As dúvidas editoriais permanecem para o gate final. Só depois desses gates
+   o arquivo poderá ser servido pelo app e entregue ao repositório do hub. A
+   publicação de ID é irreversível.
 5. **Fatia 5 — link visível.** Após o hub responder 200 para todas as IDs do
    lote, exibir a ID e o link canônico nas questões correspondentes. Sem fetch
    ao hub em runtime. Validar PT/EN, mobile, offline e fallback de domínio.
