@@ -1,5 +1,10 @@
 # Axon no Synapse — plano auditado em 2026-10-30
 
+Fatia 1 integrada na `main` do app (PR #12). Fatia 2 integrada na `main` do
+banco canônico (PR #1): 50 pares `internalId -> publicId`, com validador no CI.
+As IDs internas e o conteúdo das questões permanecem intactos. Snapshot,
+manifesto e badge ainda aguardam referência editorial e seus gates próprios.
+
 ## Estado e limites
 
 - `@ironidesflj/axon@0.2.2` é a versão publicada e registrada pelo Noos.
