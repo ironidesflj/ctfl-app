@@ -6,9 +6,10 @@
   `@ironidesflj/axon@0.2.2`. O pacote ainda não é importado pelo app.
   A fatia 2 reservou 50 IDs públicas para questões CTFL de estudo em PT-BR
   no repositório canônico do banco (PR #1), sem alterar as IDs internas ou o
-  progresso dos alunos. Nenhum snapshot ou manifesto foi publicado. A escolha
-  das referências editoriais antecede a próxima fatia; auditoria e sequência
-  segura em `axon-adoption-plan.md`.
+  progresso dos alunos. A prévia gera 48 snapshots em diretório temporário,
+  valida o parser/checksum Axon e deixa duas IDs retidas fora do manifesto.
+  O CI guarda a prévia por sete dias; nada foi publicado no hub. Auditoria e
+  sequência segura em `axon-adoption-plan.md`.
 - Synapse 4.1.0 Vite integrada à `main` no PR #9 (`143f6ae`). CTFL, CTAL-TA e
   CTAL-TM estão disponíveis; a dívida editorial de CTAL-TM continua aberta.
 - A primeira visita mostra a abertura completa e o onboarding uma vez; a aba

@@ -2,8 +2,10 @@
 
 Fatia 1 integrada na `main` do app (PR #12). Fatia 2 integrada na `main` do
 banco canônico (PR #1): 50 pares `internalId -> publicId`, com validador no CI.
-As IDs internas e o conteúdo das questões permanecem intactos. Snapshot,
-manifesto e badge ainda aguardam referência editorial e seus gates próprios.
+As IDs internas e o conteúdo das questões permanecem intactos. A prévia de
+F3/F4 valida 48 registros Axon em diretório temporário e artefato CI de sete
+dias; duas IDs continuam retidas por pendências editoriais. O hub e o app não
+servem esse manifesto.
 
 ## Estado e limites
 
@@ -37,15 +39,15 @@ manifesto e badge ainda aguardam referência editorial e seus gates próprios.
    O gerador deve recusar colisões, mudanças de mapeamento e qualquer item do
    pool `exam`. Flag de build desativada por padrão; revisar o diff do lote
    antes de tornar qualquer ID pública.
-3. **Fatia 3 — snapshot e integridade.** Definir o idioma e a referência do
-   lote. Gerar `version: 1` e checksum sobre o snapshot com o Axon; em edições,
-   incrementar a versão e recalcular o checksum sem alterar a ID. Testar
-   mutação, checksum inválido e estabilidade do mapeamento.
-4. **Fatia 4 — manifesto em CI.** Gerar um `manifest.jsonl` só das questões
-   aprovadas, com `aliases: []`, parsear e verificar cada registro no CI.
-   Publicar primeiro como artefato de CI para revisão. Só depois de confirmar
-   conteúdo, licenças, idioma, referências e IDs, servir o arquivo e entregá-lo
-   ao repositório do hub. A publicação de ID é irreversível.
+3. **Fatia 3 — snapshot e integridade.** Prévia PT-BR de 48 candidatas com
+   `version: 1`, resposta em letra e checksum calculado/verificado pelo Axon.
+   As duas questões retidas não entram na prévia. Uma futura edição deve
+   incrementar a versão sem trocar a ID.
+4. **Fatia 4 — manifesto em CI.** A prévia gera JSONL somente em diretório
+   temporário, exige zero rejeições e checksum válido e guarda o artefato por
+   sete dias. Ainda falta aprovação editorial final e revisão do artefato.
+   Só depois desses gates o arquivo poderá ser servido pelo app e entregue ao
+   repositório do hub. A publicação de ID é irreversível.
 5. **Fatia 5 — link visível.** Após o hub responder 200 para todas as IDs do
    lote, exibir a ID e o link canônico nas questões correspondentes. Sem fetch
    ao hub em runtime. Validar PT/EN, mobile, offline e fallback de domínio.

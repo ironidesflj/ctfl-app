@@ -9,5 +9,6 @@ public/*.png
 index.html
 test-results
 playwright-report
+bank/
 docs/sdd/Archive/
 docs/archive/
