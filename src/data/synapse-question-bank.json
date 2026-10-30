@@ -2,7 +2,7 @@
  "meta": {
   "title": "Synapse — Multi-Certification Question Bank",
   "description": "Banco de questões profissional bilíngue (EN/PT-BR) para certificações ISTQB",
-  "version": "1.7.0-rc1",
+  "version": "1.7.1",
   "generatedDate": "2026-10-25",
   "totalQuestions": 1100,
   "availableLanguages": [
@@ -1524,24 +1524,24 @@
    "answer": 3,
    "locales": {
     "pt": {
-     "q": "Qual o impacto de defeitos encontrados em produção comparado a defeitos encontrados em requisitos?",
+     "q": "Em geral, qual é a tendência do custo de corrigir um defeito quando ele é descoberto mais tarde no ciclo de desenvolvimento?",
      "options": [
       "O custo de correção de um defeito é o mesmo nas fases do projeto, sem variação",
       "O impacto financeiro dos defeitos é frequentemente irrelevante para o sucesso do projeto",
       "Defeitos encontrados em produção sempre são mais fáceis de corrigir que em requisitos",
-      "Defeitos em produção são muito mais caros de corrigir — o custo cresce a cada fase que passa"
+      "A correção pode custar mais quando o defeito é descoberto tardiamente, pois seus efeitos podem ter se propagado"
      ],
-     "exp": "O custo de correção aumenta exponencialmente com a fase: defeitos em requisitos custam muito menos que em produção."
+     "exp": "Encontrar defeitos cedo pode evitar sua propagação para outros produtos de trabalho e reduzir retrabalho. O custo depende do contexto; não há uma taxa universal de crescimento."
     },
     "en": {
-     "q": "What is the impact of defects found in production compared to defects found in requirements?",
+     "q": "In general, what is the likely trend in the cost of fixing a defect when it is discovered later in the development lifecycle?",
      "options": [
       "The cost of fixing a defect is the same at phases of the project, with no variation",
       "The financial impact of defects is frequently irrelevant to the success of the project",
       "Defects found in production are always easier to fix than in requirements",
-      "Defects in production are much more expensive to fix — the cost grows with each phase that passes"
+      "Fixing it may cost more when it is discovered late, because its effects may have spread"
      ],
-     "exp": "The cost of fixing increases exponentially by phase: defects in requirements cost much less than in production."
+     "exp": "Finding defects early can prevent them from spreading to other work products and reduce rework. Cost depends on context; there is no universal growth rate."
     }
    },
    "cert": "CTFL",
@@ -2082,24 +2082,24 @@
    "answer": 2,
    "locales": {
     "pt": {
-     "q": "Em projetos ágeis com iterações curtas, qual nível de teste é mais desafiador de executar dentro do sprint?",
+     "q": "Em um sprint curto, a integração só ocorre no fim e testes ponta a ponta demoram mais que testes unitários. Qual nível tende a ser mais difícil concluir?",
      "options": [
       "Teste de componente (unitário), por ser o mais simples no sprint em si",
       "Revisões de código realizadas pelos próprios desenvolvedores no sprint",
-      "Teste de sistema e de aceitação completos, por exigirem integração e tempo maiores",
+      "Teste de sistema e aceitação completos, pois dependem da integração tardia e de mais tempo de execução",
       "Testes de regressão unitários frequentemente executados automaticamente no CI"
      ],
-     "exp": "Testes de sistema e aceitação requerem integração e cenários end-to-end, o que pode ser difícil de concluir dentro de um sprint curto."
+     "exp": "Neste cenário específico, a integração tardia e a duração dos fluxos completos dificultam concluir testes de sistema e aceitação no sprint. Em outros projetos a dificuldade pode ser diferente."
     },
     "en": {
-     "q": "In agile projects with short iterations, which test level is most challenging to execute within the sprint?",
+     "q": "In a short sprint, integration occurs only at the end and end-to-end tests take longer than unit tests. Which level tends to be harder to finish?",
      "options": [
       "Component (unit) testing, as it is the simplest within the sprint itself",
       "Code reviews carried out by the developers themselves during the sprint",
-      "Complete system and acceptance testing, as they require more integration and time",
+      "Complete system and acceptance testing, because they depend on late integration and longer execution time",
       "Automated unit regression tests frequently run in the project CI pipeline"
      ],
-     "exp": "System and acceptance tests require integration and end-to-end scenarios, which can be hard to complete within a short sprint."
+     "exp": "In this specific scenario, late integration and the duration of full flows make system and acceptance testing harder to finish within the sprint. Other projects may have different constraints."
     }
    },
    "cert": "CTFL",
@@ -8386,24 +8386,24 @@
    "answer": 0,
    "locales": {
     "pt": {
-     "q": "Um time de teste está desenhando testes para um sistema de reserva de hotéis. Eles querem testar fluxos completos de negócio de ponta a ponta da perspectiva de um hóspede, como \"Hóspede pesquisa quartos disponíveis, seleciona um quarto, informa dados de pagamento e recebe um e-mail de confirmação\". Qual técnica de teste está mais diretamente alinhada com esse objetivo?",
+     "q": "Conteúdo complementar — casos de uso não são cobrados no CTFL v4.0.1. Um time de teste está desenhando testes para um sistema de reserva de hotéis. Eles querem testar fluxos completos de negócio de ponta a ponta da perspectiva de um hóspede, como \"Hóspede pesquisa quartos disponíveis, seleciona um quarto, informa dados de pagamento e recebe um e-mail de confirmação\". Qual técnica de teste está mais diretamente alinhada com esse objetivo?",
      "options": [
       "Teste baseado em casos de uso — testa interações entre atores e o sistema em fluxos de ponta a ponta",
       "Teste de instrução — mede a cobertura de instruções de código-fonte do componente em nível de unidade",
       "Particionamento por equivalência — divide entradas em classes de equivalência tipicamente mutuamente exclusivas",
       "Teste de decisão (branch) — exercita os dois resultados possíveis de cada decisão no código-fonte"
      ],
-     "exp": "O teste baseado em casos de uso (use case testing) é projetado para exercitar fluxos completos de interação entre atores e o sistema, do início ao fim, frequentemente cobrindo cenários alternativos e de exceção além do caminho principal. Esse alinhamento com a perspectiva do ator em fluxos de negócio de ponta a ponta é a característica definidora do teste baseado em casos de uso. As outras opções são técnicas que focam em outros aspectos: instrução (código-fonte), EP (entradas isoladas) e branch (decisões no código)."
+     "exp": "O teste baseado em casos de uso (use case testing) é projetado para exercitar fluxos completos de interação entre atores e o sistema, do início ao fim, frequentemente cobrindo cenários alternativos e de exceção além do caminho principal. Esse alinhamento com a perspectiva do ator em fluxos de negócio de ponta a ponta é a característica definidora do teste baseado em casos de uso. As outras opções são técnicas que focam em outros aspectos: instrução (código-fonte), EP (entradas isoladas) e branch (decisões no código). O tema é tratado em CTAL-TA v4.0, §3.2.3."
     },
     "en": {
-     "q": "A test team is designing tests for a hotel booking system. They want to test complete end-to-end business flows from a guest's perspective, such as \"Guest searches for available rooms, selects a room, enters payment details, and receives a confirmation email.\" Which test technique is most directly aligned with this goal?",
+     "q": "Supplementary material — use cases are outside the CTFL v4.0.1 exam scope. A test team is designing tests for a hotel booking system. They want to test complete end-to-end business flows from a guest's perspective, such as \"Guest searches for available rooms, selects a room, enters payment details, and receives a confirmation email.\" Which test technique is most directly aligned with this goal?",
      "options": [
       "Use case testing — tests interactions between actors and the system in end-to-end flows",
       "Statement testing — measures source code statement coverage of the component at the unit level",
       "Equivalence partitioning — divides inputs into typically mutually exclusive equivalence classes",
       "Branch (decision) testing — exercises both possible outcomes of each decision in the source code"
      ],
-     "exp": "Use case testing is designed to exercise complete interaction flows between actors and the system, from start to finish, often covering alternate and exception scenarios in addition to the main path. This alignment with the actor's perspective on end-to-end business flows is the defining characteristic of use case testing. The other options are techniques that focus on other aspects: statement (source code), EP (isolated inputs), and branch (decisions in code)."
+     "exp": "Use case testing is designed to exercise complete interaction flows between actors and the system, from start to finish, often covering alternate and exception scenarios in addition to the main path. This alignment with the actor's perspective on end-to-end business flows is the defining characteristic of use case testing. The other options are techniques that focus on other aspects: statement (source code), EP (isolated inputs), and branch (decisions in code). This topic is covered in CTAL-TA v4.0, §3.2.3."
     }
    },
    "cert": "CTFL",
@@ -8727,24 +8727,24 @@
    "answer": 3,
    "locales": {
     "pt": {
-     "q": "No teste baseado em casos de uso, um caso de uso tipicamente define:",
+     "q": "Conteúdo complementar — casos de uso não são cobrados no CTFL v4.0.1. No teste baseado em casos de uso, um caso de uso tipicamente define:",
      "options": [
       "Um único valor de entrada fornecido ao sistema e sua saída esperada correspondente",
       "Um conjunto de instruções de código que precisam ser executadas juntas para alcançar 100% de cobertura de instruções",
       "Uma série de transições de estados para objetos internos do sistema em seu fluxo de execução",
       "Interações entre um ator e o sistema que produzem um resultado de valor para o ator ou para o sistema"
      ],
-     "exp": "Um caso de uso descreve interações entre um ator (humano ou sistema externo) e o sistema, que produzem um resultado de valor para o ator ou para o sistema. Casos de uso capturam requisitos comportamentais do ponto de vista do usuário, frequentemente com um caminho principal e caminhos alternativos. As as demais opções descrevem outros conceitos: valor de entrada isolado, instruções de código e transições de estados internos — nenhum deles é a definição de caso de uso."
+     "exp": "Um caso de uso descreve interações entre um ator (humano ou sistema externo) e o sistema, que produzem um resultado de valor para o ator ou para o sistema. Casos de uso capturam requisitos comportamentais do ponto de vista do usuário, frequentemente com um caminho principal e caminhos alternativos. As demais opções descrevem outros conceitos: valor de entrada isolado, instruções de código e transições de estados internos — nenhum deles é a definição de caso de uso. O tema é tratado em CTAL-TA v4.0, §3.2.3."
     },
     "en": {
-     "q": "In use case testing, a use case typically defines:",
+     "q": "Supplementary material — use cases are outside the CTFL v4.0.1 exam scope. In use case testing, a use case typically defines:",
      "options": [
       "A single input value provided to the system and its corresponding expected output",
       "A set of code statements that need to be executed together to achieve 100% statement coverage",
       "A series of state transitions for internal system objects in their execution flow",
       "Interactions between an actor and the system that produce a result of value to the actor or to the system"
      ],
-     "exp": "A use case describes interactions between an actor (human or external system) and the system that produce a result of value to the actor or to the system. Use cases capture behavioral requirements from the user's perspective, often with a main path and alternate paths. The other options, and C describe other concepts: isolated input value, code statements, and internal state transitions — none of which is the definition of a use case."
+     "exp": "A use case describes interactions between an actor (human or external system) and the system that produce a result of value to the actor or to the system. Use cases capture behavioral requirements from the user's perspective, often with a main path and alternate paths. The other options describe other concepts: isolated input value, code statements, and internal state transitions — none of which is the definition of a use case. This topic is covered in CTAL-TA v4.0, §3.2.3."
     }
    },
    "cert": "CTFL",
@@ -22419,24 +22419,24 @@
    "section": "5.3",
    "locales": {
     "en": {
-     "q": "A test analyst has categorized the 100 defects found in the last release as follows: User interface defects: 40, Calculation logic defects: 8, Performance defects: 5, Security defects: 3, Documentation defects: 4. Applying Pareto analysis, which conclusion is most defensible?",
+     "q": "An analyst categorized 60 defects: user interface: 40; calculation logic: 8; performance: 5; security: 3; documentation: 4. Based on frequency, which Pareto conclusion is most defensible?",
      "options": [
       "All defect categories should receive equal attention because every defect matters equally regardless of its frequency, business impact, or where in the lifecycle it was detected",
-      "The user interface category accounts for 40% of all defects and is the 'vital few'; focusing improvement and test effort there will yield the largest reduction in defects, while the other categories together form the 'trivial many'",
-      "Security defects, although few at 3%, must be the sole priority because security is always the most critical concern in any software release, regardless of frequency-driven Pareto logic, ignoring that Pareto prioritizes by frequency, not criticality",
+      "The user interface accounts for 40 of 60 defects (about 67%) and is a priority for investigation, while also considering the severity of the remaining defects",
+      "Security, with 3 defects, must always be the sole priority in every release regardless of context or impact",
       "The data may be insufficient because Pareto analysis requires at least 10 distinct categories to produce a valid and reliable result that supports confident decision-making"
      ],
-     "exp": "Pareto analysis identifies the 'vital few' categories that account for the majority of defects, so effort is focused where it yields the largest reduction. Here UI defects are 40/100 = 40%, clearly the vital few; the remaining four categories are the 'trivial many'. A (equal attention) ignores the 80/20 principle; C over-prioritizes security by criticality rather than frequency (risk-based prioritization is separate from Pareto); D misstates the method (Pareto has no minimum-category requirement)."
+     "exp": "The categories total 60 defects; 40/60 is about 67%. By frequency, the user interface contains the largest share and warrants investigation. The final decision also considers severity and risk; frequency does not make the other defects irrelevant."
     },
     "pt": {
-     "q": "Um analista de teste categorizou os 100 defeitos encontrados no último release da seguinte forma: Defeitos de interface do usuário: 40, Defeitos de lógica de cálculo: 8, Defeitos de performance: 5, Defeitos de segurança: 3, Defeitos de documentação: 4. Aplicando a análise de Pareto, qual conclusão é mais defensável?",
+     "q": "Um analista categorizou 60 defeitos: interface do usuário: 40; lógica de cálculo: 8; performance: 5; segurança: 3; documentação: 4. Pela frequência, qual conclusão da análise de Pareto é mais defensável?",
      "options": [
       "Todas as categorias de defeitos devem receber atenção igual porque cada defeito importa igualmente independentemente de sua frequência, impacto de negócio ou fase do ciclo de vida em que foi detectado",
-      "A categoria de interface do usuário responde por 40% de todos os defeitos e é o 'pouco vital'; focar esforços de melhoria e teste ali renderá a maior redução de defeitos, enquanto as outras categorias juntas formam os 'muitos triviais'",
-      "Defeitos de segurança, embora poucos (3%), devem ser a única prioridade porque segurança é sempre a preocupação mais crítica em qualquer release, independentemente da lógica de Pareto orientada por frequência, ignorando que Pareto prioriza por frequência, não criticalidade",
+      "A interface concentra 40 dos 60 defeitos (aproximadamente 67%) e é candidata prioritária à investigação, considerando também a gravidade dos demais defeitos",
+      "A segurança, com 3 defeitos, deve ser sempre a única prioridade em qualquer release, independentemente do contexto ou impacto",
       "Os dados podem ser insuficientes porque a análise de Pareto exige pelo menos 10 categorias distintas para produzir um resultado válido e confiável que apoie a tomada de decisão com confiança"
      ],
-     "exp": "A análise de Pareto identifica as categorias do 'pouco vital' que respondem pela maioria dos defeitos, de modo que o esforço é focado onde rende a maior redução. Aqui os defeitos de UI são 40/100 = 40%, claramente o pouco vital; as quatro categorias restantes são os 'muitos triviais'. A (atenção igual) ignora o princípio 80/20; C superprioriza segurança por criticalidade em vez de frequência (priorização baseada em risco é separada de Pareto); D declara incorretamente o método (Pareto não tem requisito mínimo de categorias)."
+     "exp": "As categorias somam 60 defeitos; 40/60 é aproximadamente 67%. Pela frequência, a interface concentra a maior parcela e merece investigação. A decisão final também considera severidade e risco; frequência não significa que os demais defeitos sejam irrelevantes."
     }
    },
    "pool": "study"
@@ -22485,24 +22485,24 @@
    "section": "5.3",
    "locales": {
     "en": {
-     "q": "A test analyst tracks defect density (defects per KLOC) for a core module across four iterations: 2.0, 4.0, 7.0, 11.0. The module's code size has been stable, and the test team has not changed its approach. Which inference is most defensible?",
+     "q": "An analyst tracks defects per KLOC for a module across four iterations: 2.0, 4.0, 7.0, 11.0. Code size is stable and the test approach has not changed. What is the most defensible next action?",
      "options": [
       "The test team is improving because more defects are being found in each successive iteration, indicating higher detection effectiveness and progressively greater test coverage of the module's growing functionality over the four iterations under review",
-      "The module is becoming more reliable because defect density is being measured consistently across the four iterations under review, and the act of measuring itself indicates that quality control practices are functioning as intended, ignoring that a rising trend with stable code size signals worsening quality rather than improvement",
+      "Conclude that the module is more reliable merely because density was measured consistently across the four iterations",
       "The rising trend is normal and expected for a stable module with no recent changes, so it likely requires no special corrective action from the team, as fluctuations in defect density naturally occur across iterations even when code is unchanged",
-      "The rising defect density indicates the module is accumulating defects faster than expected — likely due to increasing complexity, technical debt, or unstable dependencies — and the TA should investigate root causes and strengthen testing (and possibly request refactoring) before the trend affects release quality"
+      "Investigate the trend, check whether effort, exposure and counting criteria are comparable, and examine severity and possible causes before concluding quality has worsened"
      ],
-     "exp": "Defect density is a quality signal: a rising trend with stable code size and unchanged test approach indicates the module is becoming more defect-prone (worsening quality), not improving. A confuses 'more found' with 'better testing'; B confuses 'measuring' with 'improving'; C dismisses the signal. The defensible inference is D: investigate root causes and strengthen testing before quality degrades further."
+     "exp": "The trend warrants investigation, but the data do not prove worsening quality or identify its cause. Check measurement comparability and consider test effort, exposure and severity."
     },
     "pt": {
-     "q": "Um analista de teste acompanha a densidade de defeitos (defeitos por KLOC) de um módulo central ao longo de quatro iterações: 2,0; 4,0; 7,0; 11,0. O tamanho do código do módulo está estável e a equipe de teste não mudou sua abordagem. Qual inferência é mais defensável?",
+     "q": "Um analista acompanha a densidade de defeitos por KLOC de um módulo em quatro iterações: 2,0; 4,0; 7,0; 11,0. O tamanho do código está estável e a abordagem de teste não mudou. Qual é a próxima ação mais defensável?",
      "options": [
       "A equipe de teste está melhorando porque mais defeitos estão sendo encontrados em cada iteração sucessiva, indicando maior eficácia de detecção e uma cobertura de teste progressivamente maior da funcionalidade crescente do módulo ao longo das quatro iterações sob revisão",
-      "O módulo está ficando mais confiável porque a densidade de defeitos está sendo medida de forma consistente nas quatro iterações sob revisão, e o próprio ato de medir indica que as práticas de controle de qualidade da equipe estão funcionando conforme o planejado, ignorando que uma tendência ascendente com tamanho de código estável sinaliza piora da qualidade em vez de melhoria",
+      "Concluir que o módulo é mais confiável apenas porque a densidade foi medida consistentemente nas quatro iterações",
       "A tendência ascendente é normal e esperada para um módulo estável sem mudanças recentes, então provavelmente não requer nenhuma ação corretiva especial da equipe, pois flutuações na densidade de defeitos ocorrem naturalmente entre iterações mesmo quando o código está inalterado",
-      "A densidade de defeitos ascendente indica que o módulo está acumulando defeitos mais rápido do que o esperado — provavelmente devido a complexidade crescente, dívida técnica ou dependências instáveis — e o TA deve investigar causas raiz e fortalecer o teste (e possivelmente solicitar refatoração) antes que a tendência afete a qualidade do release"
+      "Investigar a tendência, verificar se esforço, exposição e critérios de contagem são comparáveis e analisar gravidade e possíveis causas antes de concluir que a qualidade piorou"
      ],
-     "exp": "A densidade de defeitos é um sinal de qualidade: uma tendência ascendente com tamanho de código estável e abordagem de teste inalterada indica que o módulo está ficando mais propenso a defeitos (piora da qualidade), não melhorando. A confunde 'mais encontrados' com 'teste melhor'; B confunde 'medir' com 'melhorar'; C descarta o sinal. A inferência defensável é D: investigar causas raiz e fortalecer o teste antes que a qualidade se degrade ainda mais."
+     "exp": "A tendência justifica investigação, mas os dados não provam piora nem identificam a causa. É preciso verificar a comparabilidade das medições e considerar esforço de teste, exposição e gravidade."
     }
    },
    "pool": "study"
@@ -22617,24 +22617,24 @@
    "section": "5.3",
    "locales": {
     "en": {
-     "q": "A test analyst is facilitating a root cause analysis session and constructs a cause-effect (Ishikawa / fishbone) diagram to organize potential causes of a defect. For a software development context, which set of categories is most commonly used to structure the 'bones' of the diagram?",
+     "q": "A team uses the classic 6 Ms as a starting point for a cause-and-effect diagram. Which set matches this model?",
      "options": [
       "People, Process, Technology, and Data — limited to these four high-level categories for software development contexts, with no further subdivision or specialized categories for environment or measurement",
       "Methods, Machines (technology/tools), Materials (inputs/data), Manpower (people), Measurement (metrics), Milieu (environment) — the classic 6 Ms, adapted to software as Methods, Tools, Data/Inputs, People, Measurement, Environment",
       "The seven testing principles, used to organize potential causes according to each principle's contribution to the defect, mapping causes such as 'defect clustering' or 'early testing' to the bones of the fishbone diagram",
       "The five K-levels of Bloom's taxonomy, which may be used to classify causes by the cognitive complexity required to identify them, ordering bones from Remember at the root to Create at the most complex level, which is unrelated to standard Ishikawa categorization"
      ],
-     "exp": "The Ishikawa (fishbone) diagram most commonly structures causes using the 6 Ms: Methods, Machines, Materials, Manpower, Measurement, Milieu (Environment), adapted to software as Methods, Tools, Data/Inputs, People, Measurement, Environment. A is an incomplete four-category list; C and D are unrelated frameworks. Only B is the standard Ishikawa categorization."
+     "exp": "The classic 6 Ms are methods, machines, materials, manpower, measurement and environment. They are a starting point, not mandatory categories; teams can adapt them to the context."
     },
     "pt": {
-     "q": "Um analista de teste está facilitando uma sessão de análise de causa raiz e constrói um diagrama de causa-efeito (Ishikawa / espinha de peixe) para organizar causas potenciais de um defeito. Para um contexto de desenvolvimento de software, qual conjunto de categorias é mais comumente usado para estruturar as 'espinhas' do diagrama?",
+     "q": "Uma equipe usa o modelo clássico dos 6 Ms como ponto de partida em um diagrama de causa e efeito. Qual conjunto corresponde a esse modelo?",
      "options": [
       "Pessoas, Processo, Tecnologia e Dados — limitado a essas quatro categorias de alto nível para contextos de desenvolvimento de software, sem subdivisão adicional ou categorias especializadas para ambiente ou medição",
       "Métodos, Máquinas (tecnologia/ferramentas), Materiais (entradas/dados), Mão de obra (pessoas), Medição (métricas), Meio ambiente (ambiente) — os 6 Ms clássicos, adaptados a software como Métodos, Ferramentas, Dados/Entradas, Pessoas, Medição, Ambiente",
       "Os sete princípios de teste, usados para organizar causas potenciais de acordo com a contribuição de cada princípio para o defeito, mapeando causas como 'agrupamento de defeitos' ou 'teste precoce' para as espinhas do diagrama de espinha de peixe",
       "Os cinco níveis K da taxonomia de Bloom, que podem ser usados para classificar causas pela complexidade cognitiva exigida para identificá-las, ordenando as espinhas de Lembrar na raiz até Criar no nível mais complexo, o que não está relacionado à categorização Ishikawa padrão"
      ],
-     "exp": "O diagrama de Ishikawa (espinha de peixe) mais comumente estrutura causas usando os 6 Ms: Métodos, Máquinas, Materiais, Mão de obra, Medição, Meio ambiente (Ambiente), adaptados a software como Métodos, Ferramentas, Dados/Entradas, Pessoas, Medição, Ambiente. A é uma lista incompleta de quatro categorias; C e D são frameworks não relacionados. Apenas B é a categorização padrão de Ishikawa."
+     "exp": "Os 6 Ms clássicos são métodos, máquinas, materiais, mão de obra, medição e meio ambiente. São um ponto de partida, não categorias obrigatórias: a equipe pode adaptá-las ao contexto."
     }
    },
    "pool": "study"
@@ -26617,24 +26617,24 @@
    "lo": "TM-1.3.3",
    "locales": {
     "en": {
-     "q": "A Test Manager is prioritizing risks and uses a 1–5 scale for likelihood and a 1–5 scale for impact, multiplying them to get a risk score. According to the CTAL-TM v3.0 syllabus, which statement BEST describes this approach?",
+     "q": "Using extensive and statistically valid data, a manager estimates a risk likelihood of 20% and an impact of $10,000. Under CTAL-TM v3.0, which quantitative approach is appropriate?",
      "options": [
-      "It is a common quantitative method for combining likelihood and impact to determine risk level, consistent with the syllabus guidance that the level depends on both factors",
-      "The Test Manager must avoid this method, because the syllabus requires risk level assessment to be strictly qualitative, with no numeric scores assigned to the likelihood or the impact of risks",
-      "Multiplying 1 to 5 scales yields an automatic classification, and the Test Manager must apply the standardized thresholds defined by the syllabus, without adjustment for the project context",
-      "The product essentially measures impact, because the likelihood scale acts as a correction factor that barely changes the final risk score obtained from the multiplication"
+      "Combine likelihood and impact: 0.20 × $10,000 = $2,000 estimated expected impact",
+      "Avoid all calculations because the syllabus requires every risk assessment to be exclusively qualitative",
+      "Apply universal thresholds mandated by the syllabus regardless of project context",
+      "Ignore likelihood and use only the $10,000 impact as the expected value"
      ],
-     "exp": "The syllabus describes both qualitative and quantitative methods for assessing risk level. Multiplying likelihood × impact is a common quantitative approach consistent with this. The syllabus does not mandate qualitative-only assessment, defines no standardized score thresholds, and the mathematical product preserves the contribution of both factors."
+     "exp": "With extensive and statistically valid data, the syllabus permits a quantitative assessment combining likelihood and impact. Here 20% × $10,000 = $2,000. Without such data, the assessment is generally qualitative and relative."
     },
     "pt": {
-     "q": "Um Gerente de Teste está priorizando riscos e usa uma escala de 1–5 para probabilidade e uma escala de 1–5 para impacto, multiplicando-as para obter uma pontuação de risco. Segundo o syllabus CTAL-TM v3.0, qual afirmação MELHOR descreve essa abordagem?",
+     "q": "Com dados extensos e estatisticamente válidos, um gerente estima probabilidade de 20% e impacto de R$ 10.000 para um risco. Segundo o CTAL-TM v3.0, qual abordagem quantitativa é adequada?",
      "options": [
-      "É um método quantitativo comum para combinar probabilidade e impacto e determinar o nível de risco, consistente com a orientação do syllabus de que o nível depende de ambos os fatores",
-      "O Gerente de Teste deve evitar esse método, pois o syllabus exige que a avaliação do nível de risco seja estritamente qualitativa, sem pontuações numéricas atribuídas à probabilidade ou ao impacto dos riscos",
-      "A multiplicação em escalas de 1 a 5 produz classificação automática, e o Gerente de Teste deve aplicar os cortes padronizados definidos pelo syllabus, sem ajuste pelo contexto do projeto em análise",
-      "O produto mede essencialmente o impacto, porque a escala de probabilidade atua como fator de correção que altera pouco a pontuação final de risco obtida na multiplicação"
+      "Combinar probabilidade e impacto: 0,20 × R$ 10.000 = R$ 2.000 de impacto esperado estimado",
+      "Evitar qualquer cálculo, pois o syllabus exige que toda avaliação de risco seja exclusivamente qualitativa",
+      "Aplicar obrigatoriamente cortes universais fixados pelo syllabus, independentemente do contexto",
+      "Ignorar a probabilidade e usar apenas o impacto de R$ 10.000 como valor esperado"
      ],
-     "exp": "O syllabus descreve métodos qualitativos e quantitativos para avaliar o nível de risco. Multiplicar probabilidade × impacto é uma abordagem quantitativa comum, consistente com isso. O syllabus não exige avaliação estritamente qualitativa, não define cortes padronizados de pontuação e o produto matemático preserva a contribuição dos dois fatores."
+     "exp": "Com dados extensos e estatisticamente válidos, o syllabus admite avaliação quantitativa pela combinação de probabilidade e impacto. Neste exemplo, 20% × R$ 10.000 = R$ 2.000. Sem tais dados, a avaliação geralmente é qualitativa e relativa."
     }
    },
    "pool": "study"
