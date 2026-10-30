@@ -11,6 +11,8 @@ recente deste checkout.
 - `current-state.md`: estado verificado e histórico de integrações dos dois
   repositórios.
 - `plan.md`: próximos itens autorizados, adiados e fora de escopo.
+- `axon-adoption-plan.md`: auditoria do dossiê Noos e rollout seguro das cinco
+  fatias, preservando IDs internas e o pool de simulado.
 - `spec-onboarding-reentry.md`: spec histórica reconstruída e fechada.
 - `spec-release-communication.md`: toast técnico + modal de novidades para
   releases significativas.
