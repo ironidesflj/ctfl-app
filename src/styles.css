@@ -1554,6 +1554,34 @@ svg {
   text-wrap: pretty;
 }
 
+.axon-question-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  width: fit-content;
+  max-width: 100%;
+  margin: 9px 0 2px;
+  padding: 6px 9px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface-2);
+  color: var(--muted);
+  font: 600 12px/1.3 var(--f-body);
+  text-decoration: none;
+}
+.axon-question-link:hover {
+  border-color: var(--border-strong);
+  color: var(--fg);
+}
+.axon-question-link code {
+  color: var(--accent-ink);
+  font: 500 11px/1.3 var(--f-mono);
+}
+.axon-question-link:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
 .opts {
   display: grid;
   gap: 8px;

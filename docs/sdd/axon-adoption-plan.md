@@ -1,12 +1,14 @@
 # Axon no Synapse — plano auditado em 2026-10-30
 
-Fatia 1 integrada na `main` do app (PR #12). O primeiro lote de 50 IDs CTFL foi
-integrado na `main` do banco (PR #1). As três rodadas seguintes agora preparam
-as 381 questões restantes dos pools de estudo CTFL, CTAL-TA e CTAL-TM: 431 IDs
-no total, com validação Axon confirmada localmente. A prévia local produz 381
-snapshots válidos em diretório temporário; 50 itens ficam `held` para revisão
-editorial final. A expansão do banco e do CI ainda precisa passar por PRs. O
-hub e o app não servem esse manifesto.
+Fatia 1 integrada na `main` do app (PR #12). As 431 IDs de estudo foram
+reservadas; a expansão está no PR #7 do banco. As 50 retenções foram revistas,
+com as 8 últimas questões corrigidas em PT/EN. A prévia local cobre todas as
+431 IDs, sem questões retidas; IDs internas e índices de resposta foram
+mantidos. Duas questões CTFL sobre casos de uso estão marcadas como conteúdo
+complementar fora do exame CTFL v4.0.1, com fonte avançada CTAL-TA.
+O manifesto e os links estão preparados localmente; CI, Git/deploy e verificação
+HTTP pública continuam pendentes. A revisão está em
+`../ctfl-question-bank-ptbr/editorial/axon-study-reference-review-2026-10-30.md`.
 
 ## Estado e limites
 
@@ -23,24 +25,20 @@ O plano de cinco fatias abaixo descreve **as etapas técnicas da integração**,
 não cinco rodadas de leitura manual das 1.100 questões. As três rodadas de
 expansão deste escopo foram organizadas por prova: CTFL (170 restantes),
 CTAL-TA (110) e CTAL-TM (101). Com o primeiro lote CTFL de 50, cobrem os 431
-itens de estudo das provas ativas. A triagem automática encontrou 381
-referências candidatas e 50 dúvidas `held`, reunidas em fila para a revisão
-editorial final. As 400 questões CTFL-AT/CT-AI continuam fora do escopo ativo;
+itens de estudo das provas ativas. A triagem automática encontrou 431 referências candidatas após revisão e correção das 50 retenções; nenhuma permanece `held`. As 400 questões CTFL-AT/CT-AI continuam fora do escopo ativo;
 as 269 questões de simulado ficam permanentemente excluídas.
 
 ### Andamento da integração Axon (escopo ativo)
 
-| Fatia | Escopo                                            | Estado                                                         |
-| ----- | ------------------------------------------------- | -------------------------------------------------------------- |
-| 1     | Dependência Axon pinada, sem uso em produção      | Integrada (PR #12)                                             |
-| 2     | Reservar IDs estáveis para pools de estudo ativos | 50 integradas (PR #1); expansão de 381 no PR #7 do banco       |
-| 3     | Gerar/validar snapshots PT-BR e checksum          | 381 previews válidos localmente; 50 `held`                     |
-| 4     | Rodar preview em CI e guardar artefato temporário | Atualização para 381 pendente no CI/PR do app                  |
-| 5     | Publicar no hub e exibir links no app             | Não iniciada; aguarda gate editorial e publicação do manifesto |
+| Fatia | Escopo                                            | Estado                                                   |
+| ----- | ------------------------------------------------- | -------------------------------------------------------- |
+| 1     | Dependência Axon pinada, sem uso em produção      | Integrada (PR #12)                                       |
+| 2     | Reservar IDs estáveis para pools de estudo ativos | 50 integradas (PR #1); expansão de 381 no PR #7 do banco |
+| 3     | Gerar/validar snapshots PT-BR e checksum          | 431 previews válidos localmente; nenhum `held`           |
+| 4     | Rodar preview em CI e guardar artefato temporário | Atualização para 431 pendente no CI/PR do app            |
+| 5     | Preparar manifesto no hub e links no app          | Preparado localmente para 431; sem integração/deploy     |
 
-As 50 retenções e demais dúvidas editoriais ficam numa fila final; elas não
-bloqueiam a preparação mecânica dos outros itens. Nenhum conteúdo está servido
-pelo app ou pelo hub.
+Nenhuma questão permanece retida. Nenhum conteúdo novo foi servido pelo app/hub em produção.
 
 - `@ironidesflj/axon@0.2.2` é a versão publicada e registrada pelo Noos.
   A assinatura real de `verifyChecksum` é `verifyChecksum(record)`; os exemplos
@@ -60,8 +58,8 @@ pelo app ou pelo hub.
 - O parser do Axon aceita uma linha por ID; repetir a mesma ID em PT e EN
   rejeita a segunda linha. A primeira publicação precisa escolher um idioma
   canônico por questão. O snapshot PT-BR é a proposta inicial para CTFL.
-- As questões atuais não têm uma referência oficial específica por item.
-  Antes de publicar snapshots, revisar a referência a exibir no hub.
+- As 431 referências candidatas foram revisadas individualmente e têm fonte
+  específica no ledger. As duas questões CTFL sobre casos de uso indicam explicitamente seu caráter complementar e apontam para o syllabus avançado.
 
 ## Sequência de implementação
 
@@ -72,19 +70,22 @@ pelo app ou pelo hub.
    canônica, reservar IDs para CTFL, CTAL-TA e CTAL-TM de estudo. Preservar as
    IDs internas e registrar `lastIssued` por prova. A guarda deve recusar
    colisões, remapeamentos e qualquer questão do pool `exam`.
-3. **Fatia 3 — snapshot e integridade.** Gerar prévia PT-BR das 381 candidatas
+3. **Fatia 3 — snapshot e integridade.** Gerar prévia PT-BR das 431 candidatas
    com `version: 1`, resposta em letra e checksum calculado/verificado pelo
-   Axon. Os 50 itens `held` ficam fora do manifesto.
+   Axon. Não há itens `held`.
 4. **Fatia 4 — manifesto em CI.** A prévia gera JSONL somente em diretório
    temporário, exige zero rejeições e checksum válido e guarda o artefato por
-   sete dias. A validação local de 381 snapshots passou; o CI precisa rodar na
-   atualização do PR do app. As dúvidas editoriais ficam para o gate final.
-   Somente após aprovação editorial e publicação no hub o arquivo poderá ser
-   servido pelo app. IDs reservadas não significam conteúdo publicado.
-5. **Fatia 5 — link visível.** Após o hub responder 200 para todas as IDs do
-   lote, exibir a ID e o link canônico nas questões correspondentes. Sem fetch
-   ao hub em runtime. Validar PT/EN, mobile, offline e fallback de domínio.
+   sete dias. A validação local de 431 snapshots passou; o CI precisa rodar na
+   atualização do PR do app. O arquivo cobre as 431 questões de estudo. No
+   lançamento, publicar primeiro o manifesto do hub (ou coordenar as duas
+   publicações) para que o app não mostre links antes de as rotas existirem.
+   IDs reservadas não significam conteúdo publicado.
+5. **Fatia 5 — link visível.** O link está preparado localmente para 431 IDs
+   com snapshots aprovados; não faz fetch ao hub em runtime. O manifesto e as
+   páginas PT/EN foram compilados localmente sem rejeições. Após integração e
+   deploy, confirmar HTTP 200 para cada destino, fallback de domínio e fluxo real
+   offline. PT/EN e layout mobile foram conferidos localmente no app.
 
-Cada fatia seguinte tem PR e gate próprios. As flags de build permanecem
-desligadas até o aceite de cada fatia. O progresso dos alunos e o banco de
-simulado não entram no contrato público.
+A preparação local está concluída para 431 registros, mas CI e integração Git
+ainda faltam. O progresso dos alunos e o banco de simulado não entram no
+contrato público.

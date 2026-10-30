@@ -1,21 +1,24 @@
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { computeChecksum, parseManifest, verifyChecksum } from "@ironidesflj/axon";
 
 const bankDir = process.argv[2];
 if (!bankDir) throw new Error("Usage: node scripts/preview-axon-manifest.mjs <canonical-bank-dir>");
+const appRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 
 const readJson = (name) => JSON.parse(fs.readFileSync(path.join(bankDir, name), "utf8"));
 const bank = readJson("synapse-question-bank.json");
 const questions = new Map(bank.questions.map((question) => [question.id, question]));
 const exams = [
-  { slug: "ctfl", cert: "CTFL", axonCode: "CTFL", candidateCount: 193, heldCount: 27 },
-  { slug: "ctal-ta", cert: "CTAL-TA", axonCode: "CTALTA", candidateCount: 88, heldCount: 22 },
-  { slug: "ctal-tm", cert: "CTAL-TM", axonCode: "CTALTM", candidateCount: 100, heldCount: 1 },
+  { slug: "ctfl", cert: "CTFL", axonCode: "CTFL" },
+  { slug: "ctal-ta", cert: "CTAL-TA", axonCode: "CTALTA" },
+  { slug: "ctal-tm", cert: "CTAL-TM", axonCode: "CTALTM" },
 ];
 
 const candidateRecords = [];
+const expectedIdMap = {};
 const counts = {};
 let heldCount = 0;
 for (const exam of exams) {
@@ -36,13 +39,35 @@ for (const exam of exams) {
   const refs = new Map(review.records.map((item) => [item.publicId, item]));
   if (refs.size !== review.records.length) throw new Error(`${exam.slug}: duplicate reference ID`);
 
+  const appBank = JSON.parse(
+    fs.readFileSync(path.join(appRoot, `src/synapse/data/banks/${exam.slug}.json`), "utf8")
+  );
+  const appQuestions = Object.values(appBank).flat();
+  const appById = new Map(appQuestions.map((question) => [question.id, question]));
+  if (appById.size !== ledger.mappings.length || appQuestions.length !== ledger.mappings.length) {
+    throw new Error(`${exam.slug}: app study pool differs from the canonical ledger`);
+  }
+  for (const mapping of ledger.mappings) {
+    const source = questions.get(mapping.internalId);
+    const displayed = appById.get(mapping.internalId);
+    if (
+      !source ||
+      !displayed ||
+      source.answer !== displayed.answer ||
+      ["pt", "en"].some((lang) =>
+        ["q", "options", "exp"].some(
+          (field) =>
+            JSON.stringify(source.locales[lang][field]) !== JSON.stringify(displayed[field][lang])
+        )
+      )
+    ) {
+      throw new Error(`App study question differs from canonical bank: ${mapping.internalId}`);
+    }
+  }
+
   const candidates = review.records.filter((item) => item.state === "candidate");
   const held = review.records.filter((item) => item.state === "held");
-  if (
-    candidates.length !== exam.candidateCount ||
-    held.length !== exam.heldCount ||
-    candidates.length + held.length !== review.records.length
-  ) {
+  if (candidates.length + held.length !== review.records.length) {
     throw new Error(`${exam.slug}: unexpected candidate/held counts`);
   }
   counts[exam.cert] = candidates.length;
@@ -57,9 +82,12 @@ for (const exam of exams) {
     if (!question || question.cert !== exam.cert || question.pool !== "study") {
       throw new Error(`Not an eligible ${exam.cert} study question: ${item.internalId}`);
     }
+    expectedIdMap[item.internalId] = item.publicId;
     const referenceHost = new URL(item.reference).hostname;
     if (
-      !["istqb.org", "www.istqb.org", "glossary.istqb.org"].includes(referenceHost) ||
+      !["istqb.org", "www.istqb.org", "glossary.istqb.org", "research.ibm.com", "asq.org"].includes(
+        referenceHost
+      ) ||
       !item.referenceTitle
     ) {
       throw new Error(`Reference missing: ${item.publicId}`);
@@ -104,10 +132,20 @@ for (const exam of exams) {
   }
 }
 
-if (candidateRecords.length !== 381 || heldCount !== 50) {
+if (candidateRecords.length + heldCount !== 431) {
   throw new Error(
-    `Expected 381 candidate records and 50 held; got ${candidateRecords.length}/${heldCount}`
+    `Expected 431 reserved study IDs; got ${candidateRecords.length} candidates/${heldCount} held`
   );
+}
+
+const appIdMap = JSON.parse(
+  fs.readFileSync(path.join(appRoot, "src/synapse/data/axon-public-ids.json"), "utf8")
+);
+if (
+  Object.keys(appIdMap).length !== candidateRecords.length ||
+  Object.entries(expectedIdMap).some(([internalId, publicId]) => appIdMap[internalId] !== publicId)
+) {
+  throw new Error("App Axon ID map differs from the canonical bank candidate set");
 }
 
 const jsonl = `${candidateRecords.map((record) => JSON.stringify(record)).join("\n")}\n`;

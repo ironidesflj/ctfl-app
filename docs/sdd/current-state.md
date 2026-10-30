@@ -2,15 +2,14 @@
 
 ## Estado atual
 
-- Axon: fatia 1 integrada no PR #12, com pin exato de
-  `@ironidesflj/axon@0.2.2`. O banco principal tem 50 IDs CTFL reservadas
-  (PR #1); o PR #7 do banco prepara as 381 restantes para CTFL, CTAL-TA
-  e CTAL-TM, totalizando 431 IDs de estudo. A validação Axon aceita as 431; o
-  preview local gera 381 snapshots temporários válidos, deixando 50 referências
-  retidas fora do manifesto. A atualização do CI para esse lote ainda precisa
-  passar e ser integrada. Nenhum snapshot foi publicado no hub. IDs internas,
-  questões e progresso dos alunos permanecem intactos. Escopo e fila editorial
-  em `axon-adoption-plan.md`.
+- Axon: há 431 IDs reservadas para os pools de estudo CTFL, CTAL-TA e
+  CTAL-TM. As 50 retenções foram revistas e as 8 últimas questões corrigidas
+  em PT/EN, mantendo IDs e índices das respostas. Duas questões de casos de uso
+  são identificadas como conteúdo complementar fora do exame CTFL v4.0.1.
+  O manifesto local e os links do app abrangem as 431 questões; os pools
+  exclusivos de simulado continuam fora. CI, integração Git/deploy e confirmação
+  HTTP dos destinos públicos estão pendentes. Relatório no banco canônico:
+  `editorial/axon-study-reference-review-2026-10-30.md`.
 - Synapse 4.1.0 Vite integrada à `main` no PR #9 (`143f6ae`). CTFL, CTAL-TA e
   CTAL-TM estão disponíveis; a dívida editorial de CTAL-TM continua aberta.
 - A primeira visita mostra a abertura completa e o onboarding uma vez; a aba
