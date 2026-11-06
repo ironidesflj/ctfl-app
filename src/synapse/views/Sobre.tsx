@@ -110,7 +110,7 @@ const COPY: Record<Lang, SobreCopy> = {
       ],
     ],
     limits: [
-      "Não é afiliado ao ISTQB. O conteúdo é baseado nos syllabus e no glossário públicos; o app é independente.",
+      "Não é afiliado ao ISTQB. O conteúdo é baseado nos syllabus e no glossário públicos; o app é independente. ISTQB®, CTFL®, CTAL-TA® e CTAL-TM® são marcas registradas do International Software Testing Qualifications Board.",
       "Não é um despejo de questões. Sem banco, a prova aparece como “em breve” — e não abre.",
       "Não é uma conta na nuvem. O progresso fica neste dispositivo; sincronizar entre aparelhos ainda não existe.",
       "Não coleta dado de estudo. O feedback é público e opcional, e não deve levar dado pessoal nem resultado de prova.",
@@ -237,7 +237,7 @@ const COPY: Record<Lang, SobreCopy> = {
       ],
     ],
     limits: [
-      "It is not affiliated with ISTQB. Content is based on public syllabi and the glossary; the app is independent.",
+      "It is not affiliated with ISTQB. Content is based on public syllabi and the glossary; the app is independent. ISTQB®, CTFL®, CTAL-TA® and CTAL-TM® are registered trademarks of the International Software Testing Qualifications Board.",
       "It is not a question dump. Without a bank, the exam appears as “coming soon” — and does not open.",
       "It is not a cloud account. Progress stays on this device; cross-device sync does not exist yet.",
       "It does not collect study data. Feedback is public and optional, and must not carry personal data or exam results.",
