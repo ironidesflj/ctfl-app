@@ -5,10 +5,14 @@
 
 ## Pendências atuais
 
-- Corrigir regressão: embaralhar alternativas no modo Estudar, mantendo a
-  correção e a letra do feedback ligadas à posição visual. Simulado já faz isso.
 - Atualizar handoff/memória operacional junto aos próximos ajustes de produto.
 - Não alterar o hub sem autorização explícita do usuário.
+
+## Concluído recentemente
+
+- Embaralhamento no modo Estudar: corrigido no PR #17 (permutação por sessão,
+  correção e letra do feedback ligadas à posição visual, com teste de
+  componente). Simulado já fazia isso; o hub permanece na ordem canônica.
 
 ## Adiado ou fora do lote atual
 

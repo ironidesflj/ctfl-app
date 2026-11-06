@@ -11,6 +11,10 @@
 
 ## Pós-4.1.0 — ajustes integrados
 
+- Embaralhamento de alternativas na tela Estudar corrigido (PR #17):
+  permutação por sessão, correção por índice canônico e feedback
+  anunciado na letra visual. Coberto por teste de componente (seleção,
+  troca de idioma e sessão de salvas). O hub permanece na ordem canônica.
 - Cabeçalho sem borda de botão nativo, aviso de flashcards legível e painel de
   métricas com contraste correto nos dois temas.
 - Abertura rápida ajustada para pelo menos 2,4 s, com assinatura completa e

@@ -11,6 +11,8 @@
   de simulado continuam fora. O manifesto publicado corresponde byte a byte à
   prévia gerada do banco. A revisão está em
   `editorial/axon-study-reference-review-2026-10-30.md` no banco canônico.
+  Desde 06/11/2026 o app publica o mesmo manifesto em `/manifest.jsonl`
+  (decisão D4; adendo no fim desta seção).
 - Synapse 4.1.0 Vite integrada à `main` no PR #9 (`143f6ae`). CTFL, CTAL-TA e
   CTAL-TM estão disponíveis; a dívida editorial de CTAL-TM continua aberta.
 - O PR #15 foi integrado à `main` no commit `2c0b2b7`; app publicado em
@@ -18,9 +20,12 @@
 - Revisão editorial das 50 questões concluída no banco; as referências das 431
   questões estão no manifesto público do Noos. As 862 URLs PT/EN responderam
   HTTP 200 no domínio principal na validação de release.
-- Embaralhamento: Simulado embaralha alternativas e persiste `optOrder`;
-  Estudar atualmente exibe a ordem original do banco. A ausência de shuffle em
-  Estudar é uma regressão a corrigir; não foi uma decisão de produto.
+- Embaralhamento: Simulado e Estudar embaralham alternativas por sessão; um
+  `optOrder` por questão mapeia a posição visual para o índice canônico, então
+  correção e feedback usam a letra visual (no Simulado, também ao retomar o
+  rascunho). O PR #17 corrigiu a regressão de Estudar (que exibia a ordem
+  original do banco) com teste de componente cobrindo seleção, troca de idioma
+  e sessão de salvas. A ordem canônica do hub não muda.
 - A primeira visita mostra a abertura completa e o onboarding uma vez; a aba
   Hoje fica oculta durante a transição. Visitas comuns usam abertura rápida;
   após 12 horas fora do app, a abertura completa retorna sem onboarding.
@@ -30,6 +35,43 @@
   a animação deliberada de entrada com scripts de extensões do Chrome.
 - Artefatos históricos encontrados em Downloads foram movidos para um arquivo
   local fora do Git, com manifesto e SHA-256; não são fonte canônica do banco.
+
+## Adendo 2026-11-06 — D4: manifesto Axon público no app
+
+- O Synapse passou a publicar `/manifest.jsonl` na raiz do app (antes a URL
+  respondia 404). O arquivo é o contrato Axon completo: 9 campos por linha,
+  uma linha por questão de ESTUDO, 431 linhas (CTFL 220, CTAL-TA 110,
+  CTAL-TM 101), `lang: pt-BR`, `difficulty: unrated`, `version: 1`,
+  `aliases: []`, ordenado por prova (CTFL, CTAL-TA, CTAL-TM) e por ID público
+  crescente dentro de cada prova. Nenhuma questão do pool de simulado entra.
+- Fonte: banco canônico (`synapse-question-bank.json` + `axon/*`); o gerador
+  valida que o app serve exatamente as mesmas questões de estudo antes de
+  emitir.
+- Comandos: `npm run manifest -- <checkout do banco>` (gera
+  `public/manifest.jsonl`), `npm run manifest:check` (regenera e compara com o
+  commitado), `npm run manifest:validate` (valida o commitado; roda no
+  `prebuild`) e `npm run manifest:parity` (compara SHA-256 com o hub).
+- Paridade atual: SHA-256
+  `1bdcde8e72e6859d4bffab9a1c6496caba187a8a5caacb3c8e1df97dc526494e`
+  (514.960 bytes, 431 linhas) — idêntico, byte a byte, a
+  `https://noos.study/manifestos/SYN.jsonl`.
+- CI (`.github/workflows/test.yml`): o job `test` regenera o manifesto do banco
+  canônico e falha se o arquivo commitado divergir; o job `manifest-parity`
+  baixa o hub e falha se o SHA divergir. O build da Vercel copia `public/` para
+  `dist/`, então `/manifest.jsonl` fica publicado sem rewrite (o rewrite do
+  `vercel.json` ignora caminhos com extensão).
+- Regenerar depois de mudar questão de estudo: atualizar o banco canônico,
+  rodar `npm run manifest -- <checkout do banco>` e commitar
+  `public/manifest.jsonl` no mesmo PR. Se o SHA divergir do hub porque o app
+  está à frente, o hub precisa ingerir o manifesto novo — não ajuste o conteúdo
+  para forçar igualdade.
+- Coberto por `npm test` (`src/lib/axon-manifest-publico.test.js`): 431 linhas,
+  IDs únicos, checksums Axon válidos, cobertura exata do pool de estudo e
+  ausência do pool de simulado.
+- Integrado à `main` pelo PR #18 (merge `7e7828e`): o build copia `public/`
+  para `dist/`, então `/manifest.jsonl` é publicado junto com o app. O ingest
+  no hub é o gate de paridade; se o hub ainda não ingeriu o manifesto novo, o
+  job `manifest-parity` reprova e o PR não está publicado.
 
 ## Histórico — referência de 2026-10-24
 
