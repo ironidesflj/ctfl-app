@@ -56,7 +56,11 @@ jobs:
       - run: npm run format:check
       - run: npm run test
       - run: npm run build
-      - run: npx playwright install --with-deps chromium
+      # Matriz E2E: os três projects do playwright.config.js rodam na mesma
+      # suíte, em um job só. Medição local: Chromium+WebKit (30 testes, 2
+      # workers) em 1min33s; ~2min20s estimado com Firefox. Job separado só
+      # se o tempo passar de ~15min ou houver flake crônico de um navegador.
+      - run: npx playwright install --with-deps chromium firefox webkit
       - run: npm run test:e2e
   # D4: o app é o emissor do contrato Axon. O /manifest.jsonl publicado precisa
   # ser byte a byte igual ao que o hub (noos.study) ingeriu e republica.
