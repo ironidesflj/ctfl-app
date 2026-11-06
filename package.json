@@ -12,6 +12,11 @@
     "test:watch": "vitest",
     "test:e2e": "playwright test",
     "axon:preview": "node scripts/preview-axon-manifest.mjs",
+    "manifest": "node scripts/generate-axon-manifest.mjs",
+    "manifest:check": "node scripts/generate-axon-manifest.mjs --check",
+    "manifest:validate": "node scripts/generate-axon-manifest.mjs --validate",
+    "manifest:parity": "node scripts/check-axon-manifest-parity.mjs",
+    "prebuild": "node scripts/generate-axon-manifest.mjs --validate",
     "lint": "eslint . --max-warnings 0",
     "format": "prettier --write .",
     "format:check": "prettier --check ."

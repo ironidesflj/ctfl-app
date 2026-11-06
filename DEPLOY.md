@@ -65,9 +65,27 @@ Use o arquivo `.github/workflows/deploy.yml` já incluído.
 
 ---
 
+## Manifesto Axon (`/manifest.jsonl`)
+
+O build publica `/manifest.jsonl` a partir de `public/manifest.jsonl`
+(commitado). O `npm run build` roda o `prebuild` e falha se o arquivo estiver
+ausente/inválido; o CI regenera do banco canônico e compara o SHA-256 com
+`https://noos.study/manifestos/SYN.jsonl`. O rewrite do `vercel.json` só
+intercepta caminhos sem extensão, então o manifesto é servido estático (como no
+hub). Validação pós-deploy:
+
+```bash
+curl -fsSL https://<dominio>/manifest.jsonl | wc -l   # 431
+curl -fsSL https://<dominio>/manifest.jsonl | shasum -a 256
+```
+
+Para atualizar o contrato, regenere com `npm run manifest -- <banco canônico>`
+e commite `public/manifest.jsonl` antes do deploy.
+
 ## Checklist antes do primeiro deploy
 
 - [ ] `npm install && npm run build` passa localmente
+- [ ] `/manifest.jsonl` responde 200 com 431 linhas e o SHA bate com o hub
 - [ ] `npm run preview` abre e a navegação funciona
 - [ ] Progresso persiste ao recarregar (localStorage no navegador real)
 - [ ] Exportar/Importar progresso funciona
