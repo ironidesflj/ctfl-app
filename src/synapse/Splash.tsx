@@ -25,6 +25,11 @@ const QUICK_MIN_MS = IS_TEST ? 0 : 2400;
 const QUICK_MAX_MS = IS_TEST ? 10 : 3000;
 const REDUCED_MS = IS_TEST ? 0 : 350;
 const FADE_MS = IS_TEST ? 0 : 600;
+// Teto de espera pela assinatura "by Noos" na abertura rápida. Em navegador
+// lento (CI, aparelho fraco) o primeiro frame atrasa e o timer fixo de
+// QUICK_MIN_MS apagava o splash antes do animationend; o teto evita travar
+// a abertura se a animação nunca terminar.
+const SIGNATURE_WAIT_MAX_MS = 2000;
 
 function mulberry32(seed: number) {
   return function () {
@@ -270,6 +275,9 @@ export function ConstellationSplash({
   const revealRef = useRef(onReveal);
   const doneCbRef = useRef(onDone);
   const fadeTimerRef = useRef<number | null>(null);
+  const fadeFallbackRef = useRef<number | null>(null);
+  const fadeStartedRef = useRef(false);
+  const unmountedRef = useRef(false);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   useEffect(() => {
@@ -284,18 +292,43 @@ export function ConstellationSplash({
 
   useEffect(() => {
     return () => {
+      unmountedRef.current = true;
       if (fadeTimerRef.current !== null) window.clearTimeout(fadeTimerRef.current);
+      if (fadeFallbackRef.current !== null) window.clearTimeout(fadeFallbackRef.current);
     };
+  }, []);
+
+  const startFade = useCallback(() => {
+    if (fadeStartedRef.current || unmountedRef.current) return;
+    fadeStartedRef.current = true;
+    if (fadeFallbackRef.current !== null) {
+      window.clearTimeout(fadeFallbackRef.current);
+      fadeFallbackRef.current = null;
+    }
+    setFading(true);
+    fadeTimerRef.current = window.setTimeout(() => doneCbRef.current(), FADE_MS);
   }, []);
 
   const finish = useCallback(() => {
     if (doneRef.current) return;
     doneRef.current = true;
     document.documentElement.removeAttribute("data-boot");
-    setFading(true);
     revealRef.current();
-    fadeTimerRef.current = window.setTimeout(() => doneCbRef.current(), FADE_MS);
-  }, []);
+
+    // A abertura rápida só pode apagar depois que a assinatura "by Noos"
+    // concluir: com o primeiro frame atrasado, o timer fixo cortava o
+    // animationend no meio (flake no WebKit do CI).
+    const signature = mode === "quick" ? document.querySelector(".splash-by") : null;
+    const animations = signature?.getAnimations?.() ?? [];
+    if (animations.length === 0) {
+      startFade();
+      return;
+    }
+    Promise.all(animations.map((animation) => animation.finished))
+      .then(startFade)
+      .catch(startFade);
+    fadeFallbackRef.current = window.setTimeout(startFade, SIGNATURE_WAIT_MAX_MS);
+  }, [mode, startFade]);
 
   // Timer do splash
   useEffect(() => {
