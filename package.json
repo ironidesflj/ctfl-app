@@ -45,6 +45,6 @@
     "prettier": "^3.8.4",
     "vite": "^5.4.2",
     "vite-plugin-pwa": "^0.20.5",
-    "vitest": "^4.1.11"
+    "vitest": "^4.1.12"
   }
 }
