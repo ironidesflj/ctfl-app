@@ -95,6 +95,25 @@ mantido como referência para testes de integridade do split. A governança,
 sincronização e publicação da fonte canônica estão descritas no SDD e nos
 workflows do repositório do banco.
 
+## Manifesto Axon público
+
+O app publica `/manifest.jsonl` na raiz: o contrato Axon das 431 questões de
+**estudo** (CTFL 220, CTAL-TA 110, CTAL-TM 101), nove campos por linha, `pt-BR`,
+`aliases: []` e checksum Axon. O pool de simulado nunca entra. A cópia pública
+do hub (`https://noos.study/manifestos/SYN.jsonl`) precisa ser byte a byte igual
+à do app — o CI compara o SHA-256 e reprova divergência.
+
+```bash
+npm run manifest -- ../ctfl-question-bank-ptbr  # gera public/manifest.jsonl do banco canônico
+npm run manifest:check -- ../ctfl-question-bank-ptbr  # confere o commitado contra o banco
+npm run manifest:validate                       # valida o commitado (roda no prebuild)
+npm run manifest:parity                         # compara SHA-256 com o hub
+```
+
+O Vite copia `public/` para `dist/`, então o build já publica o arquivo. Depois
+de mudar questão de estudo, regenere e commite `public/manifest.jsonl` no mesmo
+PR; se o SHA divergir do hub, o hub ainda não ingeriu o manifesto novo.
+
 ## Qualidade
 
 ```bash

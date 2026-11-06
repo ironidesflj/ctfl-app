@@ -50,9 +50,25 @@ jobs:
           path: ${{ runner.temp }}/synapse-axon-preview-*/manifest.jsonl
           if-no-files-found: error
           retention-days: 7
+      - name: Verify committed public manifest matches the canonical bank
+        run: npm run manifest:check -- bank
       - run: npm run lint
       - run: npm run format:check
       - run: npm run test
       - run: npm run build
       - run: npx playwright install --with-deps chromium
       - run: npm run test:e2e
+  # D4: o app é o emissor do contrato Axon. O /manifest.jsonl publicado precisa
+  # ser byte a byte igual ao que o hub (noos.study) ingeriu e republica.
+  # Divergência = conteúdo novo sem ingestão (ou ingestão de conteúdo velho);
+  # o PR não está publicado. Job separado: não precisa do banco canônico nem de
+  # npm ci — o script só lê o arquivo commitado e baixa a cópia do hub.
+  manifest-parity:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Compare published manifest SHA-256 with the Noos hub
+        run: npm run manifest:parity
