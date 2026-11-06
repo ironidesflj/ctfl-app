@@ -1,9 +1,20 @@
-# Plano — estado após integração da 4.1.0
+# Plano de manutenção pós-release — 2026-11-06
 
-> A 4.1.0 foi integrada à `main` pelo PR #9. Ajustes visuais, acessibilidade e
-> ritmo de abertura estão em preparação. A revisão editorial completa de
-> CTAL-TM permanece pendente; não tratar a disponibilização no app como selo
-> editorial. Os registros abaixo são históricos.
+> A 4.1.0 e a integração Axon estão publicadas. Os registros abaixo são
+> históricos, exceto a seção “Pendências atuais”.
+
+## Pendências atuais
+
+- Corrigir regressão: embaralhar alternativas no modo Estudar, mantendo a
+  correção e a letra do feedback ligadas à posição visual. Simulado já faz isso.
+- Atualizar handoff/memória operacional junto aos próximos ajustes de produto.
+- Não alterar o hub sem autorização explícita do usuário.
+
+## Adiado ou fora do lote atual
+
+- A revisão editorial CTAL-TM e questões não liberadas permanecem sob a
+  governança do banco; disponibilidade técnica no app não significa aprovação.
+- Otimização do chunk CTAL-TA e outras melhorias de UX não bloqueiam o release.
 
 > A fase abaixo foi registrada em 2026-10-24 para o app anterior. O checkout
 > Vite 4.1.0 atual é descrita em `current-state.md`.

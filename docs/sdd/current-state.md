@@ -1,4 +1,4 @@
-# Estado do SDD — 2026-10-30
+# Estado do SDD — 2026-11-06
 
 ## Estado atual
 
@@ -13,6 +13,14 @@
   `editorial/axon-study-reference-review-2026-10-30.md` no banco canônico.
 - Synapse 4.1.0 Vite integrada à `main` no PR #9 (`143f6ae`). CTFL, CTAL-TA e
   CTAL-TM estão disponíveis; a dívida editorial de CTAL-TM continua aberta.
+- O PR #15 foi integrado à `main` no commit `2c0b2b7`; app publicado em
+  `https://ctfl-app.vercel.app/`. CI de `main` passou, incluindo 15 testes E2E.
+- Revisão editorial das 50 questões concluída no banco; as referências das 431
+  questões estão no manifesto público do Noos. As 862 URLs PT/EN responderam
+  HTTP 200 no domínio principal na validação de release.
+- Embaralhamento: Simulado embaralha alternativas e persiste `optOrder`;
+  Estudar atualmente exibe a ordem original do banco. A ausência de shuffle em
+  Estudar é uma regressão a corrigir; não foi uma decisão de produto.
 - A primeira visita mostra a abertura completa e o onboarding uma vez; a aba
   Hoje fica oculta durante a transição. Visitas comuns usam abertura rápida;
   após 12 horas fora do app, a abertura completa retorna sem onboarding.
@@ -198,7 +206,7 @@ Sem commit, push ou publicação nesta integração.
 - Contagens verificadas por assert: 21 flashcards, 18 itens de syllabus e 37
   termos de glossário CTAL-TA, todos bilíngues e cobrindo os cinco capítulos.
 
-## Candidata Synapse 4.1.0 Vite — registro antes do merge
+## Candidata Synapse 4.1.0 Vite — registro histórico antes do merge
 
 - Branch `feat/synapse-vite-redesign`; candidata Synapse 4.1.0 em revisão.
   A versão 3.18.0 permanece como base em produção até o merge. Esta branch não
