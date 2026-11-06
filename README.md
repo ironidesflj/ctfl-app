@@ -122,13 +122,15 @@ npm run lint
 npm run format:check
 npm run test
 npm run build
-npx playwright install chromium # apenas na primeira execução local
+npx playwright install --with-deps chromium firefox webkit # primeira execução local
 npm run test:e2e
 ```
 
-O CI executa lint, formatação, testes, build e E2E em Chromium. Para os números
-mais recentes de cobertura e estado de publicação, consulte o changelog e o
-SDD; eles variam entre fases de desenvolvimento.
+O CI executa lint, formatação, testes, build e E2E em Chromium, Firefox e
+WebKit (projects do `playwright.config.js`). Para rodar um navegador só, use
+`npx playwright test --project=firefox`. Para os números mais recentes de
+cobertura e estado de publicação, consulte o changelog e o SDD; eles variam
+entre fases de desenvolvimento.
 
 ## Aviso
 
@@ -137,3 +139,7 @@ Material de estudo independente, **não afiliado ao ISTQB**. Baseado na estrutur
 ## Changelog
 
 Histórico completo em [CHANGELOG.md](./CHANGELOG.md).
+
+## Marcas e afiliação
+
+Synapse é um projeto independente, sem vínculo, patrocínio ou endosso do ISTQB® ou de seus membros nacionais. ISTQB®, CTFL®, CTAL-TA® e CTAL-TM® são marcas registradas do International Software Testing Qualifications Board. O conteúdo é escrito pelo projeto, a partir dos syllabi e do glossário públicos, e não reproduz questões oficiais.
