@@ -9,7 +9,7 @@
 - Melhorias de persistência, backup/restauração, metas, capítulos e fluxo de
   estudo; nova marca e abertura 3D escura.
 
-## Pós-4.1.0 — ajustes em preparação
+## Pós-4.1.0 — ajustes integrados
 
 - Embaralhamento de alternativas na tela Estudar corrigido (PR #17):
   permutação por sessão, correção por índice canônico e feedback
@@ -22,6 +22,11 @@
   a animação completa retorna sem repetir o onboarding.
 - Botão do lembrete recebe nome acessível; texto institucional do Noos passa a
   explicar somente o que interessa ao estudante.
+
+- Integração Axon: links para as 431 questões de estudo em PT/EN. A ordem no
+  hub é a referência do banco; o app mantém seus próprios fluxos de respostas.
+- Ajustes incluídos no PR #15 e integração final à `main` pelo PR #15
+  (`2c0b2b7`). CI, build e 15 testes E2E passaram.
 
 ## Não publicado — Proteção da fonte canônica
 
