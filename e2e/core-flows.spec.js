@@ -38,6 +38,40 @@ test("abertura rápida conclui a assinatura antes da transição", async ({ page
   expect(await page.evaluate(() => window.__splashCut)).toBe(false);
 });
 
+test("abertura rápida espera a assinatura mesmo com animação atrasada", async ({ page }) => {
+  // Regressão: o timer fixo de QUICK_MIN_MS apagava o splash antes do
+  // animationend quando o primeiro frame atrasava (WebKit no CI). Aqui a
+  // assinatura é atrasada de propósito para provar que o fade espera.
+  await page.addInitScript(() => {
+    window.__splashSigEnd = null;
+    window.__splashFadeAt = null;
+    document.addEventListener("animationend", (event) => {
+      if (event.target instanceof Element && event.target.classList.contains("splash-by")) {
+        window.__splashSigEnd = performance.now();
+      }
+    });
+    new MutationObserver(() => {
+      if (document.querySelector('.splash[data-fading="true"]') && window.__splashFadeAt === null) {
+        window.__splashFadeAt = performance.now();
+      }
+    }).observe(document, { subtree: true, attributes: true, attributeFilter: ["data-fading"] });
+    document.addEventListener("DOMContentLoaded", () => {
+      const style = document.createElement("style");
+      style.textContent = ".splash-by { animation-delay: 3.2s !important; }";
+      document.head.appendChild(style);
+    });
+  });
+
+  await page.goto("/ctfl/hoje");
+  await page.locator(".splash").waitFor({ state: "detached" });
+  const { sigEnd, fadeAt } = await page.evaluate(() => ({
+    sigEnd: window.__splashSigEnd,
+    fadeAt: window.__splashFadeAt,
+  }));
+  expect(sigEnd).not.toBeNull();
+  expect(fadeAt).toBeGreaterThan(sigEnd);
+});
+
 test("primeira visita mostra onboarding após o splash sem expor Hoje", async ({ page }) => {
   await page.goto("/ctfl/hoje");
   await page.evaluate(() => {
