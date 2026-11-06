@@ -1,7 +1,7 @@
 # Synapse — Multi-Certificação ISTQB
 
 App de preparação para exames de certificação ISTQB. A versão 4.1.0 está na
-`main` desde o PR #9. Usa React + Vite, pode ser instalada como PWA e oferece
+`main` e em produção. Usa React + Vite, pode ser instalada como PWA e oferece
 suporte offline.
 
 ## Catálogo de conteúdo (1.100 questões)
@@ -23,10 +23,10 @@ suporte offline.
 
 ## Funcionalidades
 
-- **Quiz — modo Estudo:** pool exclusivo (CTFL: 220; CTAL-TA: 110; CTAL-TM: 110), feedback por questão, filtra domínio/quantidade,
+- **Quiz — modo Estudo:** pool exclusivo (CTFL: 220; CTAL-TA: 110; CTAL-TM: 101), feedback por questão, filtra domínio/quantidade,
   marca questões, oferece modo **"Errei antes"** e treino dirigido por
   capítulo/K-level.
-- **Quiz — modo Simulado:** pool exclusivo (CTFL: 80; CTAL-TA: 90; CTAL-TM: 90), questões
+- **Quiz — modo Simulado:** pool exclusivo (CTFL: 80; CTAL-TA: 90; CTAL-TM: 99), questões
   estratificadas pelo blueprint oficial de capítulo e K-level (CTFL: 40q/60min;
   CTAL-TA: 45q/120min e pontuação K2=1, K3=2, K4=3; corte 51/78), personalização,
   grade de navegação, rascunho persistido, retomada e revisão no fim.
@@ -36,7 +36,7 @@ suporte offline.
   cinco capítulos e objetivos K4 do CTAL-TA.
 - **Syllabus acionável:** botão "Estudar este capítulo" abre o Quiz pré-filtrado.
 - **Progresso:** prontidão por blueprint, radar por domínio, desempenho por
-  K-level, heatmap interativo de 12 semanas, seis conquistas, meta diária, histórico de
+  K-level, heatmap interativo de 12 semanas, nove conquistas, meta diária, histórico de
   simulados, data da prova, exportação CSV e backup/restauração JSON.
 - **PWA:** instalável, shell e rotas offline, splash iOS claro/escuro, atalhos
   e atualização gentil sem interromper a sessão.
