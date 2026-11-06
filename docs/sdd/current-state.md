@@ -266,3 +266,31 @@ Sem commit, push ou publicação nesta integração.
 - Não há, neste adendo, confirmação de publicação nem contagens atuais de
   testes/build. Consulte a execução de CI da branch antes de registrar esses
   gates como aprovados.
+
+## Adendo 2026-11-06 — Matriz E2E multi-browser (Chromium, Firefox, WebKit)
+
+- `playwright.config.js` declara três projects — `chromium`, `firefox` e
+  `webkit` — reaproveitando o mesmo `baseURL` (`http://127.0.0.1:4179`) e o
+  mesmo `webServer` (`vite preview`). Não existia project mobile neste
+  checkout; nenhum foi removido ou alterado. Os 15 testes de
+  `e2e/core-flows.spec.js` rodam iguais nos três navegadores.
+- `.github/workflows/test.yml`: o job `test` (check obrigatório) instala os
+  três browsers com
+  `npx playwright install --with-deps chromium firefox webkit` e roda
+  `npm run test:e2e` sem filtro de project, cobrindo a matriz inteira.
+- Decisão de CI: **job único**, sem separar Firefox/WebKit. Medição local
+  (2 workers, como no runner) deu 1min33s para Chromium+WebKit (30 testes);
+  somando Firefox a estimativa fica em ~2min20s de E2E, longe de tornar o job
+  excessivo. Job separado só se o tempo do `test` passar de ~15min ou se
+  aparecer flake crônico de um navegador — nesse caso, mover Firefox/WebKit
+  para job paralelo chamando `npx playwright test --project=firefox --project=webkit`.
+- Verificação local (2026-11-06): Chromium 15/15 e WebKit 15/15 verdes, com 2
+  workers; `npm test` 462/462, `npm run lint`, `npm run format:check` e
+  `npm run build` verdes.
+- **Firefox não verificado localmente**: o navegador baixado (Firefox 157,
+  build 1555) não inicia neste ambiente. O sandbox do processo bloqueia o
+  `sandbox_init` aninhado (`Operation not permitted`) e o Firefox aborta com
+  "Could not find profile folder" antes de abrir o perfil. Os browsers foram
+  instalados via `PLAYWRIGHT_BROWSERS_PATH` local porque o cache do HOME é
+  somente leitura nesta sessão. A validação do Firefox fica no CI do PR; não
+  registrar esse navegador como verificado antes do check `test` fechar verde.
