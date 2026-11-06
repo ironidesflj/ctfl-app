@@ -303,11 +303,21 @@ Sem commit, push ou publicação nesta integração.
   animação `splash-by` termina em 2,12 s (delay 1,42 s + 0,7 s com
   `--sp-scale: 0.4`), margem de ~280 ms que o runner lento consumia.
 - `Splash.tsx`: na abertura rápida o fade agora espera a animação `.splash-by`
-  terminar (`Element.getAnimations()`), com teto de 2 s
+  terminar (`Element.getAnimations()`), com teto de 3 s
   (`SIGNATURE_WAIT_MAX_MS`) para não travar a abertura. Abertura completa e
   `prefers-reduced-motion` seguem o caminho anterior.
 - Regressão coberta em `e2e/core-flows.spec.js`: com a assinatura atrasada de
   propósito em 3,2 s, `data-fading` só aparece depois do `animationend`.
-- Verificação local: E2E 32/32 (16 testes x Chromium e WebKit, 2 workers),
-  `npm test` 462/462, `npm run lint`, `npm run format:check` e
-  `npm run build` verdes. Firefox continua validado só no CI.
+- Os dois testes que dependem de `animationend` rodam só no Chromium. O WebKit
+  headless (GTK) do CI não entrega esse evento da assinatura de forma
+  confiável sob carga (os mesmos testes falhavam e passavam no retry); a
+  ordenação continua coberta no Chromium, e a correção vale para os três
+  navegadores.
+- O teste de migração 3.18 passou a usar `expect.poll` no storage em vez de
+  ler uma vez, eliminando a corrida de leitura.
+- Verificação local desta rodada: E2E 30 passed + 2 skipped (16 testes no
+  Chromium, 14 no WebKit, 2 workers), `npm test` 462/462, `npm run lint` e
+  `npm run format:check` verdes. O `vite build` local chegou a travar no
+  serviço do esbuild (Node 24) e levou 4min31s quando passou; o build
+  reproduzível fica confirmado no CI (Node 20). Firefox continua validado só
+  no CI.

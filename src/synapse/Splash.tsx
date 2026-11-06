@@ -29,7 +29,7 @@ const FADE_MS = IS_TEST ? 0 : 600;
 // lento (CI, aparelho fraco) o primeiro frame atrasa e o timer fixo de
 // QUICK_MIN_MS apagava o splash antes do animationend; o teto evita travar
 // a abertura se a animação nunca terminar.
-const SIGNATURE_WAIT_MAX_MS = 2000;
+const SIGNATURE_WAIT_MAX_MS = 3000;
 
 function mulberry32(seed: number) {
   return function () {
