@@ -321,3 +321,9 @@ Sem commit, push ou publicação nesta integração.
   serviço do esbuild (Node 24) e levou 4min31s quando passou; o build
   reproduzível fica confirmado no CI (Node 20). Firefox continua validado só
   no CI.
+
+## Adendo 2026-11-09 — fatias do CTAL-TM sincronizadas com o banco canônico 1.7.1
+
+- `src/synapse/data/banks/ctal-tm.json` (101 estudo) e `ctal-tm-exam.json` (99 simulado) foram regeneradas a partir do banco canônico `ctfl-question-bank-ptbr@main` (1.7.1): 16 questões do pool de estudo passam a refletir a revisão editorial já registrada no banco (gabaritos inalterados). Antes deste adendo as fatias servidas estavam defasadas em relação ao monólito/manifesto.
+- `public/manifest.jsonl` **não muda** (SHA `1bdcde8e…` continua igual ao do hub): o conteúdo publicado já era o do banco canônico; a correção é de consistência interna das fatias.
+- Pendente (não fecha o checklist editorial): cobertura K4 do pool de estudo (1 questão K4; decisão de ampliar ou aceitar) e o bump de versão/registro formal de sign-off.
