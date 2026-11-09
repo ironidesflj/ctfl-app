@@ -346,3 +346,9 @@ Sem commit, push ou publicação nesta integração.
 - Guardas 7/7 nos certs live e na fatia de estudo; K4 mínimo presente (`ctaltm-121` → TM-1.3.4 K4); ampliação aguarda novo pacote.
 - `@ironidesflj/axon` **0.3.0** (pin exato) adotado: gerador de manifesto propaga `retired`; hub publica página de questão retirada com aviso e sem gabarito.
 - Pendências: editorial CTAL-TA (`ctalta-106`, `ctalta-120`); novo pacote K4.
+
+## Adendo 2026-11-09 (5) — banco 1.7.4: CTAL-TA (2 inconclusivas reescritas)
+
+- `ctalta-106` e `ctalta-120` reescritas no banco canônico (1.7.4), gabaritos preservados; guards 7/7, 0 suspeitas novas.
+- Fatias regeneradas pelo gerador versionado (`npm run slices`); `public/manifest.jsonl` novo SHA `df25f8be…` (o anterior era `7313f302…`). **Exige reingestão no hub** antes do merge.
+- Sync do banco agora também regenera o manifesto (workflow), fechando o furo que travou a 1.7.4.

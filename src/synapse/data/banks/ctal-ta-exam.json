@@ -531,26 +531,26 @@
       "answer": 3,
       "ref": "ISTQB CTAL-TA v4.0 · cap. 2 · LO TA-2.1.1",
       "q": {
-        "pt": "Durante a avaliação de risco para um módulo de cálculo de impostos, as partes interessadas concordam que a probabilidade de um defeito é 'baixa', mas o impacto nos clientes é 'muito alto'. Usando uma matriz padrão de probabilidade × impacto, qual é a classificação de nível de risco mais defensável e a abordagem de teste consequente?",
-        "en": "During risk assessment for a tax-calculation module, stakeholders agree that the likelihood of a defect is 'low' but the impact on customers is 'very high'. Using a standard likelihood × impact matrix, what is the most defensible risk-level classification and consequent test approach?"
+        "pt": "Durante a avaliação de risco de um módulo de cálculo de impostos, os stakeholders classificam a probabilidade de defeito como \"baixa\" e o impacto nos clientes como \"muito alto\". Pela matriz de risco da organização, a combinação probabilidade baixa × impacto muito alto resulta em nível de risco \"alto\". Segundo o syllabus CTAL-TA v4.0 (§2.1), qual é a classificação de risco e a abordagem de mitigação de teste correspondente?",
+        "en": "During risk assessment for a tax-calculation module, stakeholders classify defect likelihood as \"low\" and customer impact as \"very high\". Per the organization’s risk matrix, the low likelihood × very high impact combination yields a \"high\" risk level. According to the CTAL-TA v4.0 syllabus (§2.1), what is the resulting risk classification and corresponding test mitigation approach?"
       },
       "options": {
         "pt": [
-          "Risco baixo — teste mínimo é necessário porque a baixa probabilidade de defeito significa que o módulo provavelmente não falhará em produção",
-          "Risco crítico — teste exaustivo é necessário porque impacto muito alto por si só é suficiente para escalar defeitos ao nível mais severo de risco",
-          "Risco médio — teste moderado é apropriado porque a baixa probabilidade compensa o alto impacto e produz uma classificação de risco equilibrada",
-          "Risco alto — teste significativo necessário porque a combinação de mesmo baixa probabilidade com impacto muito alto produz um nível de risco alto que justifica teste focado"
+          "Risco baixo — aplicar apenas teste mínimo, pois a baixa probabilidade de defeito anula o impacto muito alto na matriz de risco",
+          "Risco crítico — aplicar teste exaustivo de todas as combinações possíveis, pois o impacto muito alto ignora a probabilidade na matriz",
+          "Risco médio — aplicar esforço moderado sem priorização especial, tratando probabilidade baixa e impacto muito alto como equivalentes a risco mediano",
+          "Risco alto — aplicar teste focado e rigoroso (técnicas de modelagem mais profundas e maior prioridade de execução), conforme o nível alto definido pela matriz probabilidade × impacto"
         ],
         "en": [
-          "Low risk — minimal testing is required because the low likelihood of a defect means the module is unlikely to fail in production",
-          "Critical risk — exhaustive testing is required because very high impact alone is sufficient to escalate defects to the most severe risk level",
-          "Medium risk — moderate testing is appropriate because the low likelihood offsets the high impact and yields a balanced risk classification",
-          "High risk — significant testing required because the combination of even low likelihood with very high impact yields a high risk level that warrants focused testing"
+          "Low risk — apply minimal testing only, because the low defect likelihood cancels out the very high impact in the risk matrix",
+          "Critical risk — apply exhaustive testing of all possible combinations, because very high impact overrides likelihood in the matrix",
+          "Medium risk — apply moderate effort without special prioritization, treating low likelihood and very high impact as a median risk",
+          "High risk — apply focused, thorough testing (deeper design techniques and higher execution priority), matching the high risk level defined by the likelihood × impact matrix"
         ]
       },
       "exp": {
-        "pt": "O nível de risco é calculado a partir da combinação de probabilidade e impacto. 'Baixa probabilidade × impacto muito alto' tipicamente produz um nível de risco alto (não baixo, não crítico, não necessariamente médio) que justifica teste focado. A ignora impacto; B superestima para crítico; C subestima. Apenas D é a classificação defensável.",
-        "en": "Risk level is computed from the combination of likelihood and impact. 'Low likelihood × very high impact' typically yields a high (not low, not critical, not necessarily medium) risk level that warrants focused testing. A ignores impact; B overstates to critical; C understates. Only D is the defensible classification."
+        "pt": "Segundo o syllabus CTAL-TA v4.0 (§2.1), o nível de risco combina probabilidade e impacto conforme a matriz definida no projeto. Como a matriz da organização classifica \"probabilidade baixa × impacto muito alto\" como risco alto, a mitigação pelo teste exige esforço focado e técnicas apropriadas ao nível de risco alto. Ignorar o impacto, exigir teste exaustivo ou rebaixar o nível contradiz a avaliação de risco dada.",
+        "en": "Per the CTAL-TA v4.0 syllabus (§2.1), the risk level combines likelihood and impact according to the project’s risk matrix. Since the organization’s matrix classifies \"low likelihood × very high impact\" as high risk, test mitigation requires focused effort and techniques appropriate to a high risk level. Ignoring impact, demanding exhaustive testing, or downgrading the level contradicts the given risk assessment."
       }
     },
     {
