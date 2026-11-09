@@ -2,7 +2,7 @@
  "meta": {
   "title": "Synapse — Multi-Certification Question Bank",
   "description": "Banco de questões profissional bilíngue (EN/PT-BR) para certificações ISTQB",
-  "version": "1.7.3",
+  "version": "1.7.4",
   "generatedDate": "2026-10-25",
   "totalQuestions": 1100,
   "availableLanguages": [
@@ -19515,24 +19515,24 @@
    "section": "1.2.2",
    "locales": {
     "en": {
-     "q": "A test analyst drafts the following test case: 'Step 1: enter 1500 in the Withdraw field; Step 2: click Confirm.' Which two artifacts must the TA add during test design to make this a complete low-level test case?",
+     "q": "A test analyst drafts the following test case sketch: \"Step 1: enter 1500 in the Withdraw field; Step 2: click Confirm.\" According to the CTAL-TA v4.0 syllabus (§1.2.2), which elements must the Test Analyst add during test design to make this a complete low-level (concrete) test case?",
      "options": [
-      "A test environment name and a responsible tester's name, plus the build identifier to be used during execution of the test case",
-      "The preconditions (e.g., account balance), the expected result (e.g., new balance and confirmation message), and the test data needed",
-      "A defect report template and a traceability matrix entry, so that failures found can be logged and traced back to the requirement",
-      "An automation script and a code coverage target, since low-level test cases are typically executed through the automation framework"
+      "The test environment name, the responsible tester name, and the build identifier to be used during execution of the test case",
+      "Concrete preconditions (e.g., active account with balance of 2000), specific input test data, and detailed expected results (e.g., ending balance of 500 and confirmation message, plus postconditions if applicable)",
+      "A defect report template and a defect traceability matrix row, so that failures found after execution can be logged",
+      "An executable automation script and a structural code coverage percentage target, required for every low-level test case"
      ],
-     "exp": "A complete low-level test case requires preconditions, expected results, and the specific test data needed — together with the steps. The option “The preconditions (e.g., account balance), the…” lists exactly these. A is administrative metadata; C is post-execution artifacts; D jumps to automation/coverage which are not required for a test case to be complete."
+     "exp": "Per the CTAL-TA v4.0 syllabus (§1.2.2), a complete low-level test case requires adding concrete preconditions (e.g., active account with balance of 2000), specific input test data, and detailed expected results (e.g., ending balance of 500 and confirmation message, plus postconditions if applicable). Administrative metadata, defect matrices, or scripts do not complete it."
     },
     "pt": {
-     "q": "Um analista de teste redige o seguinte caso de teste: 'Passo 1: inserir 1500 no campo Saque; Passo 2: clicar em Confirmar.' Quais dois artefatos o TA deve adicionar durante o design de teste para tornar este um caso de teste de baixo nível completo?",
+     "q": "Um analista de teste redige o seguinte rascunho de caso de teste: \"Passo 1: inserir 1500 no campo Saque; Passo 2: clicar em Confirmar.\" Segundo o syllabus CTAL-TA v4.0 (§1.2.2), quais elementos o Analista de Teste deve acrescentar na modelagem de teste para torná-lo um caso de teste de baixo nível (concreto) completo?",
      "options": [
-      "Um nome de ambiente de teste e um nome do testador responsável, além do identificador do build a ser usado durante a execução do caso de teste",
-      "As pré-condições (ex.: saldo da conta), o resultado esperado (ex.: novo saldo e mensagem de confirmação) e os dados de teste necessários",
-      "Um modelo de relatório de defeito e uma entrada na matriz de rastreabilidade, para que falhas encontradas possam ser registradas e rastreadas até o requisito",
-      "Um script de automação e uma meta de cobertura de código, já que casos de teste de baixo nível são tipicamente executados via framework de automação"
+      "O nome do ambiente de teste, o nome do testador responsável e o identificador do build a ser usado durante a execução do caso de teste",
+      "As pré-condições concretas (ex.: conta ativa com saldo de 2000), os dados de teste de entrada específicos e os resultados esperados detalhados (ex.: saldo final de 500 e mensagem de confirmação, além de pós-condições se aplicável)",
+      "Um modelo de relatório de defeito e uma linha na matriz de rastreabilidade de defeitos, para registrar as falhas encontradas após a execução",
+      "Um script de automação executável e uma meta percentual de cobertura de código estrutural, exigidos em todo caso de teste de baixo nível"
      ],
-     "exp": "Um caso de teste de baixo nível completo requer pré-condições, resultados esperados e os dados de teste específicos necessários — junto com os passos. A opção “As pré-condições (ex.: saldo da conta), o…” lista exatamente esses. A é metadado administrativo; C são artefatos de pós-execução; D salta para automação/cobertura, que não são necessários para que um caso de teste esteja completo."
+     "exp": "Segundo o syllabus CTAL-TA v4.0 (§1.2.2), um caso de teste de baixo nível completo exige acrescentar as pré-condições concretas (ex.: conta ativa com saldo de 2000), os dados de teste de entrada específicos e os resultados esperados detalhados (ex.: saldo final de 500 e mensagem de confirmação, além de pós-condições se aplicável). Metadados administrativos de execução, matriz de defeitos ou scripts não o completam."
     }
    },
    "pool": "study"
@@ -19977,24 +19977,24 @@
    "section": "2.1",
    "locales": {
     "en": {
-     "q": "During risk assessment for a tax-calculation module, stakeholders agree that the likelihood of a defect is 'low' but the impact on customers is 'very high'. Using a standard likelihood × impact matrix, what is the most defensible risk-level classification and consequent test approach?",
+     "q": "During risk assessment for a tax-calculation module, stakeholders classify defect likelihood as \"low\" and customer impact as \"very high\". Per the organization’s risk matrix, the low likelihood × very high impact combination yields a \"high\" risk level. According to the CTAL-TA v4.0 syllabus (§2.1), what is the resulting risk classification and corresponding test mitigation approach?",
      "options": [
-      "Low risk — minimal testing is required because the low likelihood of a defect means the module is unlikely to fail in production",
-      "Critical risk — exhaustive testing is required because very high impact alone is sufficient to escalate defects to the most severe risk level",
-      "Medium risk — moderate testing is appropriate because the low likelihood offsets the high impact and yields a balanced risk classification",
-      "High risk — significant testing required because the combination of even low likelihood with very high impact yields a high risk level that warrants focused testing"
+      "Low risk — apply minimal testing only, because the low defect likelihood cancels out the very high impact in the risk matrix",
+      "Critical risk — apply exhaustive testing of all possible combinations, because very high impact overrides likelihood in the matrix",
+      "Medium risk — apply moderate effort without special prioritization, treating low likelihood and very high impact as a median risk",
+      "High risk — apply focused, thorough testing (deeper design techniques and higher execution priority), matching the high risk level defined by the likelihood × impact matrix"
      ],
-     "exp": "Risk level is computed from the combination of likelihood and impact. 'Low likelihood × very high impact' typically yields a high (not low, not critical, not necessarily medium) risk level that warrants focused testing. A ignores impact; B overstates to critical; C understates. Only D is the defensible classification."
+     "exp": "Per the CTAL-TA v4.0 syllabus (§2.1), the risk level combines likelihood and impact according to the project’s risk matrix. Since the organization’s matrix classifies \"low likelihood × very high impact\" as high risk, test mitigation requires focused effort and techniques appropriate to a high risk level. Ignoring impact, demanding exhaustive testing, or downgrading the level contradicts the given risk assessment."
     },
     "pt": {
-     "q": "Durante a avaliação de risco para um módulo de cálculo de impostos, as partes interessadas concordam que a probabilidade de um defeito é 'baixa', mas o impacto nos clientes é 'muito alto'. Usando uma matriz padrão de probabilidade × impacto, qual é a classificação de nível de risco mais defensável e a abordagem de teste consequente?",
+     "q": "Durante a avaliação de risco de um módulo de cálculo de impostos, os stakeholders classificam a probabilidade de defeito como \"baixa\" e o impacto nos clientes como \"muito alto\". Pela matriz de risco da organização, a combinação probabilidade baixa × impacto muito alto resulta em nível de risco \"alto\". Segundo o syllabus CTAL-TA v4.0 (§2.1), qual é a classificação de risco e a abordagem de mitigação de teste correspondente?",
      "options": [
-      "Risco baixo — teste mínimo é necessário porque a baixa probabilidade de defeito significa que o módulo provavelmente não falhará em produção",
-      "Risco crítico — teste exaustivo é necessário porque impacto muito alto por si só é suficiente para escalar defeitos ao nível mais severo de risco",
-      "Risco médio — teste moderado é apropriado porque a baixa probabilidade compensa o alto impacto e produz uma classificação de risco equilibrada",
-      "Risco alto — teste significativo necessário porque a combinação de mesmo baixa probabilidade com impacto muito alto produz um nível de risco alto que justifica teste focado"
+      "Risco baixo — aplicar apenas teste mínimo, pois a baixa probabilidade de defeito anula o impacto muito alto na matriz de risco",
+      "Risco crítico — aplicar teste exaustivo de todas as combinações possíveis, pois o impacto muito alto ignora a probabilidade na matriz",
+      "Risco médio — aplicar esforço moderado sem priorização especial, tratando probabilidade baixa e impacto muito alto como equivalentes a risco mediano",
+      "Risco alto — aplicar teste focado e rigoroso (técnicas de modelagem mais profundas e maior prioridade de execução), conforme o nível alto definido pela matriz probabilidade × impacto"
      ],
-     "exp": "O nível de risco é calculado a partir da combinação de probabilidade e impacto. 'Baixa probabilidade × impacto muito alto' tipicamente produz um nível de risco alto (não baixo, não crítico, não necessariamente médio) que justifica teste focado. A ignora impacto; B superestima para crítico; C subestima. Apenas D é a classificação defensável."
+     "exp": "Segundo o syllabus CTAL-TA v4.0 (§2.1), o nível de risco combina probabilidade e impacto conforme a matriz definida no projeto. Como a matriz da organização classifica \"probabilidade baixa × impacto muito alto\" como risco alto, a mitigação pelo teste exige esforço focado e técnicas apropriadas ao nível de risco alto. Ignorar o impacto, exigir teste exaustivo ou rebaixar o nível contradiz a avaliação de risco dada."
     }
    },
    "pool": "exam"
