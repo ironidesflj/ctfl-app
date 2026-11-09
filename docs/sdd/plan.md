@@ -99,3 +99,8 @@ validação final e autorização posterior para commit/push.
   candidata Vite e mantêm 3.18.0 como base em produção até o merge.
 - CI e publicação: verificar os gates da candidata antes de declarar a migração
   fechada ou registrar qualquer publicação.
+
+## Concluído em 2026-11-09
+
+- Revisão editorial CTAL-TM: 16 itens do pool de estudo aplicados no banco canônico (1.7.1) e propagados para as fatias do app; manifesto inalterado (conteúdo já publicado). Relatório: `REVISAO-CTAL-TM.md` (no workspace de orquestração).
+- Pendência aberta: decisão sobre cobertura K4 do pool de estudo.

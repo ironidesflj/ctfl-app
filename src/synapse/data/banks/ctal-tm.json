@@ -5,7 +5,7 @@
       "ch": 1,
       "k": 2,
       "answer": 0,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 1",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 1 · LO TM-1.1.1",
       "q": {
         "pt": "Durante o planejamento de teste de uma nova versão de um sistema de folha de pagamento, o Gerente de Teste passa a primeira semana revisando a política de teste organizacional, reunindo restrições regulatórias e encontrando-se com o Product Owner para alinhar o escopo de teste. Segundo o syllabus CTAL-TM v3.0, essas atividades se enquadram MELHOR em qual tarefa de planejamento de teste?",
         "en": "During test planning for a new payroll system release, the Test Manager spends the first week reviewing the organizational test policy, gathering regulatory constraints, and meeting with the Product Owner to align on test scope. According to the CTAL-TM v3.0 syllabus, these activities BEST fit under which test planning task?"
@@ -34,7 +34,7 @@
       "ch": 1,
       "k": 2,
       "answer": 1,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 1",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 1 · LO TM-1.1.1",
       "q": {
         "pt": "Um Gerente de Teste entra em um projeto depois que os requisitos já foram baseline e diz à equipe que o planejamento de teste não pode começar até a fase de design ser concluída. Segundo o syllabus CTAL-TM v3.0, qual é a afirmação MAIS precisa sobre quando o planejamento de teste deve começar?",
         "en": "A Test Manager joins a project after the requirements have already been baselined and tells the team that test planning cannot begin until the design phase is complete. According to the CTAL-TM v3.0 syllabus, what is the MOST accurate statement about when test planning should start?"
@@ -63,7 +63,7 @@
       "ch": 1,
       "k": 2,
       "answer": 0,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 1",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 1 · LO TM-1.1.3",
       "q": {
         "pt": "No final de uma versão, a equipe de teste arquiva os casos de teste, remove os dados de teste do ambiente, restaura o ambiente ao seu estado de baseline e realiza uma retrospectiva para capturar lições aprendidas. Segundo o syllabus CTAL-TM v3.0, essas tarefas pertencem a qual atividade?",
         "en": "At the end of a release, the test team archives the test cases, removes the test data from the environment, restores the environment to its baseline state, and holds a retrospective to capture lessons learned. According to the CTAL-TM v3.0 syllabus, these tasks belong to which activity?"
@@ -87,7 +87,7 @@
       "ch": 1,
       "k": 2,
       "answer": 1,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 1",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 1 · LO TM-1.1.3",
       "q": {
         "pt": "Durante a conclusão do teste, o Gerente de Teste garante que os defeitos conhecidos adiados sejam comunicados às equipes de operações e suporte que manterão o sistema em produção. Qual tarefa de conclusão do teste isso MELHOR descreve?",
         "en": "During test completion, the Test Manager ensures that deferred known defects are communicated to the operations and support teams that will maintain the system in production. Which test completion task does this BEST describe?"
@@ -116,7 +116,7 @@
       "ch": 1,
       "k": 2,
       "answer": 3,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 1",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 1 · LO TM-1.2.1",
       "q": {
         "pt": "Em um projeto, a equipe de operações está envolvida no teste de aceite operacional e ajuda a definir requisitos não funcionais. Segundo o syllabus CTAL-TM v3.0, qual afirmação sobre esse grupo de stakeholders é MAIS precisa?",
         "en": "In a project, the operations team is involved in operational acceptance testing and helps define non-functional requirements. According to the CTAL-TM v3.0 syllabus, which statement about this stakeholder group is MOST accurate?"
@@ -145,7 +145,7 @@
       "ch": 1,
       "k": 2,
       "answer": 0,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 1",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 1 · LO TM-1.2.2",
       "q": {
         "pt": "Ao usar uma matriz de stakeholders de poder/interesse para gerenciar stakeholders de teste, o Gerente de Teste identifica um patrocinador sênior que pode redirecionar o orçamento, mas mostra pouco interesse no dia a dia nas atividades de teste. Segundo o syllabus CTAL-TM v3.0, em qual quadrante esse stakeholder se enquadra?",
         "en": "When using a power/interest stakeholder matrix to manage test stakeholders, the Test Manager identifies a senior sponsor who can redirect budget but shows little day-to-day interest in test activities. According to the CTAL-TM v3.0 syllabus, in which quadrant does this stakeholder fall?"
@@ -174,7 +174,7 @@
       "ch": 1,
       "k": 2,
       "answer": 1,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 1",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 1 · LO TM-1.2.2",
       "q": {
         "pt": "Segundo o syllabus CTAL-TM v3.0, por que o syllabus recomenda que Gerentes de Teste usem uma matriz de poder/interesse no gerenciamento de testes?",
         "en": "According to the CTAL-TM v3.0 syllabus, why does the syllabus recommend that Test Managers use a power/interest matrix in test management?"
@@ -203,7 +203,7 @@
       "ch": 1,
       "k": 2,
       "answer": 2,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 1",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 1 · LO TM-1.2.3",
       "q": {
         "pt": "Um projeto usa um modelo híbrido de desenvolvimento de software: um ciclo sequencial para documentação em conformidade regulatória, junto com sprints ágeis iterativos para desenvolvimento de recursos. Segundo o syllabus CTAL-TM v3.0, qual abordagem de gerenciamento de teste é MAIS apropriada para esse modelo híbrido?",
         "en": "A project uses a hybrid software development model: a sequential cycle for regulatory-compliant documentation, alongside iterative agile sprints for feature development. According to the CTAL-TM v3.0 syllabus, which test management approach is MOST appropriate for this hybrid model?"
@@ -232,7 +232,7 @@
       "ch": 1,
       "k": 2,
       "answer": 3,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 1",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 1 · LO TM-1.2.4",
       "q": {
         "pt": "Em um SDLC iterativo-incremental, a equipe de teste adota uma estratégia de produzir um plano de teste leve por sprint que é atualizado a cada iteração, em vez de um único plano de teste abrangente no início do projeto. Segundo o syllabus CTAL-TM v3.0, essa decisão é MELHOR justificada por qual afirmação?",
         "en": "In an iterative-incremental SDLC, the test team adopts a strategy of producing a lightweight test plan per sprint that is updated every iteration, rather than a single comprehensive test plan at project start. According to the CTAL-TM v3.0 syllabus, this decision is BEST justified by which statement?"
@@ -261,7 +261,7 @@
       "ch": 1,
       "k": 2,
       "answer": 0,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 1",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 1 · LO TM-1.2.4",
       "q": {
         "pt": "Qual das seguintes afirmações MELHOR resume a diferença nas atividades de gerenciamento de teste entre SDLCs sequenciais e iterativo-incrementais segundo o syllabus CTAL-TM v3.0?",
         "en": "Which of the following statements BEST summarizes the difference in test management activities between sequential and iterative-incremental SDLCs according to the CTAL-TM v3.0 syllabus?"
@@ -290,7 +290,7 @@
       "ch": 1,
       "k": 2,
       "answer": 1,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 1",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 1 · LO TM-1.2.6",
       "q": {
         "pt": "Após uma correção crítica ser aplicada a um sistema em produção, o Gerente de Teste agenda um teste de confirmação para o defeito corrigido seguido por uma suíte de teste de regressão. Segundo o syllabus CTAL-TM v3.0, qual é a racionalidade de gerenciamento de teste para distinguir esses dois tipos de teste nesse cenário?",
         "en": "After a critical hotfix is applied to a production system, the Test Manager schedules a confirmation test for the fixed defect followed by a regression test suite. According to the CTAL-TM v3.0 syllabus, what is the test management rationale for distinguishing these two test types in this scenario?"
@@ -319,7 +319,7 @@
       "ch": 1,
       "k": 2,
       "answer": 3,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 1",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 1 · LO TM-1.3.1",
       "q": {
         "pt": "Segundo o syllabus CTAL-TM v3.0, o teste baseado em risco responde aos riscos por meio de medidas que incluem qual das seguintes?",
         "en": "According to the CTAL-TM v3.0 syllabus, risk-based testing responds to risks through measures that include which of the following?"
@@ -348,7 +348,7 @@
       "ch": 1,
       "k": 2,
       "answer": 3,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 1",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 1 · LO TM-1.3.1",
       "q": {
         "pt": "Um Gerente de Teste relata aos stakeholders que, quando os testes encontram defeitos, isso mitiga o risco do produto criando conscientização e a oportunidade de lidar com eles antes do lançamento. Segundo o syllabus CTAL-TM v3.0, qual é o benefício adicional quando os testes NÃO encontram defeitos em uma área de alto risco?",
         "en": "A Test Manager reports to stakeholders that, when testing finds defects, this mitigates product risk by creating awareness and the opportunity to handle them before release. According to the CTAL-TM v3.0 syllabus, what is the additional benefit when testing does NOT find defects in a high-risk area?"
@@ -377,7 +377,7 @@
       "ch": 1,
       "k": 2,
       "answer": 2,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 1",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 1 · LO TM-1.3.2",
       "q": {
         "pt": "Durante a identificação de riscos, um Gerente de Teste convida apenas um stakeholder devido à pressão de cronograma, e esse stakeholder identifica apenas um pequeno subconjunto de riscos. Segundo o syllabus CTAL-TM v3.0, qual é o risco principal dessa abordagem?",
         "en": "During risk identification, a Test Manager invites only one stakeholder because of schedule pressure, and that stakeholder identifies only a small subset of risks. According to the CTAL-TM v3.0 syllabus, what is the primary risk of this approach?"
@@ -406,7 +406,7 @@
       "ch": 1,
       "k": 2,
       "answer": 3,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 1",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 1 · LO TM-1.3.3",
       "q": {
         "pt": "Segundo o syllabus CTAL-TM v3.0, qual dos seguintes fatores influencia a PROBABILIDADE de um risco de qualidade?",
         "en": "According to the CTAL-TM v3.0 syllabus, which of the following factors influences the PROBABILITY of a quality risk?"
@@ -435,7 +435,7 @@
       "ch": 1,
       "k": 2,
       "answer": 1,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 1",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 1 · LO TM-1.3.3",
       "q": {
         "pt": "Um Gerente de Teste é questionado se deve usar avaliação de risco quantitativa ou qualitativa. Segundo o syllabus CTAL-TM v3.0, quando a avaliação quantitativa de risco é apropriada?",
         "en": "A Test Manager is asked whether to use quantitative or qualitative risk assessment. According to the CTAL-TM v3.0 syllabus, when is quantitative risk assessment appropriate?"
@@ -464,7 +464,7 @@
       "ch": 1,
       "k": 2,
       "answer": 1,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 1",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 1 · LO TM-1.3.5",
       "q": {
         "pt": "Segundo o syllabus CTAL-TM v3.0, qual das seguintes é uma técnica pesada de teste baseado em risco?",
         "en": "According to the CTAL-TM v3.0 syllabus, which of the following is a heavy risk-based testing technique?"
@@ -493,7 +493,7 @@
       "ch": 1,
       "k": 2,
       "answer": 3,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 1",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 1 · LO TM-1.4.1",
       "q": {
         "pt": "Segundo o syllabus CTAL-TM v3.0, qual afirmação MELHOR descreve escolhas típicas que um Gerente de Teste deve fazer ao definir uma abordagem de teste de projeto?",
         "en": "According to the CTAL-TM v3.0 syllabus, which statement BEST describes typical choices that a Test Manager must make when defining a project test approach?"
@@ -522,7 +522,7 @@
       "ch": 1,
       "k": 2,
       "answer": 1,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 1",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 1 · LO TM-1.5.1",
       "q": {
         "pt": "Segundo o syllabus CTAL-TM v3.0, o modelo IDEAL para melhoria do processo de teste consiste em quais fases?",
         "en": "According to the CTAL-TM v3.0 syllabus, the IDEAL model for test process improvement consists of which phases?"
@@ -551,7 +551,7 @@
       "ch": 1,
       "k": 2,
       "answer": 3,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 1",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 1 · LO TM-1.5.2",
       "q": {
         "pt": "Segundo o syllabus CTAL-TM v3.0, qual afirmação MELHOR descreve a abordagem de melhoria do processo de teste baseada em modelos?",
         "en": "According to the CTAL-TM v3.0 syllabus, which statement BEST describes the model-based test process improvement approach?"
@@ -580,7 +580,7 @@
       "ch": 1,
       "k": 2,
       "answer": 3,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 1",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 1 · LO TM-1.5.2",
       "q": {
         "pt": "Um Gerente de Teste escolhe o TMMi como modelo de referência para avaliar o processo de teste. Segundo o syllabus CTAL-TM v3.0, essa escolha é um exemplo de qual abordagem de melhoria?",
         "en": "A Test Manager chooses TMMi as the reference model to assess the test process. According to the CTAL-TM v3.0 syllabus, this choice is an example of which improvement approach?"
@@ -609,7 +609,7 @@
       "ch": 1,
       "k": 2,
       "answer": 1,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 1",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 1 · LO TM-1.5.3",
       "q": {
         "pt": "Segundo o syllabus CTAL-TM v3.0, qual afirmação MELHOR descreve a abordagem de melhoria do processo de teste baseada em análise?",
         "en": "According to the CTAL-TM v3.0 syllabus, which statement BEST describes the analysis-based test process improvement approach?"
@@ -638,7 +638,7 @@
       "ch": 1,
       "k": 2,
       "answer": 3,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 1",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 1 · LO TM-1.6.1",
       "q": {
         "pt": "Segundo o syllabus CTAL-TM v3.0, qual das seguintes é uma prática recomendada reconhecida para introduzir uma ferramenta de teste?",
         "en": "According to the CTAL-TM v3.0 syllabus, which of the following is a recognized best practice for introducing a test tool?"
@@ -667,7 +667,7 @@
       "ch": 1,
       "k": 2,
       "answer": 3,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 1",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 1 · LO TM-1.6.2",
       "q": {
         "pt": "Ao decidir sobre uma ferramenta de teste, um Gerente de Teste considera o modelo de licenciamento, custo total de propriedade, estabilidade do fornecedor e o impacto na moral dos testadores. Segundo o syllabus CTAL-TM v3.0, esses são exemplos de qual tipo de aspectos?",
         "en": "When deciding on a test tool, a Test Manager considers the licensing model, total cost of ownership, vendor stability, and the impact on tester morale. According to the CTAL-TM v3.0 syllabus, these are examples of which type of aspects?"
@@ -696,7 +696,7 @@
       "ch": 1,
       "k": 2,
       "answer": 0,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 1",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 1 · LO TM-1.1.1",
       "q": {
         "pt": "Um Gerente de Teste de uma plataforma de sinistros de seguros precisa produzir a primeira versão de um plano de teste antes que o workshop de requisitos tenha terminado. Segundo o syllabus CTAL-TM v3.0, qual abordagem está MAIS alinhada com a boa prática de planejamento de teste?",
         "en": "A Test Manager for an insurance claims platform must produce the first version of a test plan before the requirements workshop has finished. According to the CTAL-TM v3.0 syllabus, which approach is MOST aligned with good test planning practice?"
@@ -725,7 +725,7 @@
       "ch": 1,
       "k": 2,
       "answer": 0,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 1",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 1 · LO TM-1.1.1",
       "q": {
         "pt": "Durante o planejamento de teste de uma expansão de varejo online, um Gerente de Teste lista os seguintes produtos do planejamento: escopo de teste definido, lista explícita de itens de teste, registro de riscos, abordagem de teste, estimativa de esforço e página de assinatura dos stakeholders. Segundo o syllabus CTAL-TM v3.0, qual é a MELHOR caracterização desses itens?",
         "en": "During test planning for an online retail expansion, a Test Manager lists the following planning outputs: a defined test scope, an explicit list of test items, a risk register, a test approach, an effort estimate, and a stakeholder sign-off page. According to the CTAL-TM v3.0 syllabus, what is the BEST characterization of these items?"
@@ -754,7 +754,7 @@
       "ch": 1,
       "k": 2,
       "answer": 0,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 1",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 1 · LO TM-1.1.2",
       "q": {
         "pt": "Um Gerente de Teste de uma atualização de faturamento de telecomunicações publica um painel diário com contagens de execução de casos de teste, taxa de chegada de defeitos e defeitos abertos remanescentes por severidade, além de uma previsão atualizada da data de término do teste. Segundo o syllabus CTAL-TM v3.0, essas ações são PRIMARIAMENTE parte de qual atividade?",
         "en": "A Test Manager for a telecom billing upgrade publishes a daily dashboard with test case execution counts, defect arrival rate, and remaining open defects by severity, plus an updated forecast of the test end date. According to the CTAL-TM v3.0 syllabus, these actions are PRIMARILY part of which activity?"
@@ -783,7 +783,7 @@
       "ch": 1,
       "k": 2,
       "answer": 0,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 1",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 1 · LO TM-1.1.2",
       "q": {
         "pt": "No meio do sprint, um Gerente de Teste percebe que a taxa de detecção de defeitos da equipe caiu drasticamente, suspeita de instabilidade do ambiente e autoriza uma investigação paralela enquanto reprioriza os casos de teste para manter a execução em movimento. Segundo o syllabus CTAL-TM v3.0, qual é o rótulo MAIS apropriado para essa última ação?",
         "en": "Mid-sprint, a Test Manager notices that the team's defect detection rate has dropped sharply, suspects environment instability, and authorizes a parallel investigation while reprioritizing the test cases to keep execution moving. According to the CTAL-TM v3.0 syllabus, what is the MOST appropriate label for the latter action?"
@@ -812,7 +812,7 @@
       "ch": 1,
       "k": 2,
       "answer": 0,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 1",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 1 · LO TM-1.1.3",
       "q": {
         "pt": "Ao final de uma versão regulatória de um dispositivo médico, o Gerente de Teste agenda uma reunião final de revisão na qual a equipe consolida o relatório de resumo de teste, arquiva o testware no sistema de gerenciamento de configuração, transfere os defeitos abertos conhecidos para a equipe de suporte e agenda uma retrospectiva. Segundo o syllabus CTAL-TM v3.0, a qual atividade esse conjunto de ações pertence?",
         "en": "At the end of a regulatory release for a medical device, the Test Manager schedules a final review meeting where the team consolidates the test summary report, archives the testware in the configuration management system, transfers known open defects to the support team, and schedules a retrospective. According to the CTAL-TM v3.0 syllabus, which activity does this set of actions belong to?"
@@ -841,7 +841,7 @@
       "ch": 1,
       "k": 2,
       "answer": 1,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 1",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 1 · LO TM-1.1.3",
       "q": {
         "pt": "Um Gerente de Teste decide pular as atividades de conclusão de teste de uma versão de portal de RH interno porque 'o projeto acabou e a equipe é necessária em outro engajamento'. Segundo o syllabus CTAL-TM v3.0, qual é a consequência MAIS provável dessa decisão?",
         "en": "A Test Manager decides to skip the test completion activities for an internal HR portal release because 'the project is over and the team is needed on another engagement'. According to the CTAL-TM v3.0 syllabus, what is the MOST likely consequence of this decision?"
@@ -870,7 +870,7 @@
       "ch": 1,
       "k": 2,
       "answer": 0,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 1",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 1 · LO TM-1.2.1",
       "q": {
         "pt": "Em uma plataforma SaaS de logística, a equipe de Vendas quer que as reivindicações de marketing sobre disponibilidade sejam verificadas por testes, enquanto a equipe de Compliance quer evidências de que as regras de retenção de dados sejam cumpridas. Segundo o syllabus CTAL-TM v3.0, qual afirmação MELHOR explica por que esses stakeholders estão interessados em teste?",
         "en": "In a logistics SaaS platform, the Sales team wants marketing claims about uptime verified by testing, while the Compliance team wants evidence that data retention rules are honored. According to the CTAL-TM v3.0 syllabus, which statement BEST explains why these stakeholders are interested in testing?"
@@ -899,7 +899,7 @@
       "ch": 1,
       "k": 2,
       "answer": 0,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 1",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 1 · LO TM-1.2.2",
       "q": {
         "pt": "Um Gerente de Teste em um projeto de infotenimento automotivo está planejando uma versão e pede a cada grupo de stakeholders (engenharia, marketing, compliance, suporte ao cliente) que indique um representante para participar dos workshops de identificação de riscos do produto. Segundo o syllabus CTAL-TM v3.0, qual é a razão PRIMÁRIA pela qual o conhecimento dos stakeholders é importante?",
         "en": "A Test Manager on an automotive infotainment project is planning a release and asks each stakeholder group (engineering, marketing, compliance, customer support) to nominate a representative to participate in product risk identification workshops. According to the CTAL-TM v3.0 syllabus, what is the PRIMARY reason this stakeholder knowledge is important?"
@@ -928,7 +928,7 @@
       "ch": 1,
       "k": 2,
       "answer": 0,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 1",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 1 · LO TM-1.2.3",
       "q": {
         "pt": "Um projeto usa um modelo híbrido: um V-model sequencial para o firmware embarcado, Scrum para o backend em nuvem e um quadro Kanban para o aplicativo móvel voltado ao cliente. Segundo o syllabus CTAL-TM v3.0, qual é a resposta de gerenciamento de teste MAIS apropriada?",
         "en": "A project uses a hybrid model: a sequential V-model for the embedded firmware, Scrum for the cloud backend, and a Kanban board for the customer-facing mobile app. According to the CTAL-TM v3.0 syllabus, what is the MOST appropriate test management response?"
@@ -957,7 +957,7 @@
       "ch": 1,
       "k": 2,
       "answer": 2,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 1",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 1 · LO TM-1.2.3",
       "q": {
         "pt": "Em um projeto híbrido, os analistas de negócios trabalham em iterações de 4 semanas, enquanto a equipe de teste realiza um UAT sequencial paralelo no final. Segundo o syllabus CTAL-TM v3.0, qual é um desafio TÍPICO de gerenciamento de teste criado por essa configuração híbrida?",
         "en": "In a hybrid project, the business analysts work in 4-week iterations while the test team runs a sequential UAT in parallel at the end. According to the CTAL-TM v3.0 syllabus, what is a TYPICAL test management challenge created by this hybrid setup?"
@@ -986,7 +986,7 @@
       "ch": 1,
       "k": 2,
       "answer": 0,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 1",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 1 · LO TM-1.2.4",
       "q": {
         "pt": "Em um projeto sequencial (V-model) para um sistema tributário governamental, o Gerente de Teste está preparando a abordagem de teste para o nível de teste de sistema. Segundo o syllabus CTAL-TM v3.0, qual característica é TÍPICA das atividades de gerenciamento de teste em um SDLC sequencial?",
         "en": "On a sequential (V-model) project for a government tax system, the Test Manager is preparing the test approach for the system test level. According to the CTAL-TM v3.0 syllabus, which characteristic is TYPICAL of test management activities in a sequential SDLC?"
@@ -1015,7 +1015,7 @@
       "ch": 1,
       "k": 2,
       "answer": 0,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 1",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 1 · LO TM-1.2.4",
       "q": {
         "pt": "Uma equipe está usando Scrum para um aplicativo de saúde. Segundo o syllabus CTAL-TM v3.0, qual das seguintes é uma atividade TÍPICA de gerenciamento de teste em um SDLC iterativo/incremental (ágil)?",
         "en": "A team is using Scrum for a healthcare app. According to the CTAL-TM v3.0 syllabus, which of the following is a TYPICAL test management activity in an iterative/incremental (agile) SDLC?"
@@ -1044,7 +1044,7 @@
       "ch": 1,
       "k": 2,
       "answer": 0,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 1",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 1 · LO TM-1.2.5",
       "q": {
         "pt": "Um Gerente de Teste de uma integração complexa de ERP decide realizar o teste de integração de componentes antes do teste de sistema. Segundo o syllabus CTAL-TM v3.0, qual é a razão PRIMÁRIA pela qual as atividades de gerenciamento de teste diferem entre os níveis de teste?",
         "en": "A Test Manager for a complex ERP integration decides to perform component integration testing before system testing. According to the CTAL-TM v3.0 syllabus, what is the PRIMARY reason test management activities differ across test levels?"
@@ -1073,7 +1073,7 @@
       "ch": 1,
       "k": 2,
       "answer": 0,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 1",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 1 · LO TM-1.2.5",
       "q": {
         "pt": "No nível de teste de aceitação do usuário de um sistema de reservas de uma companhia aérea, o Gerente de Teste envolve usuários de negócios para escrever e executar testes usando dados semelhantes aos de produção. Segundo o syllabus CTAL-TM v3.0, qual afirmação MELHOR reflete por que isso é apropriado?",
         "en": "At the user acceptance test level for an airline booking system, the Test Manager engages business users to write and execute tests using production-like data. According to the CTAL-TM v3.0 syllabus, which statement BEST reflects why this is appropriate?"
@@ -1102,7 +1102,7 @@
       "ch": 1,
       "k": 2,
       "answer": 0,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 1",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 1 · LO TM-1.2.6",
       "q": {
         "pt": "Um projeto exige teste funcional e vários tipos de teste não funcionais (desempenho, segurança, usabilidade). Segundo o syllabus CTAL-TM v3.0, qual é a melhor justificativa de gerenciamento de teste para tratar esses tipos de teste de forma diferente no plano de teste?",
         "en": "A project requires both functional testing and several non-functional test types (performance, security, usability). According to the CTAL-TM v3.0 syllabus, what is the BEST test management rationale for treating these test types differently in the test plan?"
@@ -1131,7 +1131,7 @@
       "ch": 1,
       "k": 2,
       "answer": 0,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 1",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 1 · LO TM-1.3.1",
       "q": {
         "pt": "Um risco de produto de alta severidade foi identificado no módulo de pagamento de uma plataforma de e-commerce. Segundo o syllabus CTAL-TM v3.0, qual das seguintes é uma medida TÍPICA que o teste baseado em risco adota para responder a esse risco?",
         "en": "A high-severity product risk has been identified in the payment module of an e-commerce platform. According to the CTAL-TM v3.0 syllabus, which of the following is a TYPICAL measure that risk-based testing takes to respond to this risk?"
@@ -1160,7 +1160,7 @@
       "ch": 1,
       "k": 2,
       "answer": 0,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 1",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 1 · LO TM-1.3.1",
       "q": {
         "pt": "Para um risco com alta probabilidade e baixo impacto, qual conjunto de respostas MELHOR corresponde à orientação do syllabus CTAL-TM v3.0 sobre teste baseado em risco?",
         "en": "For a risk with high likelihood and low impact, which response set BEST matches the CTAL-TM v3.0 syllabus guidance on risk-based testing?"
@@ -1189,7 +1189,7 @@
       "ch": 1,
       "k": 2,
       "answer": 0,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 1",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 1 · LO TM-1.3.2",
       "q": {
         "pt": "Segundo o syllabus CTAL-TM v3.0, qual das seguintes é uma fonte TÍPICA que um Gerente de Teste pode usar para identificar riscos para um novo projeto?",
         "en": "According to the CTAL-TM v3.0 syllabus, which of the following is a TYPICAL source that a Test Manager can use to identify risks for a new project?"
@@ -1218,7 +1218,7 @@
       "ch": 1,
       "k": 2,
       "answer": 1,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 1",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 1 · LO TM-1.3.3",
       "q": {
         "pt": "Para um sistema de negociação financeira, um risco tem alto impacto de negócio (um defeito poderia custar milhões em minutos), mas baixa probabilidade técnica (o módulo afetado é maduro e bem testado). Segundo o syllabus CTAL-TM v3.0, qual é a interpretação MAIS apropriada do nível de risco?",
         "en": "For a financial trading system, a risk has high business impact (a defect could cost millions in minutes) but low technical likelihood (the affected module is mature and well-tested). According to the CTAL-TM v3.0 syllabus, what is the MOST appropriate interpretation of the risk level?"
@@ -1247,7 +1247,7 @@
       "ch": 1,
       "k": 2,
       "answer": 0,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 1",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 1 · LO TM-1.3.3",
       "q": {
         "pt": "Com dados extensos e estatisticamente válidos, um gerente estima probabilidade de 20% e impacto de R$ 10.000 para um risco. Segundo o CTAL-TM v3.0, qual abordagem quantitativa é adequada?",
         "en": "Using extensive and statistically valid data, a manager estimates a risk likelihood of 20% and an impact of $10,000. Under CTAL-TM v3.0, which quantitative approach is appropriate?"
@@ -1276,7 +1276,7 @@
       "ch": 1,
       "k": 2,
       "answer": 0,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 1",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 1 · LO TM-1.3.5",
       "q": {
         "pt": "Segundo o syllabus CTAL-TM v3.0, qual das seguintes MELHOR distingue uma técnica de teste baseado em risco pesada de uma leve?",
         "en": "According to the CTAL-TM v3.0 syllabus, which of the following BEST distinguishes a heavy risk-based testing technique from a light one?"
@@ -1305,7 +1305,7 @@
       "ch": 1,
       "k": 2,
       "answer": 0,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 1",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 1 · LO TM-1.3.6",
       "q": {
         "pt": "Após duas versões usando teste baseado em risco, um Gerente de Teste quer avaliar se a abordagem está tendo sucesso. Segundo o syllabus CTAL-TM v3.0, qual das seguintes é uma métrica de sucesso TÍPICA para teste baseado em risco?",
         "en": "After two releases using risk-based testing, a Test Manager wants to evaluate whether the approach is succeeding. According to the CTAL-TM v3.0 syllabus, which of the following is a TYPICAL success metric for risk-based testing?"
@@ -1334,7 +1334,7 @@
       "ch": 1,
       "k": 2,
       "answer": 0,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 1",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 1 · LO TM-1.4.1",
       "q": {
         "pt": "Um projeto deve estar em conformidade com um padrão aeroespacial regulamentado que exige níveis de teste, artefatos e rastreabilidade específicos. Segundo o syllabus CTAL-TM v3.0, qual abordagem de teste o Gerente de Teste tem MAIS probabilidade de escolher?",
         "en": "A project must conform to a regulated aerospace standard that mandates specific test levels, artifacts, and traceability. According to the CTAL-TM v3.0 syllabus, which test approach is the Test Manager MOST likely to choose?"
@@ -1363,7 +1363,7 @@
       "ch": 1,
       "k": 2,
       "answer": 0,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 1",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 1 · LO TM-1.5.1",
       "q": {
         "pt": "Uma organização de teste quer melhorar seu processo de teste e decide usar o modelo IDEAL. Segundo o syllabus CTAL-TM v3.0, qual das seguintes MELHOR descreve o modelo IDEAL?",
         "en": "A test organization wants to improve its test process and decides to use the IDEAL model. According to the CTAL-TM v3.0 syllabus, which of the following BEST describes the IDEAL model?"
@@ -1392,7 +1392,7 @@
       "ch": 1,
       "k": 2,
       "answer": 0,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 1",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 1 · LO TM-1.5.1",
       "q": {
         "pt": "Durante a fase 'Diagnosing' de uma iniciativa de melhoria do processo de teste baseada no IDEAL, a equipe é solicitada a mapear as práticas atuais, identificar lacunas e propor melhorias. Segundo o syllabus CTAL-TM v3.0, qual é o propósito PRIMÁRIO dessa fase?",
         "en": "During the 'Diagnosing' phase of an IDEAL-based test process improvement initiative, the team is asked to map current practices, identify gaps, and propose improvements. According to the CTAL-TM v3.0 syllabus, what is the PRIMARY purpose of this phase?"
@@ -1421,7 +1421,7 @@
       "ch": 1,
       "k": 2,
       "answer": 0,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 1",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 1 · LO TM-1.5.2",
       "q": {
         "pt": "Um Gerente de Teste compara abordagens de melhoria baseadas em modelo e baseadas em análise e observa que a baseada em modelo é preferida quando a organização quer um benchmark externamente validado, enquanto a baseada em análise é preferida quando a organização quer ganhos rápidos e orientados por dados de seu próprio histórico de defeitos. Segundo o syllabus CTAL-TM v3.0, qual afirmação é MAIS precisa?",
         "en": "A Test Manager compares model-based and analysis-based improvement approaches and notes that model-based is preferred when the organization wants an externally validated benchmark, while analysis-based is preferred when the organization wants quick, data-driven wins from its own defect history. According to the CTAL-TM v3.0 syllabus, which statement is MOST accurate?"
@@ -1450,7 +1450,7 @@
       "ch": 1,
       "k": 2,
       "answer": 1,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 1",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 1 · LO TM-1.5.3",
       "q": {
         "pt": "Um Gerente de Teste escolhe a melhoria baseada em análise e começa analisando a taxa de chegada de defeitos, a porcentagem de detecção de defeitos (DDP), a taxa de execução de teste e a eficácia dos casos de teste das últimas 4 versões. Segundo o syllabus CTAL-TM v3.0, qual é a principal característica dessa abordagem?",
         "en": "A Test Manager chooses analysis-based improvement and starts by analyzing defect arrival rate, defect detection percentage (DDP), test execution rate, and test case effectiveness over the last 4 releases. According to the CTAL-TM v3.0 syllabus, what is the MAIN feature of this approach?"
@@ -1479,7 +1479,7 @@
       "ch": 1,
       "k": 2,
       "answer": 0,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 1",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 1 · LO TM-1.6.1",
       "q": {
         "pt": "Segundo o syllabus CTAL-TM v3.0, qual das seguintes é uma melhor prática TÍPICA ao introduzir uma ferramenta de teste em uma organização?",
         "en": "According to the CTAL-TM v3.0 syllabus, which of the following is a TYPICAL best practice when introducing a test tool into an organization?"
@@ -1508,7 +1508,7 @@
       "ch": 1,
       "k": 2,
       "answer": 1,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 1",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 1 · LO TM-1.6.2",
       "q": {
         "pt": "Ao selecionar uma ferramenta de teste, um Gerente de Teste considera aspectos técnicos como compatibilidade com a aplicação em teste, integração com ferramentas existentes, escalabilidade e capacidade de manutenção dos ativos de teste. Segundo o syllabus CTAL-TM v3.0, qual afirmação MELHOR reflete essas preocupações?",
         "en": "When selecting a test tool, a Test Manager considers technical aspects such as compatibility with the application under test, integration with existing tools, scalability, and maintainability of the test assets. According to the CTAL-TM v3.0 syllabus, which statement BEST reflects these concerns?"
@@ -1537,7 +1537,7 @@
       "ch": 1,
       "k": 2,
       "answer": 1,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 1",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 1 · LO TM-1.6.4",
       "q": {
         "pt": "Segundo o syllabus CTAL-TM v3.0, qual das seguintes MELHOR descreve os estágios típicos do ciclo de vida da ferramenta de teste?",
         "en": "According to the CTAL-TM v3.0 syllabus, which of the following BEST describes the typical stages of the test tool lifecycle?"
@@ -1566,7 +1566,7 @@
       "ch": 1,
       "k": 2,
       "answer": 0,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 1",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 1 · LO TM-1.6.5",
       "q": {
         "pt": "Um Gerente de Teste configura a ferramenta de gerenciamento de teste para calcular automaticamente, para cada versão: taxa de execução de casos de teste, taxa de chegada de defeitos, defeitos abertos por severidade e cobertura de teste dos requisitos. Segundo o syllabus CTAL-TM v3.0, qual é o principal benefício de coletar e avaliar métricas usando ferramentas?",
         "en": "A Test Manager configures the test management tool to automatically compute, for each release: test case execution rate, defect arrival rate, open defects by severity, and test coverage of requirements. According to the CTAL-TM v3.0 syllabus, what is the MAIN benefit of collecting and evaluating metrics using tools?"
@@ -1595,7 +1595,7 @@
       "ch": 1,
       "k": 2,
       "answer": 1,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 1",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 1 · LO TM-1.6.5",
       "q": {
         "pt": "Um Gerente de Teste usa o rastreador de defeitos para calcular a Porcentagem de Detecção de Defeitos (DDP) para cada nível de teste e ao longo de várias versões. Segundo o syllabus CTAL-TM v3.0, qual é um uso TÍPICO dessa métrica coletada pela ferramenta?",
         "en": "A Test Manager uses the defect tracker to compute Defect Detection Percentage (DDP) for each test level and over multiple releases. According to the CTAL-TM v3.0 syllabus, what is a TYPICAL use of this tool-collected metric?"
@@ -1624,7 +1624,7 @@
       "ch": 1,
       "k": 2,
       "answer": 1,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 1",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 1 · LO TM-1.2.4",
       "q": {
         "pt": "Em um projeto de manutenção baseado em Kanban, a equipe recebe um fluxo contínuo de pequenas solicitações de mudança. Segundo o syllabus CTAL-TM v3.0, qual adaptação de gerenciamento de teste é MAIS apropriada para esse SDLC?",
         "en": "In a Kanban-based maintenance project, the team receives a continuous flow of small change requests. According to the CTAL-TM v3.0 syllabus, which test management adaptation is MOST appropriate for this SDLC?"
@@ -1655,7 +1655,7 @@
       "ch": 2,
       "k": 2,
       "answer": 3,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 2",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 2 · LO TM-2.1.1",
       "q": {
         "pt": "Segundo o syllabus CTAL-TM v3.0, qual das seguintes é um exemplo de métrica de PRODUTO?",
         "en": "According to the CTAL-TM v3.0 syllabus, which of the following is an example of a PRODUCT metric?"
@@ -1684,7 +1684,7 @@
       "ch": 2,
       "k": 2,
       "answer": 3,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 2",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 2 · LO TM-2.1.1",
       "q": {
         "pt": "Segundo o syllabus CTAL-TM v3.0, qual das seguintes é um exemplo de métrica de PROCESSO?",
         "en": "According to the CTAL-TM v3.0 syllabus, which of the following is an example of a PROCESS metric?"
@@ -1713,7 +1713,7 @@
       "ch": 2,
       "k": 2,
       "answer": 1,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 2",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 2 · LO TM-2.1.2",
       "q": {
         "pt": "Segundo o syllabus CTAL-TM v3.0, como as métricas de teste podem ser usadas para controlar o progresso do teste?",
         "en": "According to the CTAL-TM v3.0 syllabus, how can test metrics be used to control test progress?"
@@ -1742,7 +1742,7 @@
       "ch": 2,
       "k": 2,
       "answer": 2,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 2",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 2 · LO TM-2.1.2",
       "q": {
         "pt": "Um Gerente de Teste percebe que a execução do teste está 40% atrás do plano e a taxa de chegada de defeitos está subindo. Segundo o syllabus CTAL-TM v3.0, qual ação de controle é MAIS apropriada com base nessas métricas?",
         "en": "A Test Manager notices that test execution is 40% behind plan and defect arrival rate is climbing. According to the CTAL-TM v3.0 syllabus, which control action is MOST appropriate based on these metrics?"
@@ -1771,7 +1771,7 @@
       "ch": 2,
       "k": 2,
       "answer": 1,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 2",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 2 · LO TM-2.2.1",
       "q": {
         "pt": "Segundo o syllabus CTAL-TM v3.0, quais dos seguintes fatores precisam ser considerados na estimativa de teste?",
         "en": "According to the CTAL-TM v3.0 syllabus, which of the following factors need to be considered in test estimation?"
@@ -1800,7 +1800,7 @@
       "ch": 2,
       "k": 2,
       "answer": 2,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 2",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 2 · LO TM-2.2.1",
       "q": {
         "pt": "Um Gerente de Teste está estimando o esforço de teste. Segundo o syllabus CTAL-TM v3.0, qual afirmação MELHOR reflete a relação entre estimativa de teste e estimativa de projeto?",
         "en": "A Test Manager is estimating test effort. According to the CTAL-TM v3.0 syllabus, which statement BEST reflects the relationship between test estimation and project estimation?"
@@ -1829,7 +1829,7 @@
       "ch": 2,
       "k": 2,
       "answer": 3,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 2",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 2 · LO TM-2.2.2",
       "q": {
         "pt": "Um projeto tem um produto muito maduro e bem testado como base de teste e uma equipe de teste sênior e motivada com ampla experiência no domínio. Segundo o syllabus CTAL-TM v3.0, qual é o provável efeito no esforço de teste em comparação com um projeto com base de teste imatura e equipe júnior?",
         "en": "A project has a very mature, well-tested product as its test basis and a senior, motivated test team with extensive experience in the domain. According to the CTAL-TM v3.0 syllabus, what is the likely effect on test effort compared to a project with an immature test basis and a junior team?"
@@ -1858,7 +1858,7 @@
       "ch": 2,
       "k": 2,
       "answer": 1,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 2",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 2 · LO TM-2.2.2",
       "q": {
         "pt": "Um projeto tem uma alta taxa de mudança de requisitos no final do ciclo de desenvolvimento. Segundo o syllabus CTAL-TM v3.0, qual é o provável impacto no esforço de teste?",
         "en": "A project has a high rate of requirements change late in the development cycle. According to the CTAL-TM v3.0 syllabus, what is the likely impact on test effort?"
@@ -1887,7 +1887,7 @@
       "ch": 2,
       "k": 2,
       "answer": 2,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 2",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 2 · LO TM-2.3.2",
       "q": {
         "pt": "Segundo o syllabus CTAL-TM v3.0, qual conjunto de participantes é necessário para um gerenciamento eficaz de defeitos?",
         "en": "According to the CTAL-TM v3.0 syllabus, which set of participants is required for effective defect management?"
@@ -1916,7 +1916,7 @@
       "ch": 2,
       "k": 2,
       "answer": 3,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 2",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 2 · LO TM-2.3.2",
       "q": {
         "pt": "Um Gerente de Teste percebe que defeitos relatados pela equipe de operações são rotineiramente ignorados porque a equipe de operações não faz parte da reunião de triagem de defeitos. Segundo o syllabus CTAL-TM v3.0, qual é a MELHOR ação?",
         "en": "A Test Manager notices that defects reported by the operations team are routinely ignored because the operations team is not part of the defect triage meeting. According to the CTAL-TM v3.0 syllabus, what is the BEST action?"
@@ -1945,7 +1945,7 @@
       "ch": 2,
       "k": 2,
       "answer": 1,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 2",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 2 · LO TM-2.3.3",
       "q": {
         "pt": "Em uma equipe ágil, um defeito crítico é encontrado perto do final de um sprint. Segundo o syllabus CTAL-TM v3.0, qual afirmação MELHOR reflete uma prática recomendada?",
         "en": "In an agile team, a critical defect is found near the end of a sprint. According to the CTAL-TM v3.0 syllabus, which statement BEST reflects a recommended practice?"
@@ -1974,7 +1974,7 @@
       "ch": 2,
       "k": 2,
       "answer": 2,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 2",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 2 · LO TM-2.3.6",
       "q": {
         "pt": "Segundo o syllabus CTAL-TM v3.0, as estatísticas de relatórios de defeitos podem ser usadas para planejar melhoria do processo por:",
         "en": "According to the CTAL-TM v3.0 syllabus, defect report statistics can be used to plan process improvement by:"
@@ -2003,7 +2003,7 @@
       "ch": 2,
       "k": 2,
       "answer": 3,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 2",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 2 · LO TM-2.3.6",
       "q": {
         "pt": "Segundo o syllabus CTAL-TM v3.0, as estatísticas de relatórios de defeitos podem ser usadas para realizar análise de causa-raiz para:",
         "en": "According to the CTAL-TM v3.0 syllabus, defect report statistics can be used to perform root cause analysis to:"
@@ -2032,7 +2032,7 @@
       "ch": 2,
       "k": 2,
       "answer": 1,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 2",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 2 · LO TM-2.3.6",
       "q": {
         "pt": "Um Gerente de Teste observa que a taxa de chegada de defeitos está aumentando conforme o projeto se aproxima da data prevista de lançamento, ao contrário das expectativas. Segundo o syllabus CTAL-TM v3.0, o que essa tendência MAIS provavelmente indica e qual ação é apropriada?",
         "en": "A Test Manager observes that the defect arrival rate is increasing as the project nears its scheduled release date, contrary to expectations. According to the CTAL-TM v3.0 syllabus, what does this trend MOST likely indicate, and what action is appropriate?"
@@ -2061,7 +2061,7 @@
       "ch": 2,
       "k": 2,
       "answer": 1,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 2",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 2 · LO TM-2.1.2",
       "q": {
         "pt": "Um painel de teste mostra: testes executados = 90% do plano, defeitos encontrados = 50% da versão anterior e defeitos críticos abertos = 5. Segundo o syllabus CTAL-TM v3.0, qual é a ação de controle MAIS apropriada para o Gerente de Teste?",
         "en": "A test dashboard shows: tests run = 90% of plan, defects found = 50% of the prior release, and critical-severity open defects = 5. According to the CTAL-TM v3.0 syllabus, what is the MOST appropriate control action for the Test Manager?"
@@ -2090,7 +2090,7 @@
       "ch": 2,
       "k": 2,
       "answer": 3,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 2",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 2 · LO TM-2.2.1",
       "q": {
         "pt": "Um Gerente de Teste está preparando uma estimativa de teste para uma nova plataforma de e-commerce. Qual dos seguintes fatores, segundo o syllabus CTAL-TM v3.0, DEVE ser considerado na estimativa de teste?",
         "en": "A Test Manager is preparing a test estimate for a new e-commerce platform. Which of the following factors, per the CTAL-TM v3.0 syllabus, MUST be considered in test estimation?"
@@ -2119,7 +2119,7 @@
       "ch": 2,
       "k": 2,
       "answer": 1,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 2",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 2 · LO TM-2.2.1",
       "q": {
         "pt": "Um Gerente de Teste é solicitado a estimar o teste de um projeto que está usando uma stack de tecnologia totalmente nova e não familiar à equipe. Segundo o syllabus CTAL-TM v3.0, qual é o efeito MAIS apropriado na estimativa?",
         "en": "A Test Manager is asked to estimate testing for a project that is using a brand-new technology stack unfamiliar to the team. According to the CTAL-TM v3.0 syllabus, what is the MOST appropriate effect on the estimate?"
@@ -2148,7 +2148,7 @@
       "ch": 2,
       "k": 2,
       "answer": 1,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 2",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 2 · LO TM-2.2.2",
       "q": {
         "pt": "Um projeto tem alto risco de produto devido à conformidade regulatória, com base de teste estável, ambiente de teste disponível e testadores experientes. Segundo o syllabus CTAL-TM v3.0, qual combinação de fatores MAIS provavelmente aumenta a estimativa de teste?",
         "en": "A project has high product risk because of regulatory compliance, with a stable test basis, available test environment, and experienced testers. According to the CTAL-TM v3.0 syllabus, which combination of factors MOST likely increases the test estimate?"
@@ -2177,7 +2177,7 @@
       "ch": 2,
       "k": 2,
       "answer": 1,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 2",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 2 · LO TM-2.2.2",
       "q": {
         "pt": "Uma base de teste é instável: requisitos mudam semanalmente, a arquitetura está sob redesenho e a especificação da API de terceiros está incompleta. Segundo o syllabus CTAL-TM v3.0, qual é o efeito MAIS provável nas estimativas de teste?",
         "en": "A test basis is unstable: requirements change weekly, the architecture is under redesign, and the third-party API specification is incomplete. According to the CTAL-TM v3.0 syllabus, what is the MOST likely effect on test estimates?"
@@ -2206,7 +2206,7 @@
       "ch": 2,
       "k": 2,
       "answer": 1,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 2",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 2 · LO TM-2.2.2",
       "q": {
         "pt": "Uma equipe tem 2 testadores experientes e 4 testadores juniores para um projeto complexo. Segundo o syllabus CTAL-TM v3.0, qual é o efeito MAIS apropriado na estimativa de teste?",
         "en": "A team has 2 experienced testers and 4 junior testers for a complex project. According to the CTAL-TM v3.0 syllabus, what is the MOST appropriate effect on the test estimate?"
@@ -2235,7 +2235,7 @@
       "ch": 2,
       "k": 2,
       "answer": 2,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 2",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 2 · LO TM-2.3.2",
       "q": {
         "pt": "Um Gerente de Teste percebe que defeitos estão sendo reabertos várias vezes porque a correção do desenvolvedor está incompleta. Segundo o syllabus CTAL-TM v3.0, qual é a prática de gerenciamento de defeitos MAIS apropriada para resolver isso?",
         "en": "A Test Manager notices that defects are being re-opened multiple times because the developer's fix is incomplete. According to the CTAL-TM v3.0 syllabus, what is the MOST appropriate defect management practice to address this?"
@@ -2264,7 +2264,7 @@
       "ch": 2,
       "k": 2,
       "answer": 2,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 2",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 2 · LO TM-2.3.4",
       "q": {
         "pt": "Um projeto híbrido tem uma equipe de back-end sequencial usando um rastreador formal de defeitos e uma equipe de front-end ágil usando um quadro de sprint. Segundo o syllabus CTAL-TM v3.0, qual é um desafio TÍPICO de gerenciamento de defeitos nessa configuração híbrida?",
         "en": "A hybrid project has a sequential back-end team using a formal defect tracker and an agile front-end team using a sprint board. According to the CTAL-TM v3.0 syllabus, what is a TYPICAL defect management challenge in this hybrid setup?"
@@ -2293,7 +2293,7 @@
       "ch": 2,
       "k": 2,
       "answer": 2,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 2",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 2 · LO TM-2.3.6",
       "q": {
         "pt": "Um Gerente de Teste analisa estatísticas de defeitos da última versão e observa que 60% dos defeitos foram encontrados em dois módulos específicos. Segundo o syllabus CTAL-TM v3.0, qual é o uso MAIS apropriado dessa estatística?",
         "en": "A Test Manager analyzes defect statistics from the last release and observes that 60% of defects were found in two specific modules. According to the CTAL-TM v3.0 syllabus, what is the MOST appropriate use of this statistic?"
@@ -2322,7 +2322,7 @@
       "ch": 2,
       "k": 2,
       "answer": 2,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 2",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 2 · LO TM-2.3.6",
       "q": {
         "pt": "Um Gerente de Teste observa que 70% das fugas para produção se devem a defeitos relacionados a requisitos (requisitos ausentes ou incorretos) e apenas 10% a defeitos de codificação. Segundo o syllabus CTAL-TM v3.0, qual é a ação de melhoria MAIS apropriada?",
         "en": "A Test Manager observes that 70% of production escapes are due to requirements-related defects (missing or incorrect requirements) and only 10% to coding defects. According to the CTAL-TM v3.0 syllabus, what is the MOST appropriate improvement action?"
@@ -2351,7 +2351,7 @@
       "ch": 2,
       "k": 2,
       "answer": 1,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 2",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 2 · LO TM-2.3.6",
       "q": {
         "pt": "A análise de tendências de defeito mostra que a taxa de chegada de defeitos atingiu o pico muito tarde no projeto, indicando convergência tardia. Segundo o syllabus CTAL-TM v3.0, qual ação de melhoria está MAIS alinhada com a orientação do syllabus?",
         "en": "Defect trend analysis shows that the defect arrival rate peaked very late in the project, indicating late convergence. According to the CTAL-TM v3.0 syllabus, what improvement action is MOST aligned with the syllabus guidance?"
@@ -2380,7 +2380,7 @@
       "ch": 2,
       "k": 2,
       "answer": 2,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 2",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 2 · LO TM-2.3.6",
       "q": {
         "pt": "Um Gerente de Teste analisa a distribuição de defeitos por nível de teste e descobre que o nível de teste de sistema encontra 80% dos defeitos, enquanto testes de componente e de integração encontram apenas 10% cada. Segundo o syllabus CTAL-TM v3.0, qual ação de melhoria é MAIS apropriada?",
         "en": "A Test Manager analyzes defect distribution by test level and finds that the system test level finds 80% of defects, while component and integration tests find only 10% each. According to the CTAL-TM v3.0 syllabus, what improvement action is MOST appropriate?"
@@ -2409,7 +2409,7 @@
       "ch": 2,
       "k": 2,
       "answer": 2,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 2",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 2 · LO TM-2.3.6",
       "q": {
         "pt": "Um Gerente de Teste usa o esquema Orthogonal Defect Classification (ODC) para categorizar defeitos por tipo (função, interface, verificação, atribuição, tempo, algoritmo, etc.). Segundo o syllabus CTAL-TM v3.0, qual é o propósito PRIMÁRIO dessa classificação?",
         "en": "A Test Manager uses the Orthogonal Defect Classification (ODC) scheme to categorize defects by type (function, interface, checking, assignment, timing, algorithm, etc.). According to the CTAL-TM v3.0 syllabus, what is the PRIMARY purpose of this classification?"
@@ -2440,7 +2440,7 @@
       "ch": 3,
       "k": 2,
       "answer": 2,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 3",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 3 · LO TM-3.1.1",
       "q": {
         "pt": "Segundo o syllabus CTAL-TM v3.0, quais são as quatro áreas de competência em que os membros da equipe de teste tipicamente precisam de habilidades?",
         "en": "According to the CTAL-TM v3.0 syllabus, what are the four competency areas in which test team members typically need skills?"
@@ -2469,7 +2469,7 @@
       "ch": 3,
       "k": 2,
       "answer": 3,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 3",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 3 · LO TM-3.1.3",
       "q": {
         "pt": "Segundo o syllabus CTAL-TM v3.0, o modelo de papéis de equipe de Belbin é mencionado como uma ferramenta para ajudar as equipes a funcionar mais eficazmente. Qual é a ideia-chave do modelo de Belbin?",
         "en": "According to the CTAL-TM v3.0 syllabus, Belbin's Team Roles model is mentioned as a tool to help teams work more effectively. What is the key idea of Belbin's model?"
@@ -2498,7 +2498,7 @@
       "ch": 3,
       "k": 2,
       "answer": 3,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 3",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 3 · LO TM-3.1.4",
       "q": {
         "pt": "Segundo o syllabus CTAL-TM v3.0, qual das seguintes é uma abordagem reconhecida para desenvolver habilidades dos membros da equipe de teste?",
         "en": "According to the CTAL-TM v3.0 syllabus, which of the following is a recognized approach to developing test team member skills?"
@@ -2527,7 +2527,7 @@
       "ch": 3,
       "k": 2,
       "answer": 2,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 3",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 3 · LO TM-3.1.5",
       "q": {
         "pt": "Segundo o syllabus CTAL-TM v3.0, qual conjunto de habilidades é necessário para gerenciar uma equipe de teste?",
         "en": "According to the CTAL-TM v3.0 syllabus, which set of skills is required to manage a test team?"
@@ -2556,7 +2556,7 @@
       "ch": 3,
       "k": 2,
       "answer": 3,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 3",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 3 · LO TM-3.1.6",
       "q": {
         "pt": "Segundo o syllabus CTAL-TM v3.0, a Teoria de Dois Fatores de Herzberg distingue motivadores de fatores de higiene. Qual das seguintes é um MOTIVADOR?",
         "en": "According to the CTAL-TM v3.0 syllabus, Herzberg's Two-Factor Theory distinguishes motivators from hygiene factors. Which of the following is a MOTIVATOR?"
@@ -2585,7 +2585,7 @@
       "ch": 3,
       "k": 2,
       "answer": 2,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 3",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 3 · LO TM-3.2.1",
       "q": {
         "pt": "Segundo o syllabus CTAL-TM v3.0, o custo da qualidade é classificado em quais quatro categorias?",
         "en": "According to the CTAL-TM v3.0 syllabus, the cost of quality is classified into which four categories?"
@@ -2614,7 +2614,7 @@
       "ch": 3,
       "k": 2,
       "answer": 3,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 3",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 3 · LO TM-3.2.1",
       "q": {
         "pt": "Um Gerente de Teste quer identificar custos de falhas internas. Segundo o syllabus CTAL-TM v3.0, qual das seguintes é um custo de falha INTERNA?",
         "en": "A Test Manager wants to identify internal failure costs. According to the CTAL-TM v3.0 syllabus, which of the following is an INTERNAL failure cost?"
@@ -2643,7 +2643,7 @@
       "ch": 3,
       "k": 2,
       "answer": 3,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 3",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 3 · LO TM-3.2.1",
       "q": {
         "pt": "Um produto defeituoso foi lançado aos clientes, levando a perda de receita, custos legais, chamadas de suporte ao cliente e recall de produto. Segundo o syllabus CTAL-TM v3.0, esses custos MELHOR se enquadram em qual categoria de custo da qualidade?",
         "en": "A defective product was released to customers, leading to revenue loss, legal costs, customer support calls, and a product recall. According to the CTAL-TM v3.0 syllabus, these costs BEST fit which cost of quality category?"
@@ -2672,7 +2672,7 @@
       "ch": 3,
       "k": 3,
       "answer": 3,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 3",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 3 · LO TM-3.2.2",
       "q": {
         "pt": "Um Gerente de Teste deve articular o valor do teste a um executivo cético que vê o teste apenas como custo. Segundo o syllabus CTAL-TM v3.0, qual argumento está MAIS alinhado com a perspectiva de custo-benefício?",
         "en": "A Test Manager must articulate the value of testing to a sceptical executive who sees testing only as a cost. According to the CTAL-TM v3.0 syllabus, which argument is MOST aligned with the cost-benefit perspective?"
@@ -2701,7 +2701,7 @@
       "ch": 3,
       "k": 2,
       "answer": 2,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 3",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 3 · LO TM-3.1.1",
       "q": {
         "pt": "Um membro da equipe de teste é solicitado a orientar juniores, facilitar uma comunidade de prática e resolver conflitos interpessoais dentro da equipe. Segundo o syllabus CTAL-TM v3.0, qual área de competência está PRIMARIAMENTE sendo demonstrada?",
         "en": "A test team member is asked to mentor juniors, facilitate a community-of-practice, and resolve interpersonal conflicts within the team. According to the CTAL-TM v3.0 syllabus, which competency area is PRIMARILY being demonstrated?"
@@ -2730,7 +2730,7 @@
       "ch": 3,
       "k": 2,
       "answer": 2,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 3",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 3 · LO TM-3.1.1",
       "q": {
         "pt": "Um Gerente de Teste observa que um testador atualiza consistentemente suas habilidades, demonstra forte automotivação e mantém uma atitude positiva durante sprints difíceis. Segundo o syllabus CTAL-TM v3.0, qual área de competência isso MELHOR reflete?",
         "en": "A Test Manager observes that a tester consistently updates their skills, demonstrates strong self-motivation, and maintains a positive attitude during difficult sprints. According to the CTAL-TM v3.0 syllabus, which competency area does this BEST reflect?"
@@ -2759,7 +2759,7 @@
       "ch": 3,
       "k": 2,
       "answer": 2,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 3",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 3 · LO TM-3.1.3",
       "q": {
         "pt": "Segundo o syllabus CTAL-TM v3.0, qual das seguintes é uma técnica TÍPICA de avaliação de habilidades de membro da equipe de teste?",
         "en": "According to the CTAL-TM v3.0 syllabus, which of the following is a TYPICAL test team member skill assessment technique?"
@@ -2788,7 +2788,7 @@
       "ch": 3,
       "k": 2,
       "answer": 2,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 3",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 3 · LO TM-3.1.4",
       "q": {
         "pt": "Um Gerente de Teste pareia um testador júnior com um testador sênior por 3 meses, com metas estruturadas e revisões. Segundo o syllabus CTAL-TM v3.0, qual abordagem de desenvolvimento de habilidades de membros da equipe de teste isso representa?",
         "en": "A Test Manager pairs a junior tester with a senior tester for 3 months, with structured goals and reviews. According to the CTAL-TM v3.0 syllabus, which approach to developing test team member skills does this represent?"
@@ -2817,7 +2817,7 @@
       "ch": 3,
       "k": 2,
       "answer": 2,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 3",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 3 · LO TM-3.1.4",
       "q": {
         "pt": "Um Gerente de Teste patrocina um testador para participar de um curso externo de certificação ISTQB. Segundo o syllabus CTAL-TM v3.0, qual é a relação entre essa certificação e a competência do testador?",
         "en": "A Test Manager sponsors a tester to attend an external ISTQB certification course. According to the CTAL-TM v3.0 syllabus, what is the relationship between this certification and the tester's competency?"
@@ -2846,7 +2846,7 @@
       "ch": 3,
       "k": 2,
       "answer": 2,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 3",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 3 · LO TM-3.1.5",
       "q": {
         "pt": "Segundo o syllabus CTAL-TM v3.0, qual das seguintes é uma habilidade TÍPICA necessária para gerenciar uma equipe de teste?",
         "en": "According to the CTAL-TM v3.0 syllabus, which of the following is a TYPICAL skill required to manage a test team?"
@@ -2875,7 +2875,7 @@
       "ch": 3,
       "k": 3,
       "answer": 3,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 3",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 3 · LO TM-3.2.2",
       "q": {
         "pt": "Um Gerente de Teste deve realizar um cálculo de custo-benefício. Custos de teste: $120.000. Sem teste, o custo esperado de defeitos em produção é $500.000. Com teste, o custo esperado de defeitos remanescentes em produção é $80.000 (porque o teste captura a maioria, mas não todos). Segundo o syllabus CTAL-TM v3.0, qual é o valor agregado pelo teste?",
         "en": "A Test Manager must perform a cost-benefit calculation. Test costs: $120,000. Without testing, the expected cost of production defects is $500,000. With testing, the expected cost of remaining production defects is $80,000 (because testing catches most but not all). According to the CTAL-TM v3.0 syllabus, what is the value added by testing?"
@@ -2904,7 +2904,7 @@
       "ch": 3,
       "k": 3,
       "answer": 1,
-      "ref": "ISTQB CTAL-TM v3.0 · cap. 3",
+      "ref": "ISTQB CTAL-TM v3.0 · cap. 3 · LO TM-3.2.2",
       "q": {
         "pt": "Um Gerente de Teste é questionado: 'Investir $200.000 em automação de teste adicional reduzirá o custo esperado de defeitos em produção de $600.000 para $300.000. O investimento é justificado em termos de custo-benefício?' Segundo o syllabus CTAL-TM v3.0, qual é a análise?",
         "en": "A Test Manager is asked: 'Investing $200,000 in additional test automation will reduce expected production defect cost from $600,000 to $300,000. Is the investment justified on cost-benefit grounds?' According to the CTAL-TM v3.0 syllabus, what is the analysis?"
