@@ -5,7 +5,7 @@
       "ch": 1,
       "k": 2,
       "answer": 2,
-      "ref": "ISTQB CTAL-TA v4.0 · 1.2.1",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 1 · LO TA-1.2.1",
       "q": {
         "pt": "Um analista de teste recebeu a especificação de requisitos de um novo módulo. Qual das seguintes é uma tarefa que o analista de teste realiza como parte da análise de teste (em vez de design, implementação ou execução de teste)?",
         "en": "A test analyst has just received the requirements specification for a new module. Which of the following is a task the test analyst performs as part of test analysis (rather than test design, implementation, or execution)?"
@@ -34,7 +34,7 @@
       "ch": 1,
       "k": 2,
       "answer": 3,
-      "ref": "ISTQB CTAL-TA v4.0 · 1.2.1",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 1 · LO TA-1.2.1",
       "q": {
         "pt": "Qual afirmação melhor reflete a tarefa do analista de teste de definir condições de teste durante a análise de teste?",
         "en": "Which statement best reflects the test analyst's task of defining test conditions during test analysis?"
@@ -63,7 +63,7 @@
       "ch": 1,
       "k": 2,
       "answer": 3,
-      "ref": "ISTQB CTAL-TA v4.0 · 1.2.3",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 1 · LO TA-1.2.3",
       "q": {
         "pt": "Um analista de teste está preparando o testware para um próximo ciclo de execução de teste. Qual das seguintes é uma tarefa realizada durante a implementação de teste?",
         "en": "A test analyst is preparing the testware for an upcoming test execution cycle. Which of the following is a task performed during test implementation?"
@@ -92,7 +92,7 @@
       "ch": 1,
       "k": 2,
       "answer": 0,
-      "ref": "ISTQB CTAL-TA v4.0 · 1.2.4",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 1 · LO TA-1.2.4",
       "q": {
         "pt": "Durante a execução de teste, o analista de teste realiza as tarefas típicas de executar testes, comparar resultados reais com esperados, analisar anomalias, relatar defeitos e registrar resultados. Conforme o syllabus, qual tarefa adicional de avaliação também faz parte da execução de teste?",
         "en": "During test execution, the test analyst performs the typical tasks of executing tests, comparing actual to expected results, analyzing anomalies, reporting defects, and logging test results. According to the syllabus, which additional evaluation task is also part of test execution?"
@@ -121,7 +121,7 @@
       "ch": 1,
       "k": 2,
       "answer": 1,
-      "ref": "ISTQB CTAL-TA v4.0 · 1.3.1",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 1 · LO TA-1.3.1",
       "q": {
         "pt": "Qual afirmação sobre casos de teste de alto e baixo nível está correta conforme o syllabus?",
         "en": "Which statement about high-level and low-level test cases is correct according to the syllabus?"
@@ -150,7 +150,7 @@
       "ch": 1,
       "k": 2,
       "answer": 3,
-      "ref": "ISTQB CTAL-TA v4.0 · 1.3.2",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 1 · LO TA-1.3.2",
       "q": {
         "pt": "Um caso de teste inclui o passo 'Inserir um valor adequado para o campo de desconto e verificar se o sistema responde conforme necessário.' Qual critério de qualidade para casos de teste é mais diretamente violado por essa formulação?",
         "en": "A test case includes the step 'Enter a suitable value for the discount field and verify the system responds as needed.' Which quality criterion for test cases is most directly violated by this formulation?"
@@ -179,7 +179,7 @@
       "ch": 1,
       "k": 2,
       "answer": 1,
-      "ref": "ISTQB CTAL-TA v4.0 · 1.3.2",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 1 · LO TA-1.3.2",
       "q": {
         "pt": "Um analista de teste está revisando um caso que exercita 14 condições de teste em 25 ações. Um par sugere dividi-lo em vários casos menores. Qual justificativa do syllabus melhor apoia essa sugestão?",
         "en": "A test analyst is reviewing a test case that exercises 14 test conditions across 25 actions. A peer suggests splitting it into several smaller test cases. Which rationale from the syllabus best supports this suggestion?"
@@ -208,7 +208,7 @@
       "ch": 1,
       "k": 2,
       "answer": 2,
-      "ref": "ISTQB CTAL-TA v4.0 · 1.3.4",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 1 · LO TA-1.3.4",
       "q": {
         "pt": "Um analista de teste está testando um programa atuarial baseado em IA que prevê a idade de morte com base em um grande conjunto de dados. Para entradas individuais, é muito difícil determinar a idade esperada correta. Conforme o syllabus, qual técnica de teste é mais apropriada para tratar esse problema do oráculo de teste?",
         "en": "A test analyst is testing an AI-based actuarial program that predicts age at death based on a large dataset. For individual inputs, it is very difficult to determine the correct expected age. According to the syllabus, which test technique is most appropriate to address this test oracle problem?"
@@ -237,7 +237,7 @@
       "ch": 1,
       "k": 2,
       "answer": 1,
-      "ref": "ISTQB CTAL-TA v4.0 · 1.3.5",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 1 · LO TA-1.3.5",
       "q": {
         "pt": "Qual das seguintes melhor ilustra as categorias de dados de teste que o analista de teste deve considerar ao identificar requisitos de dados de teste?",
         "en": "Which of the following best illustrates the categories of test data that the test analyst must consider when identifying test data requirements?"
@@ -266,7 +266,7 @@
       "ch": 1,
       "k": 2,
       "answer": 1,
-      "ref": "ISTQB CTAL-TA v4.0 · 1.3.7",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 1 · LO TA-1.3.7",
       "q": {
         "pt": "Qual das seguintes melhor resume os tipos de ferramentas usadas para gerenciar o testware, conforme descrito no syllabus?",
         "en": "Which of the following best summarizes the types of tools used to manage the testware, as described in the syllabus?"
@@ -295,7 +295,7 @@
       "ch": 1,
       "k": 2,
       "answer": 1,
-      "ref": "ISTQB CTAL-TA v4.0 · 1.1",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 1 · LO TA-1.1.1",
       "q": {
         "pt": "Em um ciclo de vida sequencial com marcos formais de fase (revisão de requisitos, revisão de design, código completo, entrada de teste de sistema, entrada de UAT), em quais marcos o analista de teste faz as contribuições mais significativas?",
         "en": "In a sequential lifecycle with formal phase-gate milestones (requirements review, design review, code complete, system test entry, UAT entry), at which milestones does the test analyst make the most significant contributions?"
@@ -324,7 +324,7 @@
       "ch": 1,
       "k": 2,
       "answer": 0,
-      "ref": "ISTQB CTAL-TA v4.0 · 1.2.2",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 1 · LO TA-1.2.2",
       "q": {
         "pt": "Um analista de teste está projetando testes para um módulo cujo comportamento está documentado como um diagrama de estados com transições explícitas, guardas e transições inválidas. Qual técnica de design de teste é mais apropriada como técnica primária?",
         "en": "A test analyst is designing tests for a module whose behavior is documented as a state diagram with explicit transitions, guards, and invalid transitions. Which test design technique is most appropriate as the primary technique?"
@@ -353,7 +353,7 @@
       "ch": 1,
       "k": 2,
       "answer": 1,
-      "ref": "ISTQB CTAL-TA v4.0 · 1.2.2",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 1 · LO TA-1.2.2",
       "q": {
         "pt": "Um analista de teste redige o seguinte caso de teste: 'Passo 1: inserir 1500 no campo Saque; Passo 2: clicar em Confirmar.' Quais dois artefatos o TA deve adicionar durante o design de teste para tornar este um caso de teste de baixo nível completo?",
         "en": "A test analyst drafts the following test case: 'Step 1: enter 1500 in the Withdraw field; Step 2: click Confirm.' Which two artifacts must the TA add during test design to make this a complete low-level test case?"
@@ -382,7 +382,7 @@
       "ch": 1,
       "k": 2,
       "answer": 2,
-      "ref": "ISTQB CTAL-TA v4.0 · 1.2.3",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 1 · LO TA-1.2.3",
       "q": {
         "pt": "Um analista de teste terminou de projetar 60 casos de teste para um release. Qual das seguintes é uma tarefa que o TA realiza durante a implementação de teste?",
         "en": "A test analyst has finished designing 60 test cases for a release. Which of the following is a task the TA performs during test implementation?"
@@ -411,7 +411,7 @@
       "ch": 1,
       "k": 2,
       "answer": 0,
-      "ref": "ISTQB CTAL-TA v4.0 · 1.3.1",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 1 · LO TA-1.3.1",
       "q": {
         "pt": "Um analista de teste está trabalhando durante a fase de requisitos em uma funcionalidade cujo design detalhado ainda não está disponível. De acordo com o syllabus, qual tipo de caso de teste é mais apropriado neste ponto, e por quê?",
         "en": "A test analyst is working during the requirements phase on a feature whose detailed design is not yet available. According to the syllabus, which type of test case is most appropriate at this point, and why?"
@@ -440,7 +440,7 @@
       "ch": 1,
       "k": 2,
       "answer": 1,
-      "ref": "ISTQB CTAL-TA v4.0 · 1.3.1",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 1 · LO TA-1.3.1",
       "q": {
         "pt": "Qual das seguintes melhor descreve um caso de teste de baixo nível conforme definido no syllabus CTAL-TA?",
         "en": "Which of the following best describes a low-level test case as defined in the CTAL-TA syllabus?"
@@ -469,7 +469,7 @@
       "ch": 1,
       "k": 2,
       "answer": 0,
-      "ref": "ISTQB CTAL-TA v4.0 · 1.3.3",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 1 · LO TA-1.3.3",
       "q": {
         "pt": "Um analista de teste está se preparando para testar uma integração de gateway de pagamento. Qual das seguintes é uma exigência de ambiente de teste (em oposição a dados de teste)?",
         "en": "A test analyst is preparing for testing a payment gateway integration. Which of the following is a test environment requirement (as opposed to test data)?"
@@ -498,7 +498,7 @@
       "ch": 1,
       "k": 2,
       "answer": 2,
-      "ref": "ISTQB CTAL-TA v4.0 · 1.3.5",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 1 · LO TA-1.3.5",
       "q": {
         "pt": "Um analista de teste precisa de dados de teste para um módulo de reclamações de saúde. As reclamações reais de produção contêm informações de saúde protegidas (PHI). De acordo com o syllabus, qual abordagem equilibra corretamente as categorias de dados de teste?",
         "en": "A test analyst needs test data for a healthcare claims module. Real production claims contain protected health information (PHI). According to the syllabus, which approach correctly balances the categories of test data?"
@@ -527,7 +527,7 @@
       "ch": 1,
       "k": 3,
       "answer": 3,
-      "ref": "ISTQB CTAL-TA v4.0 · 1.3.6",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 1 · LO TA-1.3.6",
       "q": {
         "pt": "Um analista de teste está projetando scripts de teste orientados a palavras-chave para um fluxo de verificação de elegibilidade de saúde. Qual das seguintes é o melhor conjunto de palavras-chave no nível de abstração correto?",
         "en": "A test analyst is designing keyword-driven test scripts for a healthcare eligibility-check workflow. Which of the following is the best set of keywords at the right abstraction level?"
@@ -556,7 +556,7 @@
       "ch": 1,
       "k": 3,
       "answer": 0,
-      "ref": "ISTQB CTAL-TA v4.0 · 1.3.6",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 1 · LO TA-1.3.6",
       "q": {
         "pt": "Uma equipe de teste debate se deve usar automação de teste orientada a palavras-chave ou orientada a dados para um fluxo de onboarding de cliente que tem muitas variações de entrada, mas uma sequência estável de ações de negócio. Qual declaração distingue corretamente as duas abordagens?",
         "en": "A test team debates whether to use keyword-driven or data-driven test automation for a customer-onboarding workflow that has many input variations but a stable sequence of business actions. Which statement correctly distinguishes the two approaches?"
@@ -587,7 +587,7 @@
       "ch": 2,
       "k": 2,
       "answer": 0,
-      "ref": "ISTQB CTAL-TA v4.0 · 2.1",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 2 · LO TA-2.1.1",
       "q": {
         "pt": "Um analista de teste foi convidado para um workshop de identificação de riscos de produto para uma nova plataforma de e-commerce. Conforme o syllabus, qual das seguintes melhor descreve a contribuição do analista de teste para a identificação de riscos?",
         "en": "A test analyst has been invited to a product risk identification workshop for a new e-commerce platform. According to the syllabus, which of the following best describes the test analyst's contribution to risk identification?"
@@ -616,7 +616,7 @@
       "ch": 2,
       "k": 2,
       "answer": 2,
-      "ref": "ISTQB CTAL-TA v4.0 · 2.1",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 2 · LO TA-2.1.1",
       "q": {
         "pt": "Durante a avaliação de risco de produto para uma aplicação bancária, o analista de teste trabalha com stakeholders para estimar o nível de risco. Conforme o syllabus, quais dos seguintes fatores o analista de teste deve ajudar a estimar?",
         "en": "During product risk assessment for a banking application, the test analyst works with stakeholders to estimate the risk level. According to the syllabus, which of the following factors should the test analyst help estimate?"
@@ -645,7 +645,7 @@
       "ch": 2,
       "k": 2,
       "answer": 3,
-      "ref": "ISTQB CTAL-TA v4.0 · 2.1",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 2 · LO TA-2.1.1",
       "q": {
         "pt": "Após uma análise de risco de produto identificar um risco alto no módulo de processamento de pagamentos de um sistema de e-commerce, qual é o papel do analista de teste em relação à mitigação, conforme o syllabus?",
         "en": "After a product risk analysis identifies a high risk in the payment processing module of an e-commerce system, what is the test analyst's role regarding mitigation, according to the syllabus?"
@@ -674,7 +674,7 @@
       "ch": 2,
       "k": 4,
       "answer": 0,
-      "ref": "ISTQB CTAL-TA v4.0 · 2.2",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 2 · LO TA-2.2.1",
       "q": {
         "pt": "Um analista de teste está selecionando testes de regressão para uma aplicação financeira onde requisitos regulatórios mudaram. O TA tem uma matriz de rastreabilidade de requisitos completa mapeando testes a requisitos. A mudança afeta os requisitos R1, R3 e R7, e impacta indiretamente o requisito R5. A aplicação não tem dados históricos de defeitos disponíveis, não tem perfis operacionais, e a suíte de regressão é totalmente manual. Qual técnica de seleção de teste de regressão é mais apropriada nesta situação?",
         "en": "A test analyst is selecting regression tests for a financial application where regulatory requirements have changed. The TA has a complete requirements traceability matrix mapping tests to requirements. The change affects requirements R1, R3, and R7, and indirectly impacts requirement R5. The application has no historical defect data available, no operational profiles, and the regression suite is fully manual. Which regression test selection technique is most appropriate in this situation?"
@@ -703,7 +703,7 @@
       "ch": 2,
       "k": 4,
       "answer": 3,
-      "ref": "ISTQB CTAL-TA v4.0 · 2.2",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 2 · LO TA-2.2.1",
       "q": {
         "pt": "Um analista de teste é responsável por manter a suíte de regressão de um sistema complexo ao longo de múltiplas iterações. Conforme o syllabus, qual afirmação melhor captura a abordagem recomendada para selecionar testes de regressão neste contexto iterativo?",
         "en": "A test analyst is responsible for maintaining the regression suite of a complex system across multiple iterations. According to the syllabus, which statement best captures the recommended approach for selecting regression tests in this iterative context?"
@@ -732,7 +732,7 @@
       "ch": 2,
       "k": 2,
       "answer": 2,
-      "ref": "ISTQB CTAL-TA v4.0 · 2.1",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 2 · LO TA-2.1.1",
       "q": {
         "pt": "Um analista de teste é convidado para um workshop de identificação de riscos de produto para uma nova versão de um CRM que teve três releases anteriores. De acordo com o syllabus, qual fonte de informação de risco o TA deve trazer para o workshop?",
         "en": "A test analyst is invited to a product risk identification workshop for a new version of a CRM that has had three previous releases. According to the syllabus, which source of risk information should the TA bring to the workshop?"
@@ -761,7 +761,7 @@
       "ch": 2,
       "k": 4,
       "answer": 1,
-      "ref": "ISTQB CTAL-TA v4.0 · 2.2",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 2 · LO TA-2.2.1",
       "q": {
         "pt": "Um analista de teste tem 200 testes planejados, mas tempo de executar apenas 120 antes do prazo de release. O gerente de teste pede ao TA para priorizar. Qual estratégia de priorização melhor reflete os princípios do teste baseado em risco?",
         "en": "A test analyst has 200 tests planned but only time to execute 120 before the release deadline. The test manager asks the TA to prioritize. Which prioritization strategy best reflects risk-based testing principles?"
@@ -790,7 +790,7 @@
       "ch": 2,
       "k": 4,
       "answer": 2,
-      "ref": "ISTQB CTAL-TA v4.0 · 2.2",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 2 · LO TA-2.2.1",
       "q": {
         "pt": "Uma equipe muda o formato de resposta de um microsserviço 'endereço-do-cliente' dos campos JSON 'street, city, zip' para 'address_line1, city, postal_code'. Três serviços downstream consomem este microsserviço. Da perspectiva do teste baseado em risco, o que o analista de teste deve fazer?",
         "en": "A team changes the response format of a 'customer-address' microservice from JSON fields 'street, city, zip' to 'address_line1, city, postal_code'. Three downstream services consume this microservice. From a risk-based testing perspective, what should the test analyst do?"
@@ -821,7 +821,7 @@
       "ch": 3,
       "k": 3,
       "answer": 1,
-      "ref": "ISTQB CTAL-TA v4.0 · 3.1.1",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 3 · LO TA-3.1.1",
       "q": {
         "pt": "Um analista de teste está planejando itens de cobertura para um domínio definido por uma expressão usando o operador '>'. Qual afirmação contrasta corretamente a cobertura de domínio simplificada e a cobertura de domínio confiável para essa fronteira?",
         "en": "A test analyst is planning coverage items for a domain defined by an expression using the '>' operator. Which statement correctly contrasts simplified domain coverage and reliable domain coverage for this border?"
@@ -850,7 +850,7 @@
       "ch": 3,
       "k": 3,
       "answer": 2,
-      "ref": "ISTQB CTAL-TA v4.0 · 3.1.1",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 3 · LO TA-3.1.1",
       "q": {
         "pt": "Qual afirmação melhor descreve como o teste de domínio se relaciona com o particionamento por equivalência (EP) e a análise de valor limite (BVA) cobertos no syllabus CTFL?",
         "en": "Which statement best describes how domain testing relates to equivalence partitioning (EP) and boundary value analysis (BVA) as covered in the CTFL syllabus?"
@@ -879,7 +879,7 @@
       "ch": 3,
       "k": 3,
       "answer": 3,
-      "ref": "ISTQB CTAL-TA v4.0 · 3.1.1",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 3 · LO TA-3.1.1",
       "q": {
         "pt": "Um domínio tem múltiplas fronteiras definidas por várias condições atômicas. Conforme o syllabus, como o número de itens de cobertura no teste de domínio pode ser otimizado sem perder cobertura?",
         "en": "A domain has multiple borders defined by several atomic conditions. According to the syllabus, how can the number of coverage items in domain testing be optimized without losing coverage?"
@@ -908,7 +908,7 @@
       "ch": 3,
       "k": 3,
       "answer": 0,
-      "ref": "ISTQB CTAL-TA v4.0 · 3.1.2",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 3 · LO TA-3.1.2",
       "q": {
         "pt": "Um analista de teste está aplicando cobertura de escolha base a um sistema com três parâmetros: Browser (Chrome, Firefox, Safari), OS (Windows, macOS, Linux) e Network (Wifi, 4G, 5G). O TA escolhe (Chrome, Windows, Wifi) como item de cobertura base. Conforme o syllabus, como itens subsequentes são gerados sob cobertura de escolha base?",
         "en": "A test analyst is applying base choice coverage to a system with three parameters: Browser (Chrome, Firefox, Safari), OS (Windows, macOS, Linux), and Network (Wifi, 4G, 5G). The TA chooses (Chrome, Windows, Wifi) as the base coverage item. According to the syllabus, how are subsequent coverage items generated under base choice coverage?"
@@ -937,7 +937,7 @@
       "ch": 3,
       "k": 3,
       "answer": 2,
-      "ref": "ISTQB CTAL-TA v4.0 · 3.1.2",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 3 · LO TA-3.1.2",
       "q": {
         "pt": "Qual das seguintes afirmações sobre cobertura pairwise no teste combinatório está correta, conforme o syllabus?",
         "en": "Which of the following statements about pairwise coverage in combinatorial testing is correct, according to the syllabus?"
@@ -966,7 +966,7 @@
       "ch": 3,
       "k": 3,
       "answer": 0,
-      "ref": "ISTQB CTAL-TA v4.0 · 3.1.2",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 3 · LO TA-3.1.2",
       "q": {
         "pt": "Conforme o syllabus, o teste combinatório tem duas abordagens principais. Qual afirmação as descreve corretamente?",
         "en": "According to the syllabus, combinatorial testing has two main approaches. Which statement correctly describes them?"
@@ -995,7 +995,7 @@
       "ch": 3,
       "k": 2,
       "answer": 1,
-      "ref": "ISTQB CTAL-TA v4.0 · 3.1.3",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 3 · LO TA-3.1.3",
       "q": {
         "pt": "Conforme o syllabus, qual das seguintes é um benefício do teste aleatório?",
         "en": "According to the syllabus, which of the following is a benefit of random testing?"
@@ -1024,7 +1024,7 @@
       "ch": 3,
       "k": 2,
       "answer": 2,
-      "ref": "ISTQB CTAL-TA v4.0 · 3.1.3",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 3 · LO TA-3.1.3",
       "q": {
         "pt": "Qual das seguintes é uma limitação do teste aleatório, conforme o syllabus?",
         "en": "Which of the following is a limitation of random testing, according to the syllabus?"
@@ -1053,7 +1053,7 @@
       "ch": 3,
       "k": 2,
       "answer": 1,
-      "ref": "ISTQB CTAL-TA v4.0 · 3.2.1",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 3 · LO TA-3.2.1",
       "q": {
         "pt": "Conforme o syllabus, qual afirmação melhor descreve as duas partes do teste CRUD?",
         "en": "According to the syllabus, which statement best describes the two parts of CRUD testing?"
@@ -1082,7 +1082,7 @@
       "ch": 3,
       "k": 3,
       "answer": 0,
-      "ref": "ISTQB CTAL-TA v4.0 · 3.2.2",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 3 · LO TA-3.2.2",
       "q": {
         "pt": "Conforme o syllabus, qual afirmação descreve corretamente a cobertura N-switch no teste de transição de estados?",
         "en": "According to the syllabus, which statement correctly describes N-switch coverage in state transition testing?"
@@ -1111,7 +1111,7 @@
       "ch": 3,
       "k": 3,
       "answer": 1,
-      "ref": "ISTQB CTAL-TA v4.0 · 3.2.2",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 3 · LO TA-3.2.2",
       "q": {
         "pt": "Qual afirmação melhor descreve a cobertura round-trip no teste de transição de estados, conforme o syllabus?",
         "en": "Which statement best describes round-trip coverage in state transition testing, according to the syllabus?"
@@ -1140,7 +1140,7 @@
       "ch": 3,
       "k": 3,
       "answer": 2,
-      "ref": "ISTQB CTAL-TA v4.0 · 3.2.2",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 3 · LO TA-3.2.2",
       "q": {
         "pt": "Qual afirmação sobre o teste de transição de estados está correta, conforme o syllabus?",
         "en": "Which statement about state transition testing is correct, according to the syllabus?"
@@ -1169,7 +1169,7 @@
       "ch": 3,
       "k": 3,
       "answer": 3,
-      "ref": "ISTQB CTAL-TA v4.0 · 3.2.2",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 3 · LO TA-3.2.2",
       "q": {
         "pt": "A base de teste contém um modelo baseado em estados produzido pela equipe de design. Conforme o syllabus, qual é a responsabilidade do analista de teste em relação a esse modelo?",
         "en": "A test basis contains a state-based model produced by the design team. According to the syllabus, what is the test analyst's responsibility regarding this model?"
@@ -1198,7 +1198,7 @@
       "ch": 3,
       "k": 3,
       "answer": 1,
-      "ref": "ISTQB CTAL-TA v4.0 · 3.2.3",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 3 · LO TA-3.2.3",
       "q": {
         "pt": "Conforme o syllabus, qual afirmação descreve corretamente os três tipos de cenários distinguidos em um caso de uso?",
         "en": "According to the syllabus, which statement correctly describes the three types of scenarios distinguished in a use case?"
@@ -1227,7 +1227,7 @@
       "ch": 3,
       "k": 3,
       "answer": 0,
-      "ref": "ISTQB CTAL-TA v4.0 · 3.2.3",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 3 · LO TA-3.2.3",
       "q": {
         "pt": "Conforme o syllabus, em quais fases de teste o teste baseado em cenários é mais comumente realizado, e que forma ele tipicamente assume?",
         "en": "According to the syllabus, in which test phases is scenario-based testing most commonly performed, and what form does it typically take?"
@@ -1256,7 +1256,7 @@
       "ch": 3,
       "k": 3,
       "answer": 1,
-      "ref": "ISTQB CTAL-TA v4.0 · 3.3.1",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 3 · LO TA-3.3.1",
       "q": {
         "pt": "Um analista de teste está revisando uma tabela de decisão com stakeholders antes de gerar casos de teste. Conforme o syllabus, quais critérios o analista deve usar para revisar a tabela de decisão?",
         "en": "A test analyst is reviewing a decision table with stakeholders before generating test cases. According to the syllabus, which criteria should the test analyst use to review the decision table?"
@@ -1285,7 +1285,7 @@
       "ch": 3,
       "k": 3,
       "answer": 2,
-      "ref": "ISTQB CTAL-TA v4.0 · 3.3.1",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 3 · LO TA-3.3.1",
       "q": {
         "pt": "Conforme o syllabus, como a cobertura de tabela de decisão é medida, e o que o analista de teste deve fazer quando o nível de risco associado à tabela de decisão é alto?",
         "en": "According to the syllabus, how is decision table coverage measured, and what should the test analyst do when the risk level associated with the decision table is high?"
@@ -1314,7 +1314,7 @@
       "ch": 3,
       "k": 3,
       "answer": 3,
-      "ref": "ISTQB CTAL-TA v4.0 · 3.3.1",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 3 · LO TA-3.3.1",
       "q": {
         "pt": "Por que o syllabus recomenda minimizar tabelas de decisão? Selecione a melhor resposta com base no raciocínio do syllabus.",
         "en": "Why does the syllabus recommend minimizing decision tables? Select the best answer based on the syllabus's reasoning."
@@ -1343,7 +1343,7 @@
       "ch": 3,
       "k": 3,
       "answer": 1,
-      "ref": "ISTQB CTAL-TA v4.0 · 3.3.2",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 3 · LO TA-3.3.2",
       "q": {
         "pt": "Um analista de teste está testando uma função que calcula a média de uma série de números. Qual das seguintes é uma relação metamórfica (MR) válida para essa função, conforme o exemplo do syllabus?",
         "en": "A test analyst is testing a function that computes the average of a series of numbers. Which of the following is a valid metamorphic relation (MR) for this function, according to the syllabus's example?"
@@ -1372,7 +1372,7 @@
       "ch": 3,
       "k": 3,
       "answer": 2,
-      "ref": "ISTQB CTAL-TA v4.0 · 3.3.2",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 3 · LO TA-3.3.2",
       "q": {
         "pt": "Conforme o syllabus, qual afirmação descreve corretamente a cobertura no teste metamórfico (MT)?",
         "en": "According to the syllabus, which statement correctly describes coverage in metamorphic testing (MT)?"
@@ -1401,7 +1401,7 @@
       "ch": 3,
       "k": 3,
       "answer": 3,
-      "ref": "ISTQB CTAL-TA v4.0 · 3.3.2",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 3 · LO TA-3.3.2",
       "q": {
         "pt": "Conforme o syllabus, qual afirmação descreve corretamente a aplicabilidade do teste metamórfico?",
         "en": "According to the syllabus, which statement correctly describes the applicability of metamorphic testing?"
@@ -1430,7 +1430,7 @@
       "ch": 3,
       "k": 3,
       "answer": 2,
-      "ref": "ISTQB CTAL-TA v4.0 · 3.4.1",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 3 · LO TA-3.4.1",
       "q": {
         "pt": "Conforme o syllabus, quais dos seguintes são itens típicos de informação adicional que um test charter pode conter (além da missão)?",
         "en": "According to the syllabus, which of the following are typical additional information items a test charter may contain (beyond the mission)?"
@@ -1459,7 +1459,7 @@
       "ch": 3,
       "k": 3,
       "answer": 0,
-      "ref": "ISTQB CTAL-TA v4.0 · 3.4.2",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 3 · LO TA-3.4.2",
       "q": {
         "pt": "Conforme o syllabus, qual afirmação distingue corretamente uma checklist read-do de uma checklist do-confirm?",
         "en": "According to the syllabus, which statement correctly distinguishes a read-do checklist from a do-confirm checklist?"
@@ -1488,7 +1488,7 @@
       "ch": 3,
       "k": 3,
       "answer": 1,
-      "ref": "ISTQB CTAL-TA v4.0 · 3.4.2",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 3 · LO TA-3.4.2",
       "q": {
         "pt": "Conforme o syllabus, qual afirmação descreve corretamente as qualidades que itens de checklist devem possuir?",
         "en": "According to the syllabus, which statement correctly describes the qualities that checklist items should possess?"
@@ -1517,7 +1517,7 @@
       "ch": 3,
       "k": 3,
       "answer": 3,
-      "ref": "ISTQB CTAL-TA v4.0 · 3.4.2",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 3 · LO TA-3.4.2",
       "q": {
         "pt": "Conforme o syllabus, quais dos seguintes são benefícios de usar checklists no teste baseado em experiência?",
         "en": "According to the syllabus, which of the following are benefits of using checklists in experience-based testing?"
@@ -1546,7 +1546,7 @@
       "ch": 3,
       "k": 4,
       "answer": 0,
-      "ref": "ISTQB CTAL-TA v4.0 · 3.5.1",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 3 · LO TA-3.5.1",
       "q": {
         "pt": "Uma análise de risco de produto identificou que os defeitos mais preocupantes em um novo motor de cálculo financeiro são erros de lógica nas regras de negócio (ex.: faixas de imposto erradas aplicadas, ordem incorreta de deduções). Qual categoria de técnica de teste é mais apropriada para mitigar esse risco, e por quê?",
         "en": "A product risk analysis has identified that the most concerning defects in a new financial calculation engine are logic errors in the business rules (e.g., wrong tax brackets applied, incorrect deduction ordering). Which test technique category is most appropriate to mitigate this risk, and why?"
@@ -1575,7 +1575,7 @@
       "ch": 3,
       "k": 4,
       "answer": 1,
-      "ref": "ISTQB CTAL-TA v4.0 · 3.5.1",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 3 · LO TA-3.5.1",
       "q": {
         "pt": "Um analista de teste está testando um modelo de aprendizado de máquina que classifica imagens. Não há oráculo de teste confiável para determinar a classificação correta para imagens individuais. Conforme o syllabus, qual técnica de teste é mais apropriada dada essa característica da base de teste?",
         "en": "A test analyst is testing a machine-learning model that classifies images. There is no reliable test oracle to determine the correct classification for individual images. According to the syllabus, which test technique is most appropriate given this test basis characteristic?"
@@ -1604,7 +1604,7 @@
       "ch": 3,
       "k": 4,
       "answer": 2,
-      "ref": "ISTQB CTAL-TA v4.0 · 3.5.1",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 3 · LO TA-3.5.1",
       "q": {
         "pt": "Um analista de teste está testando um processo de negócio cíclico onde algumas atividades podem voltar a passos anteriores. Conforme o syllabus, qual combinação de técnicas de teste é explicitamente recomendada para abordar os riscos específicos de atividades cíclicas de processo de negócio?",
         "en": "A test analyst is testing a cyclical business process where some activities can loop back to earlier steps. According to the syllabus, which combination of test techniques is explicitly recommended to address the specific risks of cyclical business process activities?"
@@ -1633,7 +1633,7 @@
       "ch": 3,
       "k": 4,
       "answer": 3,
-      "ref": "ISTQB CTAL-TA v4.0 · 3.5.1",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 3 · LO TA-3.5.1",
       "q": {
         "pt": "Uma análise de risco de produto identificou uma área de alto risco em um sistema com três parâmetros de configuração, cada um com três valores. O analista de teste está escolhendo entre cobertura pairwise e cobertura combinatória completa (3 vias). Conforme o syllabus, qual afirmação melhor captura o trade-off?",
         "en": "A product risk analysis has identified a high-risk area in a system with three configuration parameters, each with three values. The test analyst is choosing between pairwise coverage and full (3-way) combinatorial coverage. According to the syllabus, which statement best captures the trade-off?"
@@ -1662,7 +1662,7 @@
       "ch": 3,
       "k": 4,
       "answer": 0,
-      "ref": "ISTQB CTAL-TA v4.0 · 3.5.1",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 3 · LO TA-3.5.1",
       "q": {
         "pt": "Uma equipe de teste está selecionando técnicas de teste para um módulo crítico de dispositivo médico relacionado à segurança. Uma técnica candidata é altamente eficaz, mas o analista de teste da equipe nunca a usou antes. Conforme o syllabus, o que a equipe deve considerar em relação à seleção de técnica?",
         "en": "A test team is selecting test techniques for a critical, safety-related medical device module. One candidate technique is highly effective but the test analyst on the team has never used it before. According to the syllabus, what should the team consider regarding technique selection?"
@@ -1691,7 +1691,7 @@
       "ch": 3,
       "k": 3,
       "answer": 1,
-      "ref": "ISTQB CTAL-TA v4.0 · 3.1.1",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 3 · LO TA-3.1.1",
       "q": {
         "pt": "Um analista de teste aplica teste de domínio à expressão Booleana composta '(idade >= 18) AND (idade <= 65)' que define uma faixa de idade eleitora elegível. Quantos pontos ON e quantos pontos OFF o TA deve identificar no mínimo para cobrir ambas as bordas atômicas?",
         "en": "A test analyst applies domain testing to the compound Boolean expression '(age >= 18) AND (age <= 65)' defining an eligible voter-age range. How many ON points and how many OFF points should the TA identify at minimum to cover both atomic borders?"
@@ -1720,7 +1720,7 @@
       "ch": 3,
       "k": 3,
       "answer": 2,
-      "ref": "ISTQB CTAL-TA v4.0 · 3.1.1",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 3 · LO TA-3.1.1",
       "q": {
         "pt": "Um analista de teste aplica teste de domínio à expressão '(x > 0) AND (x < 100)'. Como os pontos ON e OFF diferem de uma expressão de borda fechada como '(x >= 0) AND (x <= 100)'?",
         "en": "A test analyst applies domain testing to the expression '(x > 0) AND (x < 100)'. How do the ON and OFF points differ from a closed-border expression like '(x >= 0) AND (x <= 100)'?"
@@ -1749,7 +1749,7 @@
       "ch": 3,
       "k": 3,
       "answer": 0,
-      "ref": "ISTQB CTAL-TA v4.0 · 3.1.1",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 3 · LO TA-3.1.1",
       "q": {
         "pt": "Um domínio é definido por três condições atômicas, cada uma com borda fechada. De acordo com o syllabus, qual é o número mínimo de itens de cobertura (pontos ON + pontos OFF) necessários para cobrir o domínio?",
         "en": "A domain is defined by three atomic conditions, each with a closed border. According to the syllabus, what is the minimum number of coverage items (ON points + OFF points) required to cover the domain?"
@@ -1778,7 +1778,7 @@
       "ch": 3,
       "k": 3,
       "answer": 1,
-      "ref": "ISTQB CTAL-TA v4.0 · 3.1.1",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 3 · LO TA-3.1.1",
       "q": {
         "pt": "Um sistema de preços aplica: frete grátis para pedidos abaixo de $50, frete de $5 para $50 a $99,99, frete de $10 para $100 a $199,99 e frete de $15 para $200 e acima. De acordo com o teste de domínio, qual conjunto de valores representa os pontos de borda que o analista de teste deve testar?",
         "en": "A pricing system applies: free shipping for orders below $50, $5 shipping for $50 to $99.99, $10 shipping for $100 to $199.99, and $15 shipping for $200 and above. According to domain testing, which set of values represents the boundary points that the test analyst should test?"
@@ -1807,7 +1807,7 @@
       "ch": 3,
       "k": 3,
       "answer": 0,
-      "ref": "ISTQB CTAL-TA v4.0 · 3.1.2",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 3 · LO TA-3.1.2",
       "q": {
         "pt": "Um analista de teste aplica teste combinatório pairwise (2-way) a um sistema com 4 parâmetros, cada um com 3 valores. Por que o teste pairwise é justificado como estratégia de cobertura, de acordo com o syllabus?",
         "en": "A test analyst applies pairwise (2-way) combinatorial testing to a system with 4 parameters, each with 3 values. Why is pairwise testing justified as a coverage strategy, according to the syllabus?"
@@ -1836,7 +1836,7 @@
       "ch": 3,
       "k": 3,
       "answer": 1,
-      "ref": "ISTQB CTAL-TA v4.0 · 3.1.2",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 3 · LO TA-3.1.2",
       "q": {
         "pt": "Um analista de teste aplica cobertura de escolha base a um sistema com 4 parâmetros, cada um com 3 valores. O TA seleciona uma combinação base. Quantos casos de teste são necessários no mínimo?",
         "en": "A test analyst applies base choice coverage to a system with 4 parameters, each with 3 values. The TA selects one base combination. How many test cases are required at minimum?"
@@ -1865,7 +1865,7 @@
       "ch": 3,
       "k": 3,
       "answer": 2,
-      "ref": "ISTQB CTAL-TA v4.0 · 3.1.2",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 3 · LO TA-3.1.2",
       "q": {
         "pt": "Uma equipe de teste precisa testar um aplicativo desktop em configurações: SO (Windows 10, Windows 11, macOS 13, macOS 14, Ubuntu 22) × Navegador (Chrome, Firefox, Edge, Safari) × Tamanho de tela (Pequeno, Médio, Grande). Combinatório completo seria 5×4×3=60 testes. Qual abordagem combinatória é mais apropriada se a equipe tem recursos para ~15-20 testes?",
         "en": "A test team needs to test a desktop application across configurations: OS (Windows 10, Windows 11, macOS 13, macOS 14, Ubuntu 22) × Browser (Chrome, Firefox, Edge, Safari) × Screen size (Small, Medium, Large). Full combinatorial would be 5×4×3=60 tests. Which combinatorial approach is most appropriate if the team has resources for ~15-20 tests?"
@@ -1894,7 +1894,7 @@
       "ch": 3,
       "k": 2,
       "answer": 1,
-      "ref": "ISTQB CTAL-TA v4.0 · 3.2.1",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 3 · LO TA-3.2.1",
       "q": {
         "pt": "Um analista de teste constrói uma matriz CRUD para a entidade Pedido em quatro papéis de usuário (Cliente, Vendas, Gerente, Admin). De acordo com o syllabus, o que a matriz CRUD representa e qual é sua finalidade primária de teste?",
         "en": "A test analyst constructs a CRUD matrix for an Order entity across four user roles (Customer, Sales, Manager, Admin). According to the syllabus, what does the CRUD matrix represent, and what is its primary testing purpose?"
@@ -1923,7 +1923,7 @@
       "ch": 3,
       "k": 3,
       "answer": 3,
-      "ref": "ISTQB CTAL-TA v4.0 · 3.2.2",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 3 · LO TA-3.2.2",
       "q": {
         "pt": "Um diagrama de estado para um carrinho de e-commerce tem estados: Vazio, Com Itens, Checkout, Pago. Transições incluem: Vazio→Com Itens (adicionar item), Com Itens→Com Itens (adicionar mais), Com Itens→Vazio (remover tudo), Com Itens→Checkout (prosseguir), Checkout→Com Itens (cancelar), Checkout→Pago (pagar). Qual teste demonstra cobertura round-trip?",
         "en": "A state diagram for an e-commerce cart has states: Empty, Has Items, Checkout, Paid. Transitions include: Empty→Has Items (add item), Has Items→Has Items (add more), Has Items→Empty (remove all), Has Items→Checkout (proceed), Checkout→Has Items (cancel), Checkout→Paid (pay). Which test demonstrates round-trip coverage?"
@@ -1952,7 +1952,7 @@
       "ch": 3,
       "k": 3,
       "answer": 2,
-      "ref": "ISTQB CTAL-TA v4.0 · 3.2.2",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 3 · LO TA-3.2.2",
       "q": {
         "pt": "Qual declaração descreve corretamente a relação entre cobertura de todas as transições e cobertura 0-switch no teste de transição de estado?",
         "en": "Which statement correctly describes the relationship between all transitions coverage and 0-switch coverage in state transition testing?"
@@ -1981,7 +1981,7 @@
       "ch": 3,
       "k": 3,
       "answer": 0,
-      "ref": "ISTQB CTAL-TA v4.0 · 3.2.3",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 3 · LO TA-3.2.3",
       "q": {
         "pt": "Em um diagrama de atividades modelando um fluxo de solicitação de empréstimo, um nó fork divide o fluxo em duas atividades paralelas (verificação de crédito e verificação de renda) que mais tarde se fundem em um nó join. De acordo com o syllabus, como o analista de teste deve tratar esses construtos no teste baseado em cenários?",
         "en": "In an activity diagram modeling a loan-application workflow, a fork node splits the flow into two parallel activities (credit check and income verification) that later merge at a join node. According to the syllabus, how should the test analyst handle these constructs in scenario-based testing?"
@@ -2010,7 +2010,7 @@
       "ch": 3,
       "k": 3,
       "answer": 1,
-      "ref": "ISTQB CTAL-TA v4.0 · 3.2.3",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 3 · LO TA-3.2.3",
       "q": {
         "pt": "Um modelo de cenário para compras online tem um cenário principal de sucesso (navegar, adicionar ao carrinho, checkout, pagar, receber confirmação) e três fluxos alternativos (item esgotado, pagamento recusado, timeout de sessão). De acordo com o syllabus, qual é a cobertura mínima baseada em cenários?",
         "en": "A scenario model for online shopping has a main success scenario (browse, add to cart, checkout, pay, receive confirmation) and three alternative flows (out-of-stock item, payment declined, session timeout). According to the syllabus, what is the minimum scenario-based coverage?"
@@ -2039,7 +2039,7 @@
       "ch": 3,
       "k": 3,
       "answer": 3,
-      "ref": "ISTQB CTAL-TA v4.0 · 3.2.3",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 3 · LO TA-3.2.3",
       "q": {
         "pt": "Um caso de uso 'Submeter Relatório de Despesas' tem uma extensão: '3a. Gerente rejeita relatório: sistema notifica funcionário, relatório retorna ao estado rascunho.' De acordo com o syllabus, como o analista de teste deve tratar essa extensão no teste baseado em cenários?",
         "en": "A use case 'Submit Expense Report' has an extension: '3a. Manager rejects report: system notifies employee, report returns to draft state.' According to the syllabus, how should the test analyst handle this extension in scenario-based testing?"
@@ -2068,7 +2068,7 @@
       "ch": 3,
       "k": 3,
       "answer": 0,
-      "ref": "ISTQB CTAL-TA v4.0 · 3.3.1",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 3 · LO TA-3.3.1",
       "q": {
         "pt": "Uma regra de negócio afirma: 'Aprovação de empréstimo exige score de crédito ≥ 700 E renda ≥ $50K E dívida/renda < 40%.' O analista de teste constrói uma tabela de decisão com 3 condições (cada S/N). Após enumeração (antes da minimização), quantas regras representam 'aprovar' e quantas representam 'negar'?",
         "en": "A business rule states: 'Loan approval requires credit score ≥ 700 AND income ≥ $50K AND debt-to-income < 40%.' The test analyst builds a decision table with 3 conditions (each Y/N). After enumeration (before minimization), how many rules represent 'approve' and how many represent 'deny'?"
@@ -2097,7 +2097,7 @@
       "ch": 3,
       "k": 3,
       "answer": 1,
-      "ref": "ISTQB CTAL-TA v4.0 · 3.3.2",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 3 · LO TA-3.3.2",
       "q": {
         "pt": "Um analista de teste testa um mecanismo de busca que ranqueia resultados por relevância. Não há oráculo confiável para verificar o ranqueamento exato. Qual das seguintes é uma relação metamórfica (MR) válida para esse sistema?",
         "en": "A test analyst tests a search engine that ranks results by relevance. There is no reliable oracle to verify the exact ranking. Which of the following is a valid metamorphic relation (MR) for this system?"
@@ -2126,7 +2126,7 @@
       "ch": 3,
       "k": 3,
       "answer": 2,
-      "ref": "ISTQB CTAL-TA v4.0 · 3.3.2",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 3 · LO TA-3.3.2",
       "q": {
         "pt": "Um analista de teste testa uma função de ordenação. Qual das seguintes é uma relação metamórfica válida?",
         "en": "A test analyst tests a sorting function. Which of the following is a valid metamorphic relation?"
@@ -2155,7 +2155,7 @@
       "ch": 3,
       "k": 3,
       "answer": 0,
-      "ref": "ISTQB CTAL-TA v4.0 · 3.3.2",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 3 · LO TA-3.3.2",
       "q": {
         "pt": "De acordo com o syllabus, como o analista de teste identifica relações metamórficas para um sistema sob teste?",
         "en": "According to the syllabus, how does the test analyst identify metamorphic relations for a system under test?"
@@ -2184,7 +2184,7 @@
       "ch": 3,
       "k": 3,
       "answer": 1,
-      "ref": "ISTQB CTAL-TA v4.0 · 3.4.1",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 3 · LO TA-3.4.1",
       "q": {
         "pt": "Um analista de teste escreve um charter de teste para teste baseado em sessão de uma nova funcionalidade 'exportar para PDF'. De acordo com o syllabus, qual das seguintes melhor segue o formato de charter 'Explorar X com Y para descobrir Z'?",
         "en": "A test analyst writes a test charter for session-based testing of a new 'export to PDF' feature. According to the syllabus, which of the following best follows the 'Explore X with Y to discover Z' charter format?"
@@ -2213,7 +2213,7 @@
       "ch": 3,
       "k": 3,
       "answer": 3,
-      "ref": "ISTQB CTAL-TA v4.0 · 3.4.1",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 3 · LO TA-3.4.1",
       "q": {
         "pt": "De acordo com o syllabus, quando o analista de teste deve preferir um charter de teste a um caso de teste detalhado?",
         "en": "According to the syllabus, when should the test analyst prefer a test charter over a detailed test case?"
@@ -2242,7 +2242,7 @@
       "ch": 3,
       "k": 3,
       "answer": 0,
-      "ref": "ISTQB CTAL-TA v4.0 · 3.4.1",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 3 · LO TA-3.4.1",
       "q": {
         "pt": "De acordo com o syllabus, o que o analista de teste deve registrar durante e após um teste baseado em sessão, e onde isso é documentado?",
         "en": "According to the syllabus, what should the test analyst record during and after a session-based test, and where is this documented?"
@@ -2271,7 +2271,7 @@
       "ch": 3,
       "k": 3,
       "answer": 2,
-      "ref": "ISTQB CTAL-TA v4.0 · 3.4.2",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 3 · LO TA-3.4.2",
       "q": {
         "pt": "Um checklist contém 300 itens de baixo nível como 'Inserir usuário admin, senha admin123, clicar Login, verificar dashboard aparece'. De acordo com o syllabus, qual é a melhor forma de refatorar esse checklist para testadores experientes?",
         "en": "A checklist contains 300 low-level items such as 'Enter username admin, password admin123, click Login, verify dashboard appears'. According to the syllabus, what is the best way to refactor this checklist for experienced testers?"
@@ -2300,7 +2300,7 @@
       "ch": 3,
       "k": 3,
       "answer": 3,
-      "ref": "ISTQB CTAL-TA v4.0 · 3.4.2",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 3 · LO TA-3.4.2",
       "q": {
         "pt": "De acordo com o syllabus, quando o analista de teste deve usar um checklist read-do versus um checklist do-confirm?",
         "en": "According to the syllabus, when should the test analyst use a read-do checklist versus a do-confirm checklist?"
@@ -2329,7 +2329,7 @@
       "ch": 3,
       "k": 3,
       "answer": 0,
-      "ref": "ISTQB CTAL-TA v4.0 · 3.4.2",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 3 · LO TA-3.4.2",
       "q": {
         "pt": "De acordo com o syllabus, quando o analista de teste deve atualizar um checklist de teste baseado em experiência?",
         "en": "According to the syllabus, when should the test analyst update an experience-based testing checklist?"
@@ -2358,7 +2358,7 @@
       "ch": 3,
       "k": 4,
       "answer": 0,
-      "ref": "ISTQB CTAL-TA v4.0 · 3.5.1",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 3 · LO TA-3.5.1",
       "q": {
         "pt": "Um analista de teste testa um algoritmo genético que otimiza rotas de entrega. O algoritmo é não determinístico: diferentes execuções produzem diferentes rotas. Não há oráculo para a rota 'ótima'. Qual técnica é mais apropriada?",
         "en": "A test analyst tests a genetic algorithm that optimizes delivery routes. The algorithm is non-deterministic: different runs produce different routes. There is no oracle for the 'optimal' route. Which technique is most appropriate?"
@@ -2389,7 +2389,7 @@
       "ch": 4,
       "k": 2,
       "answer": 0,
-      "ref": "ISTQB CTAL-TA v4.0 · 4.1",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 4 · LO TA-4.1.1",
       "q": {
         "pt": "Conforme o syllabus, qual pergunta-chave caracteriza o teste de completude funcional?",
         "en": "According to the syllabus, which key question characterizes functional completeness testing?"
@@ -2418,7 +2418,7 @@
       "ch": 4,
       "k": 2,
       "answer": 1,
-      "ref": "ISTQB CTAL-TA v4.0 · 4.1",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 4 · LO TA-4.1.1",
       "q": {
         "pt": "Conforme o syllabus, qual afirmação melhor descreve o teste de corretude funcional?",
         "en": "According to the syllabus, which statement best describes functional correctness testing?"
@@ -2447,7 +2447,7 @@
       "ch": 4,
       "k": 2,
       "answer": 2,
-      "ref": "ISTQB CTAL-TA v4.0 · 4.1",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 4 · LO TA-4.1.1",
       "q": {
         "pt": "Conforme o syllabus, qual afirmação melhor descreve o teste de adequação funcional?",
         "en": "According to the syllabus, which statement best describes functional appropriateness testing?"
@@ -2476,7 +2476,7 @@
       "ch": 4,
       "k": 2,
       "answer": 1,
-      "ref": "ISTQB CTAL-TA v4.0 · 4.2",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 4 · LO TA-4.2.1",
       "q": {
         "pt": "Conforme o syllabus, como o analista de teste pode contribuir para as principais técnicas de avaliação de usabilidade?",
         "en": "According to the syllabus, how can the test analyst contribute to the principal usability evaluation techniques?"
@@ -2505,7 +2505,7 @@
       "ch": 4,
       "k": 2,
       "answer": 2,
-      "ref": "ISTQB CTAL-TA v4.0 · 4.3",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 4 · LO TA-4.3.1",
       "q": {
         "pt": "Conforme o syllabus, como o analista de teste apoia o teste de adaptabilidade para uma aplicação móvel que deve rodar em múltiplos sistemas operacionais e navegadores?",
         "en": "According to the syllabus, how does the test analyst support adaptability testing for a mobile application that must run on multiple operating systems and browsers?"
@@ -2534,7 +2534,7 @@
       "ch": 4,
       "k": 2,
       "answer": 0,
-      "ref": "ISTQB CTAL-TA v4.0 · 4.3",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 4 · LO TA-4.3.1",
       "q": {
         "pt": "Conforme o syllabus, qual afirmação melhor descreve o escopo do teste de instalabilidade?",
         "en": "According to the syllabus, which statement best describes the scope of installability testing?"
@@ -2563,7 +2563,7 @@
       "ch": 4,
       "k": 2,
       "answer": 1,
-      "ref": "ISTQB CTAL-TA v4.0 · 4.4",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 4 · LO TA-4.4.1",
       "q": {
         "pt": "Conforme o syllabus, qual afirmação melhor descreve o teste de interoperabilidade?",
         "en": "According to the syllabus, which statement best describes interoperability testing?"
@@ -2592,7 +2592,7 @@
       "ch": 4,
       "k": 2,
       "answer": 3,
-      "ref": "ISTQB CTAL-TA v4.0 · 4.2",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 4 · LO TA-4.2.1",
       "q": {
         "pt": "Um formulário de inscrição online fornece mensagens de validação inline ao lado de cada campo enquanto o usuário digita, explicando os requisitos de formato e mostrando marcas de verificação verde para entradas válidas. Qual aspecto de usabilidade é mais diretamente suportado por esse design?",
         "en": "An online enrollment form provides inline validation messages next to each field as the user types, explaining format requirements and showing green checkmarks for valid entries. Which usability aspect is most directly supported by this design?"
@@ -2621,7 +2621,7 @@
       "ch": 4,
       "k": 2,
       "answer": 3,
-      "ref": "ISTQB CTAL-TA v4.0 · 4.4",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 4 · LO TA-4.4.1",
       "q": {
         "pt": "O sistema de prontuário eletrônico (EMR) de um hospital envia ordens de laboratório para um sistema de informação laboratorial (LIS) e recebe os resultados de volta, que ele analisa e armazena no registro do paciente. O teste verifica se ambos os sistemas trocam informações e usam mutuamente as informações que foram trocadas. Qual característica de qualidade está sendo testada?",
         "en": "A hospital's electronic medical record (EMR) system sends lab orders to a laboratory information system (LIS) and receives lab results back, which it parses and stores in the patient record. Testing verifies that both systems exchange information and mutually use the information that has been exchanged. Which quality characteristic is being tested?"
@@ -2650,7 +2650,7 @@
       "ch": 4,
       "k": 2,
       "answer": 0,
-      "ref": "ISTQB CTAL-TA v4.0 · 4.4",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 4 · LO TA-4.4.1",
       "q": {
         "pt": "Um analista de teste está classificando defeitos encontrados durante a integração de um CRM com uma plataforma de automação de marketing. Qual dos seguintes é um defeito de interoperabilidade?",
         "en": "A test analyst is classifying defects found during integration of a CRM with a marketing automation platform. Which of the following is an interoperability defect?"
@@ -2681,7 +2681,7 @@
       "ch": 5,
       "k": 2,
       "answer": 0,
-      "ref": "ISTQB CTAL-TA v4.0 · 5.1",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 5 · LO TA-5.1.1",
       "q": {
         "pt": "Conforme o syllabus, quais dos seguintes são exemplos de como o analista de teste pode contribuir para a prevenção de defeitos?",
         "en": "According to the syllabus, which of the following are examples of how the test analyst can contribute to defect prevention?"
@@ -2710,7 +2710,7 @@
       "ch": 5,
       "k": 2,
       "answer": 2,
-      "ref": "ISTQB CTAL-TA v4.0 · 5.1",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 5 · LO TA-5.1.1",
       "q": {
         "pt": "Conforme o syllabus, quais métricas podem ajudar a avaliar a eficácia das medidas de prevenção de defeitos, com o analista de teste avaliando (geralmente em consulta com o gerente de teste)?",
         "en": "According to the syllabus, which metrics can help evaluate the effectiveness of defect prevention measures, with the test analyst assessing (usually in consultation with the test manager)?"
@@ -2739,7 +2739,7 @@
       "ch": 5,
       "k": 3,
       "answer": 1,
-      "ref": "ISTQB CTAL-TA v4.0 · 5.2.1",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 5 · LO TA-5.2.1",
       "q": {
         "pt": "Conforme o syllabus, quais tipos de defeitos os modelos baseados em dados (modelos de domínio, modelos de teste combinatório) podem ajudar o analista de teste a detectar em uma especificação?",
         "en": "According to the syllabus, which types of defects can data-based models (domain models, combinatorial testing models) help the test analyst detect in a specification?"
@@ -2768,7 +2768,7 @@
       "ch": 5,
       "k": 3,
       "answer": 0,
-      "ref": "ISTQB CTAL-TA v4.0 · 5.2.1",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 5 · LO TA-5.2.1",
       "q": {
         "pt": "Conforme o syllabus, de quais três formas a modelagem pode apoiar a contenção de fase?",
         "en": "According to the syllabus, in which three ways can modeling support phase containment?"
@@ -2797,7 +2797,7 @@
       "ch": 5,
       "k": 3,
       "answer": 1,
-      "ref": "ISTQB CTAL-TA v4.0 · 5.2.2",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 5 · LO TA-5.2.2",
       "q": {
         "pt": "Conforme o syllabus, qual afirmação melhor descreve a revisão ad hoc?",
         "en": "According to the syllabus, which statement best describes ad hoc reviewing?"
@@ -2826,7 +2826,7 @@
       "ch": 5,
       "k": 3,
       "answer": 3,
-      "ref": "ISTQB CTAL-TA v4.0 · 5.2.2",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 5 · LO TA-5.2.2",
       "q": {
         "pt": "Conforme o syllabus, qual afirmação melhor descreve a leitura baseada em perspectiva?",
         "en": "According to the syllabus, which statement best describes perspective-based reading?"
@@ -2855,7 +2855,7 @@
       "ch": 5,
       "k": 3,
       "answer": 0,
-      "ref": "ISTQB CTAL-TA v4.0 · 5.2.2",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 5 · LO TA-5.2.2",
       "q": {
         "pt": "Conforme o syllabus, qual afirmação melhor descreve a revisão baseada em cenários?",
         "en": "According to the syllabus, which statement best describes scenario-based reviewing?"
@@ -2884,7 +2884,7 @@
       "ch": 5,
       "k": 4,
       "answer": 3,
-      "ref": "ISTQB CTAL-TA v4.0 · 5.3.1",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 5 · LO TA-5.3.1",
       "q": {
         "pt": "Um analista de teste está revisando onde focar esforço adicional de teste em um release. A equipe tem uma base de código madura com grande parte do código inalterada de releases anteriores, e um pequeno conjunto de novas mudanças. Conforme o syllabus, qual método analítico é mais apropriado para focar esforço adicional em áreas propensas a erro?",
         "en": "A test analyst is reviewing where to focus additional test effort in a release. The team has a mature codebase with much of the code unchanged from previous releases, and a small set of new changes. According to the syllabus, which analytical method is most appropriate for focusing additional test effort on error-prone areas?"
@@ -2913,7 +2913,7 @@
       "ch": 5,
       "k": 2,
       "answer": 3,
-      "ref": "ISTQB CTAL-TA v4.0 · 5.3.2",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 5 · LO TA-5.3.2",
       "q": {
         "pt": "Conforme o syllabus, quais técnicas o analista de teste usa para identificar causas raiz de defeitos e falhas?",
         "en": "According to the syllabus, which techniques does the test analyst use to identify root causes of defects and failures?"
@@ -2942,7 +2942,7 @@
       "ch": 5,
       "k": 3,
       "answer": 2,
-      "ref": "ISTQB CTAL-TA v4.0 · 5.2",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 5 · LO TA-5.2.1",
       "q": {
         "pt": "A especificação de aprovação de empréstimo afirma: 'Um empréstimo é aprovado se a pontuação de crédito do solicitante for 700 ou superior E a renda anual for de pelo menos 50.000; caso contrário, o empréstimo é negado.' Um analista de teste constrói uma tabela de decisão a partir dessa regra. Qual defeito o TA tem mais probabilidade de detectar ao construir e analisar a tabela de decisão?",
         "en": "A loan approval specification states: 'A loan is approved if the applicant's credit score is 700 or higher AND annual income is at least 50,000; otherwise the loan is denied.' A test analyst builds a decision table from this rule. Which defect is the TA most likely to detect by constructing and analyzing the decision table?"
@@ -2971,7 +2971,7 @@
       "ch": 5,
       "k": 3,
       "answer": 2,
-      "ref": "ISTQB CTAL-TA v4.0 · 5.2",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 5 · LO TA-5.2.2",
       "q": {
         "pt": "Um analista de teste está revisando um conjunto de histórias de usuário para uma plataforma de e-commerce. Em vez de ler cada história isoladamente, o analista percorre uma jornada completa do cliente: navegar -> adicionar ao carrinho -> finalizar compra -> pagar -> receber envio -> solicitar devolução -> receber reembolso. Qual técnica de revisão está sendo aplicada e quando ela é mais eficaz?",
         "en": "A test analyst is reviewing a set of user stories for an e-commerce platform. Instead of reading each story in isolation, the analyst walks through a complete customer journey: browse -> add to cart -> checkout -> pay -> receive shipment -> request return -> receive refund. Which review technique is being applied, and when is it most effective?"
@@ -3000,7 +3000,7 @@
       "ch": 5,
       "k": 3,
       "answer": 3,
-      "ref": "ISTQB CTAL-TA v4.0 · 5.2",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 5 · LO TA-5.2.2",
       "q": {
         "pt": "Um analista de teste está revisando uma especificação de API REST usando um checklist predefinido com itens como: 'Todos os endpoints estão versionados?', 'As respostas de erro estão documentadas com códigos de status?', 'A autenticação é exigida para cada endpoint?', 'A paginação está especificada para endpoints de lista?' Qual técnica de revisão está sendo aplicada e qual é sua principal limitação?",
         "en": "A test analyst is reviewing a REST API specification using a predefined checklist with items such as: 'Are all endpoints versioned?', 'Are error responses documented with status codes?', 'Is authentication required for each endpoint?', 'Is pagination specified for list endpoints?' Which review technique is being applied, and what is its primary limitation?"
@@ -3029,7 +3029,7 @@
       "ch": 5,
       "k": 4,
       "answer": 1,
-      "ref": "ISTQB CTAL-TA v4.0 · 5.3",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 5 · LO TA-5.3.1",
       "q": {
         "pt": "Um analista categorizou 60 defeitos: interface do usuário: 40; lógica de cálculo: 8; performance: 5; segurança: 3; documentação: 4. Pela frequência, qual conclusão da análise de Pareto é mais defensável?",
         "en": "An analyst categorized 60 defects: user interface: 40; calculation logic: 8; performance: 5; security: 3; documentation: 4. Based on frequency, which Pareto conclusion is most defensible?"
@@ -3058,7 +3058,7 @@
       "ch": 5,
       "k": 4,
       "answer": 2,
-      "ref": "ISTQB CTAL-TA v4.0 · 5.3",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 5 · LO TA-5.3.1",
       "q": {
         "pt": "Em um release, o analista de teste observa que o módulo 'Geração de Fatura', que representa apenas 5% do código total, responde por 60% de todos os defeitos encontrados. O módulo foi exaustivamente testado no release anterior sem mudanças desde então. Qual ação é mais defensável?",
         "en": "In a release, the test analyst observes that the 'Invoice Generation' module, which represents only 5% of the total codebase, accounts for 60% of all defects found. The module was thoroughly tested in the previous release with no changes since. Which action is most defensible?"
@@ -3087,7 +3087,7 @@
       "ch": 5,
       "k": 4,
       "answer": 3,
-      "ref": "ISTQB CTAL-TA v4.0 · 5.3",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 5 · LO TA-5.3.1",
       "q": {
         "pt": "Um analista acompanha a densidade de defeitos por KLOC de um módulo em quatro iterações: 2,0; 4,0; 7,0; 11,0. O tamanho do código está estável e a abordagem de teste não mudou. Qual é a próxima ação mais defensável?",
         "en": "An analyst tracks defects per KLOC for a module across four iterations: 2.0, 4.0, 7.0, 11.0. Code size is stable and the test approach has not changed. What is the most defensible next action?"
@@ -3116,7 +3116,7 @@
       "ch": 5,
       "k": 2,
       "answer": 2,
-      "ref": "ISTQB CTAL-TA v4.0 · 5.3",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 5 · LO TA-5.3.2",
       "q": {
         "pt": "Na Classificação Ortogonal de Defeitos (ODC), cada defeito é classificado ao longo de vários atributos ortogonais. Qual atributo ODC captura 'a condição de teste ou atividade que expôs o defeito para surgir' (por exemplo, o tipo específico de caso de teste, elemento de cobertura ou cenário de execução que disparou o defeito)?",
         "en": "In Orthogonal Defect Classification (ODC), each defect is classified along several orthogonal attributes. Which ODC attribute captures 'the test condition or activity that exposed the defect to surface' (for example, the specific test case type, coverage element, or execution scenario that triggered the defect)?"
@@ -3145,7 +3145,7 @@
       "ch": 5,
       "k": 2,
       "answer": 0,
-      "ref": "ISTQB CTAL-TA v4.0 · 5.3",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 5 · LO TA-5.3.2",
       "q": {
         "pt": "Um analista de teste está realizando análise de causa raiz em um defeito recorrente em produção: 'usuários intermitentemente não conseguem fazer login.' Usando a técnica dos 'cinco porquês', o analista faz uma sequência de perguntas por que: Por que os usuários não conseguem fazer login? -> O serviço de autenticação rejeita os tokens. Por quê? -> Os tokens estão expirados. Por quê? -> O tempo de vida do token é muito curto. Por quê? -> A configuração padrão não foi atualizada após a mudança da política de sessão. Por quê? -> O processo de mudança de configuração não tem porta de revisão. Qual declaração melhor descreve essa técnica?",
         "en": "A test analyst is performing root cause analysis on a recurring production defect: 'users intermittently cannot log in.' Using the 'five whys' technique, the analyst asks a sequence of why-questions: Why can't users log in? -> The auth service rejects tokens. Why? -> Tokens are expired. Why? -> Token lifetime is too short. Why? -> Default config was not updated after the session policy change. Why? -> The config change process has no review gate. Which statement best describes this technique?"
@@ -3174,7 +3174,7 @@
       "ch": 5,
       "k": 2,
       "answer": 1,
-      "ref": "ISTQB CTAL-TA v4.0 · 5.3",
+      "ref": "ISTQB CTAL-TA v4.0 · cap. 5 · LO TA-5.3.2",
       "q": {
         "pt": "Uma equipe usa o modelo clássico dos 6 Ms como ponto de partida em um diagrama de causa e efeito. Qual conjunto corresponde a esse modelo?",
         "en": "A team uses the classic 6 Ms as a starting point for a cause-and-effect diagram. Which set matches this model?"

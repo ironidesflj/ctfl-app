@@ -13,3 +13,6 @@ bank/
 docs/sdd/Archive/
 docs/archive/
 public/manifest.jsonl
+
+# fatias derivadas do banco (geradas por scripts/generate-study-slices.mjs)
+src/synapse/data/banks/

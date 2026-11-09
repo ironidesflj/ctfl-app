@@ -1,0 +1,35 @@
+import { readFileSync } from "node:fs";
+import path from "node:path";
+import { describe, expect, it } from "vitest";
+import { buildStudySlices } from "../../scripts/lib/study-slices.mjs";
+
+const readBank = (rel) => JSON.parse(readFileSync(path.join(process.cwd(), rel), "utf8"));
+const bank = readBank("src/data/synapse-question-bank.json");
+const generated = buildStudySlices(bank);
+
+const read = (name) => readBank(`src/synapse/data/banks/${name}`);
+
+describe("fatias de estudo/simulado geradas", () => {
+  it("cada fatia commitada é idêntica à gerada do monólito", () => {
+    for (const [name, data] of Object.entries(generated)) {
+      expect(read(name), name).toEqual(data);
+    }
+  });
+
+  it("cobre os 3 certs vivos com os pools completos", () => {
+    const count = (name) => Object.values(read(name)).reduce((acc, list) => acc + list.length, 0);
+    expect(count("ctfl.json")).toBe(220);
+    expect(count("ctfl-exam.json")).toBe(80);
+    expect(count("ctal-ta.json")).toBe(110);
+    expect(count("ctal-ta-exam.json")).toBe(90);
+    expect(count("ctal-tm.json")).toBe(101);
+    expect(count("ctal-tm-exam.json")).toBe(99);
+  });
+
+  it("referência cita capítulo e LO quando o banco tem LO", () => {
+    const tm = read("ctal-tm.json");
+    const first = tm["1"][0];
+    expect(first.ref).toMatch(/^ISTQB CTAL-TM v3\.0 · cap\. \d+/);
+    expect(first.ref).toMatch(/· LO TM-/);
+  });
+});

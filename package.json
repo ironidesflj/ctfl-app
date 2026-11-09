@@ -19,7 +19,9 @@
     "prebuild": "node scripts/generate-axon-manifest.mjs --validate",
     "lint": "eslint . --max-warnings 0",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "slices": "node scripts/generate-study-slices.mjs",
+    "slices:check": "node scripts/generate-study-slices.mjs --check"
   },
   "dependencies": {
     "@ironidesflj/axon": "0.2.2",
