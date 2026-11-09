@@ -327,3 +327,10 @@ Sem commit, push ou publicação nesta integração.
 - `src/synapse/data/banks/ctal-tm.json` (101 estudo) e `ctal-tm-exam.json` (99 simulado) foram regeneradas a partir do banco canônico `ctfl-question-bank-ptbr@main` (1.7.1): 16 questões do pool de estudo passam a refletir a revisão editorial já registrada no banco (gabaritos inalterados). Antes deste adendo as fatias servidas estavam defasadas em relação ao monólito/manifesto.
 - `public/manifest.jsonl` **não muda** (SHA `1bdcde8e…` continua igual ao do hub): o conteúdo publicado já era o do banco canônico; a correção é de consistência interna das fatias.
 - Pendente (não fecha o checklist editorial): cobertura K4 do pool de estudo (1 questão K4; decisão de ampliar ou aceitar) e o bump de versão/registro formal de sign-off.
+
+## Adendo 2026-11-09 (2) — banco 1.7.3: revisão semântica integral do CTAL-TM
+
+- Banco canônico 1.7.3 aplicado via sync: 62 itens do pool de estudo CTAL-TM corrigidos em PT/EN (14 do relatório + 48 da leitura integral), **0 gabaritos alterados** e 0 alternativas reordenadas.
+- Fatias do Synapse regeneradas; `public/manifest.jsonl` mudou: novo SHA `7313f302…` (o anterior era `1bdcde8e…`). **Exige reingestão no hub** antes do merge deste PR (o hub serve o manifesto antigo).
+- Guardas 7/7 PASS nos certs live e na fatia de estudo; `ctaltm-121` agora é K4 (lacuna S1 suprida).
+- Pendente: novo pacote de questões para ampliar a amostra K4 (aguardando o mantenedor).
