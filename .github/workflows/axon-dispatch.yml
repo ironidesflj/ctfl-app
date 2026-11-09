@@ -1,0 +1,48 @@
+name: Axon manifest → hub (dispatch)
+
+# F2: quando o manifesto público muda na main, avisa o hub para abrir o PR
+# de ingestão. O hub ingere no build; nada é consultado em runtime.
+# Requer o secret HUB_SYNC_TOKEN (fine-grained, apenas noos-hub:
+# contents:write + pull_requests:write). Sem o secret, encerra com aviso
+# (fallback: cópia manual, como antes).
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "public/manifest.jsonl"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  dispatch:
+    name: Avisar hub sobre novo manifesto
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validar manifesto
+        run: |
+          test -s public/manifest.jsonl
+          echo "linhas: $(wc -l < public/manifest.jsonl)"
+
+      - name: Dispatch para noos-hub
+        env:
+          TOKEN: ${{ secrets.HUB_SYNC_TOKEN }}
+          PREFIX: SYN
+          APP: Synapse
+          URL: https://ctfl-app.vercel.app/manifest.jsonl
+        run: |
+          if [ -z "$TOKEN" ]; then
+            echo "::notice::HUB_SYNC_TOKEN ausente — cópia manual continua necessária."
+            exit 0
+          fi
+          SHA256=$(sha256sum public/manifest.jsonl | cut -d' ' -f1)
+          echo "sha256=$SHA256"
+          curl -fsS -X POST \
+            -H "Authorization: Bearer $TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            https://api.github.com/repos/ironidesflj/noos-hub/dispatches \
+            -d "{\"event_type\":\"manifest-updated\",\"client_payload\":{\"prefix\":\"$PREFIX\",\"app\":\"$APP\",\"sha256\":\"$SHA256\",\"url\":\"$URL\"}}"
