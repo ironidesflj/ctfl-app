@@ -339,3 +339,10 @@ Sem commit, push ou publicação nesta integração.
 
 - O gerador de manifesto (`scripts/lib/axon-manifest.mjs`) passa a propagar `retired: true` quando a questão do banco canônico estiver retirada (Axon 0.3.0, MINOR). Sem questão retirada hoje: manifesto atual inalterado (`7313f302…`).
 - `assertRecordShape` aceita o campo opcional como 10º campo (booleano), mantendo a ordem dos 9 campos do contrato; teste dedicado cobre ativo/válido/inválido.
+
+## Adendo 2026-11-09 (4) — CTAL-TM editorial fechado e Axon 0.3.0
+
+- Banco canônico **1.7.3** (62 itens: 14 + 48 da leitura semântica integral), 0 gabaritos alterados; fatias regeneradas pelo gerador versionado; manifesto `7313f302…` reingerido no hub (`manifestos/SYN.jsonl` idêntico ao do app).
+- Guardas 7/7 nos certs live e na fatia de estudo; K4 mínimo presente (`ctaltm-121` → TM-1.3.4 K4); ampliação aguarda novo pacote.
+- `@ironidesflj/axon` **0.3.0** (pin exato) adotado: gerador de manifesto propaga `retired`; hub publica página de questão retirada com aviso e sem gabarito.
+- Pendências: editorial CTAL-TA (`ctalta-106`, `ctalta-120`); novo pacote K4.
