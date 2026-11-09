@@ -75,7 +75,12 @@
           "Planejamento de teste",
           "Análise de teste"
         ],
-        "en": ["Test completion", "Test monitoring", "Test planning", "Test analysis"]
+        "en": [
+          "Test completion",
+          "Test monitoring",
+          "Test planning",
+          "Test analysis"
+        ]
       },
       "exp": {
         "pt": "Essas são tarefas clássicas de conclusão do teste segundo o syllabus: arquivar testware, limpar e restaurar o ambiente de teste, capturar lições aprendidas em retrospectivas, além de criar/aprovar o relatório de conclusão do teste e transferir material de teste. Monitoramento, planejamento e análise são atividades diferentes do processo e não incluem arquivamento/limpeza/retrospectiva.",

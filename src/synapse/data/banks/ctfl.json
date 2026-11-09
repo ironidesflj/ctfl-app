@@ -330,8 +330,18 @@
         "en": "Which test process activity defines objectives, approach, and resources?"
       },
       "options": {
-        "pt": ["Monitoramento", "Encerramento", "Implementação", "Planejamento"],
-        "en": ["Test monitoring", "Test completion", "Implementation", "Test planning"]
+        "pt": [
+          "Monitoramento",
+          "Encerramento",
+          "Implementação",
+          "Planejamento"
+        ],
+        "en": [
+          "Test monitoring",
+          "Test completion",
+          "Implementation",
+          "Test planning"
+        ]
       },
       "exp": {
         "pt": "O planejamento de teste define objetivos, escopo, abordagem, recursos e critérios.",
@@ -1685,8 +1695,18 @@
         "en": "Which integration approach combines low-level components first and progressively adds higher-level components?"
       },
       "options": {
-        "pt": ["Big-bang", "Bottom-up", "Top-down", "Sanduíche (sandwich)"],
-        "en": ["Big-bang", "Bottom-up", "Top-down", "Sandwich"]
+        "pt": [
+          "Big-bang",
+          "Bottom-up",
+          "Top-down",
+          "Sanduíche (sandwich)"
+        ],
+        "en": [
+          "Big-bang",
+          "Bottom-up",
+          "Top-down",
+          "Sandwich"
+        ]
       },
       "exp": {
         "pt": "Bottom-up integra de baixo para cima: começa pelos componentes de nível mais baixo, eliminando a necessidade de stubs mas exigindo drivers.",
@@ -2984,7 +3004,12 @@
         "en": "A field accepts ages from 18 to 65. Which values are tested using 2-value BVA?"
       },
       "options": {
-        "pt": ["17, 18, 65, 66", "Os valores 18 e 65", "Os valores 0 e 100", "17, 19, 64, 66"],
+        "pt": [
+          "17, 18, 65, 66",
+          "Os valores 18 e 65",
+          "Os valores 0 e 100",
+          "17, 19, 64, 66"
+        ],
         "en": [
           "17, 18, 65, and 66",
           "The values 18 and 65",
@@ -3008,8 +3033,18 @@
         "en": "Using 3-value BVA for the upper boundary of 65, which values are tested?"
       },
       "options": {
-        "pt": ["64, 65 e 66", "Testar o 65", "63, 64 e 65", "65, 66 e 67"],
-        "en": ["64, 65, and 66", "Test the value 65", "63, 64, and 65", "65, 66, and 67"]
+        "pt": [
+          "64, 65 e 66",
+          "Testar o 65",
+          "63, 64 e 65",
+          "65, 66 e 67"
+        ],
+        "en": [
+          "64, 65, and 66",
+          "Test the value 65",
+          "63, 64, and 65",
+          "65, 66, and 67"
+        ]
       },
       "exp": {
         "pt": "A BVA de 3 valores testa o limite e os dois vizinhos: 64, 65 e 66 para a fronteira 65.",
@@ -3288,8 +3323,18 @@
         "en": "A code segment has 10 executable statements; a test suite executed 7 of them. The statement coverage is:"
       },
       "options": {
-        "pt": ["70%", "100%", "7%", "30%"],
-        "en": ["70%", "100%", "7%", "30%"]
+        "pt": [
+          "70%",
+          "100%",
+          "7%",
+          "30%"
+        ],
+        "en": [
+          "70%",
+          "100%",
+          "7%",
+          "30%"
+        ]
       },
       "exp": {
         "pt": "7 de 10 instruções executadas = 70% de cobertura de instruções.",
@@ -3597,8 +3642,18 @@
         "en": "A temperature field accepts -10 to 50°C. Using 2-value BVA, what are the 4 boundary values to test?"
       },
       "options": {
-        "pt": ["-9, -10, 49, 50", "Limites -10 e 50", "-10, 0, 50, 100", "-11, -10, 50, 51"],
-        "en": ["-9, -10, 49, 50", "Limits -10 and 50", "-10, 0, 50, 100", "-11, -10, 50, 51"]
+        "pt": [
+          "-9, -10, 49, 50",
+          "Limites -10 e 50",
+          "-10, 0, 50, 100",
+          "-11, -10, 50, 51"
+        ],
+        "en": [
+          "-9, -10, 49, 50",
+          "Limits -10 and 50",
+          "-10, 0, 50, 100",
+          "-11, -10, 50, 51"
+        ]
       },
       "exp": {
         "pt": "BVA de 2 valores testa o valor da fronteira e o imediatamente adjacente do lado inválido: -11/-10 (limite inferior) e 50/51 (limite superior).",
@@ -3616,8 +3671,18 @@
         "en": "A decision table has 3 binary conditions. How many rules does the complete table (without collapsing) have?"
       },
       "options": {
-        "pt": ["4", "6", "8", "9"],
-        "en": ["4", "6", "8", "9"]
+        "pt": [
+          "4",
+          "6",
+          "8",
+          "9"
+        ],
+        "en": [
+          "4",
+          "6",
+          "8",
+          "9"
+        ]
       },
       "exp": {
         "pt": "Três condições binárias geram 2³ = 8 combinações (regras) na tabela de decisão completa.",
@@ -3635,8 +3700,18 @@
         "en": "A discount system applies a discount if: (premium customer = Yes) OR (order value > $500). How many distinct rules exist with 2 binary conditions?"
       },
       "options": {
-        "pt": ["4", "2", "6", "8"],
-        "en": ["4", "2", "6", "8"]
+        "pt": [
+          "4",
+          "2",
+          "6",
+          "8"
+        ],
+        "en": [
+          "4",
+          "2",
+          "6",
+          "8"
+        ]
       },
       "exp": {
         "pt": "Duas condições binárias geram 2² = 4 regras; a tabela completa tem 4 colunas independentemente do operador lógico.",
@@ -3654,8 +3729,18 @@
         "en": "In a bank account state machine: states = {Active, Blocked, Closed}. How many invalid transitions exist if only 4 valid transitions are defined?"
       },
       "options": {
-        "pt": ["4", "5", "8", "6"],
-        "en": ["4", "5", "8", "6"]
+        "pt": [
+          "4",
+          "5",
+          "8",
+          "6"
+        ],
+        "en": [
+          "4",
+          "5",
+          "8",
+          "6"
+        ]
       },
       "exp": {
         "pt": "Com 3 estados, há 3×3 = 9 células na matriz (incluindo auto-transições); com 4 válidas, há 9-4 = 5 transições inválidas a verificar.",
@@ -3673,8 +3758,18 @@
         "en": "A code segment has 20 executable statements. A test suite executed 15. What is the statement coverage?"
       },
       "options": {
-        "pt": ["75%", "25%", "85%", "20%"],
-        "en": ["75%", "25%", "85%", "20%"]
+        "pt": [
+          "75%",
+          "25%",
+          "85%",
+          "20%"
+        ],
+        "en": [
+          "75%",
+          "25%",
+          "85%",
+          "20%"
+        ]
       },
       "exp": {
         "pt": "Cobertura de instruções = executadas ÷ total = 15 ÷ 20 = 75%.",
@@ -3692,8 +3787,18 @@
         "en": "A method has 4 decisions (if/else). For 100% decision coverage, how many decision outcomes must be exercised at minimum?"
       },
       "options": {
-        "pt": ["8", "4", "2", "16"],
-        "en": ["8", "4", "2", "16"]
+        "pt": [
+          "8",
+          "4",
+          "2",
+          "16"
+        ],
+        "en": [
+          "8",
+          "4",
+          "2",
+          "16"
+        ]
       },
       "exp": {
         "pt": "Cada decisão tem 2 resultados (V/F); 4 decisões × 2 resultados = 8 resultados mínimos a exercitar para 100% de cobertura de decisões.",
@@ -3711,8 +3816,18 @@
         "en": "A field accepts ages from 0 to 120 years (integers). Using 3-value BVA, which values should be tested at the lower boundary (0)?"
       },
       "options": {
-        "pt": ["-1, 0 e 1", "0 e 1", "0, 1 e 2", "-2, -1 e 0"],
-        "en": ["-1, 0, and 1", "0 and 1", "0, 1, and 2", "-2, -1, and 0"]
+        "pt": [
+          "-1, 0 e 1",
+          "0 e 1",
+          "0, 1 e 2",
+          "-2, -1 e 0"
+        ],
+        "en": [
+          "-1, 0, and 1",
+          "0 and 1",
+          "0, 1, and 2",
+          "-2, -1, and 0"
+        ]
       },
       "exp": {
         "pt": "BVA de 3 valores testa o limite e seus dois vizinhos: para o limite inferior 0, testam-se -1, 0 e 1.",
@@ -3991,8 +4106,18 @@
         "en": "An online store offers free shipping when a customer orders 10 or more items. For orders of fewer than 10 items, a flat shipping fee is charged. Using the 2-value boundary value analysis technique, which test values should be selected for the boundary between free and paid shipping?"
       },
       "options": {
-        "pt": ["0, 9, 10 e 100", "9 e 10", "10 e 11", "9, 10 e 11"],
-        "en": ["0, 9, 10, and 100", "9 and 10", "10 and 11", "9, 10, and 11"]
+        "pt": [
+          "0, 9, 10 e 100",
+          "9 e 10",
+          "10 e 11",
+          "9, 10 e 11"
+        ],
+        "en": [
+          "0, 9, 10, and 100",
+          "9 and 10",
+          "10 and 11",
+          "9, 10, and 11"
+        ]
       },
       "exp": {
         "pt": "O limite entre as duas partições (frete grátis para >=10 itens, frete pago para <10 itens) está entre 9 e 10. A técnica de BVA de 2 valores seleciona os valores imediatamente em cada lado do limite: 9 (o valor mais alto na partição 'paga') e 10 (o valor mais baixo na partição 'grátis'). A opção com os valores (9 e 10) usa corretamente esses dois valores. A opção com os valores (10 e 11) testa apenas valores no limite ou acima dele, perdendo o lado 'abaixo'. A opção com os valores (9, 10 e 11) usa três valores, o que corresponde à técnica de BVA de 3 valores, não de 2. A opção com os valores (0, 9, 10 e 100) inclui valores extremos irrelevantes e não segue BVA.",
@@ -4097,8 +4222,18 @@
         "en": "A train booking system has a \"Number of Passengers\" field that accepts integer values from 1 to 6, inclusive. Values of 0 or below, and 7 or above, are rejected with an error message. Using equivalence partitioning, which set of test values provides minimum coverage of all identified partitions?"
       },
       "options": {
-        "pt": ["0, 3, 7", "1, 6", "0, 1, 6, 7", "1, 3, 6"],
-        "en": ["0, 3, 7", "1, 6", "0, 1, 6, 7", "1, 3, 6"]
+        "pt": [
+          "0, 3, 7",
+          "1, 6",
+          "0, 1, 6, 7",
+          "1, 3, 6"
+        ],
+        "en": [
+          "0, 3, 7",
+          "1, 6",
+          "0, 1, 6, 7",
+          "1, 3, 6"
+        ]
       },
       "exp": {
         "pt": "O particionamento por equivalência identifica três partições: válida (inteiros 1-6), inválida baixa (≤0) e inválida alta (≥7). A cobertura mínima requer um representante de cada partição (3 valores no total). A opção com os valores (0, 3, 7) cobre as três partições: 0 representa a inválida baixa, 3 representa a válida, e 7 representa a inválida alta. A opção com os valores (1, 6) cobre apenas a partição válida. A opção com os valores (0, 1, 6, 7) inclui valores extras (1 e 6 ainda estão dentro da partição válida, não são partições separadas em EP puro). A opção com os valores (1, 3, 6) cobre apenas a partição válida com múltiplos representantes.",
@@ -4116,8 +4251,18 @@
         "en": "A volunteer program accepts applicants aged 18 to 65, inclusive. Applicants younger than 18 or older than 65 are rejected. Using equivalence partitioning, which set of test values provides minimum coverage of all identified partitions?"
       },
       "options": {
-        "pt": ["18, 41, 65", "17, 41, 66", "17, 18, 65, 66", "18, 65"],
-        "en": ["18, 41, 65", "17, 41, 66", "17, 18, 65, 66", "18, 65"]
+        "pt": [
+          "18, 41, 65",
+          "17, 41, 66",
+          "17, 18, 65, 66",
+          "18, 65"
+        ],
+        "en": [
+          "18, 41, 65",
+          "17, 41, 66",
+          "17, 18, 65, 66",
+          "18, 65"
+        ]
       },
       "exp": {
         "pt": "O particionamento por equivalência identifica três partições: válida (18-65), inválida baixa (<18) e inválida alta (>65). A cobertura mínima requer um representante de cada partição (3 valores). A opção com os valores (17, 41, 66) cobre as três partições: 17 representa a inválida baixa, 41 representa a válida, e 66 representa a inválida alta. A opção com os valores (18, 41, 65) usa três valores da partição válida, sem cobrir as inválidas. A opção com os valores (17, 18, 65, 66) mistura EP com BVA (adiciona valores de borda) e não representa cobertura mínima. A opção com os valores (18, 65) cobre apenas a partição válida.",
@@ -4135,8 +4280,18 @@
         "en": "A digital kitchen scale is calibrated to measure weights from 0 g to 5000 g, inclusive. Weights below 0 g or above 5000 g are physically impossible; if reported, they indicate a sensor fault. Using 3-value boundary value analysis, which test values should be selected to test the upper boundary?"
       },
       "options": {
-        "pt": ["4999, 5000, 5002", "5000, 5001, 5002", "4999, 5000, 5001", "4998, 4999, 5000"],
-        "en": ["4999, 5000, 5002", "5000, 5001, 5002", "4999, 5000, 5001", "4998, 4999, 5000"]
+        "pt": [
+          "4999, 5000, 5002",
+          "5000, 5001, 5002",
+          "4999, 5000, 5001",
+          "4998, 4999, 5000"
+        ],
+        "en": [
+          "4999, 5000, 5002",
+          "5000, 5001, 5002",
+          "4999, 5000, 5001",
+          "4998, 4999, 5000"
+        ]
       },
       "exp": {
         "pt": "A BVA de 3 valores testa o valor no limite, o valor imediatamente abaixo e o valor imediatamente acima. Para o limite superior 5000, os três valores são 4999 (abaixo), 5000 (no limite) e 5001 (acima). A opção com os valores (4999, 5000, 5002) usa o valor no limite e o abaixo, mas pula o valor imediatamente acima (5001), usando 5002 em seu lugar. A opção com os valores (5000, 5001, 5002) testa apenas o limite e valores acima, omitindo o lado abaixo. A opção com os valores (4998, 4999, 5000) testa valores abaixo do limite e o próprio limite, mas omite o valor imediatamente acima. Apenas a opção com os valores (4999, 5000, 5001) aplica corretamente a BVA de 3 valores no limite superior.",
@@ -4154,8 +4309,18 @@
         "en": "A corporate event registration system requires a company to register between 5 and 50 attendees, inclusive. Values outside this range are rejected. Using the 2-value boundary value analysis technique, which set of test values covers all the boundaries of the valid input range?"
       },
       "options": {
-        "pt": ["5, 50", "4, 5, 6, 49, 50, 51", "5, 25, 50", "4, 5, 50, 51"],
-        "en": ["5, 50", "4, 5, 6, 49, 50, 51", "5, 25, 50", "4, 5, 50, 51"]
+        "pt": [
+          "5, 50",
+          "4, 5, 6, 49, 50, 51",
+          "5, 25, 50",
+          "4, 5, 50, 51"
+        ],
+        "en": [
+          "5, 50",
+          "4, 5, 6, 49, 50, 51",
+          "5, 25, 50",
+          "4, 5, 50, 51"
+        ]
       },
       "exp": {
         "pt": "Há dois limites na faixa válida: o inferior (5) e o superior (50). A BVA de 2 valores seleciona o valor no limite e o adjacente do lado testado em cada limite. No limite inferior: 4 (abaixo) e 5 (no limite). No limite superior: 50 (no limite) e 51 (acima). O conjunto completo é {4, 5, 50, 51}. A opção com os valores (5, 50) testa apenas os pontos de limite, não os adjacentes. A opção com os valores (4, 5, 6, 49, 50, 51) usa BVA de 3 valores. A opção com os valores (5, 25, 50) testa valores médios, não limites. Apenas a opção com os valores (4, 5, 50, 51) aplica corretamente a BVA de 2 valores em ambos os limites.",
@@ -4173,8 +4338,18 @@
         "en": "A mortgage pre-qualification system uses a decision table with three conditions: (1) Credit score tier — values: Poor, Fair, Good (3 values); (2) Annual income — values: Low, High (2 values); (3) Has co-signer — values: Yes, No (2 values). The team builds a full, uncollapsed decision table. How many rules (columns) does the table contain?"
       },
       "options": {
-        "pt": ["12", "18", "24", "27"],
-        "en": ["12", "18", "24", "27"]
+        "pt": [
+          "12",
+          "18",
+          "24",
+          "27"
+        ],
+        "en": [
+          "12",
+          "18",
+          "24",
+          "27"
+        ]
       },
       "exp": {
         "pt": "Em uma tabela de decisão sem colapso, o número de regras (colunas) é o produto do número de valores que cada condição pode assumir. Aqui: 3 (pontuação) × 2 (renda) × 2 (co-fiador) = 12 regras. A opção “18” seria 3×3×2, tratando a renda como ternária em vez de binária. A opção “24” seria 4×3×2, tratando a pontuação de crédito como tendo 4 valores. A opção “27” seria 3×3×3, tratando todas as condições como ternárias. Apenas a opção “12” está correta.",
@@ -4192,8 +4367,18 @@
         "en": "A document review workflow has the following states: Draft, In Review, Approved, Published. The valid transitions are:\n- Draft → In Review (submit)\n- In Review → Approved (approve)\n- In Review → Draft (reject, return to author)\n- Approved → Published (publish)\n- Approved → In Review (request rework)\n\nHow many valid transitions are there in total?"
       },
       "options": {
-        "pt": ["4", "3", "5", "16"],
-        "en": ["4", "3", "5", "16"]
+        "pt": [
+          "4",
+          "3",
+          "5",
+          "16"
+        ],
+        "en": [
+          "4",
+          "3",
+          "5",
+          "16"
+        ]
       },
       "exp": {
         "pt": "Contando as transições listadas: (1) Rascunho → Em Revisão, (2) Em Revisão → Aprovado, (3) Em Revisão → Rascunho, (4) Aprovado → Publicado, (5) Aprovado → Em Revisão. Total = 5 transições válidas. A opção “4” omite uma das transições de retorno. A opção “3” considera apenas o fluxo linear direto. A opção “16” contaria todas as combinações possíveis entre estados (4×4, incluindo auto-transições), o que não é o que foi definido.",
@@ -4240,8 +4425,18 @@
         "en": "Consider the following code:\n\n```\n1.  if (a > 0) then\n2.      doA()\n3.  end if\n4.  if (b > 0) then\n5.      doB()\n6.  end if\n```\n\nThere are two IF decisions. Each has two branches (true and false), for a total of 4 branches. What is the minimum number of test cases required to achieve 100% branch coverage?"
       },
       "options": {
-        "pt": ["1", "3", "2", "4"],
-        "en": ["1", "3", "2", "4"]
+        "pt": [
+          "1",
+          "3",
+          "2",
+          "4"
+        ],
+        "en": [
+          "1",
+          "3",
+          "2",
+          "4"
+        ]
       },
       "exp": {
         "pt": "Cada caso de teste pode exercitar um desvio de cada IF (um verdadeiro ou falso por IF). Para cobrir os 4 desvios (a-T, a-F, b-T, b-F), precisamos de no mínimo 2 casos de teste. Por exemplo: Teste 1 com a=1, b=1 cobre os desvios a-T e b-T; Teste 2 com a=-1, b=-1 cobre os desvios a-F e b-F. A opção “1” não pode cobrir os 4 desvios (um único teste só exercita um desvio por IF). A opção “3” é mais do que o mínimo necessário. A opção “4” seria um caso por desvio, desnecessário.",
@@ -5073,8 +5268,18 @@
         "en": "A risk has a 30% probability of occurrence and an impact rated 4 (scale 1-5). What is the risk level?"
       },
       "options": {
-        "pt": ["0,3", "4,3", "1,2", "1,5"],
-        "en": ["0.3", "4.3", "1.2", "1.5"]
+        "pt": [
+          "0,3",
+          "4,3",
+          "1,2",
+          "1,5"
+        ],
+        "en": [
+          "0.3",
+          "4.3",
+          "1.2",
+          "1.5"
+        ]
       },
       "exp": {
         "pt": "Nível de risco = probabilidade × impacto = 0,30 × 4 = 1,2 (em escala numérica).",
@@ -5405,7 +5610,7 @@
       "ch": 5,
       "k": 1,
       "answer": 1,
-      "ref": "ISTQB CTFL v4.0 · cap. 5",
+      "ref": "ISTQB CTFL v4.0 · cap. 5 · LO FL-5.1.3",
       "q": {
         "pt": "Um plano de teste mestre é um documento que tipicamente cobre:",
         "en": "A master test plan is a document that typically covers:"
@@ -5434,7 +5639,7 @@
       "ch": 5,
       "k": 1,
       "answer": 2,
-      "ref": "ISTQB CTFL v4.0 · cap. 5",
+      "ref": "ISTQB CTFL v4.0 · cap. 5 · LO FL-5.2.1",
       "q": {
         "pt": "Qual dos seguintes é um exemplo de risco de projeto?",
         "en": "Which of the following is an example of a project risk?"
@@ -5463,7 +5668,7 @@
       "ch": 5,
       "k": 1,
       "answer": 3,
-      "ref": "ISTQB CTFL v4.0 · cap. 5",
+      "ref": "ISTQB CTFL v4.0 · cap. 5 · LO FL-5.2.1",
       "q": {
         "pt": "Qual dos seguintes é um exemplo de risco de produto?",
         "en": "Which of the following is an example of a product risk?"
@@ -5492,7 +5697,7 @@
       "ch": 5,
       "k": 1,
       "answer": 0,
-      "ref": "ISTQB CTFL v4.0 · cap. 5",
+      "ref": "ISTQB CTFL v4.0 · cap. 5 · LO FL-5.2.1",
       "q": {
         "pt": "Durante o planejamento de teste, a equipe identifica um risco de que \"o gateway de pagamento de terceiros pode não estar disponível durante a janela de teste, bloqueando cenários de teste críticos.\" Isso é melhor classificado como:",
         "en": "During test planning, the team identifies a risk that \"the third-party payment gateway may not be available during the test window, blocking critical test scenarios.\" This is best classified as a:"
@@ -5521,7 +5726,7 @@
       "ch": 5,
       "k": 1,
       "answer": 2,
-      "ref": "ISTQB CTFL v4.0 · cap. 5",
+      "ref": "ISTQB CTFL v4.0 · cap. 5 · LO FL-5.3.1",
       "q": {
         "pt": "Uma métrica de teste é melhor descrita como:",
         "en": "A test metric is best described as:"
@@ -5550,7 +5755,7 @@
       "ch": 5,
       "k": 1,
       "answer": 1,
-      "ref": "ISTQB CTFL v4.0 · cap. 5",
+      "ref": "ISTQB CTFL v4.0 · cap. 5 · LO FL-5.4.1",
       "q": {
         "pt": "Qual é um valor chave do gerenciamento de configuração em um projeto de teste?",
         "en": "What is a key value of configuration management in a testing project?"
@@ -5579,7 +5784,7 @@
       "ch": 5,
       "k": 1,
       "answer": 2,
-      "ref": "ISTQB CTFL v4.0 · cap. 5",
+      "ref": "ISTQB CTFL v4.0 · cap. 5 · LO FL-5.1.1",
       "q": {
         "pt": "Qual das seguintes é uma responsabilidade típica de um gerente de teste?",
         "en": "Which of the following is a typical responsibility of a test manager?"
@@ -5608,7 +5813,7 @@
       "ch": 5,
       "k": 1,
       "answer": 3,
-      "ref": "ISTQB CTFL v4.0 · cap. 5",
+      "ref": "ISTQB CTFL v4.0 · cap. 5 · LO FL-5.1.2",
       "q": {
         "pt": "Critérios de entrada e saída em teste são usados principalmente para:",
         "en": "Entry and exit criteria in testing are primarily used to:"
@@ -5637,7 +5842,7 @@
       "ch": 5,
       "k": 2,
       "answer": 0,
-      "ref": "ISTQB CTFL v4.0 · cap. 5",
+      "ref": "ISTQB CTFL v4.0 · cap. 5 · LO FL-5.1.1",
       "q": {
         "pt": "Uma abordagem de teste onde os testadores seguem um conjunto consistente de condições de teste em uma ordem prescrita (como \"testar todos os itens de menu de cima para baixo, depois todos os formulários da esquerda para a direita\") é melhor caracterizada como:",
         "en": "A test approach where testers follow a consistent set of test conditions in a prescribed order (such as \"test all menu items top-to-bottom, then all forms left-to-right\") is best characterized as:"
@@ -5666,7 +5871,7 @@
       "ch": 5,
       "k": 2,
       "answer": 3,
-      "ref": "ISTQB CTFL v4.0 · cap. 5",
+      "ref": "ISTQB CTFL v4.0 · cap. 5 · LO FL-5.2.2",
       "q": {
         "pt": "Um risco recebe uma probabilidade \"baixa\" (avaliada 1 em uma escala de 1-5) e um impacto \"catastrófico\" (avaliado 5). Qual é o nível de risco usando o cálculo padrão de probabilidade × impacto, e o que isso indica?",
         "en": "A risk is assigned a likelihood of \"low\" (rated 1 on a 1-5 scale) and an impact of \"catastrophic\" (rated 5). What is the risk level using the standard likelihood × impact calculation, and what does this indicate?"
@@ -5695,7 +5900,7 @@
       "ch": 5,
       "k": 2,
       "answer": 1,
-      "ref": "ISTQB CTFL v4.0 · cap. 5",
+      "ref": "ISTQB CTFL v4.0 · cap. 5 · LO FL-5.3.2",
       "q": {
         "pt": "Qual dos seguintes é um exemplo de controle de teste em vez de monitoramento de teste?",
         "en": "Which of the following is an example of test control rather than test monitoring?"
@@ -5724,7 +5929,7 @@
       "ch": 5,
       "k": 2,
       "answer": 2,
-      "ref": "ISTQB CTFL v4.0 · cap. 5",
+      "ref": "ISTQB CTFL v4.0 · cap. 5 · LO FL-5.5.1",
       "q": {
         "pt": "Qual das seguintes distingue corretamente o status do defeito da prioridade do defeito?",
         "en": "Which of the following correctly distinguishes defect status from defect priority?"
@@ -5753,7 +5958,7 @@
       "ch": 5,
       "k": 2,
       "answer": 3,
-      "ref": "ISTQB CTFL v4.0 · cap. 5",
+      "ref": "ISTQB CTFL v4.0 · cap. 5 · LO FL-5.3.1",
       "q": {
         "pt": "Qual das seguintes melhor descreve a diferença entre uma métrica de teste e um KPI de teste?",
         "en": "Which of the following best describes the difference between a test metric and a test KPI?"
@@ -5782,7 +5987,7 @@
       "ch": 5,
       "k": 2,
       "answer": 0,
-      "ref": "ISTQB CTFL v4.0 · cap. 5",
+      "ref": "ISTQB CTFL v4.0 · cap. 5 · LO FL-5.1.3",
       "q": {
         "pt": "Um projeto tem planos de teste separados para teste de componente, teste de integração e teste de sistema. Comparado a um único plano de teste mestre, qual é o principal valor de ter esses planos específicos por fase?",
         "en": "A project has separate test plans for component testing, integration testing, and system testing. Compared to a single master test plan, what is the main value of having these phase-specific test plans?"
@@ -5811,7 +6016,7 @@
       "ch": 5,
       "k": 3,
       "answer": 1,
-      "ref": "ISTQB CTFL v4.0 · cap. 5",
+      "ref": "ISTQB CTFL v4.0 · cap. 5 · LO FL-5.5.2",
       "q": {
         "pt": "Um defeito está atualmente no status \"Aberto\". O desenvolvedor investiga, aplica uma correção e muda o status para \"Corrigido\". O testador re-testa e confirma que o defeito não ocorre mais. De acordo com o ciclo de vida típico de defeito, qual é o próximo status apropriado, e quem tipicamente o define?",
         "en": "A defect is currently in \"Open\" status. The developer investigates, applies a fix, and changes the status to \"Fixed.\" The tester re-tests and confirms the defect no longer occurs. According to the typical defect lifecycle, what is the appropriate next status, and who typically sets it?"
@@ -5840,7 +6045,7 @@
       "ch": 5,
       "k": 3,
       "answer": 2,
-      "ref": "ISTQB CTFL v4.0 · cap. 5",
+      "ref": "ISTQB CTFL v4.0 · cap. 5 · LO FL-5.5.2",
       "q": {
         "pt": "Um testador envia o seguinte relatório de defeito: \"Login está quebrado. Cliquei em login e nada aconteceu. Por favor, corrijam.\" Qual elemento crítico está FALTANDO que torna este relatório de defeito inadequado para os desenvolvedores investigarem?",
         "en": "A tester submits the following defect report: \"Login is broken. I clicked login and nothing happened. Please fix.\" Which critical element is MISSING that makes this defect report inadequate for developers to investigate?"

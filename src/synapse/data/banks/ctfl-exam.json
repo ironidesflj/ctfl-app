@@ -1119,8 +1119,18 @@
         "en": "Passwords must be between 8 and 16 characters. Using 2-value BVA, which lengths are tested at the lower boundary?"
       },
       "options": {
-        "pt": ["8 e 16", "8 e 9", "6, 7, 8", "7 e 8"],
-        "en": ["8 and 16", "8 and 9", "6, 7, and 8", "7 and 8"]
+        "pt": [
+          "8 e 16",
+          "8 e 9",
+          "6, 7, 8",
+          "7 e 8"
+        ],
+        "en": [
+          "8 and 16",
+          "8 and 9",
+          "6, 7, and 8",
+          "7 and 8"
+        ]
       },
       "exp": {
         "pt": "No limite inferior (8), a BVA de 2 valores testa 7 (inválido) e 8 (válido).",
@@ -1138,8 +1148,18 @@
         "en": "A rule grants free shipping if (subscriber = Yes) AND (purchase > $100). With 2 binary conditions, how many rules does the full decision table contain?"
       },
       "options": {
-        "pt": ["2", "3", "4", "8"],
-        "en": ["2", "3", "4", "8"]
+        "pt": [
+          "2",
+          "3",
+          "4",
+          "8"
+        ],
+        "en": [
+          "2",
+          "3",
+          "4",
+          "8"
+        ]
       },
       "exp": {
         "pt": "Duas condições binárias geram 2² = 4 combinações (regras) na tabela completa.",
@@ -1279,7 +1299,12 @@
           "Valores = 0",
           "Valores negativos"
         ],
-        "en": ["There is no upper invalid partition", "Values ≥ 4", "Values = 0", "Negative values"]
+        "en": [
+          "There is no upper invalid partition",
+          "Values ≥ 4",
+          "Values = 0",
+          "Negative values"
+        ]
       },
       "exp": {
         "pt": "A partição inválida superior inclui todos os valores ≥ 4 (acima do máximo 3); valores ≤ 0 formam a partição inválida inferior.",
@@ -1384,8 +1409,18 @@
         "en": "A field accepts values from $1.00 to $9,999.99. Using 2-value BVA, what are the test values for the lower boundary?"
       },
       "options": {
-        "pt": ["R$0,99 e R$1,00", "R$1,00 e R$9.999,99", "R$1,00 e R$1,01", "R$0,00 e R$1,00"],
-        "en": ["$0.99 and $1.00", "$1.00 and $9,999.99", "$1.00 and $1.01", "$0.00 and $1.00"]
+        "pt": [
+          "R$0,99 e R$1,00",
+          "R$1,00 e R$9.999,99",
+          "R$1,00 e R$1,01",
+          "R$0,00 e R$1,00"
+        ],
+        "en": [
+          "$0.99 and $1.00",
+          "$1.00 and $9,999.99",
+          "$1.00 and $1.01",
+          "$0.00 and $1.00"
+        ]
       },
       "exp": {
         "pt": "No limite inferior R$1,00, a BVA de 2 valores testa o valor abaixo do limite (R$0,99, inválido) e o próprio limite (R$1,00, válido).",
@@ -1432,8 +1467,18 @@
         "en": "A web form has a \"Discount Percentage\" field that accepts integer values from 0 to 50, inclusive. Values below 0 or above 50 are rejected with an error message. Using equivalence partitioning, which set of test values provides minimum coverage of all identified partitions?"
       },
       "options": {
-        "pt": ["-1, 25, 51", "0, 50", "0, 25, 50, -1, 51", "0, 1, 49, 50, -1, 51"],
-        "en": ["-1, 25, 51", "0, 50", "0, 25, 50, -1, 51", "0, 1, 49, 50, -1, 51"]
+        "pt": [
+          "-1, 25, 51",
+          "0, 50",
+          "0, 25, 50, -1, 51",
+          "0, 1, 49, 50, -1, 51"
+        ],
+        "en": [
+          "-1, 25, 51",
+          "0, 50",
+          "0, 25, 50, -1, 51",
+          "0, 1, 49, 50, -1, 51"
+        ]
       },
       "exp": {
         "pt": "O particionamento por equivalência identifica três partições para este campo: válida (inteiros de 0 a 50), inválida baixa (abaixo de 0) e inválida alta (acima de 50). A cobertura mínima requer um representante de cada partição (3 valores no total). A opção com os valores (-1, 25, 51) cobre as três partições com o menor número de valores: -1 representa a partição inválida baixa, 25 representa a partição válida, e 51 representa a partição inválida alta. A opção com os valores (0, 50) cobre apenas a partição válida. As opções com os valores (0, 25, 50, -1, 51) e (0, 1, 49, 50, -1, 51) incluem valores extras da partição válida (0 e 50 ainda estão dentro da partição válida, não são partições separadas em EP) e não representam cobertura mínima.",
@@ -1538,8 +1583,18 @@
         "en": "Consider the following code:\n\n```\n1.  read(x)\n2.  if (x > 10) then\n3.      print(\"high\")\n4.  end if\n5.  print(\"done\")\n```\n\nThe code has 4 executable statements (lines 1, 2, 3, and 5). A single test case with x=5 is executed. What statement coverage is achieved?"
       },
       "options": {
-        "pt": ["25%", "75%", "50%", "100%"],
-        "en": ["25%", "75%", "50%", "100%"]
+        "pt": [
+          "25%",
+          "75%",
+          "50%",
+          "100%"
+        ],
+        "en": [
+          "25%",
+          "75%",
+          "50%",
+          "100%"
+        ]
       },
       "exp": {
         "pt": "Com x=5: a linha 1 (ler) é executada, a linha 2 (avaliação da condição x>10, resulta em falso) é executada, a linha 3 (imprimir \"alto\") NÃO é executada porque a condição é falsa, e a linha 5 (imprimir \"pronto\") é executada. Total de instruções executadas: 3 de 4 = 75%. A opção “25%” subestima; a opção “50%” dividiria por 2; a opção “100%” exigiria executar todas as instruções, o que não ocorre com x=5 (a linha 3 não é executada).",
@@ -1849,8 +1904,18 @@
         "en": "A ratio-based test effort estimate uses the historical proportion that testing consumes 30% of development effort. If development is estimated at 1000h, the estimated test effort is:"
       },
       "options": {
-        "pt": ["300h", "700h", "30h", "1300h"],
-        "en": ["300h", "700h", "30h", "1300h"]
+        "pt": [
+          "300h",
+          "700h",
+          "30h",
+          "1300h"
+        ],
+        "en": [
+          "300h",
+          "700h",
+          "30h",
+          "1300h"
+        ]
       },
       "exp": {
         "pt": "Ratio de 30%: esforço de teste = 30% × 1000h = 300h.",
@@ -2007,7 +2072,7 @@
       "ch": 5,
       "k": 1,
       "answer": 0,
-      "ref": "ISTQB CTFL v4.0 · cap. 5",
+      "ref": "ISTQB CTFL v4.0 · cap. 5 · LO FL-5.1.2",
       "q": {
         "pt": "Qual dos seguintes é tipicamente incluído no plano de teste de um projeto?",
         "en": "Which of the following is typically included in a project's test plan?"
@@ -2036,7 +2101,7 @@
       "ch": 5,
       "k": 1,
       "answer": 3,
-      "ref": "ISTQB CTFL v4.0 · cap. 5",
+      "ref": "ISTQB CTFL v4.0 · cap. 5 · LO FL-5.3.3",
       "q": {
         "pt": "Qual dos seguintes é tipicamente incluído em um relatório de resumo de teste?",
         "en": "Which of the following is typically included in a test summary report?"
@@ -2065,7 +2130,7 @@
       "ch": 5,
       "k": 3,
       "answer": 1,
-      "ref": "ISTQB CTFL v4.0 · cap. 5",
+      "ref": "ISTQB CTFL v4.0 · cap. 5 · LO FL-5.5.2",
       "q": {
         "pt": "Um testador está escrevendo um relatório de defeito para um defeito de regressão: uma funcionalidade que funcionava corretamente no release anterior agora falha após uma mudança de código. Qual informação é MAIS importante incluir para ajudar os desenvolvedores a confirmar que se trata de uma regressão e localizar a causa?",
         "en": "A tester is writing a defect report for a regression defect: a feature that worked correctly in the previous release now fails after a code change. Which information is MOST important to include to help developers confirm this is a regression and locate the cause?"
@@ -2094,7 +2159,7 @@
       "ch": 5,
       "k": 3,
       "answer": 2,
-      "ref": "ISTQB CTFL v4.0 · cap. 5",
+      "ref": "ISTQB CTFL v4.0 · cap. 5 · LO FL-5.5.2",
       "q": {
         "pt": "Um testador observa que uma página web leva 18 segundos para carregar sob carga normal de usuários, excedendo o requisito de 3 segundos. Ao reportar este defeito de performance, qual informação é MAIS crítica para incluir?",
         "en": "A tester observes that a web page takes 18 seconds to load under normal user load, exceeding the 3-second requirement. When reporting this performance defect, which information is MOST critical to include?"
@@ -2123,7 +2188,7 @@
       "ch": 5,
       "k": 3,
       "answer": 0,
-      "ref": "ISTQB CTFL v4.0 · cap. 5",
+      "ref": "ISTQB CTFL v4.0 · cap. 5 · LO FL-5.5.2",
       "q": {
         "pt": "Um testador descobre que uma página de login aceita injeção de SQL no campo de nome de usuário, retornando dados da tabela de usuários. Ao escrever o relatório de defeito, qual informação deve ser incluída para permitir que a equipe de segurança investigue efetivamente?",
         "en": "A tester discovers that a login page accepts SQL injection in the username field, returning data from the user table. When writing the defect report, which information should be included to enable the security team to investigate effectively?"
