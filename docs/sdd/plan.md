@@ -32,11 +32,11 @@ Spec ativa: `spec-canonical-bank-protection.md`. Sem autorização de push.
 - Aplicado localmente: exclusão do snapshot histórico do format check.
 - Evidência técnica: 11 testes de proteção, 443 testes app, cinco E2E,
   formatação/lint/build aprovados; fontes/fatias idênticas.
-- NÃO CONCLUÍDO: revisão editorial integral CTAL-TM. Quatro guardas permanecem
-  bloqueantes. Não alterar baseline/threshold para fechar a fase.
-- Após revisão: versionar alterações de conteúdo na fonte, regenerar fatias,
-  validar tudo e apresentar os diffs. Publicar primeiro a fonte e depois o app
-  somente após autorização; não enviar esta fase como se o conteúdo estivesse verde.
+- CONCLUÍDO em 09/nov/2026: revisão editorial integral do CTAL-TM (62 itens no
+  banco 1.7.3, 0 gabaritos alterados; guardas 7/7). K4 mínimo suprido
+  (`ctaltm-121` → TM-1.3.4 K4); ampliação aguarda novo pacote de questões.
+- Fluxo seguido: conteúdo primeiro na fonte canônica, depois sync e app, com
+  manifesto e paridade SHA verificados.
 
 ## Registro histórico do plano anterior
 
@@ -85,7 +85,7 @@ validação final e autorização posterior para commit/push.
 ## Dívidas conhecidas, não bloqueantes
 
 - Chunk lazy do CTAL-TA com aproximadamente 669 KB e warning acima de 500 KB.
-- CT-AI, CTAL-TM e CTFL-AT com dívida psicométrica latente.
+- CT-AI e CTFL-AT com dívida psicométrica latente (CTAL-TM resolvido em 09/nov/2026).
 - `ctalta-106` e `ctalta-120` continuam inconclusivos e visíveis até decisão de
   conteúdo específica.
 - `vite-plugin-pwa` permanece inerte em `devDependencies`; remoção exige
@@ -93,8 +93,8 @@ validação final e autorização posterior para commit/push.
 
 ## Encaminhamento para a candidata 4.1.0 Vite — 2026-10-29
 
-- Revisão editorial CTAL-TM e guardas canônicas: continuam pendentes conforme
-  o registro da fase de 24/10; não remover nem afrouxar essas barreiras.
+- Revisão editorial CTAL-TM e guardas canônicas: **resolvidas em 09/nov/2026**
+  (registro histórico da fase de 24/10 mantido para rastreabilidade).
 - Documentação de produto e deploy: README, CHANGELOG e DEPLOY descrevem a
   candidata Vite e mantêm 3.18.0 como base em produção até o merge.
 - CI e publicação: verificar os gates da candidata antes de declarar a migração
@@ -102,5 +102,7 @@ validação final e autorização posterior para commit/push.
 
 ## Concluído em 2026-11-09
 
-- Revisão editorial CTAL-TM: 16 itens do pool de estudo aplicados no banco canônico (1.7.1) e propagados para as fatias do app; manifesto inalterado (conteúdo já publicado). Relatório: `REVISAO-CTAL-TM.md` (no workspace de orquestração).
-- Pendência aberta: decisão sobre cobertura K4 do pool de estudo.
+- Revisão editorial CTAL-TM: **fechada** em 09/nov/2026 — 62 itens no banco canônico 1.7.3 (14 do relatório + 48 da leitura integral), 0 gabaritos alterados; guardas 7/7; fatias regeneradas por gerador versionado; manifesto `7313f302…` reingerido no hub. Relatório: `REVISAO-CTAL-TM.md`.
+- K4: mínimo suprido (`ctaltm-121` → TM-1.3.4 K4). Ampliação aguarda novo pacote de questões do mantenedor.
+- Axon 0.3.0 adotado (`retired`/`isRetired`): gerador propaga `retired`; app pronto para a política epitáfio.
+- Pendente: decisão editorial do CTAL-TA (`ctalta-106`, `ctalta-120`).
