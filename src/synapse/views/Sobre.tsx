@@ -101,6 +101,10 @@ const COPY: Record<Lang, SobreCopy> = {
       ],
       ["É realmente gratuito?", "Sim. Sem anúncio, sem plano pago e sem pegadinha."],
       [
+        "Meus dados são coletados?",
+        "Não. O progresso fica neste dispositivo; não usamos cookies de terceiros nem analytics. O feedback é público, opcional e não deve levar dado pessoal.",
+      ],
+      [
         "O conteúdo é oficial do ISTQB?",
         "É baseado nos syllabus e no glossário públicos do ISTQB. O app não é afiliado ao ISTQB.",
       ],
@@ -227,6 +231,10 @@ const COPY: Record<Lang, SobreCopy> = {
         "No. Everything works without login; progress stays on this device.",
       ],
       ["Is it really free?", "Yes. No ads, no paid plan, no catch."],
+      [
+        "Is my data collected?",
+        "No. Progress stays on this device; no third-party cookies or analytics. Feedback is public, optional and must not include personal data.",
+      ],
       [
         "Is the content official ISTQB?",
         "It is based on ISTQB’s public syllabi and glossary. The app is not affiliated with ISTQB.",
