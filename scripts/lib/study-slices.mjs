@@ -13,7 +13,7 @@ function refFor(cert, q) {
   return q.lo ? `${base} · LO ${q.lo}` : base;
 }
 
-function toSliceItem(cert, q, lang) {
+function toSliceItem(cert, q) {
   return {
     id: q.id,
     ch: q.chapter,
