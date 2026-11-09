@@ -143,3 +143,10 @@ Histórico completo em [CHANGELOG.md](./CHANGELOG.md).
 ## Marcas e afiliação
 
 Synapse é um projeto independente, sem vínculo, patrocínio ou endosso do ISTQB® ou de seus membros nacionais. ISTQB®, CTFL®, CTAL-TA® e CTAL-TM® são marcas registradas do International Software Testing Qualifications Board. O conteúdo é escrito pelo projeto, a partir dos syllabi e do glossário públicos, e não reproduz questões oficiais.
+
+## Privacidade
+
+- Progresso de estudo é **local ao dispositivo** (localStorage/IndexedDB); o app não envia dado de estudo para servidor.
+- Sem cookies de terceiros, sem analytics e sem anúncios (por decisão de produto).
+- O canal de feedback é público e opcional; não inclua dado pessoal nem resultado de prova.
+- Detalhes e direitos (LGPD): consulte a seção "Sobre" do app e a política do canal de feedback.
