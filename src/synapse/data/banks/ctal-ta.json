@@ -355,26 +355,26 @@
       "answer": 1,
       "ref": "ISTQB CTAL-TA v4.0 · cap. 1 · LO TA-1.2.2",
       "q": {
-        "pt": "Um analista de teste redige o seguinte caso de teste: 'Passo 1: inserir 1500 no campo Saque; Passo 2: clicar em Confirmar.' Quais dois artefatos o TA deve adicionar durante o design de teste para tornar este um caso de teste de baixo nível completo?",
-        "en": "A test analyst drafts the following test case: 'Step 1: enter 1500 in the Withdraw field; Step 2: click Confirm.' Which two artifacts must the TA add during test design to make this a complete low-level test case?"
+        "pt": "Um analista de teste redige o seguinte rascunho de caso de teste: \"Passo 1: inserir 1500 no campo Saque; Passo 2: clicar em Confirmar.\" Segundo o syllabus CTAL-TA v4.0 (§1.2.2), quais elementos o Analista de Teste deve acrescentar na modelagem de teste para torná-lo um caso de teste de baixo nível (concreto) completo?",
+        "en": "A test analyst drafts the following test case sketch: \"Step 1: enter 1500 in the Withdraw field; Step 2: click Confirm.\" According to the CTAL-TA v4.0 syllabus (§1.2.2), which elements must the Test Analyst add during test design to make this a complete low-level (concrete) test case?"
       },
       "options": {
         "pt": [
-          "Um nome de ambiente de teste e um nome do testador responsável, além do identificador do build a ser usado durante a execução do caso de teste",
-          "As pré-condições (ex.: saldo da conta), o resultado esperado (ex.: novo saldo e mensagem de confirmação) e os dados de teste necessários",
-          "Um modelo de relatório de defeito e uma entrada na matriz de rastreabilidade, para que falhas encontradas possam ser registradas e rastreadas até o requisito",
-          "Um script de automação e uma meta de cobertura de código, já que casos de teste de baixo nível são tipicamente executados via framework de automação"
+          "O nome do ambiente de teste, o nome do testador responsável e o identificador do build a ser usado durante a execução do caso de teste",
+          "As pré-condições concretas (ex.: conta ativa com saldo de 2000), os dados de teste de entrada específicos e os resultados esperados detalhados (ex.: saldo final de 500 e mensagem de confirmação, além de pós-condições se aplicável)",
+          "Um modelo de relatório de defeito e uma linha na matriz de rastreabilidade de defeitos, para registrar as falhas encontradas após a execução",
+          "Um script de automação executável e uma meta percentual de cobertura de código estrutural, exigidos em todo caso de teste de baixo nível"
         ],
         "en": [
-          "A test environment name and a responsible tester's name, plus the build identifier to be used during execution of the test case",
-          "The preconditions (e.g., account balance), the expected result (e.g., new balance and confirmation message), and the test data needed",
-          "A defect report template and a traceability matrix entry, so that failures found can be logged and traced back to the requirement",
-          "An automation script and a code coverage target, since low-level test cases are typically executed through the automation framework"
+          "The test environment name, the responsible tester name, and the build identifier to be used during execution of the test case",
+          "Concrete preconditions (e.g., active account with balance of 2000), specific input test data, and detailed expected results (e.g., ending balance of 500 and confirmation message, plus postconditions if applicable)",
+          "A defect report template and a defect traceability matrix row, so that failures found after execution can be logged",
+          "An executable automation script and a structural code coverage percentage target, required for every low-level test case"
         ]
       },
       "exp": {
-        "pt": "Um caso de teste de baixo nível completo requer pré-condições, resultados esperados e os dados de teste específicos necessários — junto com os passos. A opção “As pré-condições (ex.: saldo da conta), o…” lista exatamente esses. A é metadado administrativo; C são artefatos de pós-execução; D salta para automação/cobertura, que não são necessários para que um caso de teste esteja completo.",
-        "en": "A complete low-level test case requires preconditions, expected results, and the specific test data needed — together with the steps. The option “The preconditions (e.g., account balance), the…” lists exactly these. A is administrative metadata; C is post-execution artifacts; D jumps to automation/coverage which are not required for a test case to be complete."
+        "pt": "Segundo o syllabus CTAL-TA v4.0 (§1.2.2), um caso de teste de baixo nível completo exige acrescentar as pré-condições concretas (ex.: conta ativa com saldo de 2000), os dados de teste de entrada específicos e os resultados esperados detalhados (ex.: saldo final de 500 e mensagem de confirmação, além de pós-condições se aplicável). Metadados administrativos de execução, matriz de defeitos ou scripts não o completam.",
+        "en": "Per the CTAL-TA v4.0 syllabus (§1.2.2), a complete low-level test case requires adding concrete preconditions (e.g., active account with balance of 2000), specific input test data, and detailed expected results (e.g., ending balance of 500 and confirmation message, plus postconditions if applicable). Administrative metadata, defect matrices, or scripts do not complete it."
       }
     },
     {
