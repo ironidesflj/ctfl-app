@@ -194,7 +194,7 @@ export function buildManifestRecords({ bankDir, appRoot: root = appRoot() } = {}
         reference: item.reference,
         referenceTitle: item.referenceTitle,
       };
-      records.push({
+      const record = {
         id: item.publicId,
         exam: exam.axonCode,
         topics: [question.domain],
@@ -204,7 +204,11 @@ export function buildManifestRecords({ bankDir, appRoot: root = appRoot() } = {}
         checksum: computeChecksum(snapshot),
         aliases: [],
         snapshot,
-      });
+      };
+      // Política epitáfio (Axon 0.3, MINOR): questão retirada do banco ativo
+      // continua no manifesto, marcada — a ID e a página canônica permanecem.
+      if (question.retired === true) record.retired = true;
+      records.push(record);
     }
 
     for (const item of held) {
@@ -257,9 +261,13 @@ export function serializeManifest(records) {
 
 /** Garante os nove campos (e a ordem) e o snapshot completo. */
 export function assertRecordShape(record) {
+  const fields = record.retired === undefined ? MANIFEST_FIELDS : [...MANIFEST_FIELDS, "retired"];
   const keys = Object.keys(record);
-  if (keys.length !== MANIFEST_FIELDS.length || keys.some((key, i) => key !== MANIFEST_FIELDS[i])) {
+  if (keys.length !== fields.length || keys.some((key, i) => key !== fields[i])) {
     throw new Error(`campos fora do contrato Axon: ${keys.join(",")}`);
+  }
+  if (record.retired !== undefined && typeof record.retired !== "boolean") {
+    throw new Error("campo retired deve ser booleano quando presente");
   }
   const snapshotKeys = Object.keys(record.snapshot ?? {});
   if (

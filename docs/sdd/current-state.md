@@ -334,3 +334,8 @@ Sem commit, push ou publicação nesta integração.
 - Fatias do Synapse regeneradas; `public/manifest.jsonl` mudou: novo SHA `7313f302…` (o anterior era `1bdcde8e…`). **Exige reingestão no hub** antes do merge deste PR (o hub serve o manifesto antigo).
 - Guardas 7/7 PASS nos certs live e na fatia de estudo; `ctaltm-121` agora é K4 (lacuna S1 suprida).
 - Pendente: novo pacote de questões para ampliar a amostra K4 (aguardando o mantenedor).
+
+## Adendo 2026-11-09 (3) — política epitáfio no gerador de manifesto
+
+- O gerador de manifesto (`scripts/lib/axon-manifest.mjs`) passa a propagar `retired: true` quando a questão do banco canônico estiver retirada (Axon 0.3.0, MINOR). Sem questão retirada hoje: manifesto atual inalterado (`7313f302…`).
+- `assertRecordShape` aceita o campo opcional como 10º campo (booleano), mantendo a ordem dos 9 campos do contrato; teste dedicado cobre ativo/válido/inválido.
