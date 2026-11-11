@@ -14,7 +14,9 @@ import App from "../../App.jsx";
  * 1. prova oficial CTFL — inicia (40 questões), responde, finaliza pelo
  *    último item da grade e grava o resultado no histórico;
  * 2. rascunho (P0) — resposta gravada em `synapse.examdraft.v1` sobrevive à
- *    remontagem do app, e o banner "Retomar" restaura a prova.
+ *    remontagem do app, e o banner "Retomar" restaura a prova;
+ * 3. regressão do P1 — finalizar/descartar removem também a chave
+ *    `synapse.examDraft.v1.{cert}`, então o banner não reaparece.
  */
 
 function openQuizRoute() {
@@ -103,24 +105,16 @@ describe("Simulado · fluxo da view 4.1", () => {
 });
 
 /**
- * BUG CONHECIDO (P1, reportado na verificação de QA):
+ * Regressão do P1 encontrado na verificação de QA (corrigido nesta branch):
  *
  * `saveExamDraft` grava o rascunho na chave global `synapse.examdraft.v1` E
- * também em `synapse.examDraft.v1.${cert}` (store.tsx:263), mas as limpezas da
- * view chamam `clearExamDraft()` sem argumento (Simulado.tsx:503 ao finalizar,
- * :687 ao descartar), removendo apenas a chave global. `loadExamDraft`
- * (store.tsx:247) cai de volta na chave por cert, então:
- *   1. depois de FINALIZAR o simulado, o banner "Você tem um simulado em
- *      andamento" reaparece e "Retomar" reabre uma prova já concluída;
- *   2. "Descartar" não remove o banner (ele volta na hora).
- *
- * Fix mínimo: passar a cert em `clearExamDraft(state.cert)` nos três call sites
- * (Simulado.tsx:503, :677, :687) — ou remover a chave por cert no clear.
- * Este teste usa `it.fails`: enquanto o bug existir ele passa (falha esperada);
- * quando for corrigido, passa a falhar e deve ser promovido a `it`.
+ * em `synapse.examDraft.v1.${cert}` (store.tsx:263); as limpezas da view
+ * precisam passar a cert — `clearExamDraft(state.cert)` em Simulado.tsx (ao
+ * finalizar, ao descartar e no resume inválido) — senão a chave por cert
+ * sobrevive e `loadExamDraft` (store.tsx:247) ressuscita o banner de retomada.
  */
-describe("Simulado · BUG conhecido: limpeza do rascunho por cert", () => {
-  it.fails("não deve sobrar rascunho após finalizar, nem banner na reabertura", async () => {
+describe("Simulado · limpeza do rascunho por cert (regressão P1)", () => {
+  it("finalizar descarta o rascunho e a reabertura não oferece prova concluída", async () => {
     openQuizRoute();
     const { container } = render(<App />);
     await startOfficialExam(container);
@@ -132,14 +126,38 @@ describe("Simulado · BUG conhecido: limpeza do rascunho por cert", () => {
       expect(container.querySelector('[data-od-id="simulado-resultado"]')).not.toBeNull()
     );
 
-    // (1) a chave por cert também precisa ser limpa ao finalizar
+    // o rascunho some nas duas chaves (global e por cert)
+    expect(localStorage.getItem("synapse.examdraft.v1")).toBeNull();
     expect(localStorage.getItem("synapse.examDraft.v1.ctfl")).toBeNull();
 
-    // (2) reabrir o simulado não pode oferecer retomada de prova concluída
+    // reabrir não oferece retomada de prova concluída e permite reiniciar
+    cleanup();
+    openQuizRoute();
+    const reopened = render(<App />);
+    await screen.findByText(/Treine como no dia da prova/i);
+    expect(document.querySelector(".sim-draft")).toBeNull();
+    fireEvent.click(screen.getAllByRole("button", { name: /Começar simulado/i })[0]);
+    await waitFor(() => expect(quizEl(reopened.container)).not.toBeNull());
+  });
+
+  it("descartar remove o rascunho (global e por cert) e o banner", async () => {
+    openQuizRoute();
+    const first = render(<App />);
+    await startOfficialExam(first.container);
+    fireEvent.click(optionInputs(first.container)[1]);
+    await waitFor(() => {
+      const draft = JSON.parse(localStorage.getItem("synapse.examdraft.v1") || "null");
+      expect(draft?.answers?.filter((a) => a !== null).length).toBe(1);
+    });
+
     cleanup();
     openQuizRoute();
     render(<App />);
-    await screen.findByText(/Treine como no dia da prova/i);
-    expect(document.querySelector(".sim-draft")).toBeNull();
+    await screen.findByText(/Você tem um simulado em andamento/i);
+    fireEvent.click(screen.getByRole("button", { name: /Descartar/i }));
+
+    await waitFor(() => expect(document.querySelector(".sim-draft")).toBeNull());
+    expect(localStorage.getItem("synapse.examdraft.v1")).toBeNull();
+    expect(localStorage.getItem("synapse.examDraft.v1.ctfl")).toBeNull();
   });
 });

@@ -500,7 +500,9 @@ export function Simulado() {
     if (!rs) return;
     finishedRef.current = true;
     if (timerRef.current) clearInterval(timerRef.current);
-    clearExamDraft();
+    /* o rascunho é gravado na chave global E na por cert (store.tsx:263);
+       sem a cert a chave por cert sobrevive e o banner de retomada volta. */
+    clearExamDraft(state.cert);
     setDraft(null);
     const verdict = examVerdict(exam.qs, exam.answers, rs, exam.custom);
     const wrongIds = exam.qs
@@ -674,7 +676,7 @@ export function Simulado() {
     const map = bankById();
     const qs = d.questionIds.map((id) => map.get(id)).filter((q): q is Question => !!q);
     if (!qs.length) {
-      clearExamDraft();
+      clearExamDraft(state.cert);
       setDraft(null);
       return;
     }
@@ -684,7 +686,7 @@ export function Simulado() {
   }
 
   function discardDraft() {
-    clearExamDraft();
+    clearExamDraft(state.cert);
     setDraft(null);
     setDraftTick((x) => x + 1);
   }
