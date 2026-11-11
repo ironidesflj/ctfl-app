@@ -106,3 +106,7 @@ validação final e autorização posterior para commit/push.
 - K4: mínimo suprido (`ctaltm-121` → TM-1.3.4 K4). Ampliação aguarda novo pacote de questões do mantenedor.
 - Axon 0.3.0 adotado (`retired`/`isRetired`): gerador propaga `retired`; app pronto para a política epitáfio.
 - Pendente: decisão editorial do CTAL-TA (`ctalta-106`, `ctalta-120`).
+
+- **2026-11-11:** QA canônico concluído; P1 de rascunho de simulado corrigido no
+  PR #41 (`6665375`). Próximo: manter o checkout canônico em `main` (não usar o
+  branch Next antigo como fonte de QA) e repetir o gate completo antes de release.
