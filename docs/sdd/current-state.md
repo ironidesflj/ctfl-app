@@ -352,3 +352,22 @@ Sem commit, push ou publicação nesta integração.
 - `ctalta-106` e `ctalta-120` reescritas no banco canônico (1.7.4), gabaritos preservados; guards 7/7, 0 suspeitas novas.
 - Fatias regeneradas pelo gerador versionado (`npm run slices`); `public/manifest.jsonl` novo SHA `df25f8be…` (o anterior era `7313f302…`). **Exige reingestão no hub** antes do merge.
 - Sync do banco agora também regenera o manifesto (workflow), fechando o furo que travou a 1.7.4.
+
+## Adendo 2026-11-11 — QA do Synapse e correção do rascunho de simulado (PR #41)
+
+- **Caminho canônico:** `/Users/iron/Documents/ctfl-question-bank/ctfl-app 2`
+  (o sufixo " 2" é do checkout local). Sincronizado com `main` em **`6665375`**
+  em 2026-11-11; antes estava parado no branch antigo `feat/synapse-4-1-redesign`.
+- **QA 3/5 — P2(a) timing:** refutado no canônico: `npm ci` 9,7s, `lint` 6,7s,
+  `build` 2,2s, todos exit 0; typecheck não é gate no canônico. O estouro de
+  30s era da cópia Next antiga.
+- **QA 3/5 — P2(b) cobertura:** refutado no canônico: 35 arquivos vitest + 1
+  e2e, 468 unit + 16 E2E, cobrindo simulados, persistência, PWA e fluxos.
+- **P1 corrigido:** finalizar/descartar simulado não limpava
+  `synapse.examDraft.v1.{cert}`; `clearExamDraft(state.cert)` nos 3 pontos
+  (finalizar, resume inválido, descartar). Testes em `Simulado.test.jsx`
+  (4 casos) cobrem finalizar/descartar + reabertura.
+- **Provas:** `npm test` 36 arquivos / 472 passed; lint e format OK; build OK;
+  Playwright chromium 16/16. Merge `6665375`.
+- **Risco residual:** rascunhos legados só são limpos ao finalizar/descartar na
+  versão corrigida (limpeza no boot ficaria fora do fix mínimo).
