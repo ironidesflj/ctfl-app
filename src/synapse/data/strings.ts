@@ -924,7 +924,7 @@ const pt: Strings = {
     explain:
       "{n} questões em {min} minutos. Você pode navegar, marcar para revisão e trocar respostas até finalizar. O resultado entra no histórico e as erradas ficam disponíveis para treinar.",
     explainPts:
-      "{n} questões em {min} minutos, pontuação ponderada por K-level (K2=1 · K3=2 · K4=3). Você pode navegar, marcar para revisão e trocar respostas até finalizar.",
+      "{n} questões em {min} minutos, pontuação ponderada por K-level ({weights}). Você pode navegar, marcar para revisão e trocar respostas até finalizar.",
     lastWrong: "Repetir erros do último simulado",
     lastWrongDesc: "{n} erradas para treinar",
     draftBanner: "Você tem um simulado em andamento",
@@ -1004,8 +1004,8 @@ const pt: Strings = {
     hero: "Tudo que você precisa para passar nas certificações ISTQB, de graça.",
     subtitle:
       "Questões PT/EN, flashcards com revisão espaçada e simulados oficiais — Foundation e Advanced Level.",
-    statsQuestions: "700 questões",
-    statCerts: "3 certificações",
+    statsQuestions: "{n} questões",
+    statCerts: "{n} certificações",
     statLang: "PT/EN",
     statFree: "Gratuito",
     featuresTitle: "O que você vai encontrar",
@@ -1465,7 +1465,7 @@ const en: Strings = {
     explain:
       "{n} questions in {min} minutes. You can navigate, flag for review and change answers until you finish. The result goes into history and the wrong ones become trainable.",
     explainPts:
-      "{n} questions in {min} minutes, K-level weighted scoring (K2=1 · K3=2 · K4=3). You can navigate, flag for review and change answers until you finish.",
+      "{n} questions in {min} minutes, K-level weighted scoring ({weights}). You can navigate, flag for review and change answers until you finish.",
     lastWrong: "Redo last exam's mistakes",
     lastWrongDesc: "{n} wrong ones to train",
     draftBanner: "You have an exam in progress",
@@ -1545,8 +1545,8 @@ const en: Strings = {
     hero: "Everything you need to pass ISTQB certifications, for free.",
     subtitle:
       "PT/EN questions, spaced-repetition flashcards and official exam simulations — Foundation and Advanced Level.",
-    statsQuestions: "700 questions",
-    statCerts: "3 certifications",
+    statsQuestions: "{n} questions",
+    statCerts: "{n} certifications",
     statLang: "PT/EN",
     statFree: "Free",
     featuresTitle: "What you’ll find",

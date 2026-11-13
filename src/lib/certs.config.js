@@ -139,4 +139,82 @@ export const CERTS = {
       },
     ],
   },
+  "ct-ai": {
+    id: "ct-ai",
+    label: "CT-AI",
+    version: "v2.0",
+    syllabusYear: 2026,
+    chapters: [
+      {
+        chapter: 1,
+        domain: "ai",
+        pt: {
+          name: "Introdução à IA",
+          sub: "Introdução à Inteligência Artificial",
+          short: "Intro IA",
+        },
+        en: {
+          name: "Intro to AI",
+          sub: "Introduction to Artificial Intelligence",
+          short: "Intro AI",
+        },
+      },
+      {
+        chapter: 2,
+        domain: "ai",
+        pt: {
+          name: "Qualidade em IA",
+          sub: "Características de Qualidade para Sistemas Baseados em IA",
+          short: "Qualidade",
+        },
+        en: {
+          name: "AI Quality",
+          sub: "Quality Characteristics for AI-Based Systems",
+          short: "Quality",
+        },
+      },
+      {
+        chapter: 3,
+        domain: "ai",
+        pt: { name: "Machine Learning", sub: "Aprendizado de Máquina (ML)", short: "ML" },
+        en: { name: "Machine Learning", sub: "Machine Learning", short: "ML" },
+      },
+      {
+        chapter: 4,
+        domain: "ai",
+        pt: { name: "Teste de IA", sub: "Teste de Sistemas Baseados em IA", short: "Teste IA" },
+        en: { name: "Testing AI", sub: "Testing AI-Based Systems", short: "Testing AI" },
+      },
+      {
+        chapter: 5,
+        domain: "ai",
+        pt: {
+          name: "Dados de Entrada",
+          sub: "Teste de Dados de Entrada para Sistemas de ML",
+          short: "Dados",
+        },
+        en: { name: "Input Data", sub: "Input Data Testing for ML Systems", short: "Input Data" },
+      },
+      {
+        chapter: 6,
+        domain: "ai",
+        pt: {
+          name: "Teste de Modelos",
+          sub: "Teste de Modelos para Sistemas de ML",
+          short: "Modelos",
+        },
+        en: { name: "Model Testing", sub: "Model Testing for ML Systems", short: "Models" },
+      },
+      {
+        chapter: 7,
+        domain: "ai",
+        pt: {
+          name: "Desenvolvimento ML",
+          sub: "Teste de Desenvolvimento de ML",
+          short: "Pipeline",
+        },
+        en: { name: "ML Dev Testing", sub: "ML Development Testing", short: "ML Dev" },
+      },
+    ],
+  },
 };

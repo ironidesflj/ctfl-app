@@ -51,3 +51,44 @@ export function buildStudySlices(bank) {
   }
   return files;
 }
+
+function chapterCounts(slice) {
+  const counts = {};
+  let total = 0;
+  for (const [ch, list] of Object.entries(slice)) {
+    counts[ch] = list.length;
+    total += list.length;
+  }
+  return { counts, total };
+}
+
+/** Metadados derivados das fatias vivas (versão, totais por cert e capítulo). */
+export function buildBankMeta(bank) {
+  const perCert = {};
+  let studyTotal = 0;
+  let examTotal = 0;
+  for (const certId of Object.keys(CERTS)) {
+    const study = chapterCounts(buildSlice(bank, certId, "study"));
+    const exam = chapterCounts(buildSlice(bank, certId, "exam"));
+    studyTotal += study.total;
+    examTotal += exam.total;
+    perCert[certId] = {
+      study: study.total,
+      exam: exam.total,
+      total: study.total + exam.total,
+      chapters: study.counts,
+    };
+  }
+  return {
+    version: bank.meta?.version || "",
+    generatedDate: bank.meta?.generatedDate || "",
+    totalQuestions: bank.meta?.totalQuestions || studyTotal + examTotal,
+    live: {
+      certs: Object.keys(CERTS).length,
+      study: studyTotal,
+      exam: examTotal,
+      total: studyTotal + examTotal,
+    },
+    perCert,
+  };
+}

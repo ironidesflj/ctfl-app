@@ -1,6 +1,6 @@
 /* Synapse · data/glossary.ts
-   144 termos oficiais ISTQB PT/EN, escopados por certificação —
-   portado do handoff (data/glossary.js), conteúdo congelado. */
+   165 termos oficiais ISTQB PT/EN, escopados por certificação —
+   CTFL v4.0, CTAL-TA v4.0, CTAL-TM v3.0 e CT-AI v2.0. */
 
 import type { GlossaryEntry } from "../types";
 
@@ -1875,6 +1875,281 @@ export const GLOSSARY: GlossaryEntry[] = [
     en: {
       term: "Motivators vs. hygiene factors",
       def: "Herzberg's two-factor theory. Motivators are consciously perceived and lead to growth and satisfaction: recognition, responsibility and autonomy, challenging tasks, and professional development. Hygiene factors are taken for granted — fulfilling them does not create satisfaction, but their absence demotivates: remuneration, management style, working conditions, safety, and relationships.",
+    },
+  },
+
+  /* ─────────── CT-AI v2.0 ─────────── */
+  {
+    cert: "ct-ai",
+    id: "gl-ai-101",
+    chapter: 1,
+    pt: {
+      term: "Efeito de IA",
+      def: "Tendência de redefinir continuamente o termo 'inteligência artificial' à medida que técnicas dominadas passam a ser vistas como computação convencional.",
+    },
+    en: {
+      term: "AI effect",
+      def: "The tendency to continually redefine 'artificial intelligence' as mastered capabilities come to be viewed as conventional computing.",
+    },
+  },
+  {
+    cert: "ct-ai",
+    id: "gl-ai-102",
+    chapter: 1,
+    pt: {
+      term: "Aprendizado por reforço",
+      def: "Paradigma de aprendizado de máquina em que um agente executa ações em um ambiente e aprende uma política otimizada por meio de sinais de recompensa e penalidade.",
+    },
+    en: {
+      term: "Reinforcement learning",
+      def: "A machine learning paradigm in which an agent takes actions in an environment and learns an optimized policy via reward and penalty signals.",
+    },
+  },
+  {
+    cert: "ct-ai",
+    id: "gl-ai-103",
+    chapter: 1,
+    pt: {
+      term: "Geração aumentada por recuperação",
+      def: "Arquitetura (RAG) que ancora as respostas de um modelo generativo em documentos externos recuperados dinamicamente, atualizando conhecimento sem retreinar o modelo e reduzindo alucinações.",
+    },
+    en: {
+      term: "Retrieval-augmented generation",
+      def: "An architecture (RAG) that grounds generative model outputs in dynamically retrieved external documents, updating knowledge without retraining and reducing hallucinations.",
+    },
+  },
+  {
+    cert: "ct-ai",
+    id: "gl-ai-201",
+    chapter: 2,
+    pt: {
+      term: "Equidade em IA",
+      def: "Característica de qualidade que exige que decisões de um sistema baseado em IA sejam livres de preconceito, discriminação ou tratamento injusto entre grupos e indivíduos.",
+    },
+    en: {
+      term: "AI fairness",
+      def: "A quality characteristic requiring that AI-based system decisions be free from prejudice, discrimination, or unfair treatment across groups and individuals.",
+    },
+  },
+  {
+    cert: "ct-ai",
+    id: "gl-ai-202",
+    chapter: 2,
+    pt: {
+      term: "Explicabilidade",
+      def: "Grau em que o raciocínio e os fatores que levaram a uma saída específica de um sistema baseado em IA podem ser compreendidos e auditados por seres humanos.",
+    },
+    en: {
+      term: "Explainability",
+      def: "The degree to which the reasoning and factors behind a specific output of an AI-based system can be understood and audited by humans.",
+    },
+  },
+  {
+    cert: "ct-ai",
+    id: "gl-ai-203",
+    chapter: 2,
+    pt: {
+      term: "Não-determinismo em IA",
+      def: "Propriedade pela qual entradas idênticas ou equivalentes podem produzir saídas diferentes entre execuções, exigindo critérios de aceitação estatísticos e baseados em tolerâncias.",
+    },
+    en: {
+      term: "AI non-determinism",
+      def: "The property whereby identical or equivalent inputs can yield different outputs across runs, requiring statistical and tolerance-based acceptance criteria.",
+    },
+  },
+  {
+    cert: "ct-ai",
+    id: "gl-ai-301",
+    chapter: 3,
+    pt: {
+      term: "Sobreajuste",
+      def: "Condição em que um modelo de ML memoriza ruídos e padrões específicos do conjunto de treinamento, alcançando alta taxa de acerto no treino e baixa generalização em dados novos.",
+    },
+    en: {
+      term: "Overfitting",
+      def: "A condition in which an ML model memorizes noise and specifics of the training set, achieving high training performance but poor generalization on unseen data.",
+    },
+  },
+  {
+    cert: "ct-ai",
+    id: "gl-ai-302",
+    chapter: 3,
+    pt: {
+      term: "Subajuste",
+      def: "Condição em que um modelo é simples demais para capturar a estrutura dos dados, resultando em desempenho insatisfatório tanto no conjunto de treino quanto no de validação.",
+    },
+    en: {
+      term: "Underfitting",
+      def: "A condition in which a model is too simple to capture the underlying data structure, resulting in poor performance on both training and validation sets.",
+    },
+  },
+  {
+    cert: "ct-ai",
+    id: "gl-ai-303",
+    chapter: 3,
+    pt: {
+      term: "Matriz de confusão",
+      def: "Tabela que compara classes reais e preditas (VP, FP, FN, VN) para calcular métricas de classificação como precisão, revocação, acurácia e pontuação F1.",
+    },
+    en: {
+      term: "Confusion matrix",
+      def: "A table comparing actual and predicted classes (TP, FP, FN, TN) used to derive classification metrics such as precision, recall, accuracy, and F1 score.",
+    },
+  },
+  {
+    cert: "ct-ai",
+    id: "gl-ai-401",
+    chapter: 4,
+    pt: {
+      term: "Alucinação",
+      def: "Comportamento de modelos generativos ao produzir afirmações, fatos ou referências falsas apresentados com fluência e confiança como se fossem verdadeiros.",
+    },
+    en: {
+      term: "Hallucination",
+      def: "A generative model behavior where false statements, facts, or citations are produced fluently and confidently as if they were true.",
+    },
+  },
+  {
+    cert: "ct-ai",
+    id: "gl-ai-402",
+    chapter: 4,
+    pt: {
+      term: "Red teaming",
+      def: "Prática estruturada de ataque adversarial — frequentemente em caixa-preta — contra sistemas baseados em IA para revelar falhas de segurança, injeção de prompt, viés ou vazamento de dados.",
+    },
+    en: {
+      term: "Red teaming",
+      def: "A structured adversarial attack exercise — typically black-box — against AI-based systems to uncover safety failures, prompt injection, bias, or data leakage.",
+    },
+  },
+  {
+    cert: "ct-ai",
+    id: "gl-ai-403",
+    chapter: 4,
+    pt: {
+      term: "Problema do oráculo em IA",
+      def: "Dificuldade de definir uma saída única e exata esperada para sistemas probabilísticos ou autoaprendentes, requerendo oráculos estatísticos, avaliação humana ou conjuntos de referência.",
+    },
+    en: {
+      term: "Test oracle problem in AI",
+      def: "The difficulty of specifying a single exact expected output for probabilistic or self-learning systems, requiring statistical oracles, human evaluation, or reference datasets.",
+    },
+  },
+  {
+    cert: "ct-ai",
+    id: "gl-ai-501",
+    chapter: 5,
+    pt: {
+      term: "Representatividade dos dados",
+      def: "Dimensão de qualidade dos dados de ML que avalia o quanto o dataset de treinamento e teste reflete fielmente a distribuição esperada em produção.",
+    },
+    en: {
+      term: "Data representativeness",
+      def: "An ML data quality dimension assessing how closely the training and test dataset reflects the expected production input distribution.",
+    },
+  },
+  {
+    cert: "ct-ai",
+    id: "gl-ai-502",
+    chapter: 5,
+    pt: {
+      term: "Teste dinâmico de viés",
+      def: "Execução do modelo com dados de avaliação segmentados por grupos ou atributos protegidos para detectar disparidades sistemáticas nas previsões.",
+    },
+    en: {
+      term: "Dynamic bias testing",
+      def: "Executing the model on evaluation inputs segmented by groups or protected attributes to detect systematic disparities in predictions.",
+    },
+  },
+  {
+    cert: "ct-ai",
+    id: "gl-ai-503",
+    chapter: 5,
+    pt: {
+      term: "Correção de rótulos",
+      def: "Prática de verificar se os rótulos (ground truth) atribuídos aos dados supervisionados são precisos, consistentes e livres de ambiguidades de anotação.",
+    },
+    en: {
+      term: "Label correctness",
+      def: "The practice of verifying that labels (ground truth) assigned to supervised training and test data are accurate, consistent, and free of annotation errors.",
+    },
+  },
+  {
+    cert: "ct-ai",
+    id: "gl-ai-601",
+    chapter: 6,
+    pt: {
+      term: "Model card",
+      def: "Documento estruturado que descreve o propósito pretendido de um modelo de ML, arquitetura, dados de treino, métricas de desempenho, restrições e usos fora de escopo.",
+    },
+    en: {
+      term: "Model card",
+      def: "A structured documentation artifact describing an ML model's intended use, architecture, training data, performance metrics, limitations, and out-of-scope uses.",
+    },
+  },
+  {
+    cert: "ct-ai",
+    id: "gl-ai-602",
+    chapter: 6,
+    pt: {
+      term: "Teste adversarial",
+      def: "Técnica que introduz perturbações pequenas e calculadas em entradas legítimas para testar a robustez do modelo de ML frente a exemplos adversariais.",
+    },
+    en: {
+      term: "Adversarial testing",
+      def: "A testing technique that applies small, targeted perturbations to legitimate inputs to assess an ML model's robustness against adversarial examples.",
+    },
+  },
+  {
+    cert: "ct-ai",
+    id: "gl-ai-603",
+    chapter: 6,
+    pt: {
+      term: "Drift de dados",
+      def: "Desvio estatístico ao longo do tempo entre a distribuição dos dados de entrada observados em produção e a distribuição usada no treinamento do modelo.",
+    },
+    en: {
+      term: "Data drift",
+      def: "A statistical shift over time between the distribution of production input data and the distribution on which the ML model was trained.",
+    },
+  },
+  {
+    cert: "ct-ai",
+    id: "gl-ai-701",
+    chapter: 7,
+    pt: {
+      term: "Reprodutibilidade em ML",
+      def: "Capacidade de repetir um experimento de treinamento e obter exatamente o mesmo modelo mediante versionamento de dados, código, dependências e sementes aleatórias.",
+    },
+    en: {
+      term: "ML reproducibility",
+      def: "The ability to repeat a training experiment and obtain the exact same model by versioning data, code, environment dependencies, and random seeds.",
+    },
+  },
+  {
+    cert: "ct-ai",
+    id: "gl-ai-702",
+    chapter: 7,
+    pt: {
+      term: "Implantação canário",
+      def: "Estratégia de implantação em MLOps que direciona primeiro uma pequena fração do tráfego de produção ao novo modelo para monitorar erros e métricas antes da expansão total.",
+    },
+    en: {
+      term: "Canary deployment",
+      def: "An MLOps rollout strategy that routes a small initial share of live traffic to the new model to monitor metrics and errors before full rollout.",
+    },
+  },
+  {
+    cert: "ct-ai",
+    id: "gl-ai-703",
+    chapter: 7,
+    pt: {
+      term: "Implantação sombra",
+      def: "Estratégia de implantação em que um novo modelo processa solicitações reais em paralelo ao modelo de produção sem expor suas saídas aos usuários finais.",
+    },
+    en: {
+      term: "Shadow deployment",
+      def: "A deployment strategy in which a candidate model processes live production traffic alongside the active model without exposing its outputs to end users.",
     },
   },
 ];

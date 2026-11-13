@@ -1,7 +1,8 @@
 import { describe, it, expect, beforeEach, afterEach } from "vitest";
 import { render, screen, cleanup, fireEvent, waitFor } from "@testing-library/react";
 import App from "./App.jsx";
-import { CERTS } from "./synapse/data/certs";
+import { BANK_META, CERTS } from "./synapse/data/certs";
+import { APP_VERSION } from "./synapse/data/releases";
 
 afterEach(cleanup);
 beforeEach(() => {
@@ -167,12 +168,22 @@ describe("Synapse 4.1 · Shell e Navegação", () => {
 });
 
 describe("Catálogo oficial de certificações ISTQB", () => {
-  it("contém as 6 certificações do contrato (3 live, 2 soon, 1 legacy)", () => {
+  it("contém as 6 certificações do contrato (4 live, 1 soon, 1 legacy)", () => {
     const list = Object.values(CERTS);
     expect(list.length).toBe(6);
-    expect(list.filter((c) => c.status === "live")).toHaveLength(3);
-    expect(list.filter((c) => c.status === "soon")).toHaveLength(2);
+    expect(list.filter((c) => c.status === "live")).toHaveLength(4);
+    expect(list.filter((c) => c.status === "soon")).toHaveLength(1);
     expect(list.filter((c) => c.status === "legacy")).toHaveLength(1);
+  });
+
+  it("sincroniza os totais de estudo por capítulo com meta.json", () => {
+    const studySum = (id) => CERTS[id].chapters.reduce((acc, ch) => acc + ch.total, 0);
+    expect(studySum("ctfl")).toBe(BANK_META.perCert.ctfl.study);
+    expect(studySum("ctal-ta")).toBe(BANK_META.perCert["ctal-ta"].study);
+    expect(studySum("ctal-tm")).toBe(BANK_META.perCert["ctal-tm"].study);
+    expect(studySum("ctfl")).toBe(342);
+    expect(studySum("ctal-ta")).toBe(266);
+    expect(studySum("ctal-tm")).toBe(305);
   });
 });
 
@@ -248,7 +259,7 @@ describe("Synapse 4.1 · Telas e Fluxos Caderno", () => {
     expect(screen.getByText(/Fundamentos do Teste/i)).toBeInTheDocument();
   });
 
-  it("Sobre: exibe fontes oficiais, autor, Noos e botão Como funciona", async () => {
+  it("Sobre: exibe fontes oficiais, autor, Noos, estado dinâmico e botão Como funciona", async () => {
     const { container } = render(<App />);
     fireEvent.click(container.querySelector('button[data-nav="about"]'));
 
@@ -258,10 +269,16 @@ describe("Synapse 4.1 · Telas e Fluxos Caderno", () => {
 
     expect(screen.getByText(/Quem faz\./i)).toBeInTheDocument();
     expect(screen.getByText(/Ironides Francisco/i)).toBeInTheDocument();
+    expect(screen.getByText(`v${APP_VERSION}`)).toBeInTheDocument();
+    expect(
+      screen.getByText(
+        new RegExp(`v${BANK_META.version}.*1\\.810 ativas.*1\\.156 estudo.*654 simulado`)
+      )
+    ).toBeInTheDocument();
     expect(screen.getByRole("button", { name: /Como funciona/i })).toBeInTheDocument();
   });
 
-  it("Onboarding: abre via Sobre e exibe as estações e demo interativa", async () => {
+  it("Onboarding: abre via Sobre e exibe as estações, contagem real e demo interativa", async () => {
     const { container } = render(<App />);
     fireEvent.click(container.querySelector('button[data-nav="about"]'));
 
@@ -275,11 +292,50 @@ describe("Synapse 4.1 · Telas e Fluxos Caderno", () => {
       expect(screen.getByRole("dialog", { name: /Como funciona o Synapse/i })).toBeVisible();
     });
 
+    expect(screen.getByText("1.810 questões")).toBeInTheDocument();
+    expect(screen.getByText("4 certificações")).toBeInTheDocument();
     expect(screen.getByText(/O que você vai encontrar/i)).toBeInTheDocument();
     expect(screen.getByText(/Veja como funciona/i)).toBeInTheDocument();
     expect(
       screen.getByText(/Qual é a relação correta entre erro, defeito e falha\?/i)
     ).toBeInTheDocument();
     expect(screen.getByText(/Perguntas frequentes/i)).toBeInTheDocument();
+  });
+
+  it("Estudar: exibe cobertura real do pool de estudo da certificação ativa", async () => {
+    const { container } = render(<App />);
+    fireEvent.click(container.querySelector('button[data-nav="estudar"]'));
+
+    await waitFor(() => {
+      expect(screen.getByText(/0 de 342 questões de estudo/i)).toBeInTheDocument();
+    });
+  });
+
+  it("CT-AI v2.0: troca para CT-AI e renderiza Estudar (243), Syllabus (7 cap.) e Glossário (21)", async () => {
+    const { container } = render(<App />);
+
+    fireEvent.click(screen.getByRole("button", { name: /Trocar de prova: CTFL/i }));
+    const aiTile = await screen.findByRole("button", { name: /CT-AI/i });
+    fireEvent.click(aiTile);
+
+    await waitFor(() => {
+      expect(document.body.getAttribute("data-cert")).toBe("ct-ai");
+      expect(screen.getByText(/AI Testing/i)).toBeInTheDocument();
+    });
+
+    fireEvent.click(container.querySelector('button[data-nav="estudar"]'));
+    await waitFor(() => {
+      expect(screen.getByText(/0 de 243 questões de estudo/i)).toBeInTheDocument();
+    });
+
+    fireEvent.click(container.querySelector('button[data-nav="syllabus"]'));
+    await waitFor(() => {
+      expect(screen.getByText(/Teste de Modelos para Sistemas de ML/i)).toBeInTheDocument();
+    });
+
+    fireEvent.click(container.querySelector('button[data-nav="glossary"]'));
+    await waitFor(() => {
+      expect(screen.getByText(/Red teaming/i)).toBeInTheDocument();
+    });
   });
 });

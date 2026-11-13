@@ -28,6 +28,7 @@ export const CURRENT_RELEASE: {
     intro:
       "A nova abertura apresenta a marca em uma animação de profundidade, com tempo para contemplá-la.",
     items: [
+      "Certificação CT-AI v2.0 (AI Testing) liberada com 360 questões, simulado pontuado de 44 pts (corte 29), glossário e cartões em PT/EN.",
       "Onboarding reconstruído na identidade Caderno: quatro estações nos nós da marca, índice de recursos em filetes, demo interativa com os estilos reais da sessão e FAQ — reabrível a qualquer momento no Sobre.",
       "Nova marca e abertura 3D em fundo escuro, com transição direta para o próximo passo, sem exibir a interface antes da hora.",
       "O progresso local da versão 3.18 é migrado ao abrir a atualização; o backup continua disponível em Progresso.",
@@ -41,6 +42,7 @@ export const CURRENT_RELEASE: {
     title: "Synapse has a new identity",
     intro: "The new opening presents the brand with a depth animation and time to take it in.",
     items: [
+      "CT-AI v2.0 (AI Testing) certification launched with 360 questions, 44-point weighted exam (pass 29), plus PT/EN glossary and flashcards.",
       "Onboarding rebuilt in the Caderno identity: four stations on the brand's nodes, a hairline feature index, an interactive demo with the real session styles and an FAQ — reopenable anytime from About.",
       "New brand and 3D opening on a dark background, transitioning directly to the next step without showing the interface too early.",
       "Local progress from version 3.18 is migrated when the update opens; backups remain available in Progress.",

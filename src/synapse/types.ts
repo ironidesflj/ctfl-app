@@ -47,6 +47,8 @@ export interface Chapter {
   sub: LocaleText;
   /** questões no exame (blueprint oficial) */
   examQ: number;
+  /** distribuição oficial por K-level no simulado (blueprint) */
+  kLevels?: Record<string, number>;
   /** questões de estudo no banco */
   total: number;
   topics: Topic[];

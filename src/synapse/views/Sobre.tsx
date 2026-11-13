@@ -7,6 +7,8 @@
    feedback. Copy local completo (pt/en), sem resumo.
    =========================================================== */
 
+import { BANK_META, CERTS } from "../data/certs";
+import { APP_VERSION } from "../data/releases";
 import { useSynapse } from "../store";
 import type { Lang } from "../types";
 import { ViewFoot } from "./Hoje";
@@ -44,7 +46,6 @@ interface SobreCopy {
   feedbackCta: string;
   feedbackNote: string;
   stateTitle: string;
-  state: [string, string][];
   footnote: string;
   back: string;
   howCta: string;
@@ -172,12 +173,6 @@ const COPY: Record<Lang, SobreCopy> = {
     feedbackNote:
       "Não envie dados pessoais, resultados de prova ou conteúdo de terceiros. O feedback é público.",
     stateTitle: "Estado desta versão",
-    state: [
-      ["Provas", "3 com banco · 2 em preparação · 1 arquivo"],
-      ["Idiomas", "PT-BR + EN"],
-      ["Dados", "local-first · sem conta"],
-      ["Última atualização", "outubro de 2026"],
-    ],
     footnote: "Synapse não é afiliado ao ISTQB.",
     back: "Voltar ao app",
     howCta: "Como funciona",
@@ -299,12 +294,6 @@ const COPY: Record<Lang, SobreCopy> = {
     feedbackNote:
       "Do not send personal data, exam results or third-party content. Feedback is public.",
     stateTitle: "This version",
-    state: [
-      ["Exams", "3 with a bank · 2 in preparation · 1 archive"],
-      ["Languages", "PT-BR + EN"],
-      ["Data", "local-first · no account"],
-      ["Last update", "October 2026"],
-    ],
     footnote: "Synapse is not affiliated with ISTQB.",
     back: "Back to the app",
     howCta: "How it works",
@@ -344,10 +333,58 @@ function Mark() {
   );
 }
 
+function formatUpdatedDate(iso: string, lang: Lang): string {
+  const parsed = new Date(`${iso}T12:00:00Z`);
+  if (Number.isNaN(parsed.getTime())) return iso;
+  return new Intl.DateTimeFormat(lang === "en" ? "en-US" : "pt-BR", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+    timeZone: "UTC",
+  }).format(parsed);
+}
+
+function buildStateRows(lang: Lang): [string, string][] {
+  const fmtNum = (n: number) => new Intl.NumberFormat(lang === "en" ? "en-US" : "pt-BR").format(n);
+  const all = Object.values(CERTS);
+  const live = all.filter((cert) => cert.status === "live").length;
+  const soon = all.filter((cert) => cert.status === "soon").length;
+  const legacy = all.filter((cert) => cert.status === "legacy").length;
+  const updated = formatUpdatedDate(BANK_META.updated, lang);
+
+  if (lang === "en") {
+    return [
+      ["App", `v${APP_VERSION}`],
+      [
+        "Question bank",
+        `v${BANK_META.version} · ${fmtNum(BANK_META.live.total)} live (${fmtNum(BANK_META.live.study)} study · ${fmtNum(BANK_META.live.exam)} exam)`,
+      ],
+      ["Exams", `${live} with a bank · ${soon} in preparation · ${legacy} archive`],
+      ["Languages", "PT-BR + EN"],
+      ["Data", "local-first · no account"],
+      ["Last update", updated],
+    ];
+  }
+
+  return [
+    ["App", `v${APP_VERSION}`],
+    [
+      "Banco de questões",
+      `v${BANK_META.version} · ${fmtNum(BANK_META.live.total)} ativas (${fmtNum(BANK_META.live.study)} estudo · ${fmtNum(BANK_META.live.exam)} simulado)`,
+    ],
+    ["Provas", `${live} com banco · ${soon} em preparação · ${legacy} arquivo`],
+    ["Idiomas", "PT-BR + EN"],
+    ["Dados", "local-first · sem conta"],
+    ["Última atualização", updated],
+  ];
+}
+
 export function Sobre() {
   const ss = useSynapse();
   const { t, links } = ss;
-  const copy = COPY[ss.state.lang] || COPY.pt;
+  const lang = ss.state.lang;
+  const copy = COPY[lang] || COPY.pt;
+  const stateRows = buildStateRows(lang);
 
   return (
     <>
@@ -568,7 +605,7 @@ export function Sobre() {
       <section className="ab-state" aria-labelledby="stateTitle" data-od-id="sobre-estado">
         <h2 id="stateTitle">{copy.stateTitle}</h2>
         <dl>
-          {copy.state.map(([dt, dd], i) => (
+          {stateRows.map(([dt, dd], i) => (
             <div key={i}>
               <dt>{dt}</dt>
               <dd>{dd}</dd>

@@ -24,7 +24,7 @@
  * (ou abre, se estiver fechada) na rota neutra /go/quiz, que resolve pro
  * último cert usado. Notificações sem rota focam e pronto.
  */
-const VERSION = "r27-v1";
+const VERSION = "r28-v1";
 const CACHE = `synapse-${VERSION}`;
 
 const SCOPE = new URL(self.registration.scope);
@@ -75,7 +75,11 @@ self.addEventListener("install", (event) => {
                           new Set(jsText.match(/[a-zA-Z0-9_-]+\.js/g) || [])
                         );
                         for (const chunk of chunkMatches) {
-                          if (chunk.startsWith("ctfl") || chunk.startsWith("ctal")) {
+                          if (
+                            chunk.startsWith("ctfl") ||
+                            chunk.startsWith("ctal") ||
+                            chunk.startsWith("ct-ai")
+                          ) {
                             const chunkUrl = new URL(`assets/${chunk}`.replace(/\/+/g, "/"), SCOPE)
                               .href;
                             try {

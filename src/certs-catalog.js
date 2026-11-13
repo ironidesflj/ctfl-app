@@ -38,11 +38,11 @@ export const CERT_CATALOG = [
   },
   {
     id: "ct-ai",
-    status: "coming-soon",
+    status: "live",
     mark: "AI",
     label: "CT-AI",
     fullName: "AI Testing",
-    version: "v1.0",
+    version: "v2.0",
   },
   {
     id: "ctal-at-v2",

@@ -23,7 +23,8 @@
    =========================================================== */
 
 import { useEffect, useRef, useState } from "react";
-import { pad2, useSynapse } from "./store";
+import { BANK_META } from "./data/certs";
+import { fmt, pad2, useSynapse } from "./store";
 
 const FOCUSABLE = 'button, a[href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
 
@@ -172,9 +173,15 @@ export function Onboarding({
             </h1>
             <p className="ob-subtitle">{t("onboarding.subtitle")}</p>
             <p className="ob-stats">
-              <span>{t("onboarding.statsQuestions")}</span>
+              <span>
+                {fmt(t("onboarding.statsQuestions"), {
+                  n: new Intl.NumberFormat(ss.state.lang === "en" ? "en-US" : "pt-BR").format(
+                    BANK_META.live.total
+                  ),
+                })}
+              </span>
               <span aria-hidden="true">·</span>
-              <span>{t("onboarding.statCerts")}</span>
+              <span>{fmt(t("onboarding.statCerts"), { n: BANK_META.live.certs })}</span>
               <span aria-hidden="true">·</span>
               <span>{t("onboarding.statLang")}</span>
               <span aria-hidden="true">·</span>

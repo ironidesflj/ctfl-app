@@ -12,14 +12,17 @@ import { loadBankFor } from "./bank.js";
 await loadBankFor("ctfl");
 await loadBankFor("ctal-ta");
 await loadBankFor("ctal-tm");
+await loadBankFor("ct-ai");
 const ctfl = getBank("ctfl");
 const ta = getBank("ctal-ta");
 const tm = getBank("ctal-tm");
+const ai = getBank("ct-ai");
 
 describe.each([
   ["ctfl", ctfl, 500, 342, 158],
   ["ctal-ta", ta, 450, 266, 184],
   ["ctal-tm", tm, 500, 305, 195],
+  ["ct-ai", ai, 360, 243, 117],
 ])("pools exclusivos — %s", (_id, bank, total, studyN, examN) => {
   it(`pool de estudo tem ${studyN} e pool de simulado ${examN} (total ${total})`, () => {
     expect(bank.ALL.length).toBe(total);
@@ -115,7 +118,7 @@ describe.each([
     // acima), mas 2 provas 100% disjuntas nessa célula não são garantidas
     // (7 < 8). Limitação do acervo de 200 questões, registrada no ledger do
     // banco e no poolSplit.meta — não é regressão.
-    const F2_EXCEPTIONS = { "ctal-tm:2:K3": 7 };
+    const F2_EXCEPTIONS = { "ctal-tm:2:K3": 7, "ct-ai:5:K3": 1 };
     const bp = bank.META.examBlueprint[bank.cert.id].chapters;
     Object.entries(bp).forEach(([ch, spec]) => {
       Object.entries(spec.kLevels || {}).forEach(([k, wantN]) => {
@@ -189,5 +192,27 @@ describe("pools exclusivos — examFormat oficial (r13)", () => {
       );
     }, 0);
     expect(pts).toBe(78);
+  });
+
+  it("CT-AI v2.0: pontuação ponderada, 44 pontos, corte 29, tempo nativo 60 min", () => {
+    const f = ai.META.examFormat["ct-ai"];
+    expect(f.scoring).toBe("points");
+    expect(f.passMark).toBe(29);
+    expect(f.totalPoints).toBe(44);
+    expect(f.questions).toBe(40);
+    expect(f.timeMinutes).toBe(60);
+    expect(f.timeMinutesNonNative).toBe(75);
+    expect(f.pointsByK).toEqual({ 1: 1, 2: 1, 3: 2 });
+    const bp = ai.META.examBlueprint["ct-ai"].chapters;
+    const PTS = { K1: 1, K2: 1, K3: 2 };
+    const pts = Object.values(bp).reduce((sum, spec) => {
+      return (
+        sum +
+        Object.entries(spec.kLevels || {}).reduce((s, [k, n]) => {
+          return s + (Number(n) || 0) * (PTS[k] || 0);
+        }, 0)
+      );
+    }, 0);
+    expect(pts).toBe(44);
   });
 });

@@ -2,8 +2,8 @@
  "meta": {
   "title": "Synapse — Multi-Certification Question Bank",
   "description": "Banco de questões profissional bilíngue (EN/PT-BR) para certificações ISTQB",
-  "version": "1.8.1",
-  "generatedDate": "2026-11-12",
+  "version": "1.9.0",
+  "generatedDate": "2026-11-13",
   "totalQuestions": 2010,
   "availableLanguages": [
    "pt",
@@ -30,6 +30,15 @@
     "1": 26,
     "2": 15,
     "3": 9
+   },
+   "ct-ai": {
+    "1": 6,
+    "2": 3,
+    "3": 7,
+    "4": 7,
+    "5": 6,
+    "6": 9,
+    "7": 2
    }
   },
   "examFormat": {
@@ -69,6 +78,20 @@
     },
     "timeMinutes": 120,
     "timeMinutesNonNative": 150
+   },
+   "ct-ai": {
+    "questions": 40,
+    "passMark": 29,
+    "passMarkPct": 65,
+    "totalPoints": 44,
+    "scoring": "points",
+    "pointsByK": {
+     "1": 1,
+     "2": 1,
+     "3": 2
+    },
+    "timeMinutes": 60,
+    "timeMinutesNonNative": 75
    }
   },
   "examBlueprint": {
@@ -218,6 +241,70 @@
       }
      }
     }
+   },
+   "ct-ai": {
+    "source": "ISTQB CT-AI v2.0 Syllabus & Exam Structure Tables",
+    "sourceVersion": "v2.0, 2026-04",
+    "totalQuestions": 40,
+    "passMarkPct": 65,
+    "chapters": {
+     "1": {
+      "questions": 6,
+      "kLevels": {
+       "K1": 0,
+       "K2": 6,
+       "K3": 0
+      }
+     },
+     "2": {
+      "questions": 3,
+      "kLevels": {
+       "K1": 0,
+       "K2": 3,
+       "K3": 0
+      }
+     },
+     "3": {
+      "questions": 7,
+      "kLevels": {
+       "K1": 0,
+       "K2": 6,
+       "K3": 1
+      }
+     },
+     "4": {
+      "questions": 7,
+      "kLevels": {
+       "K1": 0,
+       "K2": 6,
+       "K3": 1
+      }
+     },
+     "5": {
+      "questions": 6,
+      "kLevels": {
+       "K1": 0,
+       "K2": 5,
+       "K3": 1
+      }
+     },
+     "6": {
+      "questions": 9,
+      "kLevels": {
+       "K1": 0,
+       "K2": 8,
+       "K3": 1
+      }
+     },
+     "7": {
+      "questions": 2,
+      "kLevels": {
+       "K1": 0,
+       "K2": 2,
+       "K3": 0
+      }
+     }
+    }
    }
   },
   "certifications": {
@@ -275,7 +362,8 @@
      "K1",
      "K2",
      "K3"
-    ]
+    ],
+    "version": "2.0.0"
    }
   },
   "poolSplit": {
@@ -301,9 +389,10 @@
      "note": "partição r19 scoped (script partition_ctal_tm_r19.py): PRNG próprio na mesma seed para preservar a sequência RNG dos certs já particionados; pools de ctfl/ctal-ta intocados."
     },
     "ct-ai": {
-     "exam": 113,
-     "study": 247,
-     "total": 360
+     "exam": 117,
+     "study": 243,
+     "total": 360,
+     "note": "ajuste v1.9.0 para blueprint CT-AI v2.0 (F=2 por célula, exceto cap.5 K3=1 com 1 questão no banco)"
     },
     "ctfl-at": {
      "exam": 0,
@@ -311,7 +400,7 @@
      "total": 200
     }
    },
-   "generatedDate": "2026-11-12"
+   "generatedDate": "2026-11-13"
   },
   "examFormatSource": "istqb.org — CTFL v4.0 (40 questões, 26 para aprovação, 60 min +25% não-nativo) e CTAL-TA v4.0 (45 questões, 78 pontos, corte 51, 120 min +25% não-nativo); bstqb.online/ctfl — exame em português no Brasil, tempo estendido apenas mediante solicitação na inscrição"
  },
@@ -31456,7 +31545,7 @@
    "kLevel": 2,
    "lo": "AI-6.1.1",
    "answer": 1,
-   "pool": "study",
+   "pool": "exam",
    "locales": {
     "pt": {
      "q": "Em uma matriz de confusão de classificação binária, o que a 'precisão' (precision) mede?",
@@ -31936,7 +32025,7 @@
    "kLevel": 2,
    "lo": "AI-7.1.1",
    "answer": 2,
-   "pool": "study",
+   "pool": "exam",
    "locales": {
     "pt": {
      "q": "Qual é o principal propósito de testar um pipeline de ML (a sequência de ingestão de dados, pré-processamento, treinamento, avaliação e implantação)?",
@@ -45502,7 +45591,7 @@
    "kLevel": 1,
    "lo": "AI-7.1.1",
    "answer": 2,
-   "pool": "exam",
+   "pool": "study",
    "locales": {
     "pt": {
      "q": "Um cientista de dados precisa garantir que um experimento de treinamento de ML possa ser reproduzido mais tarde, com os mesmos resultados. Qual prática apoia diretamente esse objetivo?",
@@ -49470,7 +49559,7 @@
    "kLevel": 2,
    "lo": "AI-5.1.1",
    "answer": 1,
-   "pool": "exam",
+   "pool": "study",
    "locales": {
     "pt": {
      "q": "Uma fábrica usa um modelo preditivo que recebe leituras de sensores das máquinas em tempo real para agendar manutenções. O time quer mitigar o risco de o modelo tomar decisões a partir de dados de entrada ruins. Qual abordagem atende diretamente a esse risco de dados de entrada?",
@@ -57132,7 +57221,7 @@
    "kLevel": 2,
    "lo": "AI-6.1.2",
    "answer": 0,
-   "pool": "study",
+   "pool": "exam",
    "locales": {
     "pt": {
      "q": "Um banco mantém um modelo de score de risco de inadimplência, treinado e avaliado para empréstimos pessoais de pessoas físicas, com documentação em model card que declara propósito, dados de treino, desempenho por segmento e limitações. Um gerente novo pede ao time de qualidade autorização para usar o mesmo score na avaliação de microempreendedores individuais, segmento que não consta da avaliação. O que a revisão da documentação do modelo deve identificar nesse pedido?",
@@ -60812,7 +60901,7 @@
    "kLevel": 3,
    "lo": "AI-5.1.5",
    "answer": 1,
-   "pool": "study",
+   "pool": "exam",
    "locales": {
     "pt": {
      "q": "A equipe declarou quatro restrições para o dataset de treinamento de um modelo de concessão de crédito:\n- idade: número inteiro entre 0 e 120;\n- CEP: exatamente 8 dígitos numéricos;\n- e-mail: valor único, não pode se repetir no dataset;\n- receita mensal: preenchimento obrigatório, não pode ficar vazio.\nA extração inicial trouxe seis linhas:\n- linha 1: idade 41; CEP 01310930; e-mail ana@corp.com.br; receita 5.200,00\n- linha 2: idade 24,5; CEP 05425002; e-mail bruno@corp.com.br; receita 3.100,00\n- linha 3: idade 57; CEP abc; e-mail carla@corp.com.br; receita 8.900,00\n- linha 4: idade 33; CEP 22041001; e-mail ana@corp.com.br; receita 4.750,00\n- linha 5: idade 62; CEP 30123901; e-mail elias@corp.com.br; receita vazia\n- linha 6: idade 28; CEP 60830460; e-mail fabia@corp.com.br; receita 6.400,00\nAplicando as quatro restrições declaradas, qual é o resultado correto?",
@@ -61004,7 +61093,7 @@
    "kLevel": 2,
    "lo": "AI-6.1.7",
    "answer": 3,
-   "pool": "study",
+   "pool": "exam",
    "locales": {
     "pt": {
      "q": "Uma operadora de telecomunicações pôs em produção, em janeiro de 2020, um modelo que prevê o cancelamento de clientes, treinado com dados de uso e de relacionamento coletados antes da pandemia. A partir de maio de 2020, com a mudança drástica dos hábitos de consumo durante o bloqueio, a qualidade das previsões em produção caiu mês a mês, embora o modelo tenha seguido em operação sem re-treinamento. A equipe decide adotar drift testing nesse sistema. O que esse teste faz em um sistema de aprendizado de máquina operacional e o que ele deve disparar nesse caso?",
@@ -64428,7 +64517,7 @@
    "kLevel": 2,
    "lo": "AI-6.1.4",
    "answer": 2,
-   "pool": "study",
+   "pool": "exam",
    "locales": {
     "pt": {
      "q": "Uma seguradora contrata de um fornecedor um modelo que classifica cada aviso de sinistro como 'liquidação imediata' ou 'enviar para perícia'. O time de teste acessa o modelo apenas por uma API, sem conhecer os internos nem o pipeline de treino. Para avaliar a robustez do classificador, o time treina uma cópia funcional própria, com arquitetura e internos conhecidos, que reproduz as decisões observadas na API sobre um corpus de avisos rotulados; sobre essa cópia, um algoritmo gera milhares de variações mínimas calculadas para trocar a classe predita — sinônimos, pontuação e pequenos ajustes de redação que preservam o sentido do aviso — e, em seguida, o time submete essas mesmas variações à API do modelo original e mede quantas trocam a decisão. Qual afirmativa caracteriza corretamente essa estratégia?",
