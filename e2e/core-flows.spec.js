@@ -1,6 +1,9 @@
+import { readFileSync } from "node:fs";
 import { test, expect } from "@playwright/test";
 
-const APP_VERSION = "4.1.0";
+const { version: APP_VERSION } = JSON.parse(
+  readFileSync(new URL("../package.json", import.meta.url), "utf8")
+);
 const releaseKey = "synapse.ver.v1";
 
 test.beforeEach(async ({ page }) => {
@@ -204,12 +207,12 @@ test("novidades de release aparecem uma vez por versão", async ({ page }) => {
   }, releaseKey);
   await page.reload();
 
-  await expect(page.getByRole("dialog", { name: /Synapse ganhou|Synapse has/i })).toBeVisible({
-    timeout: 12000,
-  });
+  const modal = page.locator('.release-modal[role="dialog"]');
+  await expect(modal).toBeVisible({ timeout: 12000 });
+  await expect(modal).toContainText(`v${APP_VERSION}`);
   await page.getByRole("button", { name: /Entendi|Got it/i }).click();
   await page.reload();
-  await expect(page.getByRole("dialog", { name: /Synapse ganhou|Synapse has/i })).toHaveCount(0);
+  await expect(modal).toHaveCount(0);
 });
 
 test("migração com formato real da 3.18 preserva capítulos, tentativas, histórico, SRS e rascunhos", async ({

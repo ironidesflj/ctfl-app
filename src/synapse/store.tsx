@@ -51,6 +51,7 @@ import type {
   Theme,
 } from "./types";
 import { CERTS, LINKS } from "./data/certs";
+import { APP_VERSION } from "./data/releases";
 import { STRINGS, type Strings } from "./data/strings";
 import { sanitizeReminder, scheduleDailyReminder } from "./reminder";
 import { migrateViteProgressIfNeeded } from "./migrate";
@@ -389,10 +390,12 @@ export interface SynapseApi {
   scrollTop: () => void;
   focusId: (id: string) => void;
 
-  /* lembrete diário + overlay “Como funciona” */
+  /* lembrete diário + overlays “Como funciona” e “Novidades da versão” */
   setReminder: (enabled: boolean, time?: string) => void;
   howOpen: boolean;
   setHowOpen: (open: boolean) => void;
+  releaseNotesOpen: boolean;
+  setReleaseNotesOpen: (open: boolean) => void;
 
   /* dados */
   cert: () => Cert;
@@ -537,6 +540,7 @@ export function SynapseProvider({ children }: { children: ReactNode }) {
   const [bankStatus, setBankStatus] = useState<"loading" | "ready" | "error">("loading");
   const [navSeq, setNavSeq] = useState(0);
   const [howOpen, setHowOpen] = useState(false);
+  const [releaseNotesOpen, setReleaseNotesOpen] = useState(false);
   const capRef = useRef<number | null>(null);
   const liveRef = useRef<HTMLParagraphElement | null>(null);
 
@@ -1635,7 +1639,7 @@ export function SynapseProvider({ children }: { children: ReactNode }) {
   const exportBackup = useCallback(() => {
     const backup = {
       app: "synapse",
-      version: "4.1.0",
+      version: APP_VERSION,
       exportedAt: new Date().toISOString(),
       cert: state.cert,
       data: {
@@ -1953,6 +1957,8 @@ export function SynapseProvider({ children }: { children: ReactNode }) {
       setReminder,
       howOpen,
       setHowOpen,
+      releaseNotesOpen,
+      setReleaseNotesOpen,
       cert,
       questionsFor,
       chapterOf,
@@ -2026,6 +2032,8 @@ export function SynapseProvider({ children }: { children: ReactNode }) {
       setReminder,
       howOpen,
       setHowOpen,
+      releaseNotesOpen,
+      setReleaseNotesOpen,
       cert,
       questionsFor,
       chapterOf,

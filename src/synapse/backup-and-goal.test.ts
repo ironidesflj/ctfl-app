@@ -2,6 +2,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import { renderHook, act } from "@testing-library/react";
 import React from "react";
 import { SynapseProvider, useSynapse } from "./store";
+import { APP_VERSION } from "./data/releases";
 import {
   collectFullBackup,
   exportProgress,
@@ -145,7 +146,7 @@ describe("Backup & Goal parity", () => {
     await vi.waitFor(() => expect(exportedBlobText).not.toBe(""));
     const exported = JSON.parse(exportedBlobText);
     expect(exported.app).toBe("synapse");
-    expect(exported.version).toBe("4.1.0");
+    expect(exported.version).toBe(APP_VERSION);
     expect(exported.data["synapse.goal"]).toBe("30");
     expect(exported.data["synapse.onboarding.v2"]).toBe("1");
     expect(exported.data["synapse.saved.v1"]).toEqual({ ctfl: ["ch1-01"] });

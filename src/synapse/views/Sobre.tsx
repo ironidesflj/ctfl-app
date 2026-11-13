@@ -49,6 +49,7 @@ interface SobreCopy {
   footnote: string;
   back: string;
   howCta: string;
+  releaseCta: string;
 }
 
 const COPY: Record<Lang, SobreCopy> = {
@@ -176,6 +177,7 @@ const COPY: Record<Lang, SobreCopy> = {
     footnote: "Synapse não é afiliado ao ISTQB.",
     back: "Voltar ao app",
     howCta: "Como funciona",
+    releaseCta: "Novidades da versão",
   },
   en: {
     kicker: "About · Synapse",
@@ -297,6 +299,7 @@ const COPY: Record<Lang, SobreCopy> = {
     footnote: "Synapse is not affiliated with ISTQB.",
     back: "Back to the app",
     howCta: "How it works",
+    releaseCta: "What's new",
   },
 };
 
@@ -402,6 +405,13 @@ export function Sobre() {
             </button>
             <button type="button" className="btn secondary" onClick={() => ss.setHowOpen(true)}>
               {copy.howCta}
+            </button>
+            <button
+              type="button"
+              className="btn secondary"
+              onClick={() => ss.setReleaseNotesOpen(true)}
+            >
+              {copy.releaseCta}
             </button>
             <a
               className="btn secondary"

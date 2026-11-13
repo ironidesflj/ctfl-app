@@ -10,7 +10,7 @@ beforeEach(() => {
   localStorage.clear();
   // Marca onboarding e versão como vistos para testes de navegação direta da casca
   localStorage.setItem("synapse.onboarding.v2", "1");
-  localStorage.setItem("synapse.ver.v1", "4.1.0");
+  localStorage.setItem("synapse.ver.v1", APP_VERSION);
 });
 
 describe("Synapse 4.1 · Shell e Navegação", () => {
@@ -336,6 +336,38 @@ describe("Synapse 4.1 · Telas e Fluxos Caderno", () => {
     fireEvent.click(container.querySelector('button[data-nav="glossary"]'));
     await waitFor(() => {
       expect(screen.getByText(/Red teaming/i)).toBeInTheDocument();
+    });
+  });
+
+  it("Novidades da versão: abre automaticamente na atualização da 4.1.0 e marca como vista", async () => {
+    localStorage.setItem("synapse.ver.v1", "4.1.0");
+    render(<App />);
+
+    const dialog = await screen.findByRole("dialog", { name: /CT-AI v2\.0 chegou ao Synapse/i });
+    expect(dialog).toBeVisible();
+    expect(screen.getByText(new RegExp(`Novidades da versão v${APP_VERSION}`))).toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole("button", { name: /^Entendi$/i }));
+
+    await waitFor(() => {
+      expect(screen.queryByRole("dialog", { name: /CT-AI v2\.0 chegou ao Synapse/i })).toBeNull();
+    });
+    expect(localStorage.getItem("synapse.ver.v1")).toBe(APP_VERSION);
+  });
+
+  it("Novidades da versão: permite reabrir o diálogo pela aba Sobre", async () => {
+    const { container } = render(<App />);
+    fireEvent.click(container.querySelector('button[data-nav="about"]'));
+
+    const trigger = await screen.findByRole("button", { name: /Novidades da versão/i });
+    fireEvent.click(trigger);
+
+    const dialog = await screen.findByRole("dialog", { name: /CT-AI v2\.0 chegou ao Synapse/i });
+    expect(dialog).toBeVisible();
+
+    fireEvent.click(screen.getByRole("button", { name: /^Entendi$/i }));
+    await waitFor(() => {
+      expect(screen.queryByRole("dialog", { name: /CT-AI v2\.0 chegou ao Synapse/i })).toBeNull();
     });
   });
 });
