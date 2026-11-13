@@ -106,10 +106,13 @@ describe("manifesto público /manifest.jsonl (D4)", () => {
     }
   });
 
-  it("cobre exatamente as 431 questões de ESTUDO do app, sem pool de simulado", () => {
+  it("cobre as 431 questões reservadas do Axon (subconjunto de ESTUDO), sem pool de simulado", () => {
     // O mapa do app (internalId → ID público) é a ponte entre banco e manifesto.
+    // Novas questões de estudo podem existir sem ID Axon enquanto aguardam minting no hub.
     expect(Object.keys(appIdMap)).toHaveLength(RESERVED_STUDY_IDS);
-    expect(new Set(Object.keys(appIdMap))).toEqual(new Set(appStudyQuestions.keys()));
+    for (const internalId of Object.keys(appIdMap)) {
+      expect(appStudyQuestions.has(internalId)).toBe(true);
+    }
     expect(new Set(Object.values(appIdMap))).toEqual(new Set(records.map((record) => record.id)));
     // Pools são mutuamente exclusivos: nenhum ID de simulado no mapa/contrato.
     const leaked = [...appExamQuestions.keys()].filter((id) => appIdMap[id] !== undefined);

@@ -27,8 +27,8 @@ describe.each(["ctfl", "ctal-ta", "ctal-tm"])("bank(%s) - distribuição do simu
 const { ALL, chapters, byChapterInLang, byIds, buildExamInLang, shuffleOptions } = getBank("ctfl");
 
 describe("bank - data integrity", () => {
-  it("has exactly 300 questions", () => {
-    expect(ALL.length).toBe(300);
+  it("has exactly 500 questions", () => {
+    expect(ALL.length).toBe(500);
   });
 
   it("every question has a valid answer index within its options", () => {

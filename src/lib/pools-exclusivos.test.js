@@ -17,9 +17,9 @@ const ta = getBank("ctal-ta");
 const tm = getBank("ctal-tm");
 
 describe.each([
-  ["ctfl", ctfl, 300, 220, 80],
-  ["ctal-ta", ta, 200, 110, 90],
-  ["ctal-tm", tm, 200, 101, 99],
+  ["ctfl", ctfl, 500, 342, 158],
+  ["ctal-ta", ta, 450, 266, 184],
+  ["ctal-tm", tm, 500, 305, 195],
 ])("pools exclusivos — %s", (_id, bank, total, studyN, examN) => {
   it(`pool de estudo tem ${studyN} e pool de simulado ${examN} (total ${total})`, () => {
     expect(bank.ALL.length).toBe(total);

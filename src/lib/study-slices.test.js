@@ -18,12 +18,12 @@ describe("fatias de estudo/simulado geradas", () => {
 
   it("cobre os 3 certs vivos com os pools completos", () => {
     const count = (name) => Object.values(read(name)).reduce((acc, list) => acc + list.length, 0);
-    expect(count("ctfl.json")).toBe(220);
-    expect(count("ctfl-exam.json")).toBe(80);
-    expect(count("ctal-ta.json")).toBe(110);
-    expect(count("ctal-ta-exam.json")).toBe(90);
-    expect(count("ctal-tm.json")).toBe(101);
-    expect(count("ctal-tm-exam.json")).toBe(99);
+    expect(count("ctfl.json")).toBe(342);
+    expect(count("ctfl-exam.json")).toBe(158);
+    expect(count("ctal-ta.json")).toBe(266);
+    expect(count("ctal-ta-exam.json")).toBe(184);
+    expect(count("ctal-tm.json")).toBe(305);
+    expect(count("ctal-tm-exam.json")).toBe(195);
   });
 
   it("referência cita capítulo e LO quando o banco tem LO", () => {

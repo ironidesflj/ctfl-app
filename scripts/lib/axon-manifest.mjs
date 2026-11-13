@@ -131,8 +131,19 @@ export function buildManifestRecords({ bankDir, appRoot: root = appRoot() } = {}
 
     const appQuestions = readAppBank(root, exam.slug);
     const appById = new Map(appQuestions.map((question) => [question.id, question]));
-    if (appById.size !== ledger.mappings.length || appQuestions.length !== ledger.mappings.length) {
-      throw new Error(`${exam.slug}: o pool de estudo do app difere do ledger canônico`);
+    if (appById.size !== appQuestions.length) {
+      throw new Error(`${exam.slug}: IDs duplicadas no pool de estudo do app`);
+    }
+    if (appQuestions.length < ledger.mappings.length) {
+      throw new Error(`${exam.slug}: o pool de estudo do app perdeu questões do ledger canônico`);
+    }
+    const appExamIds = new Set(readAppBank(root, exam.slug, "exam").map((question) => question.id));
+    for (const mapping of ledger.mappings) {
+      if (appExamIds.has(mapping.internalId)) {
+        throw new Error(
+          `${exam.slug}: questão reservada Axon vazou para simulado: ${mapping.internalId}`
+        );
+      }
     }
     for (const mapping of ledger.mappings) {
       const source = questions.get(mapping.internalId);
