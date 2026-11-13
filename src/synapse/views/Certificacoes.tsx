@@ -48,10 +48,10 @@ const COPY: Record<Lang, CertCopy> = {
     current: "Sua prova agora",
     continue: "Continuar em Hoje",
     available: "Disponíveis",
-    availableSub: "Três provas com banco e regras oficiais",
+    availableSub: "{n} provas com banco e regras oficiais",
     soon: "Em preparação",
     soonSub: "Sem banco, não há o que estudar",
-    soonNote: "As provas em preparação não abrem. Nenhuma data é prometida.",
+    soonNote: "Provas em preparação não abrem. Nenhuma data é prometida.",
     legacyNote: "CTFL-AT permanece como arquivo, com conteúdo congelado e sem acesso.",
     facts: "{q} questões · {min} min · corte {pass}",
     chapters: "{n} capítulos",
@@ -71,7 +71,7 @@ const COPY: Record<Lang, CertCopy> = {
     current: "Your exam now",
     continue: "Continue in Today",
     available: "Available",
-    availableSub: "Three exams with a bank and official rules",
+    availableSub: "{n} exams with a bank and official rules",
     soon: "In preparation",
     soonSub: "No bank, nothing to study",
     soonNote: "Exams in preparation do not open. No date is promised.",
@@ -241,7 +241,7 @@ export function Certificacoes() {
       >
         <div className="pg-head">
           <h2 id="liveTitle">{copy.available}</h2>
-          <span>{copy.availableSub}</span>
+          <span>{fmt(copy.availableSub, { n: live.length })}</span>
         </div>
         <div className="cert-grid">
           {live.map((id) => {

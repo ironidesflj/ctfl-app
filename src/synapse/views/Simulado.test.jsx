@@ -1,6 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import App from "../../App.jsx";
+import ctAiExam from "../data/banks/ct-ai-exam.json";
 
 /**
  * Cobertura do fluxo de simulado na view viva `src/synapse/views/Simulado.tsx`.
@@ -159,5 +160,36 @@ describe("Simulado · limpeza do rascunho por cert (regressão P1)", () => {
     await waitFor(() => expect(document.querySelector(".sim-draft")).toBeNull());
     expect(localStorage.getItem("synapse.examdraft.v1")).toBeNull();
     expect(localStorage.getItem("synapse.examDraft.v1.ctfl")).toBeNull();
+  });
+
+  it("CT-AI v2.0: simulado oficial sorteia 40 questões estratificadas (36 K2 + 4 K3 = 44 pts, corte 29)", async () => {
+    localStorage.setItem("synapse.cert.v1", "ct-ai");
+    openQuizRoute();
+    const { container } = render(<App />);
+
+    await screen.findByText(
+      /40 questões em 60 minutos, pontuação ponderada por K-level \(K2=1 · K3=2\)/i
+    );
+
+    await startOfficialExam(container);
+    expect(screen.getByText(/Questão 1 de 40/)).toBeInTheDocument();
+
+    const draft = JSON.parse(localStorage.getItem("synapse.examdraft.v1") || "null");
+    expect(draft).not.toBeNull();
+    expect(draft.cert).toBe("ct-ai");
+    expect(draft.custom).toBe(false);
+    expect(draft.questionIds).toHaveLength(40);
+    expect(new Set(draft.questionIds).size).toBe(40);
+
+    const byId = new Map(
+      Object.values(ctAiExam)
+        .flat()
+        .map((q) => [q.id, q])
+    );
+    const totalPts = draft.questionIds.reduce((sum, id) => {
+      const q = byId.get(id);
+      return sum + (q?.k === 3 ? 2 : 1);
+    }, 0);
+    expect(totalPts).toBe(44);
   });
 });

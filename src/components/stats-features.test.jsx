@@ -568,16 +568,16 @@ describe("r11: Stats — card Data da prova", () => {
 
   it("definir data persiste em synapse.examDate e mostra contagem + ritmo", () => {
     renderStats(PROGRESS());
-    // PROGRESS fixture: attempts={} → seenCount 0 → left = 220 (pool de
-    // estudo r13), pace = 220/10 = 22/dia — o ritmo planeja cobrir o MATERIAL
-    // DE ESTUDO; as 80 exclusivas de simulado não são treináveis
+    // PROGRESS fixture: attempts={} → seenCount 0 → left = 342 (pool de
+    // estudo), pace = ceil(342/10) = 35/dia — o ritmo planeja cobrir o MATERIAL
+    // DE ESTUDO; as 158 exclusivas de simulado não são treináveis
     fireEvent.change(document.getElementById("exam-date-input"), {
       target: { value: isoOffset(10) },
     });
     expect(localStorage.getItem("synapse.examDate")).toBe(isoOffset(10));
     expect(screen.getByText(/faltam 10 dias/i)).toBeInTheDocument();
-    expect(screen.getByText(/~22 questões\/dia/i)).toBeInTheDocument();
-    expect(screen.getByText(/220 restantes/i)).toBeInTheDocument();
+    expect(screen.getByText(/~35 questões\/dia/i)).toBeInTheDocument();
+    expect(screen.getByText(/342 restantes/i)).toBeInTheDocument();
   });
 
   it("1 dia → singular “falta 1 dia” + tom de urgência (warn)", () => {

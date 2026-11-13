@@ -122,7 +122,7 @@ test("CTAL-TM conclui simulado com pontuação e progresso próprios", async ({ 
 
 test("cabeçalho mobile preserva título e troca de certificação em 390px", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
-  for (const cert of ["ctfl", "ctal-ta", "ctal-tm"]) {
+  for (const cert of ["ctfl", "ctal-ta", "ctal-tm", "ct-ai"]) {
     await page.goto(`/${cert}/quiz`);
     const certCode = page.locator("#certCode");
     await expect(certCode).toBeVisible();

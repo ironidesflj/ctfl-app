@@ -6,7 +6,7 @@
 import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { buildStudySlices } from "./lib/study-slices.mjs";
+import { buildBankMeta, buildStudySlices } from "./lib/study-slices.mjs";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(here, "..");
@@ -15,11 +15,14 @@ const outDir = path.join(root, "src/synapse/data/banks");
 const CHECK = process.argv.includes("--check");
 
 const bank = JSON.parse(readFileSync(monolithPath, "utf8"));
-const slices = buildStudySlices(bank);
+const outputs = {
+  ...buildStudySlices(bank),
+  "meta.json": buildBankMeta(bank),
+};
 mkdirSync(outDir, { recursive: true });
 
 let failures = 0;
-for (const [name, data] of Object.entries(slices)) {
+for (const [name, data] of Object.entries(outputs)) {
   const file = path.join(outDir, name);
   const serialized = JSON.stringify(data, null, 2) + "\n";
   if (CHECK) {
@@ -37,8 +40,12 @@ for (const [name, data] of Object.entries(slices)) {
     }
   } else {
     writeFileSync(file, serialized);
-    const n = Object.values(data).reduce((acc, list) => acc + list.length, 0);
-    console.log(`${name}: ${n} questões`);
+    if (name === "meta.json") {
+      console.log(`${name}: v${data.version} · ${data.live.total} questões vivas`);
+    } else {
+      const n = Object.values(data).reduce((acc, list) => acc + list.length, 0);
+      console.log(`${name}: ${n} questões`);
+    }
   }
 }
 if (CHECK && failures > 0) process.exit(1);

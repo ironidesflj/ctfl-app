@@ -607,13 +607,35 @@ export function Simulado() {
 
   /* ---------- montagem da prova ---------- */
 
+  function pointsWeightsLabel(): string {
+    const hasK4 = c.chapters.some((ch) => (ch.kLevels?.["4"] ?? 0) > 0);
+    return hasK4 ? "K2=1 · K3=2 · K4=3" : "K2=1 · K3=2";
+  }
+
   function buildOfficial(): Question[] {
-    /* prova oficial: segue o blueprint (examQ por capítulo), sorteio
-       do pool exclusivo, ordem final embaralhada */
+    /* prova oficial: segue o blueprint (examQ e kLevels por capítulo),
+       sorteio do pool exclusivo, ordem final embaralhada */
     const picked: Question[] = [];
     c.chapters.forEach((ch) => {
       const pool = examBank[String(ch.n)] || [];
-      picked.push(...shuffle(pool).slice(0, ch.examQ));
+      if (!ch.kLevels) {
+        picked.push(...shuffle(pool).slice(0, ch.examQ));
+        return;
+      }
+      const used = new Set<string>();
+      const chosen: Question[] = [];
+      Object.entries(ch.kLevels).forEach(([kStr, count]) => {
+        if (count <= 0) return;
+        const kPool = shuffle(pool.filter((q) => String(q.k) === kStr && !used.has(q.id)));
+        const take = kPool.slice(0, count);
+        take.forEach((q) => used.add(q.id));
+        chosen.push(...take);
+      });
+      if (chosen.length < ch.examQ && used.size < pool.length) {
+        const rest = shuffle(pool.filter((q) => !used.has(q.id)));
+        chosen.push(...rest.slice(0, ch.examQ - chosen.length));
+      }
+      picked.push(...chosen);
     });
     return shuffle(picked);
   }
@@ -876,17 +898,27 @@ export function Simulado() {
                   >
                     {t("customAnyK")}
                   </button>
-                  {[1, 2, 3, 4].map((k) => (
-                    <button
-                      key={k}
-                      type="button"
-                      className={"chip" + (exam.customK.includes(k) ? " on" : "")}
-                      aria-pressed={exam.customK.includes(k)}
-                      onClick={() => dispatch({ type: "TOGGLE_CUSTOM_K", k })}
-                    >
-                      K{k}
-                    </button>
-                  ))}
+                  {(() => {
+                    const ks = [
+                      ...new Set(
+                        Object.values(examBank)
+                          .flat()
+                          .map((q) => Number(q.k))
+                          .filter((k) => k >= 1 && k <= 4)
+                      ),
+                    ].sort((a, b) => a - b);
+                    return (ks.length ? ks : [1, 2, 3, 4]).map((k) => (
+                      <button
+                        key={k}
+                        type="button"
+                        className={"chip" + (exam.customK.includes(k) ? " on" : "")}
+                        aria-pressed={exam.customK.includes(k)}
+                        onClick={() => dispatch({ type: "TOGGLE_CUSTOM_K", k })}
+                      >
+                        K{k}
+                      </button>
+                    ));
+                  })()}
                 </div>
               </div>
               <div className="sim-custom-row2">
@@ -950,6 +982,7 @@ export function Simulado() {
               {fmt(rules.scoring === "points" ? t("explainPts") : t("explain"), {
                 n: rules.q,
                 min: rules.min,
+                weights: pointsWeightsLabel(),
               })}
             </p>
           )}

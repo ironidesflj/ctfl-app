@@ -954,6 +954,345 @@ export const FLASHCARDS = [
       },
     },
   },
+
+  /* ─────────── CT-AI v2.0 (21 cartões, Ch 1-7) ─────────── */
+  {
+    id: "fc-ai-101",
+    cert: "ct-ai",
+    ch: 1,
+    d: "ai",
+    locales: {
+      pt: {
+        front: "Efeito de IA, IA × ML × Deep Learning e IA Estreita vs Geral",
+        back: "EFEITO DE IA: quando uma técnica dominada deixa de ser vista como 'IA' e vira computação comum\nHIERARQUIA: IA (amplo) ⊃ Machine Learning (aprende padrões com dados sem regras explícitas) ⊃ Deep Learning (redes neurais profundas, ex.: CNN)\nIA ESTREITA (ANI): especialista em tarefa única (hoje real) × IA GERAL (AGI): flexibilidade humana × SUPERINTELIGÊNCIA (ASI): hipotética",
+      },
+      en: {
+        front: "AI effect, AI vs. ML vs. Deep Learning & Narrow vs. General AI",
+        back: "AI EFFECT: mastered capabilities stop being viewed as 'AI' and become conventional software\nHIERARCHY: AI (broad) ⊃ Machine Learning (learns patterns from data without explicit rules) ⊃ Deep Learning (deep neural networks, e.g., CNNs)\nNARROW AI (ANI): excels at one task (today's reality) vs. GENERAL AI (AGI): human-level flexibility vs. SUPERINTELLIGENCE (ASI): hypothetical",
+      },
+    },
+  },
+  {
+    id: "fc-ai-102",
+    cert: "ct-ai",
+    ch: 1,
+    d: "ai",
+    locales: {
+      pt: {
+        front: "Aprendizado por reforço e Geração Aumentada por Recuperação (RAG)",
+        back: "REFORÇO (RL): agente interage com o ambiente, executa ações e recebe sinal de RECOMPENSA para maximizar retorno acumulado ao longo do tempo\nRAG: recupera documentos externos atualizados e injeta no contexto do LLM → ancora respostas em evidências, reduz alucinação e evita retreinar o modelo base",
+      },
+      en: {
+        front: "Reinforcement learning & Retrieval-Augmented Generation (RAG)",
+        back: "REINFORCEMENT (RL): an agent interacts with an environment, acts, and receives a REWARD signal to maximize cumulative return over time\nRAG: retrieves up-to-date external documents into the LLM prompt → grounds answers in sources, reduces hallucination, and avoids retraining the base model",
+      },
+    },
+  },
+  {
+    id: "fc-ai-103",
+    cert: "ct-ai",
+    ch: 1,
+    d: "ai",
+    locales: {
+      pt: {
+        front: "Hardware, implantação Cloud vs Edge, frameworks ML e regulação",
+        back: "EDGE / EMBARCADO: baixa latência e operação offline com aceleradores dedicados (NPU/GPU/ASIC embarcada)\nCLOUD / MLaaS: escala elástica sem exigir time de infra\nFRAMEWORKS ML: oferecem APIs prontas para pipeline, grafo, autograd e treino\nREGULAÇÃO DE RISCO (ex.: EU AI Act, ISO/IEC 42001): classifica risco, exige rastreabilidade, governança de dados e plano de testes",
+      },
+      en: {
+        front: "Hardware, Cloud vs. Edge deployment, ML frameworks & regulation",
+        back: "EDGE / EMBEDDED: low latency and offline inference using dedicated accelerators (embedded NPU/GPU/ASIC)\nCLOUD / MLaaS: elastic scaling without an infra team\nML FRAMEWORKS: built-in APIs for pipelines, autograd, and training\nAI RISK REGULATION (e.g., EU AI Act, ISO/IEC 42001): tiered risk, traceability, data governance, and test plans",
+      },
+    },
+  },
+  {
+    id: "fc-ai-201",
+    cert: "ct-ai",
+    ch: 2,
+    d: "ai",
+    locales: {
+      pt: {
+        front:
+          "Características de qualidade específicas de IA (equidade, transparência, explicabilidade)",
+        back: "EQUIDADE (Fairness): ausência de viés/discriminação injusta entre grupos (ex.: crédito, RH)\nTRANSPARÊNCIA: clareza sobre dados, limitações e presença de IA\nEXPLICABILIDADE / INTERPRETABILIDADE: entender por que o modelo produziu determinada saída\nFLEXIBILIDADE E AUTONOMIA: capacidade de adaptar-se ou agir sem supervisão direta — exige limites claros de autonomia",
+      },
+      en: {
+        front: "AI-specific quality characteristics (fairness, transparency, explainability)",
+        back: "FAIRNESS: absence of unfair bias/discrimination across groups (e.g., credit, hiring)\nTRANSPARENCY: clarity on data, limitations, and AI involvement\nEXPLAINABILITY / INTERPRETABILITY: understanding why the model produced a given output\nFLEXIBILITY & AUTONOMY: adapting or acting without constant oversight — requires bounded autonomy controls",
+      },
+    },
+  },
+  {
+    id: "fc-ai-202",
+    cert: "ct-ai",
+    ch: 2,
+    d: "ai",
+    locales: {
+      pt: {
+        front: "IA em sistemas relacionados à segurança e não-determinismo",
+        back: "SEGURANÇA (Safety-related): falha de IA (ex.: frenagem autônoma) pode causar dano físico → maior severidade, redundância, fallback seguro e validação rigorosa\nNÃO-DETERMINISMO: mesma entrada pode gerar saídas distintas (amostragem, peso, GPU) → testar com estatística, sementes controladas e faixas aceitáveis",
+      },
+      en: {
+        front: "Safety-related AI systems & non-determinism",
+        back: "SAFETY-RELATED: an AI failure (e.g., autonomous braking) can cause physical harm → higher severity, redundancy, safe fallbacks, and strict verification\nNON-DETERMINISM: the same input may produce varying outputs (sampling, hardware) → test with statistics, controlled seeds, and acceptable tolerances",
+      },
+    },
+  },
+  {
+    id: "fc-ai-203",
+    cert: "ct-ai",
+    ch: 2,
+    d: "ai",
+    locales: {
+      pt: {
+        front: "Como definir critérios de aceitação para sistemas baseados em IA",
+        back: "Não basta 'funcionar bem' nem exigir 100% determinístico!\nDEFINIÇÃO OBJETIVA E VERIFICÁVEL: limiares quantitativos em métricas acordadas (ex.: recall ≥ 0,92, precisão ≥ 0,85), intervalos estatísticos em datasets representativos, limites de latência e critérios de segurança/equidade",
+      },
+      en: {
+        front: "Defining acceptance criteria for AI-based systems",
+        back: "Vague goals or 100% deterministic pass/fail expectations don't work!\nOBJECTIVE & VERIFIABLE: quantitative thresholds on agreed metrics (e.g., recall ≥ 0.92, precision ≥ 0.85), statistical bounds on representative datasets, latency budgets, and fairness/safety thresholds",
+      },
+    },
+  },
+  {
+    id: "fc-ai-301",
+    cert: "ct-ai",
+    ch: 3,
+    d: "ai",
+    locales: {
+      pt: {
+        front: "Split de dados (treino / validação / teste) e generalização",
+        back: "TREINAMENTO: ajusta os parâmetros (pesos) do modelo\nVALIDAÇÃO: orienta escolha de hiperparâmetros e seleção de modelos (early stopping)\nTESTE: reservado e intocado até o fim para estimativa NÃO ENVIÉSADA da generalização em produção — jamais vazar dados de teste para o treino (data leakage)",
+      },
+      en: {
+        front: "Data splits (training / validation / test) & generalization",
+        back: "TRAINING: fits model parameters (weights)\nVALIDATION: tunes hyperparameters and selects models (early stopping)\nTEST: held out untouched until final evaluation for an UNBIASED estimate of generalization — never leak test data into training",
+      },
+    },
+  },
+  {
+    id: "fc-ai-302",
+    cert: "ct-ai",
+    ch: 3,
+    d: "ai",
+    locales: {
+      pt: {
+        front: "Sobreajuste (overfitting) × Subajuste (underfitting)",
+        back: "OVERFITTING (sobreajuste): modelo decora ruído do treino → ex.: 99% no treino e 71% na validação (lacuna grande, alta variância)\nUNDERFITTING (subajuste): modelo simples demais → ruim tanto no treino quanto na validação (alto viés)",
+      },
+      en: {
+        front: "Overfitting vs. underfitting",
+        back: "OVERFITTING: model memorizes training noise → e.g., 99% train vs. 71% validation (large gap, high variance)\nUNDERFITTING: model too simple to learn the pattern → poor performance on both training and validation (high bias)",
+      },
+    },
+  },
+  {
+    id: "fc-ai-303",
+    cert: "ct-ai",
+    ch: 3,
+    d: "ai",
+    locales: {
+      pt: {
+        front: "Matriz de confusão e cálculo K3 (Precisão, Recall, F1, Acurácia)",
+        back: "PRECISÃO = VP / (VP + FP) — entre os previstos como positivos, quantos realmente são?\nRECALL (Revocação) = VP / (VP + FN) — entre os positivos reais, quantos foram capturados?\nF1 = 2 × (Precisão × Recall) / (Precisão + Recall) — média harmônica\nACURÁCIA = (VP + VN) / Total — cuidado: enganosa em classes desbalanceadas!",
+      },
+      en: {
+        front: "Confusion matrix & K3 metrics (Precision, Recall, F1, Accuracy)",
+        back: "PRECISION = TP / (TP + FP) — of predicted positives, how many are truly positive?\nRECALL = TP / (TP + FN) — of actual positives, how many did the model find?\nF1 SCORE = 2 × (Precision × Recall) / (Precision + Recall) — harmonic mean\nACCURACY = (TP + TN) / Total — misleading on imbalanced datasets!",
+      },
+    },
+  },
+  {
+    id: "fc-ai-401",
+    cert: "ct-ai",
+    ch: 4,
+    d: "ai",
+    locales: {
+      pt: {
+        front: "Problema do oráculo de teste e avaliação em IA generativa",
+        back: "ORÁCULO DIFÍCIL: sistemas baseados em IA são probabilísticos/adaptativos e não há especificação determinística 1:1\nESTRATÉGIAS: avaliação estatística em massa com faixas de confiança, datasets de referência (ground truth) e avaliação humana estruturada com rubricas claras (ex.: tradução, resumo)",
+      },
+      en: {
+        front: "Test oracle problem & evaluating generative AI",
+        back: "HARD ORACLE: AI systems are probabilistic/adaptive with no single exact expected output per input\nSTRATEGIES: statistical evaluation over representative samples, reference ground-truth datasets, and structured human evaluation with explicit rubrics (e.g., translation, summarization)",
+      },
+    },
+  },
+  {
+    id: "fc-ai-402",
+    cert: "ct-ai",
+    ch: 4,
+    d: "ai",
+    locales: {
+      pt: {
+        front: "Alucinação em LLMs e Red Teaming (K3)",
+        back: "ALUCINAÇÃO: LLM inventa política, citação ou fato falso com tom confiante → mitigar com RAG, verificação factual e guarda de saída\nRED TEAMING (AI-4.2.2 K3): ataque deliberado, normalmente em caixa-preta, testando injeção de prompt, vazamento de PII, evasão de guardrails e geração tóxica com cenários adversariais estruturados",
+      },
+      en: {
+        front: "LLM hallucinations & Red Teaming (K3)",
+        back: "HALLUCINATION: an LLM fabricates facts or citations with high confidence → mitigate via RAG, factuality checks, and guardrails\nRED TEAMING (AI-4.2.2 K3): a deliberate, usually black-box adversarial probing plan testing prompt injection, PII leakage, jailbreaks, and unsafe outputs",
+      },
+    },
+  },
+  {
+    id: "fc-ai-403",
+    cert: "ct-ai",
+    ch: 4,
+    d: "ai",
+    locales: {
+      pt: {
+        front: "Teste do modelo isolado × Sistema completo e Teste Baseado em Risco",
+        back: "TESTE DO MODELO: avalia métricas do modelo treinado isoladamente em dados de teste\nTESTE DE INTEGRAÇÃO/SISTEMA: valida pré-processamento, APIs, fallback, latência e UX ponta a ponta\nTBR EM IA: prioriza risco técnico e ético/negócio (segurança, viés, impacto de falha, drift) para dosar profundidade do teste",
+      },
+      en: {
+        front: "Model vs. system testing & Risk-Based Testing in AI",
+        back: "MODEL TESTING: evaluates the trained model in isolation against functional metrics\nSYSTEM / INTEGRATION TESTING: verifies preprocessing, APIs, fallbacks, latency, and end-to-end UX\nRBT FOR AI: allocates deeper test effort based on AI-specific technical, ethical, safety, and drift risks",
+      },
+    },
+  },
+  {
+    id: "fc-ai-501",
+    cert: "ct-ai",
+    ch: 5,
+    d: "ai",
+    locales: {
+      pt: {
+        front: "Qualidade de dados de entrada: representatividade, balanceamento e esquema",
+        back: "DIMENSÕES: acurácia, completude, consistência, REPRESENTATIVIDADE (espelhar produção) e balanceamento entre classes\nPIPELINE DE DADOS: validar esquema, tipos, nulos, faixas e integridade em CADA estágio antes do treinamento",
+      },
+      en: {
+        front: "Input data quality: representativeness, balance & schema validation",
+        back: "DIMENSIONS: accuracy, completeness, consistency, REPRESENTATIVENESS (matching production distribution), and class balance\nPIPELINE STAGES: validate schemas, types, nulls, ranges, and integrity at EVERY pipeline step before training",
+      },
+    },
+  },
+  {
+    id: "fc-ai-502",
+    cert: "ct-ai",
+    ch: 5,
+    d: "ai",
+    locales: {
+      pt: {
+        front: "Restrições de dataset (K3) e correção de rótulos",
+        back: "RESTRIÇÕES DE DATASET (AI-5.1.5 K3): verificar cada registro contra regras explícitas (tipo inteiro, intervalo válido, obrigatoriedade, cardinalidade) para achar linhas violadoras\nCORREÇÃO DE RÓTULOS: auditoria de anotações e consenso entre anotadores; rótulos ruins corrompem modelos supervisionados",
+      },
+      en: {
+        front: "Dataset constraints (K3) & label correctness",
+        back: "DATASET CONSTRAINTS (AI-5.1.5 K3): check records line by line against explicit rules (integer type, allowed range, non-null, uniqueness) to pinpoint violations\nLABEL CORRECTNESS: audit annotation quality and inter-annotator agreement — noisy labels directly degrade supervised models",
+      },
+    },
+  },
+  {
+    id: "fc-ai-503",
+    cert: "ct-ai",
+    ch: 5,
+    d: "ai",
+    locales: {
+      pt: {
+        front: "Teste dinâmico de viés nos dados e entradas do modelo",
+        back: "Não basta inspecionar médias globais!\nTESTE DINÂMICO DE VIÉS: alimentar o modelo com conjuntos de avaliação estratificados por grupos (ex.: gênero, região, faixa etária) e comparar taxas de aprovação/erro entre subgrupos para detectar sub-representação ou viés histórico",
+      },
+      en: {
+        front: "Dynamic bias testing on ML data & model inputs",
+        back: "Global averages hide disparities!\nDYNAMIC BIAS TESTING: run evaluation datasets stratified by demographic or protected subgroups and compare acceptance/error rates across groups to expose under-representation or historical bias",
+      },
+    },
+  },
+  {
+    id: "fc-ai-601",
+    cert: "ct-ai",
+    ch: 6,
+    d: "ai",
+    locales: {
+      pt: {
+        front: "Model cards, métricas probabilísticas e detecção de overfitting",
+        back: "MODEL CARD: revisão documental garante que o modelo não seja implantado fora do escopo e restrições avaliadas\nDESEMPENHO FUNCIONAL: avaliado estatisticamente sobre amostras com limiares mínimos aprovados\nOVERFITTING NA VALIDAÇÃO: gap grande entre métrica de treino e de validação (ex.: 99% vs 71%)",
+      },
+      en: {
+        front: "Model cards, probabilistic performance & overfitting detection",
+        back: "MODEL CARD: documentation review prevents deploying models outside tested demographics or intended use\nFUNCTIONAL PERFORMANCE: statistical verification across samples against minimum thresholds\nOVERFITTING CHECK: large gap between training and validation metrics (e.g., 99% vs. 71%)",
+      },
+    },
+  },
+  {
+    id: "fc-ai-602",
+    cert: "ct-ai",
+    ch: 6,
+    d: "ai",
+    locales: {
+      pt: {
+        front: "Teste metamórfico (K3) e Teste adversarial em sistemas de ML",
+        back: "TESTE METAMÓRFICO (AI-6.1.5 K3): dispensa oráculo exato criando pares de execução com entrada base + entrada transformada e verificando uma Relação Metamórfica (ex.: dobrar a área construída não deve reduzir preço previsto)\nTESTE ADVERSARIAL: aplica pequenas perturbações direcionadas (ruído mínimo) a entradas válidas para checar robustez",
+      },
+      en: {
+        front: "Metamorphic testing (K3) & adversarial testing for ML",
+        back: "METAMORPHIC TESTING (AI-6.1.5 K3): bypasses exact oracles using paired runs (base input + transformed input) and checking a Metamorphic Relation (e.g., doubling floor area should not lower predicted house price)\nADVERSARIAL TESTING: adds minimal targeted perturbations to valid inputs to test model robustness",
+      },
+    },
+  },
+  {
+    id: "fc-ai-603",
+    cert: "ct-ai",
+    ch: 6,
+    d: "ai",
+    locales: {
+      pt: {
+        front: "Drift testing, Teste A/B e Teste back-to-back em modelos",
+        back: "DRIFT TESTING: monitora periodicamente dados de produção vs dados de treino (data drift) ou mudança na relação entrada→alvo (concept drift)\nTESTE A/B: duas variantes do modelo atendem tráfego real em paralelo para comparar métricas de negócio/desempenho\nBACK-TO-BACK: mesma entrada vai ao pipeline de treino (batch) e ao operacional para validar equivalência de features/saída",
+      },
+      en: {
+        front: "Drift testing, A/B testing & back-to-back testing for models",
+        back: "DRIFT TESTING: periodically compares live inputs against training distributions (data drift) or shifts in input→target behavior (concept drift)\nA/B TESTING: splits live traffic across two model versions to compare real outcomes\nBACK-TO-BACK: feeds the same input to training (batch) and serving pipelines to verify equivalence",
+      },
+    },
+  },
+  {
+    id: "fc-ai-701",
+    cert: "ct-ai",
+    ch: 7,
+    d: "ai",
+    locales: {
+      pt: {
+        front: "Teste de pipeline de ML e componentes MLOps",
+        back: "PIPELINE DE ML: sequência automatizada de ingestão → pré-processamento → treinamento → avaliação → implantação\nFOCO DO TESTE: contratos de dados entre etapas, integridade do FEATURE STORE (mesma lógica treino/serving), registro de modelos (MODEL REGISTRY), retreino automatizado e cobertura end-to-end (não só testes unitários)",
+      },
+      en: {
+        front: "ML pipeline testing & MLOps components",
+        back: "ML PIPELINE: automated chain of ingestion → preprocessing → training → evaluation → deployment\nTEST FOCUS: data contracts between stages, FEATURE STORE consistency (training vs. serving), MODEL REGISTRY, automated retraining triggers, and end-to-end validation (not only unit tests)",
+      },
+    },
+  },
+  {
+    id: "fc-ai-702",
+    cert: "ct-ai",
+    ch: 7,
+    d: "ai",
+    locales: {
+      pt: {
+        front: "Reprodutibilidade em ML e Teste de APIs de frameworks",
+        back: "REPRODUTIBILIDADE: versionar dataset, código, hiperparâmetros, dependências do ambiente e FIXAR SEMENTES ALEATÓRIAS (random seeds) para recriar experimentos\nTESTE DE API (7.1.2): detecta mau uso silencioso de bibliotecas ML (ex.: formato de tensor, vazamento no pré-processamento, modo eval vs train)",
+      },
+      en: {
+        front: "ML reproducibility & framework API testing",
+        back: "REPRODUCIBILITY: version datasets, code, hyperparameters, environment dependencies, and FIX RANDOM SEEDS to faithfully recreate training runs\nAPI TESTING (7.1.2): catches subtle ML library misuse (e.g., tensor shapes, eval vs. train mode, leaky transforms)",
+      },
+    },
+  },
+  {
+    id: "fc-ai-703",
+    cert: "ct-ai",
+    ch: 7,
+    d: "ai",
+    locales: {
+      pt: {
+        front: "Estratégias de implantação ML: Canário, Sombra, Blue-Green e Champion/Challenger",
+        back: "CANÁRIO: pequena % do tráfego real vai para o novo modelo com rollback rápido\nSOMBRA (Shadow): novo modelo roda em paralelo no tráfego real sem exibir resposta ao usuário (mede latência/acertos sem risco)\nBLUE-GREEN: dois ambientes completos alternam tráfego instantaneamente\nCHAMPION/CHALLENGER: modelo candidato compete continuamente com o ativo",
+      },
+      en: {
+        front: "ML deployment patterns: Canary, Shadow, Blue-Green & Champion/Challenger",
+        back: "CANARY: small share of live traffic goes to the new model with fast rollback\nSHADOW: candidate model runs on live traffic alongside production without exposing responses to users (risk-free evaluation)\nBLUE-GREEN: two full environments swap live traffic instantly\nCHAMPION/CHALLENGER: challenger model continuously competes against the incumbent",
+      },
+    },
+  },
 ];
 
 export const SYLLABUS_ITEMS = [
@@ -1785,6 +2124,346 @@ export const SYLLABUS_ITEMS = [
       en: {
         kw: "Motivation, cost of quality and cost-benefit (K2/K3)",
         desc: "Herzberg: motivators vs. hygiene factors (examples of each); the 4 cost of quality categories (prevention, appraisal, internal failure, external failure — Feigenbaum); the cost-benefit calculation (average savings per defect) is K3 (2 questions).",
+      },
+    },
+  },
+
+  /* ════════════════════════════════════════════════════════════════════════
+     CT-AI v2.0 (21 itens · Ch 1-7 · 360 questões · 44 pts · corte 29)
+     ════════════════════════════════════════════════════════════════════════ */
+  {
+    id: "syl-ai-101",
+    cert: "ct-ai",
+    ch: 1,
+    d: "ai",
+    locales: {
+      pt: {
+        kw: "Definição de IA, efeito de IA e IA × ML × DL (K2)",
+        desc: "IA estreita (ANI) vs IA geral (AGI) vs superinteligência; efeito de IA (técnicas dominadas viram software comum); hierarquia IA ⊃ ML ⊃ Deep Learning (redes neurais profundas/CNNs).",
+      },
+      en: {
+        kw: "AI definition, AI effect and AI vs. ML vs. DL (K2)",
+        desc: "Narrow AI (ANI) vs. General AI (AGI) vs. superintelligence; AI effect (mastered capabilities become standard software); hierarchy AI ⊃ ML ⊃ Deep Learning (deep neural networks/CNNs).",
+      },
+    },
+  },
+  {
+    id: "syl-ai-102",
+    cert: "ct-ai",
+    ch: 1,
+    d: "ai",
+    locales: {
+      pt: {
+        kw: "Aprendizado por reforço e RAG (K2)",
+        desc: "Reforço: agente aprende política maximizando o sinal de recompensa; RAG (Geração Aumentada por Recuperação): ancora LLMs em documentos externos recuperados para reduzir alucinação sem retreinar.",
+      },
+      en: {
+        kw: "Reinforcement learning and RAG (K2)",
+        desc: "Reinforcement: agent learns a policy by maximizing a reward signal; RAG (Retrieval-Augmented Generation): grounds LLMs in retrieved external documents to reduce hallucination without retraining.",
+      },
+    },
+  },
+  {
+    id: "syl-ai-103",
+    cert: "ct-ai",
+    ch: 1,
+    d: "ai",
+    locales: {
+      pt: {
+        kw: "Hardware, implantação, frameworks e regulação (K2)",
+        desc: "Inferência edge/embarcada com aceleradores vs MLaaS em nuvem; papel dos frameworks ML; normas e regulações de risco em IA (ex.: EU AI Act, ISO/IEC 42001) no plano de testes.",
+      },
+      en: {
+        kw: "Hardware, deployment, frameworks and regulation (K2)",
+        desc: "Edge/embedded inference with dedicated accelerators vs. cloud MLaaS; role of ML frameworks; AI risk standards and regulations (e.g., EU AI Act, ISO/IEC 42001) shaping the test plan.",
+      },
+    },
+  },
+  {
+    id: "syl-ai-201",
+    cert: "ct-ai",
+    ch: 2,
+    d: "ai",
+    locales: {
+      pt: {
+        kw: "Equidade, transparência e explicabilidade (K2)",
+        desc: "Características de qualidade específicas de IA (AI-2.1.1): equidade e ausência de viés (ex.: crédito/RH), transparência e explicabilidade/interpretabilidade das decisões.",
+      },
+      en: {
+        kw: "Fairness, transparency and explainability (K2)",
+        desc: "AI-specific quality characteristics (AI-2.1.1): fairness and freedom from bias (e.g., lending/HR), transparency, and explainability/interpretability of decisions.",
+      },
+    },
+  },
+  {
+    id: "syl-ai-202",
+    cert: "ct-ai",
+    ch: 2,
+    d: "ai",
+    locales: {
+      pt: {
+        kw: "IA relacionada à segurança e autonomia (K2)",
+        desc: "Sistemas onde falhas causam dano físico exigem severidade elevada, controles de autonomia, monitoramento e mecanismos seguros de fallback (AI-2.1.2).",
+      },
+      en: {
+        kw: "Safety-related AI and autonomy (K2)",
+        desc: "Systems where AI failures can cause physical harm require high severity, bounded autonomy, runtime monitoring, and safe fallback mechanisms (AI-2.1.2).",
+      },
+    },
+  },
+  {
+    id: "syl-ai-203",
+    cert: "ct-ai",
+    ch: 2,
+    d: "ai",
+    locales: {
+      pt: {
+        kw: "Critérios de aceitação objetivos para IA (K2)",
+        desc: "Especificar critérios mensuráveis e verificáveis via limiares quantitativos em métricas funcionais, faixas estatísticas, latência e metas de equidade (AI-2.2.1).",
+      },
+      en: {
+        kw: "Objective acceptance criteria for AI (K2)",
+        desc: "Specify measurable, verifiable criteria using quantitative thresholds on functional metrics, statistical intervals, latency budgets, and fairness goals (AI-2.2.1).",
+      },
+    },
+  },
+  {
+    id: "syl-ai-301",
+    cert: "ct-ai",
+    ch: 3,
+    d: "ai",
+    locales: {
+      pt: {
+        kw: "Aprendizado supervisionado, LLMs e split de dados (K2)",
+        desc: "Papel do rótulo; divisão em treino (ajuste de pesos), validação (hiperparâmetros/seleção) e teste (estimativa imparcial); abordagens para LLMs (prompting, RAG, fine-tuning).",
+      },
+      en: {
+        kw: "Supervised learning, LLMs and data splits (K2)",
+        desc: "Role of labels; splitting into training (weight fitting), validation (hyperparameters/selection), and test (unbiased estimate); LLM adaptation (prompting, RAG, fine-tuning).",
+      },
+    },
+  },
+  {
+    id: "syl-ai-302",
+    cert: "ct-ai",
+    ch: 3,
+    d: "ai",
+    locales: {
+      pt: {
+        kw: "Generalização, overfitting e redes neurais (K2)",
+        desc: "Representatividade treino vs produção; sobreajuste (overfitting) × subajuste (underfitting); estrutura de neurônios, funções de ativação e cobertura de neurônios/fronteiras (AI-3.4.3).",
+      },
+      en: {
+        kw: "Generalization, overfitting and neural networks (K2)",
+        desc: "Training vs. production representativeness; overfitting vs. underfitting; neural network weights, bias, activations, and neuron/boundary coverage measures (AI-3.4.3).",
+      },
+    },
+  },
+  {
+    id: "syl-ai-303",
+    cert: "ct-ai",
+    ch: 3,
+    d: "ai",
+    locales: {
+      pt: {
+        kw: "Matriz de confusão e métricas de ML (K3)",
+        desc: "Questão prática (AI-3.3.1): calcular Precisão = VP/(VP+FP), Revocação = VP/(VP+FN), F1 e Acurácia a partir de VP, FP, FN e VN em um cenário dado.",
+      },
+      en: {
+        kw: "Confusion matrix and ML metrics (K3)",
+        desc: "Hands-on question (AI-3.3.1): calculate Precision = TP/(TP+FP), Recall = TP/(TP+FN), F1, and Accuracy from TP, FP, FN, and TN in a given scenario.",
+      },
+    },
+  },
+  {
+    id: "syl-ai-401",
+    cert: "ct-ai",
+    ch: 4,
+    d: "ai",
+    locales: {
+      pt: {
+        kw: "Problema do oráculo e avaliação estatística (K2)",
+        desc: "Saídas probabilísticas e não-determinísticas dificultam oráculos exatos (AI-4.1.1/4.1.2) — usar avaliação estatística em amostra, dados de referência e rubricas humanas estruturadas (AI-4.1.3).",
+      },
+      en: {
+        kw: "Test oracle problem and statistical evaluation (K2)",
+        desc: "Probabilistic, non-deterministic outputs make exact oracles hard (AI-4.1.1/4.1.2) — use sample-based statistical testing, reference data, and structured human rubrics (AI-4.1.3).",
+      },
+    },
+  },
+  {
+    id: "syl-ai-402",
+    cert: "ct-ai",
+    ch: 4,
+    d: "ai",
+    locales: {
+      pt: {
+        kw: "Alucinações em LLMs e Red Teaming (K2/K3)",
+        desc: "Reconhecer alucinação e viés generativo (AI-4.2.1); planejar e conduzir red teaming em sistemas LLM para injeção de prompt, vazamento de dados e bypass de guardrails (AI-4.2.2 — K3).",
+      },
+      en: {
+        kw: "LLM hallucinations and Red Teaming (K2/K3)",
+        desc: "Spot generative hallucinations and bias (AI-4.2.1); plan and conduct black-box red teaming against LLM systems for prompt injection, data leakage, and guardrail evasion (AI-4.2.2 — K3).",
+      },
+    },
+  },
+  {
+    id: "syl-ai-403",
+    cert: "ct-ai",
+    ch: 4,
+    d: "ai",
+    locales: {
+      pt: {
+        kw: "Modelo isolado × sistema integrado e Teste Baseado em Risco (K2)",
+        desc: "Diferenciar avaliação do modelo isolado (AI-4.3.1) do teste ponta a ponta do sistema de IA (pré-processamento, API, fallback); priorizar esforços por risco específico de IA (AI-4.3.2).",
+      },
+      en: {
+        kw: "Isolated model vs. integrated system & RBT (K2)",
+        desc: "Distinguish isolated model testing (AI-4.3.1) from end-to-end AI system testing (preprocessing, APIs, fallbacks); prioritize test effort by AI-specific risks (AI-4.3.2).",
+      },
+    },
+  },
+  {
+    id: "syl-ai-501",
+    cert: "ct-ai",
+    ch: 5,
+    d: "ai",
+    locales: {
+      pt: {
+        kw: "Qualidade de dados, viés dinâmico e validação de pipeline (K2)",
+        desc: "Dimensões de dados (representatividade, balanceamento, completude); teste dinâmico de viés por subgrupos (AI-5.1.2); validação de esquema e qualidade por estágio do pipeline (AI-5.1.3).",
+      },
+      en: {
+        kw: "Data quality, dynamic bias and pipeline validation (K2)",
+        desc: "Data dimensions (representativeness, balance, completeness); dynamic subgroup bias testing (AI-5.1.2); per-stage schema and data quality validation in pipelines (AI-5.1.3).",
+      },
+    },
+  },
+  {
+    id: "syl-ai-502",
+    cert: "ct-ai",
+    ch: 5,
+    d: "ai",
+    locales: {
+      pt: {
+        kw: "Restrições de dataset na prática (K3)",
+        desc: "Questão prática (AI-5.1.5): aplicar regras declaradas de tipo, faixa, formato e integridade sobre registros de treinamento para identificar violações no dataset.",
+      },
+      en: {
+        kw: "Dataset constraints in practice (K3)",
+        desc: "Hands-on question (AI-5.1.5): apply declared type, range, format, and integrity rules to training records to identify dataset constraint violations.",
+      },
+    },
+  },
+  {
+    id: "syl-ai-503",
+    cert: "ct-ai",
+    ch: 5,
+    d: "ai",
+    locales: {
+      pt: {
+        kw: "Representatividade e correção de rótulos (K2)",
+        desc: "Avaliar cobertura e distribuição frente à produção (AI-5.1.4); auditar qualidade e consistência dos rótulos de treinamento (AI-5.1.6).",
+      },
+      en: {
+        kw: "Representativeness and label correctness (K2)",
+        desc: "Assess feature coverage and distribution against production (AI-5.1.4); audit supervised annotation accuracy and label consistency (AI-5.1.6).",
+      },
+    },
+  },
+  {
+    id: "syl-ai-601",
+    cert: "ct-ai",
+    ch: 6,
+    d: "ai",
+    locales: {
+      pt: {
+        kw: "Model cards, métricas e overfitting na avaliação (K2)",
+        desc: "Métricas de classificação/F1 (AI-6.1.1); revisão de model cards para evitar uso fora de escopo (AI-6.1.2); limiares estatísticos funcionais (AI-6.1.3); gap treino vs validação (AI-6.1.8).",
+      },
+      en: {
+        kw: "Model cards, metrics and overfitting checks (K2)",
+        desc: "Classification/F1 metrics (AI-6.1.1); model card documentation review to prevent out-of-scope deployment (AI-6.1.2); statistical functional thresholds (AI-6.1.3); train vs. val gap (AI-6.1.8).",
+      },
+    },
+  },
+  {
+    id: "syl-ai-602",
+    cert: "ct-ai",
+    ch: 6,
+    d: "ai",
+    locales: {
+      pt: {
+        kw: "Teste adversarial e Teste metamórfico para ML (K2/K3)",
+        desc: "Avaliar robustez com perturbações adversariais mínimas (AI-6.1.4); aplicar teste metamórfico derivando pares de entradas e verificando relações metamórficas esperadas (AI-6.1.5 — K3).",
+      },
+      en: {
+        kw: "Adversarial testing & Metamorphic testing for ML (K2/K3)",
+        desc: "Evaluate robustness with minimal adversarial perturbations (AI-6.1.4); apply metamorphic testing by generating paired inputs and checking expected metamorphic relations (AI-6.1.5 — K3).",
+      },
+    },
+  },
+  {
+    id: "syl-ai-603",
+    cert: "ct-ai",
+    ch: 6,
+    d: "ai",
+    locales: {
+      pt: {
+        kw: "Drift, A/B e Back-to-back em modelos ML (K2)",
+        desc: "Detectar data/concept drift em produção (AI-6.1.7); conduzir teste A/B com tráfego real (AI-6.1.9); rodar back-to-back entre pipeline batch e operacional (AI-6.1.10).",
+      },
+      en: {
+        kw: "Drift, A/B and Back-to-back model testing (K2)",
+        desc: "Detect data/concept drift in production (AI-6.1.7); run live-traffic A/B model experiments (AI-6.1.9); run back-to-back tests comparing batch training vs. online serving features (AI-6.1.10).",
+      },
+    },
+  },
+  {
+    id: "syl-ai-701",
+    cert: "ct-ai",
+    ch: 7,
+    d: "ai",
+    locales: {
+      pt: {
+        kw: "Teste de pipeline de ML e MLOps (K2)",
+        desc: "Validar etapas encadeadas (ingestão, pré-processamento, treino, avaliação, entrega), feature store, model registry e automação de retreino (AI-7.1.1).",
+      },
+      en: {
+        kw: "ML pipeline and MLOps testing (K2)",
+        desc: "Validate end-to-end pipeline stages (ingestion, preprocessing, training, evaluation, deployment), feature stores, model registries, and automated retraining triggers (AI-7.1.1).",
+      },
+    },
+  },
+  {
+    id: "syl-ai-702",
+    cert: "ct-ai",
+    ch: 7,
+    d: "ai",
+    locales: {
+      pt: {
+        kw: "Reprodutibilidade e teste de APIs ML (K2)",
+        desc: "Versionar dados, código, ambiente e sementes aleatórias para reprodutibilidade; aplicar teste de API para evitar mau uso de frameworks no treinamento (AI-7.1.2).",
+      },
+      en: {
+        kw: "Reproducibility and ML framework API testing (K2)",
+        desc: "Version data, code, environment, and random seeds for reproducibility; apply API testing to prevent silent framework misuse during training (AI-7.1.2).",
+      },
+    },
+  },
+  {
+    id: "syl-ai-703",
+    cert: "ct-ai",
+    ch: 7,
+    d: "ai",
+    locales: {
+      pt: {
+        kw: "Canário, sombra, blue-green e champion/challenger (K2)",
+        desc: "Padrões de implantação segura em MLOps para reduzir risco ao liberar novos modelos: tráfego gradual (canário), avaliação paralela oculta (sombra), troca instantânea (blue-green).",
+      },
+      en: {
+        kw: "Canary, shadow, blue-green and champion/challenger (K2)",
+        desc: "Safe MLOps deployment patterns to mitigate release risk: progressive traffic (canary), hidden parallel execution (shadow), instant cutover (blue-green).",
       },
     },
   },

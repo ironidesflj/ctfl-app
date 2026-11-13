@@ -197,6 +197,7 @@ const BANK_LOADERS: Record<string, () => Promise<{ default: Bank }>> = {
   ctfl: () => import("./data/banks/ctfl.json"),
   "ctal-ta": () => import("./data/banks/ctal-ta.json"),
   "ctal-tm": () => import("./data/banks/ctal-tm.json"),
+  "ct-ai": () => import("./data/banks/ct-ai.json"),
 };
 
 /* pool exclusivo de simulado (POOLS.md · r13): nunca cruza com o de estudo */
@@ -204,6 +205,7 @@ const EXAM_BANK_LOADERS: Record<string, () => Promise<{ default: Bank }>> = {
   ctfl: () => import("./data/banks/ctfl-exam.json"),
   "ctal-ta": () => import("./data/banks/ctal-ta-exam.json"),
   "ctal-tm": () => import("./data/banks/ctal-tm-exam.json"),
+  "ct-ai": () => import("./data/banks/ct-ai-exam.json"),
 };
 
 /* ---------- rascunho de simulado (fora do estado React — como o v3.18.0,
@@ -558,7 +560,19 @@ export function SynapseProvider({ children }: { children: ReactNode }) {
     [state.lang]
   );
 
-  const cert = useCallback(() => CERTS[state.cert], [state.cert]);
+  const loadedBank = banks[state.cert];
+  const activeCert = useMemo((): Cert => {
+    const base = CERTS[state.cert];
+    if (!loadedBank || !base?.chapters.length) return base;
+    return {
+      ...base,
+      chapters: base.chapters.map((ch) => ({
+        ...ch,
+        total: loadedBank[String(ch.n)]?.length ?? ch.total,
+      })),
+    };
+  }, [state.cert, loadedBank]);
+  const cert = useCallback(() => activeCert, [activeCert]);
   const questionsFor = useCallback((): Bank => banks[state.cert] || {}, [banks, state.cert]);
   /* pool exclusivo de simulado — a fonte única da view Simulado (r13) */
   const examQuestionsFor = useCallback(
@@ -1904,7 +1918,7 @@ export function SynapseProvider({ children }: { children: ReactNode }) {
             localStorage.removeItem(key);
           }
         }
-        for (const cert of ["ctfl", "ctal-ta", "ctal-tm"]) {
+        for (const cert of ["ctfl", "ctal-ta", "ctal-tm", "ct-ai"]) {
           localStorage.removeItem(`synapse.progress.v1.${cert}`);
           localStorage.removeItem(`synapse.examDraft.v1.${cert}`);
         }
