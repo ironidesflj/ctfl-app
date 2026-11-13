@@ -3,7 +3,7 @@
    notas de versão e a copy "o que há de novo". A versão viaja em
    synapse.ver.v1 (marcada como vista quando o usuário fecha as notas). */
 
-export const APP_VERSION = "4.1.0";
+export const APP_VERSION = "4.2.0";
 
 export interface ReleaseCopy {
   eyebrow: string;
@@ -24,29 +24,30 @@ export const CURRENT_RELEASE: {
   significant: true,
   pt: {
     eyebrow: "Novidades da versão",
-    title: "O Synapse ganhou uma nova identidade",
+    title: "CT-AI v2.0 chegou ao Synapse",
     intro:
-      "A nova abertura apresenta a marca em uma animação de profundidade, com tempo para contemplá-la.",
+      "A quarta certificação oficial agora está liberada para estudo, revisão espaçada e simulado pontuado.",
     items: [
-      "Certificação CT-AI v2.0 (AI Testing) liberada com 360 questões, simulado pontuado de 44 pts (corte 29), glossário e cartões em PT/EN.",
-      "Onboarding reconstruído na identidade Caderno: quatro estações nos nós da marca, índice de recursos em filetes, demo interativa com os estilos reais da sessão e FAQ — reabrível a qualquer momento no Sobre.",
-      "Nova marca e abertura 3D em fundo escuro, com transição direta para o próximo passo, sem exibir a interface antes da hora.",
-      "O progresso local da versão 3.18 é migrado ao abrir a atualização; o backup continua disponível em Progresso.",
-      "Teclado e leitor de tela respeitados na abertura: nada focável por baixo do splash, foco inicial no título do diálogo e aviso de app pronto.",
+      "CT-AI v2.0 (AI Testing) no ar com 360 questões nos dois idiomas (243 para estudo e 117 exclusivas de simulado).",
+      "Simulado oficial CT-AI seguindo o blueprint: 40 questões em 60 minutos, 44 pontos possíveis (K1/K2 = 1 pt, K3 = 2 pts) e nota de corte 29.",
+      "Conteúdo de apoio completo nos 7 capítulos em PT/EN: 21 itens de syllabus, 21 flashcards e 21 termos no glossário.",
+      "O catálogo agora soma 4 certificações ativas e 1.810 questões validadas, mantendo seu progresso e backups compatíveis neste dispositivo.",
+      "Você pode reabrir estas notas a qualquer momento pelo botão “Novidades da versão” na aba Sobre.",
     ],
     cta: "Entendi",
     close: "Fechar novidades",
   },
   en: {
     eyebrow: "What's new in",
-    title: "Synapse has a new identity",
-    intro: "The new opening presents the brand with a depth animation and time to take it in.",
+    title: "CT-AI v2.0 is live on Synapse",
+    intro:
+      "Our fourth official certification track is now unlocked for study, spaced repetition, and weighted mock exams.",
     items: [
-      "CT-AI v2.0 (AI Testing) certification launched with 360 questions, 44-point weighted exam (pass 29), plus PT/EN glossary and flashcards.",
-      "Onboarding rebuilt in the Caderno identity: four stations on the brand's nodes, a hairline feature index, an interactive demo with the real session styles and an FAQ — reopenable anytime from About.",
-      "New brand and 3D opening on a dark background, transitioning directly to the next step without showing the interface too early.",
-      "Local progress from version 3.18 is migrated when the update opens; backups remain available in Progress.",
-      "Keyboard and screen-reader respect throughout the opening: nothing focusable under the splash, initial focus on the dialog title and a polite app-ready announcement.",
+      "CT-AI v2.0 (AI Testing) launched with 360 bilingual questions (243 for study and 117 reserved for mock exams).",
+      "Official CT-AI mock exam aligned with the blueprint: 40 questions in 60 minutes, 44 possible points (K1/K2 = 1 pt, K3 = 2 pts), pass mark 29.",
+      "Full study companion content across all 7 chapters in PT/EN: 21 syllabus objectives, 21 flashcards, and 21 glossary terms.",
+      "The catalog now brings together 4 active certifications and 1,810 validated questions, preserving your local progress and backups.",
+      "You can reopen these release notes anytime from the “What's new” button on the About tab.",
     ],
     cta: "Got it",
     close: "Close release notes",

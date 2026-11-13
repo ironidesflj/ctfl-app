@@ -2,6 +2,7 @@ import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import App from "../../App.jsx";
 import ctAiExam from "../data/banks/ct-ai-exam.json";
+import { APP_VERSION } from "../data/releases";
 
 /**
  * Cobertura do fluxo de simulado na view viva `src/synapse/views/Simulado.tsx`.
@@ -44,7 +45,7 @@ beforeEach(() => {
   window.history.replaceState(null, "", "/");
   localStorage.clear();
   localStorage.setItem("synapse.onboarding.v2", "1");
-  localStorage.setItem("synapse.ver.v1", "4.1.0");
+  localStorage.setItem("synapse.ver.v1", APP_VERSION);
 });
 
 afterEach(cleanup);

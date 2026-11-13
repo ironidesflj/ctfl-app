@@ -500,7 +500,15 @@ export function Shell() {
         }}
       />
       {ss.howOpen ? <Onboarding variant="dialog" onDismiss={() => ss.setHowOpen(false)} /> : null}
-      <InstallPrompt active={bootSettled && !ss.howOpen} />
+      {ss.releaseNotesOpen ? (
+        <ReleaseNotes
+          onDismiss={() => {
+            markVersionSeen();
+            ss.setReleaseNotesOpen(false);
+          }}
+        />
+      ) : null}
+      <InstallPrompt active={bootSettled && !ss.howOpen && !ss.releaseNotesOpen} />
       <UpdateToast />
     </>
   );

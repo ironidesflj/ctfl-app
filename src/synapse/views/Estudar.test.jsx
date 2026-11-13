@@ -2,6 +2,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import App from "../../App.jsx";
 import { getBank } from "../../lib/bank.js";
+import { APP_VERSION } from "../data/releases";
 
 /**
  * Regressão do PR #17: a tela Estudar precisa embaralhar as alternativas
@@ -41,7 +42,7 @@ beforeEach(() => {
   window.history.replaceState(null, "", "/");
   localStorage.clear();
   localStorage.setItem("synapse.onboarding.v2", "1");
-  localStorage.setItem("synapse.ver.v1", "4.1.0");
+  localStorage.setItem("synapse.ver.v1", APP_VERSION);
   vi.spyOn(Math, "random").mockReturnValue(0);
 });
 
