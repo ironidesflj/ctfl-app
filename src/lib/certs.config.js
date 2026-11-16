@@ -217,4 +217,96 @@ export const CERTS = {
       },
     ],
   },
+  "ctal-at": {
+    id: "ctal-at",
+    label: "CTAL-AT",
+    version: "v2.0",
+    syllabusYear: 2026,
+    chapters: [
+      {
+        chapter: 1,
+        domain: "agile",
+        pt: {
+          name: "Teste no Desenv. Ágil",
+          sub: "Princípios, Níveis, Conformidade e Regressão em Ágil",
+          short: "Ágil",
+        },
+        en: {
+          name: "Testing in Agile",
+          sub: "Principles, Levels, Compliance & Regression in Agile",
+          short: "Agile",
+        },
+      },
+      {
+        chapter: 2,
+        domain: "agile",
+        pt: {
+          name: "Times e Colaboração",
+          sub: "Competências, Whole-Team e Feedback Precoce",
+          short: "Times",
+        },
+        en: {
+          name: "Agile Teams & Skills",
+          sub: "Skills, Whole-Team Approach & Early Feedback",
+          short: "Teams",
+        },
+      },
+      {
+        chapter: 3,
+        domain: "agile",
+        pt: {
+          name: "Gestão e Métricas Ágeis",
+          sub: "Planejamento, Quadrantes, Métricas e Melhoria",
+          short: "Gestão",
+        },
+        en: {
+          name: "Agile Test Management",
+          sub: "Planning, Quadrants, Metrics & Improvement",
+          short: "Management",
+        },
+      },
+      {
+        chapter: 4,
+        domain: "agile",
+        pt: {
+          name: "ATDD, BDD e Histórias",
+          sub: "Design por Exemplos, Viés e Fatiamento de Histórias",
+          short: "ATDD/BDD",
+        },
+        en: {
+          name: "ATDD, BDD & Stories",
+          sub: "Example-Based Design, Confirmation Bias & Story Slicing",
+          short: "ATDD/BDD",
+        },
+      },
+      {
+        chapter: 5,
+        domain: "agile",
+        pt: {
+          name: "Teste Exploratório e Colab.",
+          sub: "Heurísticas, Tours, Charters, Mob, Pair, Vibe e Smells",
+          short: "Exploratório",
+        },
+        en: {
+          name: "Exploratory & Collab.",
+          sub: "Heuristics, Tours, Charters, Mob, Pair, Vibe & Smells",
+          short: "Exploratory",
+        },
+      },
+      {
+        chapter: 6,
+        domain: "agile",
+        pt: {
+          name: "Ferramentas e Automação",
+          sub: "Estratégia de Automação, Camadas e Seleção de Ferramentas",
+          short: "Ferramentas",
+        },
+        en: {
+          name: "Agile Tools & Automation",
+          sub: "Automation Strategy, Layers & Tool Adoption",
+          short: "Tools",
+        },
+      },
+    ],
+  },
 };

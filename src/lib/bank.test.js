@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { getBank } from "./bank.js";
 
-describe.each(["ctfl", "ctal-ta", "ctal-tm", "ct-ai"])(
+describe.each(["ctfl", "ctal-ta", "ctal-tm", "ct-ai", "ctal-at"])(
   "bank(%s) - distribuição do simulado",
   (certId) => {
     it("buildExamInLang segue os pesos oficiais por capítulo, sem filler aleatório", () => {

@@ -45,11 +45,11 @@ export const CERT_CATALOG = [
     version: "v2.0",
   },
   {
-    id: "ctal-at-v2",
-    status: "coming-soon",
+    id: "ctal-at",
+    status: "live",
     mark: "AT",
     label: "CTAL-AT",
-    fullName: "Advanced Test Automation",
+    fullName: "Agile Tester",
     version: "v2.0",
   },
   {

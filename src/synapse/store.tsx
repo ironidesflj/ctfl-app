@@ -199,6 +199,7 @@ const BANK_LOADERS: Record<string, () => Promise<{ default: Bank }>> = {
   "ctal-ta": () => import("./data/banks/ctal-ta.json"),
   "ctal-tm": () => import("./data/banks/ctal-tm.json"),
   "ct-ai": () => import("./data/banks/ct-ai.json"),
+  "ctal-at": () => import("./data/banks/ctal-at.json"),
 };
 
 /* pool exclusivo de simulado (POOLS.md · r13): nunca cruza com o de estudo */
@@ -207,6 +208,7 @@ const EXAM_BANK_LOADERS: Record<string, () => Promise<{ default: Bank }>> = {
   "ctal-ta": () => import("./data/banks/ctal-ta-exam.json"),
   "ctal-tm": () => import("./data/banks/ctal-tm-exam.json"),
   "ct-ai": () => import("./data/banks/ct-ai-exam.json"),
+  "ctal-at": () => import("./data/banks/ctal-at-exam.json"),
 };
 
 /* ---------- rascunho de simulado (fora do estado React — como o v3.18.0,

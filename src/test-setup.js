@@ -11,4 +11,5 @@ await Promise.all([
   loadBankFor("ctal-ta"),
   loadBankFor("ctal-tm"),
   loadBankFor("ct-ai"),
+  loadBankFor("ctal-at"),
 ]);

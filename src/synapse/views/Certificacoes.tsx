@@ -26,6 +26,8 @@ interface CertCopy {
   availableSub: string;
   soon: string;
   soonSub: string;
+  archive: string;
+  archiveSub: string;
   soonNote: string;
   legacyNote: string;
   facts: string;
@@ -51,6 +53,8 @@ const COPY: Record<Lang, CertCopy> = {
     availableSub: "{n} provas com banco e regras oficiais",
     soon: "Em preparação",
     soonSub: "Sem banco, não há o que estudar",
+    archive: "Arquivo",
+    archiveSub: "Conteúdo legado sem acesso",
     soonNote: "Provas em preparação não abrem. Nenhuma data é prometida.",
     legacyNote: "CTFL-AT permanece como arquivo, com conteúdo congelado e sem acesso.",
     facts: "{q} questões · {min} min · corte {pass}",
@@ -74,6 +78,8 @@ const COPY: Record<Lang, CertCopy> = {
     availableSub: "{n} exams with a bank and official rules",
     soon: "In preparation",
     soonSub: "No bank, nothing to study",
+    archive: "Archive",
+    archiveSub: "Legacy content without access",
     soonNote: "Exams in preparation do not open. No date is promised.",
     legacyNote: "CTFL-AT remains as an archive, with frozen content and no access.",
     facts: "{q} questions · {min} min · pass {pass}",
@@ -277,47 +283,49 @@ export function Certificacoes() {
         </div>
       </section>
 
-      <section
-        className="cert-section"
-        data-od-id="certificacoes-em-breve"
-        aria-labelledby="soonTitle"
-      >
-        <div className="pg-head">
-          <h2 id="soonTitle">{copy.soon}</h2>
-          <span>{copy.soonSub}</span>
-        </div>
-        <div className="cert-grid">
-          {soon.concat(legacy).map((id) => {
-            const cert = CERTS[id];
-            const badge = cert.status === "soon" ? copy.soonBadge : copy.legacyBadge;
-            return (
-              /* protótipo: aria-disabled no tile sem banco — sinal explícito
-                 de que a prova não abre; jsx-a11y não aceita em role article. */
-              // eslint-disable-next-line jsx-a11y/role-supports-aria-props
-              <article
-                key={id}
-                className={`cert-tile is-${cert.status}`}
-                aria-disabled="true"
-                style={tileStyle(id)}
-              >
-                <span className="ct-top">
-                  <span className="ct-code">{cert.code}</span>
-                  <span className="ct-ver">{cert.version}</span>
-                  <span className="ct-badge muted">{badge}</span>
-                </span>
-                <Constellation id={id} />
-                <span className="ct-name">{cert.name}</span>
-                <span className="ct-facts">
-                  {cert.status === "soon" ? copy.soonSub : copy.noBank}
-                </span>
-              </article>
-            );
-          })}
-        </div>
-        <p className="pg-note">
-          {copy.soonNote} {copy.legacyNote}
-        </p>
-      </section>
+      {soon.length > 0 || legacy.length > 0 ? (
+        <section
+          className="cert-section"
+          data-od-id="certificacoes-em-breve"
+          aria-labelledby="soonTitle"
+        >
+          <div className="pg-head">
+            <h2 id="soonTitle">{soon.length > 0 ? copy.soon : copy.archive}</h2>
+            <span>{soon.length > 0 ? copy.soonSub : copy.archiveSub}</span>
+          </div>
+          <div className="cert-grid">
+            {soon.concat(legacy).map((id) => {
+              const cert = CERTS[id];
+              const badge = cert.status === "soon" ? copy.soonBadge : copy.legacyBadge;
+              return (
+                /* protótipo: aria-disabled no tile sem banco — sinal explícito
+                   de que a prova não abre; jsx-a11y não aceita em role article. */
+                // eslint-disable-next-line jsx-a11y/role-supports-aria-props
+                <article
+                  key={id}
+                  className={`cert-tile is-${cert.status}`}
+                  aria-disabled="true"
+                  style={tileStyle(id)}
+                >
+                  <span className="ct-top">
+                    <span className="ct-code">{cert.code}</span>
+                    <span className="ct-ver">{cert.version}</span>
+                    <span className="ct-badge muted">{badge}</span>
+                  </span>
+                  <Constellation id={id} />
+                  <span className="ct-name">{cert.name}</span>
+                  <span className="ct-facts">
+                    {cert.status === "soon" ? copy.soonSub : copy.noBank}
+                  </span>
+                </article>
+              );
+            })}
+          </div>
+          <p className="pg-note">
+            {soon.length > 0 ? `${copy.soonNote} ${copy.legacyNote}` : copy.legacyNote}
+          </p>
+        </section>
+      ) : null}
 
       <ViewFoot label={copy.footnote} tail={`Synapse · ${copy.kicker}`} />
     </>

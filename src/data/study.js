@@ -1293,6 +1293,296 @@ export const FLASHCARDS = [
       },
     },
   },
+
+  /* ─────────── CTAL-AT v2.0 (18 cartões, Ch 1-6) ─────────── */
+  {
+    id: "fc-at-101",
+    cert: "ctal-at",
+    ch: 1,
+    d: "agile",
+    locales: {
+      pt: {
+        front: "Objetivos de teste na iteração, integração sistêmica e iterações de hardening",
+        back: "NA ITERAÇÃO: escolhe-se o tipo de teste pelos objetivos, critérios de aceite, riscos de qualidade e velocidade de feedback\nHARDENING / RELEASE: útil próximo ao release ou quando novos pontos de integração sistêmicos exigem estabilização integrada além de uma história isolada (AT-1.1.1 / 1.2.1)",
+      },
+      en: {
+        front: "Iteration test objectives, system integration & hardening iterations",
+        back: "ITERATION: choose test types by iteration context, acceptance criteria, quality risks, and feedback needs\nHARDENING: appropriate near release or when cross-feature system-wide integration points arise beyond single stories (AT-1.1.1 / 1.2.1)",
+      },
+    },
+  },
+  {
+    id: "fc-at-102",
+    cert: "ctal-at",
+    ch: 1,
+    d: "agile",
+    locales: {
+      pt: {
+        front: "Conformidade regulatória em contexto ágil",
+        back: "NÃO significa abandonar o ágil nem burocratizar tudo: concentra-se o teste formal e a rastreabilidade nos requisitos regulatórios e áreas críticas, mantendo evidências auditáveis integradas ao fluxo da equipe (AT-1.3.1)",
+      },
+      en: {
+        front: "Regulatory compliance in agile development",
+        back: "Focus formal testing, audit evidence, and strict traceability on regulated requirements and high-risk areas without bogging down the rest of the agile backlog (AT-1.3.1)",
+      },
+    },
+  },
+  {
+    id: "fc-at-103",
+    cert: "ctal-at",
+    ch: 1,
+    d: "agile",
+    locales: {
+      pt: {
+        front: "Regressão contínua e incremental em projetos ágeis",
+        back: "Suítes automatizadas disparam subconjuntos direcionados a cada commit ou evento de integração em CI, garantindo detecção precoce sem esperar o fim do release (AT-1.4.1)",
+      },
+      en: {
+        front: "Incremental continuous regression testing in Agile",
+        back: "Automated suites trigger targeted subsets on every commit or CI integration event so regressions are caught early within the iteration (AT-1.4.1)",
+      },
+    },
+  },
+  {
+    id: "fc-at-201",
+    cert: "ctal-at",
+    ch: 2,
+    d: "agile",
+    locales: {
+      pt: {
+        front: "Abordagem whole-team e quebra de silos de automação",
+        back: "WHOLE-TEAM: qualidade é responsabilidade compartilhada de negócio, devs e testadores — mas competências especializadas (exploratório, usabilidade, estratégia) continuam essenciais\nANTI-SILO: pareamento em automação elimina gargalos quando um especialista se ausenta (AT-2.1.1)",
+      },
+      en: {
+        front: "Whole-team approach & breaking automation silos",
+        back: "WHOLE-TEAM: quality is shared across business, developers, and testers — yet specialist skills (exploratory, usability) remain vital\nANTI-SILO: pairing on automation prevents bottlenecks when one specialist is away (AT-2.1.1)",
+      },
+    },
+  },
+  {
+    id: "fc-at-202",
+    cert: "ctal-at",
+    ch: 2,
+    d: "agile",
+    locales: {
+      pt: {
+        front: "Negócio no ciclo de teste e custo do feedback precoce",
+        back: "REPRESENTANTES DE NEGÓCIO: atuam desde o início definindo critérios de aceitação e testes voltados ao negócio (não apenas homologando no fim)\nFEEDBACK PRECOCE: barateia correção de defeitos e evita refatorações tardias (AT-2.1.2 / 2.1.3)",
+      },
+      en: {
+        front: "Business involvement & economics of early test feedback",
+        back: "BUSINESS REPS: engage early shaping acceptance criteria and business-facing tests (not late sign-off)\nEARLY FEEDBACK: detects defects while fixes are cheap and design alignment is flexible (AT-2.1.2 / 2.1.3)",
+      },
+    },
+  },
+  {
+    id: "fc-at-203",
+    cert: "ctal-at",
+    ch: 2,
+    d: "agile",
+    locales: {
+      pt: {
+        front: "Tissue testing (olhos frescos) × teste rigoroso estruturado",
+        back: "TISSUE TESTING: sessões curtas e informais com pessoas externas ao time sobre protótipos/fluxos iniciais → feedback barato revela ruídos de compreensão cedo\nNÃO substitui testes estruturados posteriores, apenas orienta o design antes de comprometer esforço pesado (AT-2.2.1)",
+      },
+      en: {
+        front: "Tissue testing (fresh eyes) vs. formal validation",
+        back: "TISSUE TESTING: quick informal feedback from people outside the team on early prototypes/flows → surfaces UX misalignment cheaply\nComplements rather than replaces rigorous structured testing later on (AT-2.2.1)",
+      },
+    },
+  },
+  {
+    id: "fc-at-301",
+    cert: "ctal-at",
+    ch: 3,
+    d: "agile",
+    locales: {
+      pt: {
+        front: "Planejamento na iteração e os 4 Quadrantes de Teste Ágeis",
+        back: "PLANEJAMENTO: ambientes e dados estáveis desde o dia 1 (teste ocorre contínuo)\nQ1 (tecnologia, apoio ao time): unitários/componentes\nQ2 (negócio, apoio ao time): funcionais, BDD, exemplos\nQ3 (negócio, crítica ao produto): exploratório, usabilidade\nQ4 (tecnologia, crítica): desempenho, segurança, auditoria (AT-3.1.1 / 3.1.2)",
+      },
+      en: {
+        front: "Iteration test planning & the 4 Agile Testing Quadrants",
+        back: "PLANNING: keep environments and test data ready from day 1\nQ1 (tech, team-supporting): unit/component\nQ2 (business, team-supporting): functional, BDD, examples\nQ3 (business, product-critiquing): exploratory, usability\nQ4 (tech, critiquing): performance, security, compliance (AT-3.1.1 / 3.1.2)",
+      },
+    },
+  },
+  {
+    id: "fc-at-302",
+    cert: "ctal-at",
+    ch: 3,
+    d: "agile",
+    locales: {
+      pt: {
+        front: "Métricas ágeis leves (burndown, CFD) e cobertura de infraestrutura",
+        back: "MÉTRICAS LEVES: painéis automatizados (burndown, fluxo acumulado CFD) dão visibilidade em tempo real sem burocracia\nCOBERTURA DE INFRA/AMBIENTE: evidencia plataformas, navegadores, configurações e APIs externas realmente exercitadas (AT-3.2.1 / 3.3.1)",
+      },
+      en: {
+        front: "Lightweight agile metrics (burndown, CFD) & environment coverage",
+        back: "LIGHTWEIGHT METRICS: automated dashboards (burndown, cumulative flow) keep test status visible continuously\nINFRA COVERAGE: tracks platforms, configurations, and external API integrations actually tested (AT-3.2.1 / 3.3.1)",
+      },
+    },
+  },
+  {
+    id: "fc-at-303",
+    cert: "ctal-at",
+    ch: 3,
+    d: "agile",
+    locales: {
+      pt: {
+        front: "Caos/Canário em produção e retrospectivas específicas de teste",
+        back: "RESILIÊNCIA EM PRODUÇÃO (K4): chaos testing + liberações canário com feature toggles/dark launches validam comportamento operacional controlado\nRETRO DE TESTE: distinta da retro geral quando falhas de processo, escapes ou automação pedem foco dedicado (AT-3.4.1 / 3.4.2)",
+      },
+      en: {
+        front: "Chaos/canary releases & test-specific retrospectives",
+        back: "OPERATIONAL RESILIENCE (K4): combine chaos testing, canary rollouts, feature toggles, and dark launches under monitoring\nTEST RETRO: separate from general sprint retros when test effectiveness or escapes need deep root-cause focus (AT-3.4.1 / 3.4.2)",
+      },
+    },
+  },
+  {
+    id: "fc-at-401",
+    cert: "ctal-at",
+    ch: 4,
+    d: "agile",
+    locales: {
+      pt: {
+        front: "ATDD/BDD como requisitos vivos, Storyboarding e Testboarding",
+        back: "ATDD/BDD: exemplos e critérios executáveis viram requisitos vivos que orientam o código e perduram na regressão\nSTORYBOARDING: expõe a jornada em cenas para revelar premissas e fluxos faltantes\nTESTBOARDING: valida critérios concretos contra o comportamento desejado (AT-4.1.1 / 4.1.2)",
+      },
+      en: {
+        front: "ATDD/BDD living requirements, Storyboarding & Testboarding",
+        back: "ATDD/BDD: executable acceptance examples steer development and remain as regression specs\nSTORYBOARDING: lays out the user journey in scenes to surface missing paths\nTESTBOARDING: validates criteria with concrete scenarios (AT-4.1.1 / 4.1.2)",
+      },
+    },
+  },
+  {
+    id: "fc-at-402",
+    cert: "ctal-at",
+    ch: 4,
+    d: "agile",
+    locales: {
+      pt: {
+        front: "Example Mapping, Viés de Confirmação e Fatiamento de Histórias",
+        back: "EXAMPLE MAPPING: ancora regras abstratas em exemplos acordados antes do código\nVIÉS DE CONFIRMAÇÃO: perigo de só testar casos felizes que confirmam o código — combata com casos de borda/falha\nFATIAMENTO (K3): reescrever critérios de aceite por fatia com um resultado estreito independente (AT-4.1.3 / 4.1.4 / 4.1.5)",
+      },
+      en: {
+        front: "Example Mapping, Confirmation Bias & Story Slicing",
+        back: "EXAMPLE MAPPING: turns abstract business rules into shared examples and open questions\nCONFIRMATION BIAS: testing only happy paths — counter by explicitly designing negative/edge cases\nSLICING (K3): rewrite narrow, independently testable acceptance criteria per story slice (AT-4.1.3 / 4.1.4 / 4.1.5)",
+      },
+    },
+  },
+  {
+    id: "fc-at-403",
+    cert: "ctal-at",
+    ch: 4,
+    d: "agile",
+    locales: {
+      pt: {
+        front: "Histórias em texto livre com glossário de termos do domínio",
+        back: "Sem linguagem ubíqua compartilhada, times usam o mesmo termo com sentidos conflitantes → manter histórias simples acompanhadas de um glossário vivo de domínio alinha negócio, dev e teste (AT-4.2.1)",
+      },
+      en: {
+        front: "Free-form user stories backed by a domain glossary",
+        back: "When roles interpret domain terms differently, combine lightweight free-form user stories with a shared domain glossary to keep acceptance criteria unambiguous (AT-4.2.1)",
+      },
+    },
+  },
+  {
+    id: "fc-at-501",
+    cert: "ctal-at",
+    ch: 5,
+    d: "agile",
+    locales: {
+      pt: {
+        front: "Heurísticas (RCRCRC), Tours de Teste e Charters Exploratórios",
+        back: "HEURÍSTICAS: RCRCRC (Recent, Core, Risky, Config, Repaired, Chronic) prioriza regressão/exploração\nTOURS: Business District (funções centrais), Historical District, etc. organizam cobertura exploratória\nCHARTERS (K3–K4): missão com ator, propósito e risco quando requisitos mudam rápido (AT-5.1.1..5.1.5)",
+      },
+      en: {
+        front: "Heuristics (RCRCRC), Test Tours & Exploratory Charters",
+        back: "HEURISTICS: RCRCRC prioritizes regression & exploration (Recent, Core, Risky, Config, Repaired, Chronic)\nTOURS: Business District, Historical District, etc. structure exploratory coverage\nCHARTERS (K3–K4): frame actor, objective, and risk when specs evolve fast (AT-5.1.1..5.1.5)",
+      },
+    },
+  },
+  {
+    id: "fc-at-502",
+    cert: "ctal-at",
+    ch: 5,
+    d: "agile",
+    locales: {
+      pt: {
+        front: "Mob Testing, Pair Testing e Vibe Testing",
+        back: "MOB: grupo inteiro no mesmo problema (driver no teclado, navigator decide ações, mob sugere) + moderador fora da rotação\nPAIR: 2 pessoas (driver + navigator/observador) investigam juntas\nVIBE TESTING: ao avaliar UI gerada por IA (vibe coding), valide primeiro a INTENÇÃO do usuário antes do que a tela mostra (AT-5.2.1..5.2.3)",
+      },
+      en: {
+        front: "Mob Testing, Pair Testing & Vibe Testing",
+        back: "MOB: whole group tests together (rotating driver/navigator) while moderator stays outside rotation to guard flow\nPAIR: two collaborators inspect the same test object together\nVIBE TESTING: with AI-generated code, apply intent-first validation before accepting observed behavior (AT-5.2.1..5.2.3)",
+      },
+    },
+  },
+  {
+    id: "fc-at-503",
+    cert: "ctal-at",
+    ch: 5,
+    d: "agile",
+    locales: {
+      pt: {
+        front: "Test Smells ágeis: Interdependent Tests × One More Step",
+        back: "INTERDEPENDENT TESTS: um caso exige execução/dados residuais de outro — corrija tornando testes independentes e autocontidos\nONE MORE STEP: resultados esperados genéricos falham em verificar efeitos colaterais; adicione verificações extras explícitas ('conferir', 'validar') (AT-5.3.1)",
+      },
+      en: {
+        front: "Agile Test Smells: Interdependent Tests vs. One More Step",
+        back: "INTERDEPENDENT TESTS: a case relies on side effects or ordering from another test — fix by isolating setup/teardown\nONE MORE STEP: include extra explicit verification actions (check, verify state) in expected results to avoid blind spots (AT-5.3.1)",
+      },
+    },
+  },
+  {
+    id: "fc-at-601",
+    cert: "ctal-at",
+    ch: 6,
+    d: "agile",
+    locales: {
+      pt: {
+        front: "Por que 'automatizar 100% tudo' é um erro no desenvolvimento ágil?",
+        back: "Automação dá feedback rápido e repetível de regressão (Q1/Q2/Q4), mas NÃO substitui teste exploratório, avaliação de usabilidade e heurísticas humanas sob incerteza (Q3) — o objetivo é equilíbrio pelo risco e ROI (AT-6.1.1)",
+      },
+      en: {
+        front: "Why '100% test automation' is a mistake in agile projects",
+        back: "Automation excels at fast, repeatable regression checks, but complements rather than replaces human exploratory testing, usability insight, and adaptive risk discovery (AT-6.1.1)",
+      },
+    },
+  },
+  {
+    id: "fc-at-602",
+    cert: "ctal-at",
+    ch: 6,
+    d: "agile",
+    locales: {
+      pt: {
+        front: "Critérios para selecionar ferramentas e camadas de automação em ágil",
+        back: "Nunca escolha ferramenta por modismo: avalie aderência à estratégia de teste, suporte às camadas da pirâmide (unidade, API, UI), integração com CI/CD e esforço contínuo de manutenção (AT-6.2.1)",
+      },
+      en: {
+        front: "Selecting agile tools aligned with strategy & automation layers",
+        back: "Avoid hype-driven adoption: evaluate alignment with the test strategy, automation layers (unit/API/UI), CI/CD integration, feedback speed, and maintenance cost (AT-6.2.1)",
+      },
+    },
+  },
+  {
+    id: "fc-at-603",
+    cert: "ctal-at",
+    ch: 6,
+    d: "agile",
+    locales: {
+      pt: {
+        front: "Onde ferramentas de IA agregam valor direto em equipes ágeis",
+        back: "Analisar user stories para apontar ambiguidades e critérios de aceitação faltantes, apoiar design de casos de teste e gerar dados realistas cobrindo casos de borda sem substituir julgamento crítico (AT-6.2.1)",
+      },
+      en: {
+        front: "Where AI tools add value in agile testing workflows",
+        back: "Analyzing user stories to detect ambiguity and missing acceptance criteria, suggesting test conditions, and synthesizing realistic edge-case data alongside human review (AT-6.2.1)",
+      },
+    },
+  },
 ];
 
 export const SYLLABUS_ITEMS = [
@@ -2464,6 +2754,296 @@ export const SYLLABUS_ITEMS = [
       en: {
         kw: "Canary, shadow, blue-green and champion/challenger (K2)",
         desc: "Safe MLOps deployment patterns to mitigate release risk: progressive traffic (canary), hidden parallel execution (shadow), instant cutover (blue-green).",
+      },
+    },
+  },
+
+  /* ─────────── CTAL-AT v2.0 (18 tópicos, Ch 1-6) ─────────── */
+  {
+    id: "syl-at-101",
+    cert: "ctal-at",
+    ch: 1,
+    d: "agile",
+    locales: {
+      pt: {
+        kw: "Objetivos de teste na iteração e iterações de hardening (K2)",
+        desc: "Selecionar tipos de teste pelo contexto, riscos e critérios de aceite da iteração; usar hardening próximo ao release quando a integração sistêmica exigir estabilização dedicada (AT-1.1.1 / 1.2.1).",
+      },
+      en: {
+        kw: "Iteration test objectives & hardening iterations (K2)",
+        desc: "Select test types by iteration goals, quality risks, and acceptance criteria; apply hardening near release when cross-system integration calls for stabilization (AT-1.1.1 / 1.2.1).",
+      },
+    },
+  },
+  {
+    id: "syl-at-102",
+    cert: "ctal-at",
+    ch: 1,
+    d: "agile",
+    locales: {
+      pt: {
+        kw: "Conformidade regulatória em contexto ágil (K2)",
+        desc: "Concentrar teste formal, rastreabilidade e evidências auditáveis nos requisitos regulatórios e módulos críticos sem impor burocracia desnecessária ao restante do backlog (AT-1.3.1).",
+      },
+      en: {
+        kw: "Regulatory compliance in agile testing (K2)",
+        desc: "Focus formal testing, traceability, and audit evidence on regulatory requirements and critical areas while preserving agile flow elsewhere (AT-1.3.1).",
+      },
+    },
+  },
+  {
+    id: "syl-at-103",
+    cert: "ctal-at",
+    ch: 1,
+    d: "agile",
+    locales: {
+      pt: {
+        kw: "Regressão contínua e incremental (K2)",
+        desc: "Acionar subconjuntos automatizados da suíte de regressão a cada commit ou evento de integração em CI para capturar regressões cedo dentro da iteração (AT-1.4.1).",
+      },
+      en: {
+        kw: "Continuous incremental regression testing (K2)",
+        desc: "Trigger targeted regression subsets automatically at each commit or CI integration step to surface regressions early within the iteration (AT-1.4.1).",
+      },
+    },
+  },
+  {
+    id: "syl-at-201",
+    cert: "ctal-at",
+    ch: 2,
+    d: "agile",
+    locales: {
+      pt: {
+        kw: "Abordagem whole-team e quebra de silos (K2)",
+        desc: "Compartilhar responsabilidade pela qualidade entre todo o time via pareamento e troca de habilidades, preservando especialistas onde o domínio exige (AT-2.1.1).",
+      },
+      en: {
+        kw: "Whole-team approach & breaking silos (K2)",
+        desc: "Share quality ownership across the cross-functional team through pairing and cross-skilling while retaining specialist depth where needed (AT-2.1.1).",
+      },
+    },
+  },
+  {
+    id: "syl-at-202",
+    cert: "ctal-at",
+    ch: 2,
+    d: "agile",
+    locales: {
+      pt: {
+        kw: "Negócio no início e valor do feedback precoce (K2)",
+        desc: "Envolver representantes de negócio na criação dos critérios e testes de aceitação desde o início, reduzindo custo de retrabalho e defeitos tardios (AT-2.1.2 / 2.1.3).",
+      },
+      en: {
+        kw: "Early business engagement & early feedback economics (K2)",
+        desc: "Bring business representatives into acceptance criteria and business-facing test design early to cut defect remediation cost (AT-2.1.2 / 2.1.3).",
+      },
+    },
+  },
+  {
+    id: "syl-at-203",
+    cert: "ctal-at",
+    ch: 2,
+    d: "agile",
+    locales: {
+      pt: {
+        kw: "Tissue testing e avaliação com olhos frescos (K2)",
+        desc: "Coletar feedback informal e rápido de pessoas externas ao time sobre protótipos iniciais, complementando validações estruturadas posteriores (AT-2.2.1).",
+      },
+      en: {
+        kw: "Tissue testing & fresh-eyes feedback (K2)",
+        desc: "Gather fast, informal feedback from outside the team on early prototypes or flows, complementing structured testing later on (AT-2.2.1).",
+      },
+    },
+  },
+  {
+    id: "syl-at-301",
+    cert: "ctal-at",
+    ch: 3,
+    d: "agile",
+    locales: {
+      pt: {
+        kw: "Planejamento na iteração e Quadrantes Q1–Q4 (K2/K4)",
+        desc: "Garantir dados e ambientes estáveis desde o início da iteração; balancear Q1–Q4 e reforçar rastreabilidade em Q2/Q4 quando houver conformidade (AT-3.1.1 / 3.1.2).",
+      },
+      en: {
+        kw: "Iteration planning & Agile Quadrants Q1–Q4 (K2/K4)",
+        desc: "Keep test data and environments stable from day 1; balance Q1–Q4 and strengthen traceable Q2/Q4 evidence for regulated releases (AT-3.1.1 / 3.1.2).",
+      },
+    },
+  },
+  {
+    id: "syl-at-302",
+    cert: "ctal-at",
+    ch: 3,
+    d: "agile",
+    locales: {
+      pt: {
+        kw: "Métricas leves e cobertura de infraestrutura (K2)",
+        desc: "Acompanhar evolução via painéis automáticos (burndown, CFD) e evidenciar plataformas, configurações e APIs cobertas em cada iteração (AT-3.2.1 / 3.3.1).",
+      },
+      en: {
+        kw: "Lightweight metrics & infrastructure coverage (K2)",
+        desc: "Monitor progress via automated dashboards (burndown, CFD) and track platforms, environments, and APIs exercised (AT-3.2.1 / 3.3.1).",
+      },
+    },
+  },
+  {
+    id: "syl-at-303",
+    cert: "ctal-at",
+    ch: 3,
+    d: "agile",
+    locales: {
+      pt: {
+        kw: "Caos/canário e retrospectivas específicas de teste (K4/K2)",
+        desc: "Avaliar resiliência operacional com testes de caos, liberações canário, feature toggles e dark launches; conduzir retrospectivas focadas em teste quando necessário (AT-3.4.1 / 3.4.2).",
+      },
+      en: {
+        kw: "Chaos/canary testing & test-specific retrospectives (K4/K2)",
+        desc: "Verify operational resilience with chaos testing, canary releases, feature toggles, and dark launches; run dedicated test retrospectives when systemic quality issues arise (AT-3.4.1 / 3.4.2).",
+      },
+    },
+  },
+  {
+    id: "syl-at-401",
+    cert: "ctal-at",
+    ch: 4,
+    d: "agile",
+    locales: {
+      pt: {
+        kw: "ATDD/BDD, Storyboarding e Testboarding (K2)",
+        desc: "Incorporar exemplos executáveis como requisitos vivos; usar storyboarding para expor jornadas e testboarding para validar critérios concretos (AT-4.1.1 / 4.1.2).",
+      },
+      en: {
+        kw: "ATDD/BDD, Storyboarding & Testboarding (K2)",
+        desc: "Embed executable examples as living requirements; use storyboarding to map user journeys and testboarding to challenge criteria (AT-4.1.1 / 4.1.2).",
+      },
+    },
+  },
+  {
+    id: "syl-at-402",
+    cert: "ctal-at",
+    ch: 4,
+    d: "agile",
+    locales: {
+      pt: {
+        kw: "Example Mapping, viés de confirmação e fatiamento (K2/K3)",
+        desc: "Reduzir ambiguidade com mapeamento por exemplos; combater viés de confirmação com casos negativos; reescrever critérios estreitos por fatia de história (AT-4.1.3..4.1.5).",
+      },
+      en: {
+        kw: "Example Mapping, confirmation bias & story slicing (K2/K3)",
+        desc: "Resolve ambiguity via example mapping; counter confirmation bias with negative scenarios; rewrite narrow acceptance criteria per slice (AT-4.1.3..4.1.5).",
+      },
+    },
+  },
+  {
+    id: "syl-at-403",
+    cert: "ctal-at",
+    ch: 4,
+    d: "agile",
+    locales: {
+      pt: {
+        kw: "Glossário de domínio junto a histórias em texto livre (K2)",
+        desc: "Combinar histórias leves em linguagem natural com um glossário vivo de termos de negócio para eliminar sentidos conflitantes entre áreas (AT-4.2.1).",
+      },
+      en: {
+        kw: "Domain glossary alongside free-form stories (K2)",
+        desc: "Pair lightweight user stories with a living glossary of domain terms so product, dev, and test share exact semantics (AT-4.2.1).",
+      },
+    },
+  },
+  {
+    id: "syl-at-501",
+    cert: "ctal-at",
+    ch: 5,
+    d: "agile",
+    locales: {
+      pt: {
+        kw: "Heurísticas (RCRCRC), Tours e Test Charters (K2/K3/K4)",
+        desc: "Aplicar heurísticas e mnemônicos como RCRCRC, explorar por tours temáticos e estruturar sessões por charters derivados de épicos e riscos (AT-5.1.1..5.1.5).",
+      },
+      en: {
+        kw: "Heuristics (RCRCRC), Tours & Test Charters (K2/K3/K4)",
+        desc: "Apply heuristics and mnemonics like RCRCRC, structure exploration with test tours, and craft risk-driven charters from epics (AT-5.1.1..5.1.5).",
+      },
+    },
+  },
+  {
+    id: "syl-at-502",
+    cert: "ctal-at",
+    ch: 5,
+    d: "agile",
+    locales: {
+      pt: {
+        kw: "Mob testing, Pair testing e Vibe testing (K2)",
+        desc: "Organizar papéis em mob e pair testing para acelerar descoberta compartilhada; validar software gerado por IA (vibe coding) primeiro pela intenção do usuário (AT-5.2.1..5.2.3).",
+      },
+      en: {
+        kw: "Mob, Pair & Vibe testing (K2)",
+        desc: "Facilitate mob and pair sessions with clear role rotation; apply intent-first validation when testing AI-generated vibe-coded features (AT-5.2.1..5.2.3).",
+      },
+    },
+  },
+  {
+    id: "syl-at-503",
+    cert: "ctal-at",
+    ch: 5,
+    d: "agile",
+    locales: {
+      pt: {
+        kw: "Test smells em casos ágeis (K3)",
+        desc: "Identificar e corrigir anti-padrões como Interdependent Tests (isolando dependências/dados) e aplicar One More Step adicionando verificações explícitas (AT-5.3.1).",
+      },
+      en: {
+        kw: "Agile test smells (K3)",
+        desc: "Detect and eliminate test smells such as Interdependent Tests (making tests self-contained) and apply One More Step with explicit state checks (AT-5.3.1).",
+      },
+    },
+  },
+  {
+    id: "syl-at-601",
+    cert: "ctal-at",
+    ch: 6,
+    d: "agile",
+    locales: {
+      pt: {
+        kw: "Equilíbrio entre automação contínua e teste exploratório (K2)",
+        desc: "Evitar a falácia de automatizar 100%: automação sustenta regressão rápida em CI enquanto exploração e usabilidade permanecem humanas e contínuas (AT-6.1.1).",
+      },
+      en: {
+        kw: "Balancing continuous automation & exploratory testing (K2)",
+        desc: "Avoid the 100%-automation trap: automated checks sustain fast CI regression while exploratory and usability testing remain complementary (AT-6.1.1).",
+      },
+    },
+  },
+  {
+    id: "syl-at-602",
+    cert: "ctal-at",
+    ch: 6,
+    d: "agile",
+    locales: {
+      pt: {
+        kw: "Seleção de ferramentas alinhada à estratégia e camadas (K2)",
+        desc: "Escolher ferramentas pela aderência à estratégia de teste, camadas da arquitetura (API, unidade, UI) e sustentabilidade no pipeline, não por moda (AT-6.2.1).",
+      },
+      en: {
+        kw: "Tool selection aligned with strategy & automation layers (K2)",
+        desc: "Evaluate tools by fit with test strategy, automation layers (unit/API/UI), and CI sustainability rather than hype (AT-6.2.1).",
+      },
+    },
+  },
+  {
+    id: "syl-at-603",
+    cert: "ctal-at",
+    ch: 6,
+    d: "agile",
+    locales: {
+      pt: {
+        kw: "Ferramentas de IA para backlog, design e massas de dados (K2)",
+        desc: "Empregar IA para revisar user stories em busca de ambiguidades, sugerir casos e sintetizar dados de borda sob supervisão do time (AT-6.2.1).",
+      },
+      en: {
+        kw: "AI tools for backlog refinement, design & test data (K2)",
+        desc: "Use AI assistants to detect user story ambiguities, suggest test ideas, and create realistic edge-case data with human oversight (AT-6.2.1).",
       },
     },
   },

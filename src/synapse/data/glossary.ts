@@ -2152,4 +2152,239 @@ export const GLOSSARY: GlossaryEntry[] = [
       def: "A deployment strategy in which a candidate model processes live production traffic alongside the active model without exposing its outputs to end users.",
     },
   },
+  // CTAL-AT v2.0 (Ch 1–6)
+  {
+    cert: "ctal-at",
+    id: "gl-at-101",
+    chapter: 1,
+    pt: {
+      term: "Iteração de hardening",
+      def: "Iteração ou período próximo ao release dedicado a estabilizar o sistema integrado, tratar dívidas técnicas ou riscos residuais de integração que surgem além do nível de história individual.",
+    },
+    en: {
+      term: "Hardening iteration",
+      def: "An iteration or period near release dedicated to stabilizing the integrated system and addressing technical debt or system-wide integration risks beyond single-story scope.",
+    },
+  },
+  {
+    cert: "ctal-at",
+    id: "gl-at-102",
+    chapter: 1,
+    pt: {
+      term: "Teste de regressão incremental",
+      def: "Estratégia que dispara automaticamente subconjuntos direcionados da suíte de regressão a cada commit ou integração para fornecer feedback rápido ao longo da iteração.",
+    },
+    en: {
+      term: "Incremental regression testing",
+      def: "A strategy that automatically triggers targeted subsets of the regression suite at each commit or integration event to provide rapid feedback throughout the iteration.",
+    },
+  },
+  {
+    cert: "ctal-at",
+    id: "gl-at-103",
+    chapter: 1,
+    pt: {
+      term: "Conformidade regulatória em ágil",
+      def: "Adaptação das atividades ágeis para gerar evidências auditáveis e rastreabilidade formal nos requisitos regulatórios e áreas críticas sem burocratizar todo o backlog.",
+    },
+    en: {
+      term: "Regulatory compliance in Agile",
+      def: "Tailoring agile test activities to yield auditable evidence and formal traceability for regulated requirements and critical areas without burdening the whole backlog.",
+    },
+  },
+  {
+    cert: "ctal-at",
+    id: "gl-at-201",
+    chapter: 2,
+    pt: {
+      term: "Abordagem whole-team",
+      def: "Prática ágil em que toda a equipe multifuncional compartilha a responsabilidade pela qualidade, reduzindo silos de especialização por meio de pareamento e colaboração contínua.",
+    },
+    en: {
+      term: "Whole-team approach",
+      def: "An agile practice in which the entire cross-functional team shares responsibility for quality, reducing specialization silos through pairing and continuous collaboration.",
+    },
+  },
+  {
+    cert: "ctal-at",
+    id: "gl-at-202",
+    chapter: 2,
+    pt: {
+      term: "Tissue testing",
+      def: "Técnica colaborativa em que pessoas externas à equipe interagem rapidamente com um protótipo ou fluxo inicial para oferecer feedback informal de olhos frescos sobre clareza e usabilidade.",
+    },
+    en: {
+      term: "Tissue testing",
+      def: "A collaborative technique where people outside the team briefly interact with an early flow or prototype to provide cheap, informal fresh-eyes feedback on clarity and usability.",
+    },
+  },
+  {
+    cert: "ctal-at",
+    id: "gl-at-203",
+    chapter: 2,
+    pt: {
+      term: "Feedback precoce de teste",
+      def: "Envolvimento de testadores e representantes de negócio desde o refinamento e codificação, tornando a detecção e correção de defeitos mais baratas dentro da própria iteração.",
+    },
+    en: {
+      term: "Early test feedback",
+      def: "Involving testers and business representatives from refinement and coding onward, keeping defect detection and correction cheaper within the iteration itself.",
+    },
+  },
+  {
+    cert: "ctal-at",
+    id: "gl-at-301",
+    chapter: 3,
+    pt: {
+      term: "Quadrantes de teste ágeis",
+      def: "Taxonomia em quatro quadrantes (Q1–Q4) que organiza testes voltados à tecnologia ou ao negócio, de apoio ao time ou de crítica ao produto.",
+    },
+    en: {
+      term: "Agile testing quadrants",
+      def: "A four-quadrant taxonomy (Q1–Q4) organizing technology-facing and business-facing tests that either support the team or critique the product.",
+    },
+  },
+  {
+    cert: "ctal-at",
+    id: "gl-at-302",
+    chapter: 3,
+    pt: {
+      term: "Diagrama de fluxo cumulativo (CFD)",
+      def: "Métrica leve e visual em painéis automatizados que exibe o trabalho em cada estado ao longo da iteração, revelando gargalos em teste, automação ou revisão.",
+    },
+    en: {
+      term: "Cumulative flow diagram (CFD)",
+      def: "A lightweight visual chart on automated dashboards showing work items in each state across the iteration to expose bottlenecks in testing, automation, or review.",
+    },
+  },
+  {
+    cert: "ctal-at",
+    id: "gl-at-303",
+    chapter: 3,
+    pt: {
+      term: "Retrospectiva específica de teste",
+      def: "Reunião dedicada à eficácia das práticas de teste e qualidade, separada da retrospectiva geral quando problemas de cobertura, ambientes ou escapes exigem foco aprofundado.",
+    },
+    en: {
+      term: "Test-specific retrospective",
+      def: "A retrospective dedicated to testing and quality effectiveness, separate from the general sprint retro when coverage gaps, environments, or defect escapes need focused attention.",
+    },
+  },
+  {
+    cert: "ctal-at",
+    id: "gl-at-401",
+    chapter: 4,
+    pt: {
+      term: "Desenvolvimento Guiado por Testes de Aceitação (ATDD)",
+      def: "Prática colaborativa em que negócio, desenvolvimento e teste definem exemplos e critérios de aceitação executáveis antes da implementação, tornando-os requisitos vivos.",
+    },
+    en: {
+      term: "Acceptance Test-Driven Development (ATDD)",
+      def: "A collaborative practice where business, development, and testing define executable examples and acceptance criteria before coding so they endure as living requirements.",
+    },
+  },
+  {
+    cert: "ctal-at",
+    id: "gl-at-402",
+    chapter: 4,
+    pt: {
+      term: "Mapeamento por exemplos (Example Mapping)",
+      def: "Dinâmica estruturada por cartões (história, regras, exemplos e perguntas abertas) usada no refinamento para ancorar regras abstratas em casos concretos e revelar ambiguidades.",
+    },
+    en: {
+      term: "Example mapping",
+      def: "A structured card workshop (story, rules, concrete examples, and open questions) run during refinement to clarify abstract rules and uncover hidden ambiguities.",
+    },
+  },
+  {
+    cert: "ctal-at",
+    id: "gl-at-403",
+    chapter: 4,
+    pt: {
+      term: "Viés de confirmação",
+      def: "Tendência cognitiva de projetar ou executar testes apenas para confirmar que o sistema funciona como esperado, negligenciando caminhos de falha e borda.",
+    },
+    en: {
+      term: "Confirmation bias",
+      def: "Cognitive bias toward designing or running tests solely to confirm expected happy-path behavior while overlooking failure modes and edge conditions.",
+    },
+  },
+  {
+    cert: "ctal-at",
+    id: "gl-at-501",
+    chapter: 5,
+    pt: {
+      term: "Mnemônico RCRCRC",
+      def: "Heurística de seleção para teste de regressão e exploração guiada pelas dimensões Recent, Core, Risky, Configuration-sensitive, Repaired e Chronic.",
+    },
+    en: {
+      term: "RCRCRC heuristic",
+      def: "A selection mnemonic for regression and exploratory testing based on Recent, Core, Risky, Configuration-sensitive, Repaired, and Chronic product areas.",
+    },
+  },
+  {
+    cert: "ctal-at",
+    id: "gl-at-502",
+    chapter: 5,
+    pt: {
+      term: "Mob testing",
+      def: "Sessão colaborativa em que várias pessoas testam o mesmo objeto em rotação de papéis (driver, navigator e mob), com um moderador externo coordenando tempo e aderência.",
+    },
+    en: {
+      term: "Mob testing",
+      def: "A collaborative testing session where the whole group tests the same item using rotating roles (driver, navigator, mob), coordinated by a non-rotating moderator.",
+    },
+  },
+  {
+    cert: "ctal-at",
+    id: "gl-at-503",
+    chapter: 5,
+    pt: {
+      term: "Vibe testing",
+      def: "Abordagem exploratória para avaliar código gerado por IA com foco em validar primeiro a intenção de negócio do usuário em vez de apenas confirmar o que a UI faz.",
+    },
+    en: {
+      term: "Vibe testing",
+      def: "An exploratory approach to evaluating AI-generated software that validates intended user and business outcomes first rather than merely confirming current output.",
+    },
+  },
+  {
+    cert: "ctal-at",
+    id: "gl-at-601",
+    chapter: 6,
+    pt: {
+      term: "Automação contínua em CI",
+      def: "Integração de verificações automatizadas no pipeline para detectar regressões cedo sem eliminar o papel complementar do teste exploratório e de usabilidade.",
+    },
+    en: {
+      term: "Continuous CI automation",
+      def: "Integrating automated checks into the CI pipeline to catch regressions early while keeping exploratory and usability testing as essential complements.",
+    },
+  },
+  {
+    cert: "ctal-at",
+    id: "gl-at-602",
+    chapter: 6,
+    pt: {
+      term: "Camadas de automação ágil",
+      def: "Distribuição balanceada dos testes entre unidade, integração/API e interface gráfica alinhada à estratégia de risco para maximizar velocidade e estabilidade de feedback.",
+    },
+    en: {
+      term: "Agile automation layers",
+      def: "Balanced distribution of automated checks across unit, integration/API, and UI layers aligned with the test strategy for fast, stable feedback.",
+    },
+  },
+  {
+    cert: "ctal-at",
+    id: "gl-at-603",
+    chapter: 6,
+    pt: {
+      term: "Ferramentas de IA em testes ágeis",
+      def: "Uso de ferramentas baseadas em IA alinhadas à estratégia de teste para analisar histórias, detectar ambiguidades, apoiar geração de casos de teste e criar massas com casos de borda.",
+    },
+    en: {
+      term: "AI tools in agile testing",
+      def: "Applying AI-enabled tools aligned with test strategy to review user stories, spot missing acceptance criteria, assist test design, and synthesize edge-case test data.",
+    },
+  },
 ];

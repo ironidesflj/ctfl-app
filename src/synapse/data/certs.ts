@@ -486,13 +486,169 @@ export const CERTS: Record<string, Cert> = {
   "ctal-at": {
     id: "ctal-at",
     code: "CTAL-AT",
-    name: "Advanced Test Automation",
-    status: "soon",
+    name: "Agile Tester",
+    status: "live",
     version: "v2.0",
-    year: null,
-    exam: null,
-    nextChapter: null,
-    chapters: [],
+    year: 2026,
+    exam: { q: 40, min: 90, pass: 34, points: 52, pct: 65, scoring: "points" },
+    nextChapter: 5,
+    chapters: [
+      {
+        n: 1,
+        name: { pt: "Teste no Desenv. Ágil", en: "Testing in Agile" },
+        sub: {
+          pt: "Princípios, Níveis, Conformidade e Regressão em Ágil",
+          en: "Principles, Levels, Compliance & Regression in Agile",
+        },
+        examQ: 5,
+        kLevels: { "2": 5 },
+        total: studyTotal("ctal-at", 1),
+        topics: [
+          { pt: "Objetivos e quadrantes de teste (K2)", en: "Test Objectives & Quadrants (K2)" },
+          {
+            pt: "Iterações de hardening e integração sistêmica (K2)",
+            en: "Hardening Iterations & System Integration (K2)",
+          },
+          {
+            pt: "Conformidade regulatória e regressão em CI (K2)",
+            en: "Regulatory Compliance & CI Regression (K2)",
+          },
+        ],
+      },
+      {
+        n: 2,
+        name: { pt: "Times e Colaboração", en: "Agile Teams & Skills" },
+        sub: {
+          pt: "Competências, Whole-Team e Feedback Precoce",
+          en: "Skills, Whole-Team Approach & Early Feedback",
+        },
+        examQ: 5,
+        kLevels: { "2": 5 },
+        total: studyTotal("ctal-at", 2),
+        topics: [
+          {
+            pt: "Whole-team e redução de silos de especialização (K2)",
+            en: "Whole-Team & Reducing Specialization Silos (K2)",
+          },
+          {
+            pt: "Colaboração precoce com representantes de negócio (K2)",
+            en: "Early Collaboration with Business Representatives (K2)",
+          },
+          {
+            pt: "Tissue testers e valor do olhar externo (K2)",
+            en: "Tissue Testers & Fresh-Eyes Feedback (K2)",
+          },
+        ],
+      },
+      {
+        n: 3,
+        name: { pt: "Gestão e Métricas Ágeis", en: "Agile Test Management" },
+        sub: {
+          pt: "Planejamento, Quadrantes, Métricas e Melhoria",
+          en: "Planning, Quadrants, Metrics & Improvement",
+        },
+        examQ: 7,
+        kLevels: { "2": 5, "4": 2 },
+        total: studyTotal("ctal-at", 3),
+        topics: [
+          {
+            pt: "Planejamento na iteração, ambientes e dados (K2)",
+            en: "Iteration Planning, Environments & Data (K2)",
+          },
+          {
+            pt: "Quadrantes Q1–Q4 e rastreabilidade sob auditoria (K4)",
+            en: "Quadrants Q1–Q4 & Audit Traceability (K4)",
+          },
+          {
+            pt: "Burndown, CFD e cobertura de infraestrutura (K2)",
+            en: "Burndown, CFD & Infrastructure Coverage (K2)",
+          },
+          {
+            pt: "Teste de caos, canário e retrospectivas de teste (K4)",
+            en: "Chaos Testing, Canary Rollouts & Test Retros (K4)",
+          },
+        ],
+      },
+      {
+        n: 4,
+        name: { pt: "ATDD, BDD e Histórias", en: "ATDD, BDD & Stories" },
+        sub: {
+          pt: "Design por Exemplos, Viés e Fatiamento de Histórias",
+          en: "Example-Based Design, Confirmation Bias & Story Slicing",
+        },
+        examQ: 9,
+        kLevels: { "2": 7, "3": 2 },
+        total: studyTotal("ctal-at", 4),
+        topics: [
+          {
+            pt: "Requisitos vivos, ATDD e cenários BDD executáveis (K2)",
+            en: "Living Requirements, ATDD & Executable BDD (K2)",
+          },
+          {
+            pt: "Storyboarding, testboarding e example mapping (K2)",
+            en: "Storyboarding, Testboarding & Example Mapping (K2)",
+          },
+          {
+            pt: "Viés de confirmação e linguagem ubíqua (K2)",
+            en: "Confirmation Bias & Domain Glossary (K2)",
+          },
+          {
+            pt: "Fatiamento de histórias e critérios de aceite estreitos (K3)",
+            en: "Story Slicing & Narrow Acceptance Criteria (K3)",
+          },
+        ],
+      },
+      {
+        n: 5,
+        name: { pt: "Teste Exploratório e Colab.", en: "Exploratory & Collab." },
+        sub: {
+          pt: "Heurísticas, Tours, Charters, Mob, Pair, Vibe e Smells",
+          en: "Heuristics, Tours, Charters, Mob, Pair, Vibe & Smells",
+        },
+        examQ: 12,
+        kLevels: { "2": 7, "3": 4, "4": 1 },
+        total: studyTotal("ctal-at", 5),
+        topics: [
+          {
+            pt: "Heurísticas, mnemônicos (RCRCRC) e tours de teste (K2)",
+            en: "Heuristics, Mnemonics (RCRCRC) & Test Tours (K2)",
+          },
+          {
+            pt: "Charters de sessão exploratória a partir de épicos (K3–K4)",
+            en: "Exploratory Test Charters from Epics (K3–K4)",
+          },
+          {
+            pt: "Mob testing, pair testing e vibe testing por intenção (K2)",
+            en: "Mob, Pair & Intent-First Vibe Testing (K2)",
+          },
+          {
+            pt: "Test smells (One More Step, Interdependent Tests) (K3)",
+            en: "Test Smells (One More Step, Interdependent Tests) (K3)",
+          },
+        ],
+      },
+      {
+        n: 6,
+        name: { pt: "Ferramentas e Automação", en: "Agile Tools & Automation" },
+        sub: {
+          pt: "Estratégia de Automação, Camadas e Seleção de Ferramentas",
+          en: "Automation Strategy, Layers & Tool Adoption",
+        },
+        examQ: 2,
+        kLevels: { "2": 2 },
+        total: studyTotal("ctal-at", 6),
+        topics: [
+          {
+            pt: "Equilíbrio entre automação contínua e teste exploratório (K2)",
+            en: "Balancing Automation & Exploratory Testing (K2)",
+          },
+          {
+            pt: "Adoção de ferramentas e IA alinhada às camadas de teste (K2)",
+            en: "Adopting Tools & AI Aligned with Test Layers (K2)",
+          },
+        ],
+      },
+    ],
   },
   "ctfl-at": {
     id: "ctfl-at",
@@ -508,7 +664,7 @@ export const CERTS: Record<string, Cert> = {
 };
 
 export const BANK_META = {
-  examRules: "ISTQB Exam Structures & Rules v1.18",
+  examRules: "ISTQB Exam Structures & Rules v1.21",
   bank: `synapse bank v${bankMeta.version} · study pools (${Object.keys(bankMeta.perCert).join(", ")})`,
   updated: bankMeta.generatedDate,
   version: bankMeta.version,
