@@ -174,9 +174,17 @@ describe("study content — integridade estrutural", () => {
       ...SYLLABUS_ITEMS.map((i) => ({ ...i, kind: "item" })),
     ];
     for (const it of all) {
-      expect(["ctfl", "ctal-ta", "ctal-tm", "ct-ai"]).toContain(it.cert);
+      expect(["ctfl", "ctal-ta", "ctal-tm", "ct-ai", "ctal-at"]).toContain(it.cert);
       const maxCh =
-        it.cert === "ctfl" ? 6 : it.cert === "ctal-ta" ? 5 : it.cert === "ctal-tm" ? 3 : 7;
+        it.cert === "ctfl"
+          ? 6
+          : it.cert === "ctal-ta"
+            ? 5
+            : it.cert === "ctal-tm"
+              ? 3
+              : it.cert === "ctal-at"
+                ? 6
+                : 7;
       expect(it.ch).toBeGreaterThanOrEqual(1);
       expect(it.ch).toBeLessThanOrEqual(maxCh);
       expect(it.locales.pt).toBeTruthy();
@@ -186,10 +194,18 @@ describe("study content — integridade estrutural", () => {
 
   it("todo termo do glossário tem cert válido, capítulo e PT/EN completos", () => {
     for (const g of GLOSSARY) {
-      expect(["ctfl", "ctal-ta", "ctal-tm", "ct-ai"]).toContain(g.cert);
+      expect(["ctfl", "ctal-ta", "ctal-tm", "ct-ai", "ctal-at"]).toContain(g.cert);
       expect(g.chapter).toBeGreaterThanOrEqual(1);
       expect(g.chapter).toBeLessThanOrEqual(
-        g.cert === "ctfl" ? 6 : g.cert === "ctal-ta" ? 5 : g.cert === "ctal-tm" ? 3 : 7
+        g.cert === "ctfl"
+          ? 6
+          : g.cert === "ctal-ta"
+            ? 5
+            : g.cert === "ctal-tm"
+              ? 3
+              : g.cert === "ctal-at"
+                ? 6
+                : 7
       );
       expect(g.pt?.term).toBeTruthy();
       expect(g.pt?.def).toBeTruthy();
@@ -244,5 +260,19 @@ describe("study content — integridade estrutural", () => {
     expect(syllabusForCert("en", "ct-ai")).toHaveLength(21);
     expect(glossaryForCert("pt", "ct-ai")).toHaveLength(21);
     expect(glossaryForCert("en", "ct-ai")).toHaveLength(21);
+  });
+
+  it("todos os 6 capítulos do CTAL-AT v2.0 têm flashcards, syllabus e glossário completos", () => {
+    for (const ch of [1, 2, 3, 4, 5, 6]) {
+      expect(FLASHCARDS.filter((c) => c.cert === "ctal-at" && c.ch === ch).length).toBe(3);
+      expect(SYLLABUS_ITEMS.filter((i) => i.cert === "ctal-at" && i.ch === ch).length).toBe(3);
+      expect(GLOSSARY.filter((g) => g.cert === "ctal-at" && g.chapter === ch).length).toBe(3);
+    }
+    expect(flashcardsForCert("pt", "ctal-at")).toHaveLength(18);
+    expect(flashcardsForCert("en", "ctal-at")).toHaveLength(18);
+    expect(syllabusForCert("pt", "ctal-at")).toHaveLength(18);
+    expect(syllabusForCert("en", "ctal-at")).toHaveLength(18);
+    expect(glossaryForCert("pt", "ctal-at")).toHaveLength(18);
+    expect(glossaryForCert("en", "ctal-at")).toHaveLength(18);
   });
 });

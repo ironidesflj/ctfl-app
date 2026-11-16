@@ -2,6 +2,7 @@ import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import App from "../../App.jsx";
 import ctAiExam from "../data/banks/ct-ai-exam.json";
+import ctalAtExam from "../data/banks/ctal-at-exam.json";
 import { APP_VERSION } from "../data/releases";
 
 /**
@@ -192,5 +193,37 @@ describe("Simulado · limpeza do rascunho por cert (regressão P1)", () => {
       return sum + (q?.k === 3 ? 2 : 1);
     }, 0);
     expect(totalPts).toBe(44);
+  });
+
+  it("CTAL-AT v2.0: simulado oficial sorteia 40 questões estratificadas (31 K2 + 6 K3 + 3 K4 = 52 pts, corte 34)", async () => {
+    localStorage.setItem("synapse.cert.v1", "ctal-at");
+    openQuizRoute();
+    const { container } = render(<App />);
+
+    await screen.findByText(
+      /40 questões em 90 minutos, pontuação ponderada por K-level \(K2=1 · K3=2 · K4=3\)/i
+    );
+
+    await startOfficialExam(container);
+    expect(screen.getByText(/Questão 1 de 40/)).toBeInTheDocument();
+
+    const draft = JSON.parse(localStorage.getItem("synapse.examdraft.v1") || "null");
+    expect(draft).not.toBeNull();
+    expect(draft.cert).toBe("ctal-at");
+    expect(draft.custom).toBe(false);
+    expect(draft.questionIds).toHaveLength(40);
+    expect(new Set(draft.questionIds).size).toBe(40);
+
+    const byId = new Map(
+      Object.values(ctalAtExam)
+        .flat()
+        .map((q) => [q.id, q])
+    );
+    const ptsForK = { 1: 1, 2: 1, 3: 2, 4: 3 };
+    const totalPts = draft.questionIds.reduce((sum, id) => {
+      const q = byId.get(id);
+      return sum + (ptsForK[q?.k] || 1);
+    }, 0);
+    expect(totalPts).toBe(52);
   });
 });

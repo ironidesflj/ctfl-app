@@ -13,16 +13,19 @@ await loadBankFor("ctfl");
 await loadBankFor("ctal-ta");
 await loadBankFor("ctal-tm");
 await loadBankFor("ct-ai");
+await loadBankFor("ctal-at");
 const ctfl = getBank("ctfl");
 const ta = getBank("ctal-ta");
 const tm = getBank("ctal-tm");
 const ai = getBank("ct-ai");
+const at = getBank("ctal-at");
 
 describe.each([
   ["ctfl", ctfl, 500, 342, 158],
   ["ctal-ta", ta, 450, 266, 184],
   ["ctal-tm", tm, 500, 305, 195],
   ["ct-ai", ai, 360, 243, 117],
+  ["ctal-at", at, 360, 234, 126],
 ])("pools exclusivos — %s", (_id, bank, total, studyN, examN) => {
   it(`pool de estudo tem ${studyN} e pool de simulado ${examN} (total ${total})`, () => {
     expect(bank.ALL.length).toBe(total);
@@ -214,5 +217,27 @@ describe("pools exclusivos — examFormat oficial (r13)", () => {
       );
     }, 0);
     expect(pts).toBe(44);
+  });
+
+  it("CTAL-AT v2.0: pontuação ponderada, 52 pontos, corte 34, tempo nativo 90 min", () => {
+    const f = at.META.examFormat["ctal-at"];
+    expect(f.scoring).toBe("points");
+    expect(f.passMark).toBe(34);
+    expect(f.totalPoints).toBe(52);
+    expect(f.questions).toBe(40);
+    expect(f.timeMinutes).toBe(90);
+    expect(f.timeMinutesNonNative).toBe(113);
+    expect(f.pointsByK).toEqual({ 2: 1, 3: 2, 4: 3 });
+    const bp = at.META.examBlueprint["ctal-at"].chapters;
+    const PTS = { K1: 1, K2: 1, K3: 2, K4: 3 };
+    const pts = Object.values(bp).reduce((sum, spec) => {
+      return (
+        sum +
+        Object.entries(spec.kLevels || {}).reduce((s, [k, n]) => {
+          return s + (Number(n) || 0) * (PTS[k] || 0);
+        }, 0)
+      );
+    }, 0);
+    expect(pts).toBe(52);
   });
 });

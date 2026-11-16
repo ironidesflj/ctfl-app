@@ -168,11 +168,11 @@ describe("Synapse 4.1 · Shell e Navegação", () => {
 });
 
 describe("Catálogo oficial de certificações ISTQB", () => {
-  it("contém as 6 certificações do contrato (4 live, 1 soon, 1 legacy)", () => {
+  it("contém as 6 certificações do contrato (5 live, 0 soon, 1 legacy)", () => {
     const list = Object.values(CERTS);
     expect(list.length).toBe(6);
-    expect(list.filter((c) => c.status === "live")).toHaveLength(4);
-    expect(list.filter((c) => c.status === "soon")).toHaveLength(1);
+    expect(list.filter((c) => c.status === "live")).toHaveLength(5);
+    expect(list.filter((c) => c.status === "soon")).toHaveLength(0);
     expect(list.filter((c) => c.status === "legacy")).toHaveLength(1);
   });
 
@@ -181,9 +181,13 @@ describe("Catálogo oficial de certificações ISTQB", () => {
     expect(studySum("ctfl")).toBe(BANK_META.perCert.ctfl.study);
     expect(studySum("ctal-ta")).toBe(BANK_META.perCert["ctal-ta"].study);
     expect(studySum("ctal-tm")).toBe(BANK_META.perCert["ctal-tm"].study);
+    expect(studySum("ct-ai")).toBe(BANK_META.perCert["ct-ai"].study);
+    expect(studySum("ctal-at")).toBe(BANK_META.perCert["ctal-at"].study);
     expect(studySum("ctfl")).toBe(342);
     expect(studySum("ctal-ta")).toBe(266);
     expect(studySum("ctal-tm")).toBe(305);
+    expect(studySum("ct-ai")).toBe(243);
+    expect(studySum("ctal-at")).toBe(234);
   });
 });
 
@@ -272,7 +276,7 @@ describe("Synapse 4.1 · Telas e Fluxos Caderno", () => {
     expect(screen.getByText(`v${APP_VERSION}`)).toBeInTheDocument();
     expect(
       screen.getByText(
-        new RegExp(`v${BANK_META.version}.*1\\.810 ativas.*1\\.156 estudo.*654 simulado`)
+        new RegExp(`v${BANK_META.version}.*2\\.170 ativas.*1\\.390 estudo.*780 simulado`)
       )
     ).toBeInTheDocument();
     expect(screen.getByRole("button", { name: /Como funciona/i })).toBeInTheDocument();
@@ -292,8 +296,8 @@ describe("Synapse 4.1 · Telas e Fluxos Caderno", () => {
       expect(screen.getByRole("dialog", { name: /Como funciona o Synapse/i })).toBeVisible();
     });
 
-    expect(screen.getByText("1.810 questões")).toBeInTheDocument();
-    expect(screen.getByText("4 certificações")).toBeInTheDocument();
+    expect(screen.getByText("2.170 questões")).toBeInTheDocument();
+    expect(screen.getByText("5 certificações")).toBeInTheDocument();
     expect(screen.getByText(/O que você vai encontrar/i)).toBeInTheDocument();
     expect(screen.getByText(/Veja como funciona/i)).toBeInTheDocument();
     expect(
@@ -339,18 +343,52 @@ describe("Synapse 4.1 · Telas e Fluxos Caderno", () => {
     });
   });
 
-  it("Novidades da versão: abre automaticamente na atualização da 4.1.0 e marca como vista", async () => {
-    localStorage.setItem("synapse.ver.v1", "4.1.0");
+  it("CTAL-AT v2.0: troca para CTAL-AT e renderiza Estudar (234), Syllabus (6 cap.) e Glossário (18)", async () => {
+    const { container } = render(<App />);
+
+    fireEvent.click(screen.getByRole("button", { name: /Trocar de prova: CTFL/i }));
+    const atTile = await screen.findByRole("button", { name: /CTAL-AT/i });
+    fireEvent.click(atTile);
+
+    await waitFor(() => {
+      expect(document.body.getAttribute("data-cert")).toBe("ctal-at");
+      expect(screen.getByText(/Agile Tester/i)).toBeInTheDocument();
+    });
+
+    fireEvent.click(container.querySelector('button[data-nav="estudar"]'));
+    await waitFor(() => {
+      expect(screen.getByText(/0 de 234 questões de estudo/i)).toBeInTheDocument();
+    });
+
+    fireEvent.click(container.querySelector('button[data-nav="syllabus"]'));
+    await waitFor(() => {
+      expect(
+        screen.getByText(/Princípios, Níveis, Conformidade e Regressão em Ágil/i)
+      ).toBeInTheDocument();
+    });
+
+    fireEvent.click(container.querySelector('button[data-nav="glossary"]'));
+    await waitFor(() => {
+      expect(screen.getByText(/Iteração de hardening/i)).toBeInTheDocument();
+    });
+  });
+
+  it("Novidades da versão: abre automaticamente na atualização da 4.2.0 e marca como vista", async () => {
+    localStorage.setItem("synapse.ver.v1", "4.2.0");
     render(<App />);
 
-    const dialog = await screen.findByRole("dialog", { name: /CT-AI v2\.0 chegou ao Synapse/i });
+    const dialog = await screen.findByRole("dialog", {
+      name: /CTAL-AT v2\.0 completa o catálogo do Synapse/i,
+    });
     expect(dialog).toBeVisible();
     expect(screen.getByText(new RegExp(`Novidades da versão v${APP_VERSION}`))).toBeInTheDocument();
 
     fireEvent.click(screen.getByRole("button", { name: /^Entendi$/i }));
 
     await waitFor(() => {
-      expect(screen.queryByRole("dialog", { name: /CT-AI v2\.0 chegou ao Synapse/i })).toBeNull();
+      expect(
+        screen.queryByRole("dialog", { name: /CTAL-AT v2\.0 completa o catálogo do Synapse/i })
+      ).toBeNull();
     });
     expect(localStorage.getItem("synapse.ver.v1")).toBe(APP_VERSION);
   });
@@ -362,12 +400,16 @@ describe("Synapse 4.1 · Telas e Fluxos Caderno", () => {
     const trigger = await screen.findByRole("button", { name: /Novidades da versão/i });
     fireEvent.click(trigger);
 
-    const dialog = await screen.findByRole("dialog", { name: /CT-AI v2\.0 chegou ao Synapse/i });
+    const dialog = await screen.findByRole("dialog", {
+      name: /CTAL-AT v2\.0 completa o catálogo do Synapse/i,
+    });
     expect(dialog).toBeVisible();
 
     fireEvent.click(screen.getByRole("button", { name: /^Entendi$/i }));
     await waitFor(() => {
-      expect(screen.queryByRole("dialog", { name: /CT-AI v2\.0 chegou ao Synapse/i })).toBeNull();
+      expect(
+        screen.queryByRole("dialog", { name: /CTAL-AT v2\.0 completa o catálogo do Synapse/i })
+      ).toBeNull();
     });
   });
 });

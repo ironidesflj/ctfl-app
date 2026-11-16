@@ -3,7 +3,7 @@
    notas de versão e a copy "o que há de novo". A versão viaja em
    synapse.ver.v1 (marcada como vista quando o usuário fecha as notas). */
 
-export const APP_VERSION = "4.2.0";
+export const APP_VERSION = "4.3.0";
 
 export interface ReleaseCopy {
   eyebrow: string;
@@ -24,29 +24,29 @@ export const CURRENT_RELEASE: {
   significant: true,
   pt: {
     eyebrow: "Novidades da versão",
-    title: "CT-AI v2.0 chegou ao Synapse",
+    title: "CTAL-AT v2.0 completa o catálogo do Synapse",
     intro:
-      "A quarta certificação oficial agora está liberada para estudo, revisão espaçada e simulado pontuado.",
+      "A trilha Advanced Level Agile Tester chegou em português e inglês — encerrando todas as certificações ativas do roadmap.",
     items: [
-      "CT-AI v2.0 (AI Testing) no ar com 360 questões nos dois idiomas (243 para estudo e 117 exclusivas de simulado).",
-      "Simulado oficial CT-AI seguindo o blueprint: 40 questões em 60 minutos, 44 pontos possíveis (K1/K2 = 1 pt, K3 = 2 pts) e nota de corte 29.",
-      "Conteúdo de apoio completo nos 7 capítulos em PT/EN: 21 itens de syllabus, 21 flashcards e 21 termos no glossário.",
-      "O catálogo agora soma 4 certificações ativas e 1.810 questões validadas, mantendo seu progresso e backups compatíveis neste dispositivo.",
-      "Você pode reabrir estas notas a qualquer momento pelo botão “Novidades da versão” na aba Sobre.",
+      "CTAL-AT v2.0 (Agile Tester) liberada com 360 questões bilíngues (234 para estudo e 126 exclusivas de simulado).",
+      "Simulado oficial CTAL-AT fiel ao blueprint: 40 questões em 90 minutos, 52 pontos possíveis (K2=1 · K3=2 · K4=3) e nota de corte 34.",
+      "Conteúdo de apoio completo nos 6 capítulos em PT/EN: 18 itens de syllabus, 18 flashcards e 18 termos oficiais no glossário.",
+      "O catálogo agora reúne 5 certificações ativas e 2.170 questões disponíveis para estudo e simulado (2.370 no banco canônico), mantendo seu progresso intacto.",
+      "Você pode reabrir estas novidades a qualquer momento pelo botão “Novidades da versão” na aba Sobre.",
     ],
     cta: "Entendi",
     close: "Fechar novidades",
   },
   en: {
     eyebrow: "What's new in",
-    title: "CT-AI v2.0 is live on Synapse",
+    title: "CTAL-AT v2.0 completes the Synapse catalog",
     intro:
-      "Our fourth official certification track is now unlocked for study, spaced repetition, and weighted mock exams.",
+      "The Advanced Level Agile Tester track has landed in Portuguese and English — completing every active certification on the roadmap.",
     items: [
-      "CT-AI v2.0 (AI Testing) launched with 360 bilingual questions (243 for study and 117 reserved for mock exams).",
-      "Official CT-AI mock exam aligned with the blueprint: 40 questions in 60 minutes, 44 possible points (K1/K2 = 1 pt, K3 = 2 pts), pass mark 29.",
-      "Full study companion content across all 7 chapters in PT/EN: 21 syllabus objectives, 21 flashcards, and 21 glossary terms.",
-      "The catalog now brings together 4 active certifications and 1,810 validated questions, preserving your local progress and backups.",
+      "CTAL-AT v2.0 (Agile Tester) launched with 360 bilingual questions (234 for study and 126 reserved for mock exams).",
+      "Official CTAL-AT mock exam aligned with the blueprint: 40 questions in 90 minutes, 52 possible points (K2=1 · K3=2 · K4=3), pass mark 34.",
+      "Full companion study content across all 6 chapters in PT/EN: 18 syllabus objectives, 18 flashcards, and 18 official glossary terms.",
+      "The catalog now covers 5 active certifications and 2,170 live questions for study and mock exams (2,370 in the canonical bank), preserving your local progress.",
       "You can reopen these release notes anytime from the “What's new” button on the About tab.",
     ],
     cta: "Got it",

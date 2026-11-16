@@ -116,7 +116,7 @@ const COPY: Record<Lang, SobreCopy> = {
       ],
     ],
     limits: [
-      "Não é afiliado ao ISTQB. O conteúdo é baseado nos syllabus e no glossário públicos; o app é independente. ISTQB®, CTFL®, CTAL-TA® e CTAL-TM® são marcas registradas do International Software Testing Qualifications Board.",
+      "Não é afiliado ao ISTQB. O conteúdo é baseado nos syllabus e no glossário públicos; o app é independente. ISTQB®, CTFL®, CTAL-TA®, CTAL-TM®, CT-AI® e CTAL-AT® são marcas registradas do International Software Testing Qualifications Board.",
       "Não é um despejo de questões. Sem banco, a prova aparece como “em breve” — e não abre.",
       "Não é uma conta na nuvem. O progresso fica neste dispositivo; sincronizar entre aparelhos ainda não existe.",
       "Não coleta dado de estudo. O feedback é público e opcional, e não deve levar dado pessoal nem resultado de prova.",
@@ -242,7 +242,7 @@ const COPY: Record<Lang, SobreCopy> = {
       ],
     ],
     limits: [
-      "It is not affiliated with ISTQB. Content is based on public syllabi and the glossary; the app is independent. ISTQB®, CTFL®, CTAL-TA® and CTAL-TM® are registered trademarks of the International Software Testing Qualifications Board.",
+      "It is not affiliated with ISTQB. Content is based on public syllabi and the glossary; the app is independent. ISTQB®, CTFL®, CTAL-TA®, CTAL-TM®, CT-AI® and CTAL-AT® are registered trademarks of the International Software Testing Qualifications Board.",
       "It is not a question dump. Without a bank, the exam appears as “coming soon” — and does not open.",
       "It is not a cloud account. Progress stays on this device; cross-device sync does not exist yet.",
       "It does not collect study data. Feedback is public and optional, and must not carry personal data or exam results.",
@@ -354,6 +354,14 @@ function buildStateRows(lang: Lang): [string, string][] {
   const soon = all.filter((cert) => cert.status === "soon").length;
   const legacy = all.filter((cert) => cert.status === "legacy").length;
   const updated = formatUpdatedDate(BANK_META.updated, lang);
+  const examsEn =
+    soon > 0
+      ? `${live} with a bank · ${soon} in preparation · ${legacy} archive`
+      : `${live} with a bank · ${legacy} archive`;
+  const examsPt =
+    soon > 0
+      ? `${live} com banco · ${soon} em preparação · ${legacy} arquivo`
+      : `${live} com banco · ${legacy} arquivo`;
 
   if (lang === "en") {
     return [
@@ -362,7 +370,7 @@ function buildStateRows(lang: Lang): [string, string][] {
         "Question bank",
         `v${BANK_META.version} · ${fmtNum(BANK_META.live.total)} live (${fmtNum(BANK_META.live.study)} study · ${fmtNum(BANK_META.live.exam)} exam)`,
       ],
-      ["Exams", `${live} with a bank · ${soon} in preparation · ${legacy} archive`],
+      ["Exams", examsEn],
       ["Languages", "PT-BR + EN"],
       ["Data", "local-first · no account"],
       ["Last update", updated],
@@ -375,7 +383,7 @@ function buildStateRows(lang: Lang): [string, string][] {
       "Banco de questões",
       `v${BANK_META.version} · ${fmtNum(BANK_META.live.total)} ativas (${fmtNum(BANK_META.live.study)} estudo · ${fmtNum(BANK_META.live.exam)} simulado)`,
     ],
-    ["Provas", `${live} com banco · ${soon} em preparação · ${legacy} arquivo`],
+    ["Provas", examsPt],
     ["Idiomas", "PT-BR + EN"],
     ["Dados", "local-first · sem conta"],
     ["Última atualização", updated],
